@@ -11,13 +11,12 @@ func init() {
 }
 
 func main() {
-	initializers.DB.AutoMigrate(	
-		&models.User{},
+	initializers.DB.AutoMigrate(
 		&models.Car{},
-		&models.CarOwner{},
+		&models.Contract{},
+		&models.User{},
+		&models.RentHistory{},
 		&models.CarBrand{},
 		&models.CarReview{},
-		&models.Contract{},
-		&models.RentHistory{},
 	)
 }
