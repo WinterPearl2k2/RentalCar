@@ -17,7 +17,7 @@ type User struct {
 	CreatedAt     time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	UpdatedAt     time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 
-	RentHistories []*RentHistory `gorm:"foreignKey:IdHistory"`
-	Contracts     []*Contract    `gorm:"foreignKey:IdContract"`
-	Cars          []*Car         `gorm:"foreignKey:IdCar"`
+	RentHistories []RentHistory `gorm:"foreignKey:IdHistory"`
+	Contracts     []Contract    `gorm:"foreignKey:IdContract"`
+	Cars          []Car         `gorm:"foreignKey:IdCar"`
 }
