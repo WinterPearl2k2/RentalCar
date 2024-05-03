@@ -14,9 +14,9 @@ func main() {
 	initializers.DB.AutoMigrate(
 		&models.User{},
 		&models.Car{},
+		&models.CarBrand{},
 		&models.Contract{},
 		&models.RentHistory{},
-		&models.CarBrand{},
 		&models.CarReview{},
 	)
 }

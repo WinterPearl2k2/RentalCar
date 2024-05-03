@@ -31,6 +31,9 @@ const (
 
 type Car struct {
 	IdCar           uuid.UUID        `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()"`
+	IdUser          uuid.UUID        `gorm:"foreignKey:IdUser;type:uuid;"`
+	IdBrand         uuid.UUID        `gorm:"foreignKey:IdBrand;type:uuid;"`
+	IdReview        uuid.UUID        `gorm:"foreignKey:IdReview;type:uuid;"`
 	NameCar         string           `gorm:"type:varchar(255);notNull"`
 	PriceCar        float64          `gorm:"type:float8;notNull"`
 	FuelTypeCar     FuelType         `gorm:"type:text;notNull"`
@@ -39,13 +42,9 @@ type Car struct {
 	KilometersCar   int              `gorm:"type:int"`
 	SeatsCar        int              `gorm:"type:int"`
 	TransmissionCar TransmissionType `gorm:"type:text"`
+	AddressOwner    string           `gorm:"type:string;notNull"`
 	ImagesCar       string           `gorm:"type:text"`
 	StatusCar       CarStatus        `gorm:"type:text"`
-	AddressOwner    string           `gorm:"type:string;notNull"`
 	CreatedAt       time.Time        `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	UpdatedAt       time.Time        `gorm:"notNull;default:CURRENT_TIMESTAMP"`
-
-	CarBrand  *CarBrand    `gorm:"foreignKey:IdBrand"`
-	CarReview []*CarReview `gorm:"foreignKey:IdReview"`
-	User      *User        `gorm:"foreignKey:IdUser"`
 }
