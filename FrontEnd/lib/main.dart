@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:rental_car/application/di/injection.dart';
+Injection injection = Injection();
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  injection.configDependencies();
   runApp(const MyApp());
 }
 
