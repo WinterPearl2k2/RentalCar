@@ -32,6 +32,7 @@ func RegisterUser(context *gin.Context) {
 	user := models.User{
 		EmailUser:    body.Email,
 		NameUser:     body.Name,
+		PhoneUser:    body.PhoneNumber,
 		PasswordUser: string(hash),
 	}
 

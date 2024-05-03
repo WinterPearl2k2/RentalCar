@@ -5,9 +5,7 @@ import (
 )
 
 type RentHistory struct {
-	IdHistory     uuid.UUID `gorm:"primaryKey;type:uuid;default:uuid_generate_v4()"`
+	IdCar         uuid.UUID `gorm:"foreignKey:IdCar;type:uuid"`
+	IdUser        uuid.UUID `gorm:"foreignKey:IdUser;type:uuid"`
 	StatusHistory int       `gorm:"type:uuid"`
-
-	Car  *Car  `gorm:"foreignKey:IdCar"`
-	User *User `gorm:"foreignKey:IdUser"`
 }
