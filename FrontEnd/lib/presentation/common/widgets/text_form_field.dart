@@ -12,6 +12,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
   final TextInputAction? inputAction;
   final Function(String value)? onChanged;
   final TextInputType? textInputType;
+  final Widget? error;
 
   const TextFormFieldCustomWidget({
     super.key,
@@ -23,6 +24,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
     this.obscureText,
     this.inputAction,
     this.textInputType,
+    this.error,
   });
 
   @override
@@ -57,6 +59,21 @@ class TextFormFieldCustomWidget extends StatelessWidget {
             hintStyle: TextStyle(
               color: ColorUtils.textColor,
               fontSize: 14.sp,
+            ),
+            error: error,
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: const BorderSide(
+                color: Colors.redAccent,
+                width: 1,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: const BorderSide(
+                color: Colors.redAccent,
+                width: 1,
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),

@@ -6,6 +6,7 @@ import 'package:rental_car/presentation/views/auth/widgets/login_widget.dart';
 import 'package:rental_car/presentation/views/auth/widgets/register_widget.dart';
 
 import '../../common/base_state_delegate/base_state_delegate.dart';
+import '../../common/widgets/loading_widget.dart';
 import 'notifier/auth_notifier.dart';
 
 class AuthView extends ConsumerStatefulWidget {
@@ -19,6 +20,7 @@ class _AuthViewState extends BaseStateDelegate<AuthView, AuthNotifier> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
 
   @override
   void initNotifier() {
@@ -30,28 +32,45 @@ class _AuthViewState extends BaseStateDelegate<AuthView, AuthNotifier> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        body: Container(
-          margin:
-              const EdgeInsets.only(top: 70, left: 30, right: 30, bottom: 20).r,
-          child: Consumer(
-            builder: (_, ref, child) {
-              final stateView = ref.watch(
-                authNotifierProvider.select((value) => value.stateView),
-              );
-              switch (stateView) {
-                case StateView.signIn:
-                  return LoginWidget(
-                    emailController: emailController,
-                    notifier: notifier,
+        body: Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                      top: 70, left: 30, right: 30, bottom: 20)
+                  .r,
+              child: Consumer(
+                builder: (_, ref, child) {
+                  final stateView = ref.watch(
+                    authNotifierProvider.select((value) => value.stateView),
                   );
-                case StateView.signUp:
-                  return RegisterWidget(
-                    emailController: emailController,
-                    notifier: notifier,
-                  );
-              }
-            },
-          ),
+                  switch (stateView) {
+                    case StateView.signIn:
+                      return LoginWidget(
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        notifier: notifier,
+                      );
+                    case StateView.signUp:
+                      return RegisterWidget(
+                        emailController: emailController,
+                        nameController: nameController,
+                        passwordController: passwordController,
+                        phoneController: phoneController,
+                        notifier: notifier,
+                      );
+                  }
+                },
+              ),
+            ),
+            Consumer(
+              builder: (context, ref, child) {
+                final isWaiting = ref.watch(
+                  authNotifierProvider.select((value) => value.wait),
+                );
+                return isWaiting ? const LoadingWidget() : const SizedBox();
+              },
+            ),
+          ],
         ),
       ),
     );

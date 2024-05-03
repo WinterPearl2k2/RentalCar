@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/presentation/views/auth/notifier/auth_notifier.dart';
 
 import '../../../../application/utils/colors_utils.dart';
@@ -13,10 +15,16 @@ class RegisterWidget extends StatelessWidget {
     super.key,
     required this.emailController,
     required this.notifier,
+    required this.nameController,
+    required this.phoneController,
+    required this.passwordController,
   });
 
   final AuthNotifier notifier;
   final TextEditingController emailController;
+  final TextEditingController nameController;
+  final TextEditingController passwordController;
+  final TextEditingController phoneController;
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +36,10 @@ class RegisterWidget extends StatelessWidget {
           Text(
             'Nice to know you!',
             style: TextStyle(
-                color: ColorUtils.primaryColor,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold),
+              color: ColorUtils.primaryColor,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Text(
             'Enter your account to continue',
@@ -42,65 +51,142 @@ class RegisterWidget extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          TextFormFieldCustomWidget(
-            hint: 'Your full name',
-            label: "Full name",
-            controller: emailController,
-            inputAction: TextInputAction.next,
+          Consumer(
+            builder: (context, ref, child) {
+              final err = ref.watch(
+                authNotifierProvider.select((value) => value.errorName),
+              );
+              return TextFormFieldCustomWidget(
+                hint: 'Your full name',
+                label: "Full name",
+                controller: nameController,
+                inputAction: TextInputAction.next,
+                error: err
+                    ? const Text(
+                        'Name cannot be empty!',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 10,
+                        ),
+                      )
+                    : null,
+                onChanged: (value) => notifier.checkName(value),
+              );
+            },
           ),
           SizedBox(
             height: 20.h,
           ),
-          TextFormFieldCustomWidget(
-            hint: 'Your email address',
-            label: "Email address",
-            inputAction: TextInputAction.next,
-            controller: emailController,
+          Consumer(
+            builder: (context, ref, child) {
+              final err = ref.watch(
+                authNotifierProvider.select((value) => value.errorEmail),
+              );
+              return TextFormFieldCustomWidget(
+                hint: 'Your email address',
+                label: "Email address",
+                inputAction: TextInputAction.next,
+                controller: emailController,
+                error: err
+                    ? const Text(
+                        'Invalid email!',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 10,
+                        ),
+                      )
+                    : null,
+                onChanged: (value) => notifier.checkEmail(value),
+              );
+            },
           ),
           SizedBox(
             height: 20.h,
           ),
-          TextFormFieldCustomWidget(
-            hint: 'Your phone number',
-            label: "Phone number",
-            inputAction: TextInputAction.next,
-            controller: emailController,
-            textInputType: TextInputType.phone,
+          Consumer(
+            builder: (context, ref, child) {
+              final err = ref.watch(
+                authNotifierProvider.select((value) => value.errorPhone),
+              );
+              return TextFormFieldCustomWidget(
+                hint: 'Your phone number',
+                label: "Phone number",
+                inputAction: TextInputAction.next,
+                controller: phoneController,
+                textInputType: TextInputType.phone,
+                error: err
+                    ? const Text(
+                        'Invalid phone number!',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 10,
+                        ),
+                      )
+                    : null,
+                onChanged: (value) => notifier.checkPhone(value),
+              );
+            },
           ),
           SizedBox(
             height: 20.h,
           ),
-          TextFormFieldCustomWidget(
-            hint: 'Your password',
-            label: "Password",
-            controller: emailController,
-            inputAction: TextInputAction.done,
-            obscureText: true,
-            suffixIcon: IconButton(
-              onPressed: () => {},
-              icon: true
-                  ? SvgPicture.asset(
-                      'assets/icons/visibility_on.svg',
-                      colorFilter: ColorFilter.mode(
-                        ColorUtils.textColor,
-                        BlendMode.srcIn,
-                      ),
-                    )
-                  : SvgPicture.asset(
-                      'assets/icons/visibility_off.svg',
-                      colorFilter: ColorFilter.mode(
-                        ColorUtils.textColor,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-            ),
+          Consumer(
+            builder: (_, ref, child) {
+              final isShow = ref.watch(
+                authNotifierProvider.select((value) => value.showPassword),
+              );
+              final err = ref.watch(
+                authNotifierProvider.select((value) => value.errorPassword),
+              );
+              return TextFormFieldCustomWidget(
+                hint: 'Your password',
+                label: "Password",
+                controller: passwordController,
+                inputAction: TextInputAction.done,
+                obscureText: !isShow,
+                error: err
+                    ? const Text(
+                        'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 10,
+                        ),
+                      )
+                    : null,
+                onChanged: (value) => notifier.checkPassword(value),
+                suffixIcon: IconButton(
+                  onPressed: () => notifier.showPassword(),
+                  icon: !isShow
+                      ? SvgPicture.asset(
+                          AssetUtils.visibleOn,
+                          colorFilter: ColorFilter.mode(
+                            ColorUtils.textColor,
+                            BlendMode.srcIn,
+                          ),
+                        )
+                      : SvgPicture.asset(
+                          AssetUtils.visibleOff,
+                          colorFilter: ColorFilter.mode(
+                            ColorUtils.textColor,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                ),
+              );
+            },
           ),
           SizedBox(
             height: 50.h,
           ),
           TextButtonWidget(
             label: 'Register',
-            onPressed: () {},
+            onPressed: () => notifier.registerUser(
+              name: nameController,
+              password: passwordController,
+              email: emailController,
+              phoneNumber: phoneController,
+              context: context,
+            ),
           ),
           SizedBox(
             height: 10.h,
@@ -170,7 +256,13 @@ class RegisterWidget extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => notifier.changeView(),
+                  onTap: () => {
+                    nameController.clear(),
+                    phoneController.clear(),
+                    passwordController.clear(),
+                    emailController.clear(),
+                    notifier.changeView(),
+                  },
                   child: Text(
                     'Login',
                     style: TextStyle(

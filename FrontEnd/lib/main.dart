@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/di/injection.dart';
+import 'package:rental_car/application/utils/colors_utils.dart';
+
+import 'application/routes/routes.dart';
+import 'application/routes/routes_name.dart';
+
 Injection injection = Injection();
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   injection.configDependencies();
@@ -21,7 +29,9 @@ class MyApp extends StatelessWidget {
         title: 'Rental Car',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: ColorUtils.whiteColor,
+          ),
           fontFamily: 'OpenSans',
           useMaterial3: true,
         ),
