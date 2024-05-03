@@ -7,8 +7,11 @@ import (
 )
 
 type Contract struct {
-	IdUser    uuid.UUID `gorm:"foreignKey:IdUser;type:uuid"`
-	IdCar     uuid.UUID `gorm:"foreignKey:IdCar;type:uuid"`
 	StartTime time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	EndTime   time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
+	UserId    uuid.UUID `gorm:"type:uuid;notNull"`
+	CarId     uuid.UUID `gorm:"type:uuid;notNull"`
+
+	Car  *Car  `gorm:"foreignKey:CarId"`
+	User *User `gorm:"foreignKey:UserId"`
 }

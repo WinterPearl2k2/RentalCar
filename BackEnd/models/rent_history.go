@@ -1,11 +1,12 @@
 package models
 
-import (
-	"github.com/google/uuid"
-)
+import "github.com/google/uuid"
 
 type RentHistory struct {
-	IdCar         uuid.UUID `gorm:"foreignKey:IdCar;type:uuid"`
-	IdUser        uuid.UUID `gorm:"foreignKey:IdUser;type:uuid"`
 	StatusHistory int       `gorm:"type:uuid"`
+	UserId        uuid.UUID `gorm:"type:uuid;notNull"`
+	CarId         uuid.UUID `gorm:"type:uuid;notNull"`
+
+	Car  *Car  `gorm:"foreignKey:CarId"`
+	User *User `gorm:"foreignKey:UserId"`
 }
