@@ -12,10 +12,9 @@ import (
 
 func RegisterUser(context *gin.Context) {
 	var body RegisterBody
-
 	if err := context.ShouldBindJSON(&body); err != nil {
 		context.JSON(http.StatusUnprocessableEntity, gin.H{
-			"error": err.Error(),
+			"message": "Invalid information",
 		})
 		return
 	}
@@ -24,7 +23,7 @@ func RegisterUser(context *gin.Context) {
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
+			"message": err.Error(),
 		})
 		return
 	}

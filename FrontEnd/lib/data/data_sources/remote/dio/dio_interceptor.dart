@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:rental_car/application/services/auth_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
-import 'package:rental_car/application/util/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
 import 'package:rental_car/main.dart';
 
+import '../../../../application/utils/log_utils.dart';
 import 'api_client.dart';
 
 class DioInterceptor extends QueuedInterceptorsWrapper {

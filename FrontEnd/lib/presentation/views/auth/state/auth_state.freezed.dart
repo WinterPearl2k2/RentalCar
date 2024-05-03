@@ -18,6 +18,12 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthState {
   User get user => throw _privateConstructorUsedError;
   StateView get stateView => throw _privateConstructorUsedError;
+  bool get showPassword => throw _privateConstructorUsedError;
+  bool get wait => throw _privateConstructorUsedError;
+  dynamic get errorName => throw _privateConstructorUsedError;
+  dynamic get errorEmail => throw _privateConstructorUsedError;
+  dynamic get errorPhone => throw _privateConstructorUsedError;
+  dynamic get errorPassword => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -29,7 +35,15 @@ abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res, AuthState>;
   @useResult
-  $Res call({User user, StateView stateView});
+  $Res call(
+      {User user,
+      StateView stateView,
+      bool showPassword,
+      bool wait,
+      dynamic errorName,
+      dynamic errorEmail,
+      dynamic errorPhone,
+      dynamic errorPassword});
 
   $UserCopyWith<$Res> get user;
 }
@@ -49,6 +63,12 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
   $Res call({
     Object? user = null,
     Object? stateView = null,
+    Object? showPassword = null,
+    Object? wait = null,
+    Object? errorName = freezed,
+    Object? errorEmail = freezed,
+    Object? errorPhone = freezed,
+    Object? errorPassword = freezed,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -59,6 +79,30 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
           ? _value.stateView
           : stateView // ignore: cast_nullable_to_non_nullable
               as StateView,
+      showPassword: null == showPassword
+          ? _value.showPassword
+          : showPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      wait: null == wait
+          ? _value.wait
+          : wait // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorName: freezed == errorName
+          ? _value.errorName
+          : errorName // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      errorEmail: freezed == errorEmail
+          ? _value.errorEmail
+          : errorEmail // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      errorPhone: freezed == errorPhone
+          ? _value.errorPhone
+          : errorPhone // ignore: cast_nullable_to_non_nullable
+              as dynamic,
+      errorPassword: freezed == errorPassword
+          ? _value.errorPassword
+          : errorPassword // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 
@@ -79,7 +123,15 @@ abstract class _$$AuthStateImplCopyWith<$Res>
       __$$AuthStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user, StateView stateView});
+  $Res call(
+      {User user,
+      StateView stateView,
+      bool showPassword,
+      bool wait,
+      dynamic errorName,
+      dynamic errorEmail,
+      dynamic errorPhone,
+      dynamic errorPassword});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -98,6 +150,12 @@ class __$$AuthStateImplCopyWithImpl<$Res>
   $Res call({
     Object? user = null,
     Object? stateView = null,
+    Object? showPassword = null,
+    Object? wait = null,
+    Object? errorName = freezed,
+    Object? errorEmail = freezed,
+    Object? errorPhone = freezed,
+    Object? errorPassword = freezed,
   }) {
     return _then(_$AuthStateImpl(
       user: null == user
@@ -108,6 +166,19 @@ class __$$AuthStateImplCopyWithImpl<$Res>
           ? _value.stateView
           : stateView // ignore: cast_nullable_to_non_nullable
               as StateView,
+      showPassword: null == showPassword
+          ? _value.showPassword
+          : showPassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      wait: null == wait
+          ? _value.wait
+          : wait // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorName: freezed == errorName ? _value.errorName! : errorName,
+      errorEmail: freezed == errorEmail ? _value.errorEmail! : errorEmail,
+      errorPhone: freezed == errorPhone ? _value.errorPhone! : errorPhone,
+      errorPassword:
+          freezed == errorPassword ? _value.errorPassword! : errorPassword,
     ));
   }
 }
@@ -116,7 +187,14 @@ class __$$AuthStateImplCopyWithImpl<$Res>
 
 class _$AuthStateImpl implements _AuthState {
   const _$AuthStateImpl(
-      {this.user = const User(), this.stateView = StateView.signIn});
+      {this.user = const User(),
+      this.stateView = StateView.signIn,
+      this.showPassword = false,
+      this.wait = false,
+      this.errorName = false,
+      this.errorEmail = false,
+      this.errorPhone = false,
+      this.errorPassword = false});
 
   @override
   @JsonKey()
@@ -124,10 +202,28 @@ class _$AuthStateImpl implements _AuthState {
   @override
   @JsonKey()
   final StateView stateView;
+  @override
+  @JsonKey()
+  final bool showPassword;
+  @override
+  @JsonKey()
+  final bool wait;
+  @override
+  @JsonKey()
+  final dynamic errorName;
+  @override
+  @JsonKey()
+  final dynamic errorEmail;
+  @override
+  @JsonKey()
+  final dynamic errorPhone;
+  @override
+  @JsonKey()
+  final dynamic errorPassword;
 
   @override
   String toString() {
-    return 'AuthState(user: $user, stateView: $stateView)';
+    return 'AuthState(user: $user, stateView: $stateView, showPassword: $showPassword, wait: $wait, errorName: $errorName, errorEmail: $errorEmail, errorPhone: $errorPhone, errorPassword: $errorPassword)';
   }
 
   @override
@@ -137,11 +233,30 @@ class _$AuthStateImpl implements _AuthState {
             other is _$AuthStateImpl &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.stateView, stateView) ||
-                other.stateView == stateView));
+                other.stateView == stateView) &&
+            (identical(other.showPassword, showPassword) ||
+                other.showPassword == showPassword) &&
+            (identical(other.wait, wait) || other.wait == wait) &&
+            const DeepCollectionEquality().equals(other.errorName, errorName) &&
+            const DeepCollectionEquality()
+                .equals(other.errorEmail, errorEmail) &&
+            const DeepCollectionEquality()
+                .equals(other.errorPhone, errorPhone) &&
+            const DeepCollectionEquality()
+                .equals(other.errorPassword, errorPassword));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, stateView);
+  int get hashCode => Object.hash(
+      runtimeType,
+      user,
+      stateView,
+      showPassword,
+      wait,
+      const DeepCollectionEquality().hash(errorName),
+      const DeepCollectionEquality().hash(errorEmail),
+      const DeepCollectionEquality().hash(errorPhone),
+      const DeepCollectionEquality().hash(errorPassword));
 
   @JsonKey(ignore: true)
   @override
@@ -151,13 +266,32 @@ class _$AuthStateImpl implements _AuthState {
 }
 
 abstract class _AuthState implements AuthState {
-  const factory _AuthState({final User user, final StateView stateView}) =
-      _$AuthStateImpl;
+  const factory _AuthState(
+      {final User user,
+      final StateView stateView,
+      final bool showPassword,
+      final bool wait,
+      final dynamic errorName,
+      final dynamic errorEmail,
+      final dynamic errorPhone,
+      final dynamic errorPassword}) = _$AuthStateImpl;
 
   @override
   User get user;
   @override
   StateView get stateView;
+  @override
+  bool get showPassword;
+  @override
+  bool get wait;
+  @override
+  dynamic get errorName;
+  @override
+  dynamic get errorEmail;
+  @override
+  dynamic get errorPhone;
+  @override
+  dynamic get errorPassword;
   @override
   @JsonKey(ignore: true)
   _$$AuthStateImplCopyWith<_$AuthStateImpl> get copyWith =>

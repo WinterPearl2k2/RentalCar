@@ -8,6 +8,12 @@ class AuthState with _$AuthState {
   const factory AuthState({
     @Default(User()) User user,
     @Default(StateView.signIn) StateView stateView,
+    @Default(false) bool showPassword,
+    @Default(false) bool wait,
+    @Default(false) errorName,
+    @Default(false) errorEmail,
+    @Default(false) errorPhone,
+    @Default(false) errorPassword,
   }) = _AuthState;
 }
 
