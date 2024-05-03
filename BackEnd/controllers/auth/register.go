@@ -38,22 +38,22 @@ func RegisterUser(context *gin.Context) {
 
 	result := initializers.DB.Create(&user)
 
-	if result != nil {
+	if result.Error != nil {
 		errorMessage := result.Error.Error()
 		if strings.Contains(errorMessage, "unique constraint") {
 			context.JSON(http.StatusConflict, gin.H{
-				"error": "User e-mail already exsits",
+				"message": "User e-mail already exsits!",
 			})
 			return
 		}
 
 		context.JSON(http.StatusInternalServerError, gin.H{
-			"error": errorMessage,
+			"message": errorMessage,
 		})
 		return
 	}
 
 	context.JSON(http.StatusCreated, gin.H{
-		"success": "Login success",
+		"message": "Registration success.",
 	})
 }
