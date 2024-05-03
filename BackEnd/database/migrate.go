@@ -15,8 +15,8 @@ func main() {
 		&models.User{},
 		&models.Car{},
 		&models.CarBrand{},
+		&models.CarReview{},
 		&models.Contract{},
 		&models.RentHistory{},
-		&models.CarReview{},
 	)
 }
