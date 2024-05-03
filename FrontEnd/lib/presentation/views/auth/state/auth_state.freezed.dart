@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AuthState {
   User get user => throw _privateConstructorUsedError;
+  StateView get stateView => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthStateCopyWith<AuthState> get copyWith =>
@@ -28,7 +29,7 @@ abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res, AuthState>;
   @useResult
-  $Res call({User user});
+  $Res call({User user, StateView stateView});
 
   $UserCopyWith<$Res> get user;
 }
@@ -47,12 +48,17 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
   @override
   $Res call({
     Object? user = null,
+    Object? stateView = null,
   }) {
     return _then(_value.copyWith(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      stateView: null == stateView
+          ? _value.stateView
+          : stateView // ignore: cast_nullable_to_non_nullable
+              as StateView,
     ) as $Val);
   }
 
@@ -73,7 +79,7 @@ abstract class _$$AuthStateImplCopyWith<$Res>
       __$$AuthStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({User user});
+  $Res call({User user, StateView stateView});
 
   @override
   $UserCopyWith<$Res> get user;
@@ -91,12 +97,17 @@ class __$$AuthStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = null,
+    Object? stateView = null,
   }) {
     return _then(_$AuthStateImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User,
+      stateView: null == stateView
+          ? _value.stateView
+          : stateView // ignore: cast_nullable_to_non_nullable
+              as StateView,
     ));
   }
 }
@@ -104,15 +115,19 @@ class __$$AuthStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AuthStateImpl implements _AuthState {
-  const _$AuthStateImpl({this.user = const User()});
+  const _$AuthStateImpl(
+      {this.user = const User(), this.stateView = StateView.signIn});
 
   @override
   @JsonKey()
   final User user;
+  @override
+  @JsonKey()
+  final StateView stateView;
 
   @override
   String toString() {
-    return 'AuthState(user: $user)';
+    return 'AuthState(user: $user, stateView: $stateView)';
   }
 
   @override
@@ -120,11 +135,13 @@ class _$AuthStateImpl implements _AuthState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthStateImpl &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.stateView, stateView) ||
+                other.stateView == stateView));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, user, stateView);
 
   @JsonKey(ignore: true)
   @override
@@ -134,10 +151,13 @@ class _$AuthStateImpl implements _AuthState {
 }
 
 abstract class _AuthState implements AuthState {
-  const factory _AuthState({final User user}) = _$AuthStateImpl;
+  const factory _AuthState({final User user, final StateView stateView}) =
+      _$AuthStateImpl;
 
   @override
   User get user;
+  @override
+  StateView get stateView;
   @override
   @JsonKey(ignore: true)
   _$$AuthStateImplCopyWith<_$AuthStateImpl> get copyWith =>

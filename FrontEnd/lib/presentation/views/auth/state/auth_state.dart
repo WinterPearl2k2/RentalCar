@@ -7,5 +7,8 @@ part 'auth_state.freezed.dart';
 class AuthState with _$AuthState {
   const factory AuthState({
     @Default(User()) User user,
+    @Default(StateView.signIn) StateView stateView,
   }) = _AuthState;
 }
+
+enum StateView { signIn, signUp }
