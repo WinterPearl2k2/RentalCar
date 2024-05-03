@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rental_car/application/routes/routes_name.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'application/routes/routes.dart';
-
+import 'package:rental_car/application/di/injection.dart';
+Injection injection = Injection();
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  injection.configDependencies();
   runApp(const ProviderScope(child: MyApp()));
 }
 
