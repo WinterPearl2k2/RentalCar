@@ -20,6 +20,8 @@ func main() {
 
 	//auth
 	router.POST("/auth/register", AuthController.RegisterUser)
+	router.POST("/auth/login", AuthController.Login)
+	router.POST("/auth/refreshToken", AuthController.NewToken)
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)

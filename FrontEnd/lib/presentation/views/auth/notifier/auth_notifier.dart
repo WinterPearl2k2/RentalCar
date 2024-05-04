@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rental_car/application/services/auth_service.dart';
+import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/data/dtos/login_dto.dart';
 import 'package:rental_car/data/dtos/user_dto.dart';
 import 'package:rental_car/main.dart';
 
+import '../../../../application/routes/routes.dart';
 import '../../../../application/utils/log_utils.dart';
 import '../../../../application/utils/regex_check_utils.dart';
 import '../../../../data/data_sources/remote/dio/api_exception.dart';
@@ -44,6 +47,29 @@ class AuthNotifier extends _$AuthNotifier {
     );
   }
 
+  Future<void> loginUser({
+    required email,
+    required password,
+    required context,
+  }) async {
+    state = state.copyWith(wait: true);
+    final loginDTO = LoginDTO(
+      email: email.text,
+      password: password.text,
+    );
+    try {
+      await injection.getIt<IAuthService>().loginUser(
+            loginDTO: loginDTO,
+          );
+      LogUtils.i(PreferenceService.getToken().toString());
+      Routes.goToNavigationView(context);
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
+    state = state.copyWith(wait: false);
+  }
+
   Future<void> registerUser({
     required name,
     required password,
@@ -62,7 +88,7 @@ class AuthNotifier extends _$AuthNotifier {
       state = state.copyWith(wait: false);
       return;
     }
-    UserDTO userDTO = UserDTO(
+    final userDTO = UserDTO(
       password: password.text,
       name: name.text,
       email: email.text,

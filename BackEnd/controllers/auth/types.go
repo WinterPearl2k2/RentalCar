@@ -6,3 +6,12 @@ type RegisterBody struct {
 	Email       string `binding:"required"`
 	Password    string `binding:"required"`
 }
+
+type LoginBody struct {
+	Email    string `binding:"required"`
+	Password string `binding:"required"`
+}
+
+type RefreshToken struct {
+	RefreshToken string `binding:"required"`
+}

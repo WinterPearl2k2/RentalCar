@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:rental_car/application/services/auth_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
 import 'package:rental_car/main.dart';
 
@@ -11,10 +12,15 @@ import 'api_client.dart';
 
 class DioInterceptor extends QueuedInterceptorsWrapper {
   @override
-  void onRequest(RequestOptions options,
-      RequestInterceptorHandler handler,) {
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) {
     final token = PreferenceService.getToken();
-    if (token.accessToken.isNotEmpty) {
+    if (token.accessToken.isNotEmpty ||
+        (options.path != EndPoint.restUrlLogin ||
+            options.path != EndPoint.restUrlRefreshToken ||
+            options.path != EndPoint.restUrlRegister)) {
       options.headers.addAll({
         "Authorization": "Bearer ${token.accessToken}",
       });
@@ -24,8 +30,10 @@ class DioInterceptor extends QueuedInterceptorsWrapper {
   }
 
   @override
-  Future<void> onError(DioException err,
-      ErrorInterceptorHandler handler,) async {
+  Future<void> onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     final requestOptions = err.requestOptions;
     final msgError = err.response?.data['message'] ?? err.message;
     if (err.type == DioExceptionType.connectionTimeout ||
@@ -57,10 +65,7 @@ class DioInterceptor extends QueuedInterceptorsWrapper {
           ),
         );
       case HttpStatus.unauthorized:
-        if (PreferenceService
-            .getToken()
-            .accessToken
-            .isEmpty) {
+        if (PreferenceService.getToken().accessToken.isEmpty) {
           return handler.reject(
             UnauthorizedException(
               requestOptions: requestOptions,
@@ -71,7 +76,7 @@ class DioInterceptor extends QueuedInterceptorsWrapper {
         try {
           await injection.getIt<IAuthService>().refreshToken();
           await _retry(requestOptions).then(
-                (response) => handler.resolve(response),
+            (response) => handler.resolve(response),
           );
         } catch (_) {
           return handler.reject(
@@ -112,11 +117,11 @@ class DioInterceptor extends QueuedInterceptorsWrapper {
     }
   }
 
-  Future<Response> _retry(RequestOptions requestOptions,) async {
+  Future<Response> _retry(
+    RequestOptions requestOptions,
+  ) async {
     ApiClient.instance.dio.options.headers["Authorization"] =
-    "Bearer ${PreferenceService
-        .getToken()
-        .accessToken}";
+        "Bearer ${PreferenceService.getToken().accessToken}";
     return await ApiClient.instance.dio.request(
       requestOptions.path,
       data: requestOptions.data,

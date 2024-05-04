@@ -1,4 +1,5 @@
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/data/dtos/login_dto.dart';
 import 'package:rental_car/domain/model/token.dart';
 import 'package:rental_car/domain/repositories/user_repository.dart';
 
@@ -9,6 +10,10 @@ abstract class IAuthService {
 
   Future<void> registerUser({
     required UserDTO userDTO,
+  });
+
+  Future<void> loginUser({
+    required LoginDTO loginDTO,
   });
 }
 
@@ -35,5 +40,18 @@ class AuthServiceImpl implements IAuthService {
     return _userRepository.registerUser(
       userDTO: userDTO,
     );
+  }
+
+  @override
+  Future<void> loginUser({required LoginDTO loginDTO}) async {
+    try {
+      final token = await _userRepository.loginUser(
+        loginDTO: loginDTO,
+      );
+      PreferenceService.setToken(token.accessToken, token.refreshToken);
+    } catch (_) {
+      PreferenceService.clearToken();
+      rethrow;
+    }
   }
 }
