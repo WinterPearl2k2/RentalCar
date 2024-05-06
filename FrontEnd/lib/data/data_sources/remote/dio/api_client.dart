@@ -12,7 +12,7 @@ class ApiClient {
 
   final Dio dio = Dio(
     BaseOptions (
-      baseUrl: "http://192.168.1.35:4000",
+      baseUrl: "http://10.20.23.243:8080",
       contentType: 'application/json',
       connectTimeout: const Duration(seconds: 5),
       receiveTimeout: const Duration(seconds: 3),

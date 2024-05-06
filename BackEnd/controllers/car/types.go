@@ -11,6 +11,6 @@ type CarBody struct {
 	SeatsCar        int    `binding:"required"`
 	TransmissionCar string `binding:"required"`
 	AddressOwner    string `binding:"required"`
-	ImagesCar       string `binding:"required"`
+	ImagesCar       string
 	StatusCar       string `binding:"required"`
 }

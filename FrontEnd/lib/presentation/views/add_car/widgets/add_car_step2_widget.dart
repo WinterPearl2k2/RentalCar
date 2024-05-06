@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rental_car/presentation/common/widgets/dropdown_form_field.dart';
+import 'package:rental_car/presentation/views/add_car/enum/transmission.dart';
+import 'package:rental_car/presentation/views/add_car/enum/type_fuel.dart';
+import 'package:rental_car/presentation/views/add_car/notifier/add_car_notifier.dart';
 
 import '../../../common/widgets/text_form_field.dart';
 
@@ -10,12 +15,14 @@ class AddCarStep2Widget extends StatelessWidget {
     required this.kilometersController,
     required this.seatsController,
     required this.transmissionController,
+    required this.notifier,
   });
 
   final TextEditingController fuelController;
   final TextEditingController kilometersController;
   final TextEditingController seatsController;
   final TextEditingController transmissionController;
+  final AddCarNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -24,38 +31,91 @@ class AddCarStep2Widget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormFieldCustomWidget(
+          DropdownFormFieldCustomWidget<TypeFuel>(
             hint: 'Fuel',
             label: "Your fuel",
-            inputAction: TextInputAction.next,
-            controller: fuelController,
+            value: TypeFuel.values.first,
+            items: TypeFuel.values
+                .map(
+                  (typeFuel) => DropdownMenuItem(
+                    value: typeFuel,
+                    child: Text(
+                      typeFuel.fuelName.toString(),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (typeFuel) =>
+                fuelController.text = typeFuel!.fuelName.toString(),
           ),
           SizedBox(
             height: 20.h,
           ),
-          TextFormFieldCustomWidget(
-            hint: 'Kilometers',
-            label: "Your kilometers",
-            inputAction: TextInputAction.next,
-            controller: kilometersController,
+          Consumer(
+            builder: (_, ref, __) {
+              final isCheckKilometers = ref.watch(
+                addCarNotifierProvider
+                    .select((value) => value.isCheckKilometers),
+              );
+              return TextFormFieldCustomWidget(
+                hint: 'Kilometers',
+                label: "Your kilometers",
+                inputAction: TextInputAction.next,
+                controller: kilometersController,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.all(12.0).r,
+                  child: const Text('km'),
+                ),
+                textInputType: TextInputType.number,
+                onChanged: (value) => notifier.isCheckKilometers(
+                    kilometers: kilometersController.text),
+                error: isCheckKilometers
+                    ? null
+                    : const Text("Phần này không được để trống"),
+              );
+            },
           ),
           SizedBox(
             height: 20.h,
           ),
-          TextFormFieldCustomWidget(
-            hint: 'Seats',
-            label: "Your seats",
-            inputAction: TextInputAction.next,
-            controller: seatsController,
+          Consumer(
+            builder: (_, ref, __) {
+              final isCheckSeatsCars = ref.watch(
+                addCarNotifierProvider.select((value) => value.isCheckSeatsCar),
+              );
+              return TextFormFieldCustomWidget(
+                hint: 'Seats',
+                label: "Your seats",
+                inputAction: TextInputAction.next,
+                controller: seatsController,
+                textInputType: TextInputType.number,
+                onChanged: (value) =>
+                    notifier.isCheckSeatsCar(seatsCar: seatsController.text),
+                error: isCheckSeatsCars
+                    ? null
+                    : const Text("Phần này không được để trống"),
+              );
+            },
           ),
           SizedBox(
             height: 20.h,
           ),
-          TextFormFieldCustomWidget(
+          DropdownFormFieldCustomWidget<Transmission>(
             hint: 'Transmission',
             label: "Your transmission",
-            inputAction: TextInputAction.next,
-            controller: transmissionController,
+            value: Transmission.values.first,
+            items: Transmission.values
+                .map(
+                  (transmission) => DropdownMenuItem(
+                    value: transmission,
+                    child: Text(
+                      transmission.transmissionName.toString(),
+                    ),
+                  ),
+                )
+                .toList(),
+            onChanged: (transmission) => transmissionController.text =
+                transmission!.transmissionName.toString(),
           ),
         ],
       ),
