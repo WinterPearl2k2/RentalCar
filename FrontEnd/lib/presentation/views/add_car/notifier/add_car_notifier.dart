@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
@@ -74,7 +79,6 @@ class AddCarNotifier extends _$AddCarNotifier {
     required int seatsCar,
     required String addressOwner,
     required String transmissionCar,
-    required String imagesCar,
     required String statusCar,
   }) async {
     final carDTO = CarDTO(
@@ -88,7 +92,7 @@ class AddCarNotifier extends _$AddCarNotifier {
       seatsCar: seatsCar,
       addressOwner: addressOwner,
       transmissionCar: transmissionCar,
-      imagesCar: imagesCar,
+      imagesCar: await convertImageToBase64(File(state.imageFile)),
       statusCar: statusCar,
     );
     try {
@@ -146,4 +150,28 @@ class AddCarNotifier extends _$AddCarNotifier {
       state = state.copyWith(isCheckPriceCar: true);
     }
   }
+
+  Future<String> convertImageToBase64(File imageFile) async {
+    List<int> imageBytes = await imageFile.readAsBytes();
+    String base64Image = base64Encode(imageBytes);
+    return base64Image;
+  }
+
+  Future pickImageFromCamera() async {
+    final pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.camera)
+        .onError((error, stackTrace) {
+      return null;
+    });
+    state = state.copyWith(
+      imageFile: pickedFile!.path,
+    );
+  }
+}
+
+Future<File> convertBase64ToImage(String base64String, String filePath) async {
+  Uint8List bytes = base64.decode(base64String);
+  File imageFile = File(filePath);
+  await imageFile.writeAsBytes(bytes);
+  return imageFile;
 }

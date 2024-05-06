@@ -1,3 +1,4 @@
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'add_car_state.freezed.dart';
@@ -14,6 +15,7 @@ class AddCarState with _$AddCarState {
     @Default(false) bool isCheckSeatsCar,
     @Default(false) bool isCheckPriceCar,
     @Default(false) bool isCheckAddressCar,
+    @Default('') String imageFile,
   }) = _AddCarState;
 }
 

@@ -153,6 +153,7 @@ class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
                         );
                       case AddCarStep.step4:
                         return AddCarStep4Widget(
+                          notifier: notifier,
                           imageController: imageController,
                         );
                       case AddCarStep.success:
@@ -179,7 +180,6 @@ class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
                       seatsCar: int.parse(kilometersController.text),
                       addressOwner: addressController.text,
                       transmissionCar: transmissionController.text,
-                      imagesCar: imageController.text,
                       statusCar: StatusCar.available.name,
                     );
                     return TextButtonWidget(

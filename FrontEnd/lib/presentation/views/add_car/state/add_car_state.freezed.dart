@@ -23,6 +23,7 @@ mixin _$AddCarState {
   bool get isCheckSeatsCar => throw _privateConstructorUsedError;
   bool get isCheckPriceCar => throw _privateConstructorUsedError;
   bool get isCheckAddressCar => throw _privateConstructorUsedError;
+  String get imageFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddCarStateCopyWith<AddCarState> get copyWith =>
@@ -42,7 +43,8 @@ abstract class $AddCarStateCopyWith<$Res> {
       bool isCheckKilometers,
       bool isCheckSeatsCar,
       bool isCheckPriceCar,
-      bool isCheckAddressCar});
+      bool isCheckAddressCar,
+      String imageFile});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$AddCarStateCopyWithImpl<$Res, $Val extends AddCarState>
     Object? isCheckSeatsCar = null,
     Object? isCheckPriceCar = null,
     Object? isCheckAddressCar = null,
+    Object? imageFile = null,
   }) {
     return _then(_value.copyWith(
       addCarStep: null == addCarStep
@@ -95,6 +98,10 @@ class _$AddCarStateCopyWithImpl<$Res, $Val extends AddCarState>
           ? _value.isCheckAddressCar
           : isCheckAddressCar // ignore: cast_nullable_to_non_nullable
               as bool,
+      imageFile: null == imageFile
+          ? _value.imageFile
+          : imageFile // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -114,7 +121,8 @@ abstract class _$$AddCarStateImplCopyWith<$Res>
       bool isCheckKilometers,
       bool isCheckSeatsCar,
       bool isCheckPriceCar,
-      bool isCheckAddressCar});
+      bool isCheckAddressCar,
+      String imageFile});
 }
 
 /// @nodoc
@@ -135,6 +143,7 @@ class __$$AddCarStateImplCopyWithImpl<$Res>
     Object? isCheckSeatsCar = null,
     Object? isCheckPriceCar = null,
     Object? isCheckAddressCar = null,
+    Object? imageFile = null,
   }) {
     return _then(_$AddCarStateImpl(
       addCarStep: null == addCarStep
@@ -165,6 +174,10 @@ class __$$AddCarStateImplCopyWithImpl<$Res>
           ? _value.isCheckAddressCar
           : isCheckAddressCar // ignore: cast_nullable_to_non_nullable
               as bool,
+      imageFile: null == imageFile
+          ? _value.imageFile
+          : imageFile // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -179,7 +192,8 @@ class _$AddCarStateImpl extends _AddCarState {
       this.isCheckKilometers = false,
       this.isCheckSeatsCar = false,
       this.isCheckPriceCar = false,
-      this.isCheckAddressCar = false})
+      this.isCheckAddressCar = false,
+      this.imageFile = ''})
       : super._();
 
   @override
@@ -203,10 +217,13 @@ class _$AddCarStateImpl extends _AddCarState {
   @override
   @JsonKey()
   final bool isCheckAddressCar;
+  @override
+  @JsonKey()
+  final String imageFile;
 
   @override
   String toString() {
-    return 'AddCarState(addCarStep: $addCarStep, isCheckNameCar: $isCheckNameCar, isCheckColorCar: $isCheckColorCar, isCheckKilometers: $isCheckKilometers, isCheckSeatsCar: $isCheckSeatsCar, isCheckPriceCar: $isCheckPriceCar, isCheckAddressCar: $isCheckAddressCar)';
+    return 'AddCarState(addCarStep: $addCarStep, isCheckNameCar: $isCheckNameCar, isCheckColorCar: $isCheckColorCar, isCheckKilometers: $isCheckKilometers, isCheckSeatsCar: $isCheckSeatsCar, isCheckPriceCar: $isCheckPriceCar, isCheckAddressCar: $isCheckAddressCar, imageFile: $imageFile)';
   }
 
   @override
@@ -227,7 +244,9 @@ class _$AddCarStateImpl extends _AddCarState {
             (identical(other.isCheckPriceCar, isCheckPriceCar) ||
                 other.isCheckPriceCar == isCheckPriceCar) &&
             (identical(other.isCheckAddressCar, isCheckAddressCar) ||
-                other.isCheckAddressCar == isCheckAddressCar));
+                other.isCheckAddressCar == isCheckAddressCar) &&
+            (identical(other.imageFile, imageFile) ||
+                other.imageFile == imageFile));
   }
 
   @override
@@ -239,7 +258,8 @@ class _$AddCarStateImpl extends _AddCarState {
       isCheckKilometers,
       isCheckSeatsCar,
       isCheckPriceCar,
-      isCheckAddressCar);
+      isCheckAddressCar,
+      imageFile);
 
   @JsonKey(ignore: true)
   @override
@@ -256,7 +276,8 @@ abstract class _AddCarState extends AddCarState {
       final bool isCheckKilometers,
       final bool isCheckSeatsCar,
       final bool isCheckPriceCar,
-      final bool isCheckAddressCar}) = _$AddCarStateImpl;
+      final bool isCheckAddressCar,
+      final String imageFile}) = _$AddCarStateImpl;
   _AddCarState._() : super._();
 
   @override
@@ -273,6 +294,8 @@ abstract class _AddCarState extends AddCarState {
   bool get isCheckPriceCar;
   @override
   bool get isCheckAddressCar;
+  @override
+  String get imageFile;
   @override
   @JsonKey(ignore: true)
   _$$AddCarStateImplCopyWith<_$AddCarStateImpl> get copyWith =>
