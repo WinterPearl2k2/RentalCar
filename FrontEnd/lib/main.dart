@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/di/injection.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/presentation/views/verify_code/verify_code_view.dart';
 
 import 'application/routes/routes.dart';
 import 'application/routes/routes_name.dart';
+import 'application/routes/routes_test.dart';
 
 Injection injection = Injection();
 
@@ -37,6 +39,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: RoutesName.auth,
         onGenerateRoute: Routes.routeBuilder,
+        routes: RoutesTest.routes(),
       ),
     );
   }

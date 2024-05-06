@@ -1,10 +1,9 @@
 package controllers
 
 import (
-	"crypto/rand"
-	"encoding/hex"
 	"errors"
 	"fmt"
+	"math/rand"
 	"net/http"
 	"net/smtp"
 	"os"
@@ -18,15 +17,9 @@ import (
 )
 
 func ForgotPassword(context *gin.Context) {
-	var body EmailVerify
-	if err := context.ShouldBindJSON(&body); err != nil {
-		context.JSON(http.StatusUnprocessableEntity, gin.H{
-			"message": "Invalid information",
-		})
-		return
-	}
+	email := context.Param("email")
 
-	user, err := UserRepository.GetByEmail(body.Email)
+	user, err := UserRepository.GetByEmail(email)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			context.JSON(http.StatusBadRequest, gin.H{
@@ -58,10 +51,11 @@ func ForgotPassword(context *gin.Context) {
 		return
 	}
 
+	expiration := time.Now().Add(1 * time.Minute)
 	verification := models.Verification{
 		Code:       token,
-		Email:      body.Email,
-		Expiration: time.Now().Add(1 * time.Minute),
+		Email:      email,
+		Expiration: expiration,
 	}
 
 	result := initializers.DB.Save(&verification)
@@ -73,7 +67,7 @@ func ForgotPassword(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{
-		"message": http.StatusOK,
+		"expiration": expiration,
 	})
 }
 
@@ -117,12 +111,13 @@ func VerifyCode(context *gin.Context) {
 }
 
 func generateRandomToken() (string, error) {
-	tokenBytes := make([]byte, 4)
-	_, err := rand.Read(tokenBytes)
-	if err != nil {
-		return "", err
+	rand.Seed(time.Now().UnixNano())
+
+	token := ""
+	for i := 0; i < 4; i++ {
+		num := rand.Intn(10)
+		token += fmt.Sprintf("%d", num)
 	}
-	token := hex.EncodeToString(tokenBytes)
 
 	return token, nil
 }

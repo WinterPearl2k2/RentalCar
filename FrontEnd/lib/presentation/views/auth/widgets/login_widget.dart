@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/presentation/views/auth/notifier/auth_notifier.dart';
 
 import '../../../../application/utils/assets_utils.dart';
@@ -107,6 +108,7 @@ class LoginWidget extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
+              onTap: () => Routes.goToForgotPasswordView(context),
               child: Text(
                 'Forgot password?',
                 style: TextStyle(

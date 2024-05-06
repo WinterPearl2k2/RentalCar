@@ -12,10 +12,10 @@ class ApiClient {
 
   final Dio dio = Dio(
     BaseOptions (
-      baseUrl: "http://192.168.1.35:4000",
+      baseUrl: "http://172.24.128.1:4000",
       contentType: 'application/json',
-      connectTimeout: const Duration(seconds: 5),
-      receiveTimeout: const Duration(seconds: 3),
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
     )
   )..interceptors.add(DioInterceptor());
 }

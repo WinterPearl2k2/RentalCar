@@ -22,7 +22,7 @@ func main() {
 	router.POST("/auth/register", AuthController.RegisterUser)
 	router.POST("/auth/login", AuthController.Login)
 	router.POST("/auth/refreshToken", AuthController.NewToken)
-	router.POST("/auth/forgotPassword", AuthController.ForgotPassword)
+	router.POST("/auth/forgotPassword/:email", AuthController.ForgotPassword)
 	router.POST("/auth/verifyCode", AuthController.VerifyCode)
 	router.POST("/auth/resetPassword", AuthController.ResetPasswordUser)
 

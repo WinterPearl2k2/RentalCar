@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
@@ -30,6 +31,14 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
       url: EndPoint.restUrlLogin,
       data: loginDTO.toJson(),
       mapper: (response) => Token.fromJson(response.data),
+    );
+  }
+
+  @override
+  Future<Response> forgotPassword({required String email}) {
+    return post(
+      url: '${EndPoint.restUrlForgotPassword}/$email',
+      mapper: (response) => response,
     );
   }
 }

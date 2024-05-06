@@ -4,4 +4,5 @@ class EndPoint {
   static const restUrlRegister = '/auth/register';
   static const restUrlLogin = '/auth/login';
   static const restUrlRefreshToken = '/auth/refreshToken';
+  static const restUrlForgotPassword = '/auth/forgotPassword';
 }
