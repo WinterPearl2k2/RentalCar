@@ -11,7 +11,7 @@ import (
 func GenerateAccessToken(userId uuid.UUID) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": userId,
-		"exp":     time.Now().Add(time.Second * 10).Unix(),
+		"exp":     time.Now().Add(24 * time.Hour).Unix(),
 	})
 	secret := os.Getenv("JWT_ACCESS_SECRET")
 	tokenString, err := token.SignedString([]byte(secret))

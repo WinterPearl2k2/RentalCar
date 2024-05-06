@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/notifier/bottom_navigation_notifier.dart';
 import 'package:rental_car/presentation/views/history/history_view.dart';
@@ -54,7 +55,7 @@ class _BottomNavigationViewState
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Routes.goToAddCarView(context),
         backgroundColor: Colors.transparent,
         elevation: 0,
         child: Container(

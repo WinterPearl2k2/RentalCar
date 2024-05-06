@@ -4,4 +4,10 @@ class EndPoint {
   static const restUrlRegister = '/auth/register';
   static const restUrlLogin = '/auth/login';
   static const restUrlRefreshToken = '/auth/refreshToken';
+
+  static const restUrlCreateCar = '/createCar';
+  static const restUrlUpdateCar = '/updateCar';
+  static const restUrlDeleteCar = '/deleteCar';
+  static const restUrlGetAllCar = '/getAllCar';
+  static const restUrlGetCarById = '/getCarById';
 }

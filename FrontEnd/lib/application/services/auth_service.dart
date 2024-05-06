@@ -1,6 +1,5 @@
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
-import 'package:rental_car/domain/model/token.dart';
 import 'package:rental_car/domain/repositories/user_repository.dart';
 
 import '../../data/dtos/user_dto.dart';
