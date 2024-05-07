@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -159,7 +158,7 @@ class AddCarNotifier extends _$AddCarNotifier {
 
   Future pickImageFromCamera() async {
     final pickedFile = await ImagePicker()
-        .pickImage(source: ImageSource.camera)
+        .pickImage(source: ImageSource.gallery, imageQuality: 20)
         .onError((error, stackTrace) {
       return null;
     });
@@ -167,11 +166,4 @@ class AddCarNotifier extends _$AddCarNotifier {
       imageFile: pickedFile!.path,
     );
   }
-}
-
-Future<File> convertBase64ToImage(String base64String, String filePath) async {
-  Uint8List bytes = base64.decode(base64String);
-  File imageFile = File(filePath);
-  await imageFile.writeAsBytes(bytes);
-  return imageFile;
 }

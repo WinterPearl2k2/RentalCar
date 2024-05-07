@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'add_car_notifier.dart';
+part of 'car_detail_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addCarNotifierHash() => r'e354045678d0e9955ca7a56b6e6bd62c07abad94';
+String _$carDetailNotifierHash() => r'c62c973c6d2266ba1382932a634ce236f8ec5d8a';
 
-/// See also [AddCarNotifier].
-@ProviderFor(AddCarNotifier)
-final addCarNotifierProvider =
-    AutoDisposeNotifierProvider<AddCarNotifier, AddCarState>.internal(
-  AddCarNotifier.new,
-  name: r'addCarNotifierProvider',
+/// See also [CarDetailNotifier].
+@ProviderFor(CarDetailNotifier)
+final carDetailNotifierProvider =
+    AutoDisposeNotifierProvider<CarDetailNotifier, CarDetailState>.internal(
+  CarDetailNotifier.new,
+  name: r'carDetailNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$addCarNotifierHash,
+      : _$carDetailNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AddCarNotifier = AutoDisposeNotifier<AddCarState>;
+typedef _$CarDetailNotifier = AutoDisposeNotifier<CarDetailState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

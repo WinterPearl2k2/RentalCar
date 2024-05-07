@@ -8,11 +8,11 @@ class ApiClient {
 
   static ApiClient get instance => _instance;
 
-  final baseUrl = "http://172.16.0.2:4000";
+  final baseUrl = "http://10.20.23.243:8080";
 
   final Dio dio = Dio(
     BaseOptions (
-      baseUrl: "http://172.24.128.1:4000",
+      baseUrl: "http://10.20.23.243:8080",
       contentType: 'application/json',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),

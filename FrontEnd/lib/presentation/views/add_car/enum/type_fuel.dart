@@ -2,7 +2,7 @@ enum TypeFuel {
   dieselFuel,
   gasFuel,
   hybridFuel,
-  electricFuel
+  electricFuel,
 }
 
 extension TypeFuelExtension on TypeFuel {
@@ -20,4 +20,19 @@ extension TypeFuelExtension on TypeFuel {
         return '';
     }
   }
+  static TypeFuel fromString(String value) {
+    switch (value.toLowerCase()) {
+      case 'diesel':
+        return TypeFuel.dieselFuel;
+      case 'gas':
+        return TypeFuel.gasFuel;
+      case 'hybrid':
+        return TypeFuel.hybridFuel;
+      case 'electric':
+        return TypeFuel.electricFuel;
+      default:
+        throw ArgumentError('Invalid value: $value');
+    }
+  }
 }
+
