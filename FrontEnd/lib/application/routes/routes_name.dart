@@ -13,4 +13,6 @@ class RoutesName {
 
   //car
   static const addCar = 'add_car_view';
+  static const carDetailView = 'car_detail_view';
+  static const seeAllCar = 'see_all_car_view';
 }

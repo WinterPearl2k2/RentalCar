@@ -1,14 +1,74 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
+import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
+import 'package:rental_car/presentation/views/home/widgets/divider_widget.dart';
+import 'package:rental_car/presentation/views/home/widgets/header_home_widget.dart';
+import 'package:rental_car/presentation/views/home/widgets/list_top_vehicle_widget.dart';
+import 'package:rental_car/presentation/views/home/widgets/slide_banner_home_widget.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 
   @override
+  BaseStateDelegate<HomeView, HomeNotifier> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  void initNotifier() {
+    notifier = ref.read(homeNotifierProvider.notifier);
+    notifier.getListCars();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Home'),
+    super.build(context);
+    return SafeArea(
+      child: Scaffold(
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const HeaderHomeWidget(),
+            const SlideBannerHomeWidget(),
+            const DividerWidget(),
+            Padding(
+              padding:
+                  EdgeInsets.symmetric(horizontal: 14.0.w, vertical: 10.0.h),
+              child: Row(
+                children: [
+                  Text(
+                    "Top vehicle",
+                    style: TextStyle(
+                      color: ColorUtils.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17.sp,
+                    ),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      "See all",
+                      style: TextStyle(
+                        color: ColorUtils.textColor,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTopVehicleWidget(notifier: notifier),
+          ],
+        ),
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -33,6 +33,21 @@ func GetCarById(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{
-		"body": car,
+		"idCar":           car.IdCar,
+		"idUser":          car.UserId,
+		"idReview":        car.ReviewId,
+		"nameCar":         car.NameCar,
+		"priceCar":        car.PriceCar,
+		"fuelTypeCar":     car.FuelTypeCar,
+		"brandCar":        car.BrandCar,
+		"colorCar":        car.ColorCar,
+		"descriptionCar":  car.DescriptionCar,
+		"kilometersCar":   car.KilometersCar,
+		"seatsCar":        car.SeatsCar,
+		"transmissionCar": car.TransmissionCar,
+		"addressCar":      car.AddressOwner,
+		"imagesCar":       car.ImagesCar,
+		"statusCar":       car.StatusCar,
+		"createAt":        car.CreatedAt,
 	})
 }

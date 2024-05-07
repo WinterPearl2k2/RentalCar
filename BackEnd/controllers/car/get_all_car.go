@@ -3,9 +3,9 @@ package car
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	CarRepository "rent-car/repositories/car"
 
+	"github.com/gin-gonic/gin"
 )
 
 func GetAllCar(context *gin.Context) {
@@ -15,12 +15,32 @@ func GetAllCar(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
-
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{
-		"body": cars,
-	})
-}
+	var carsData []gin.H
 
+	for _, car := range cars {
+		carData := gin.H{
+			"idCar":           car.IdCar,
+			"idUser":          car.UserId,
+			"idReview":        car.ReviewId,
+			"nameCar":         car.NameCar,
+			"priceCar":        car.PriceCar,
+			"fuelTypeCar":     car.FuelTypeCar,
+			"brandCar":        car.BrandCar,
+			"colorCar":        car.ColorCar,
+			"descriptionCar":  car.DescriptionCar,
+			"kilometersCar":   car.KilometersCar,
+			"seatsCar":        car.SeatsCar,
+			"transmissionCar": car.TransmissionCar,
+			"addressCar":      car.AddressOwner,
+			"imagesCar":       car.ImagesCar,
+			"statusCar":       car.StatusCar,
+			"createAt":        car.CreatedAt,
+		}
+		carsData = append(carsData, carData)
+	}
+
+	context.JSON(http.StatusOK, carsData)
+}
