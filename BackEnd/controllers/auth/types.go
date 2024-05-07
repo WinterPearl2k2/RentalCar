@@ -15,3 +15,12 @@ type LoginBody struct {
 type RefreshToken struct {
 	RefreshToken string `binding:"required"`
 }
+
+type EmailVerify struct {
+	Email string `binding:"required"`
+}
+
+type CodeData struct {
+	Code  string `binding:"required"`
+	Email string `binding:"required"`
+}

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../application/utils/colors_utils.dart';
+import '../../../application/utils/colors_utils.dart';
 
 class SuccessNotifyWidget extends StatelessWidget {
-  const SuccessNotifyWidget({super.key});
+  final String? title;
+  final String? label;
+  const SuccessNotifyWidget({super.key, this.title, this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class SuccessNotifyWidget extends StatelessWidget {
             height: 10.h,
           ),
           Text(
-            'Chúc mừng, bạn đã hoàn tất việc đăng ký!',
+            title ?? '',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -44,8 +46,8 @@ class SuccessNotifyWidget extends StatelessWidget {
           SizedBox(
             height: 10.h,
           ),
-          const Text(
-            'Đăng ký thành công',
+          Text(
+            label ?? '',
             textAlign: TextAlign.center,
           ),
           SizedBox(

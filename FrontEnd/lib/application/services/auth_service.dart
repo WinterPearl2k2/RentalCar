@@ -1,5 +1,7 @@
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
+import 'package:rental_car/data/dtos/reset_password_dto.dart';
+import 'package:rental_car/data/dtos/verify_code_dto.dart';
 import 'package:rental_car/domain/repositories/user_repository.dart';
 
 import '../../data/dtos/user_dto.dart';
@@ -13,6 +15,18 @@ abstract class IAuthService {
 
   Future<void> loginUser({
     required LoginDTO loginDTO,
+  });
+
+  Future<void> forgotPassword({
+    required String email,
+  });
+
+  Future<void> verifyCode({
+    required VerifyCodeDto codeDto,
+  });
+
+  Future<void> resetPassword({
+    required ResetPasswordDto resetPassword,
   });
 }
 
@@ -30,6 +44,7 @@ class AuthServiceImpl implements IAuthService {
       PreferenceService.setToken(token.accessToken, token.refreshToken);
     } catch (_) {
       PreferenceService.clearToken();
+      PreferenceService.clearUUID();
       rethrow;
     }
   }
@@ -44,13 +59,30 @@ class AuthServiceImpl implements IAuthService {
   @override
   Future<void> loginUser({required LoginDTO loginDTO}) async {
     try {
-      final token = await _userRepository.loginUser(
+      final data = await _userRepository.loginUser(
         loginDTO: loginDTO,
       );
-      PreferenceService.setToken(token.accessToken, token.refreshToken);
+      PreferenceService.setToken(data['accessToken'], data['refreshToken']);
+      PreferenceService.setUUID(data['userId']);
     } catch (_) {
       PreferenceService.clearToken();
+      PreferenceService.clearUUID();
       rethrow;
     }
+  }
+
+  @override
+  Future<void> forgotPassword({required String email}) {
+    return _userRepository.forgotPassword(email: email);
+  }
+
+  @override
+  Future<void> verifyCode({required VerifyCodeDto codeDto}) {
+    return _userRepository.verifyCode(codeDto: codeDto);
+  }
+
+  @override
+  Future<void> resetPassword({required ResetPasswordDto resetPassword}) {
+    return _userRepository.resetPassword(resetPasswordDto: resetPassword);
   }
 }

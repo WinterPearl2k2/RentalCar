@@ -6,6 +6,7 @@ import 'package:rental_car/application/utils/colors_utils.dart';
 
 import 'application/routes/routes.dart';
 import 'application/routes/routes_name.dart';
+import 'application/routes/routes_test.dart';
 
 Injection injection = Injection();
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: RoutesName.auth,
         onGenerateRoute: Routes.routeBuilder,
+        routes: RoutesTest.routes(),
       ),
     );
   }

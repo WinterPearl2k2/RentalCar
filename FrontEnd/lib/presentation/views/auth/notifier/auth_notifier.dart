@@ -13,7 +13,7 @@ import '../../../../data/data_sources/remote/dio/api_exception.dart';
 import '../state/auth_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../widgets/success_notify_widget.dart';
+import '../../../common/widgets/success_notify_widget.dart';
 
 part 'auth_notifier.g.dart';
 
@@ -104,7 +104,10 @@ class AuthNotifier extends _$AuthNotifier {
         context: context,
         builder: (context) {
           return const AlertDialog(
-            content: SuccessNotifyWidget(),
+            content: SuccessNotifyWidget(
+              title: 'Chúc mừng, bạn đã hoàn tất việc đăng ký!',
+              label: 'Đăng ký thành công',
+            ),
           );
         },
       ).then((value) => changeView());
