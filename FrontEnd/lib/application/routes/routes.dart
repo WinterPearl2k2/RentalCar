@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/data/dtos/user_profile_dto.dart';
+import 'package:rental_car/presentation/views/account_profile/account_profile_view.dart';
 import 'package:rental_car/presentation/views/add_car/add_car_view.dart';
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
@@ -29,6 +31,13 @@ class Routes {
       case RoutesName.verifyCode:
         return MaterialPageRoute(
           builder: (context) => const VerifyCodeView(),
+        );
+      case RoutesName.accountProfile:
+        final args = settings.arguments as Map<String, UserProfileDTO>;
+        return MaterialPageRoute(
+          builder: (context) =>
+              AccountProfileView(user: args['user'] ?? UserProfileDTO(),
+          ),
         );
       default:
         return MaterialPageRoute(builder: (_) {
@@ -93,5 +102,17 @@ class Routes {
 
   static void goToPreviousView(BuildContext context) {
     Navigator.of(context).pop();
+  }
+  static void goToAccountProfileView(
+      BuildContext context,
+      UserProfileDTO user,
+      ) {
+    Navigator.pushNamed(
+      context,
+      RoutesName.accountProfile,
+      arguments: {
+        'user': user
+      },
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:rental_car/data/dtos/login_dto.dart';
 import 'package:rental_car/data/dtos/reset_password_dto.dart';
+import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:rental_car/data/dtos/verify_code_dto.dart';
 
 import '../../data/dtos/user_dto.dart';
@@ -12,4 +13,5 @@ abstract class IUserRepository{
   Future<void> forgotPassword({required String email});
   Future<void> verifyCode({required VerifyCodeDto codeDto});
   Future<void> resetPassword({required ResetPasswordDto resetPasswordDto});
+  Future<UserProfileDTO> getUser({required String uuid});
 }

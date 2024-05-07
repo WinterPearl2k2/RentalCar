@@ -11,6 +11,9 @@ class RoutesName {
   //verify code
   static const verifyCode = '/verify_code';
 
+  //account profile
+  static const accountProfile = '/account_profile';
+
   //car
   static const addCar = 'add_car_view';
 }

@@ -1,6 +1,7 @@
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
 import 'package:rental_car/data/dtos/reset_password_dto.dart';
+import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:rental_car/data/dtos/verify_code_dto.dart';
 import 'package:rental_car/domain/repositories/user_repository.dart';
 
@@ -27,6 +28,10 @@ abstract class IAuthService {
 
   Future<void> resetPassword({
     required ResetPasswordDto resetPassword,
+  });
+
+  Future<UserProfileDTO> getUser({
+    required String uuid,
   });
 }
 
@@ -84,5 +89,10 @@ class AuthServiceImpl implements IAuthService {
   @override
   Future<void> resetPassword({required ResetPasswordDto resetPassword}) {
     return _userRepository.resetPassword(resetPasswordDto: resetPassword);
+  }
+
+  @override
+  Future<UserProfileDTO> getUser({required String uuid}) {
+    return _userRepository.getUser(uuid: uuid);
   }
 }

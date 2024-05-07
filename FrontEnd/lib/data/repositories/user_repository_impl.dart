@@ -3,6 +3,7 @@ import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
 import 'package:rental_car/data/dtos/reset_password_dto.dart';
 import 'package:rental_car/data/dtos/user_dto.dart';
+import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:rental_car/data/dtos/verify_code_dto.dart';
 import 'package:rental_car/domain/model/token.dart';
 import 'package:rental_car/domain/repositories/user_repository.dart';
@@ -58,6 +59,16 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
       url: EndPoint.restUrlResetPassword,
       data: resetPasswordDto.toJson(),
       mapper: (_) {},
+    );
+  }
+
+  @override
+  Future<UserProfileDTO> getUser({required String uuid}) {
+    return get<UserProfileDTO>(
+      url: '${EndPoint.restUrlResetGetUser}/$uuid',
+      mapper: (response) => UserProfileDTO.fromJson(
+        response.data,
+      ),
     );
   }
 }

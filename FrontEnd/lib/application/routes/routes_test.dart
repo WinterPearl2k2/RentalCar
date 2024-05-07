@@ -5,6 +5,7 @@ import 'package:rental_car/presentation/views/forgot_password/forgot_password_vi
 import 'package:rental_car/presentation/views/reset_password/reset_password_view.dart';
 import 'package:rental_car/presentation/views/verify_code/verify_code_view.dart';
 
+import '../../presentation/views/account_profile/account_profile_view.dart';
 import '../../presentation/views/auth/auth_view.dart';
 
 class RoutesTest {
@@ -15,6 +16,7 @@ class RoutesTest {
       RoutesName.forgotPassword: (context) => const ForgotPasswordView(),
       RoutesName.bottomNavigation: (context) => const BottomNavigationView(),
       RoutesName.resetPassword: (context) => const ResetPasswordView(),
+      // RoutesName.accountProfile: (context) => const AccountProfileView(),
     };
   }
 }
