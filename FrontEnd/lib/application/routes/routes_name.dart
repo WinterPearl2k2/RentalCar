@@ -6,6 +6,8 @@ class RoutesName {
 
   //forgot password
   static const forgotPassword = '/forgot_password';
+  //reset password
+  static const resetPassword = '/reset_password';
   //verify code
   static const verifyCode = '/verify_code';
 

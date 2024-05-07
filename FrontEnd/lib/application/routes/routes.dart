@@ -27,7 +27,6 @@ class Routes {
           builder: (context) => const ForgotPasswordView(),
         );
       case RoutesName.verifyCode:
-        final args = settings.arguments as Map<String, String>;
         return MaterialPageRoute(
           builder: (context) => const VerifyCodeView(),
         );
@@ -63,14 +62,25 @@ class Routes {
   static void goToVerifyCodeView(
     BuildContext context,
     String email,
-    String time,
   ) {
     Navigator.pushNamed(
       context,
       RoutesName.verifyCode,
       arguments: {
         'email': email,
-        'time': time,
+      },
+    );
+  }
+
+  static void goToResetPasswordView(
+      BuildContext context,
+      String email,
+      ) {
+    Navigator.pushReplacementNamed(
+      context,
+      RoutesName.resetPassword,
+      arguments: {
+        'email': email
       },
     );
   }

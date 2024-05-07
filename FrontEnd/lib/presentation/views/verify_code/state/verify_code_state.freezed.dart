@@ -18,6 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$VerifyCodeState {
   bool get errorEmail => throw _privateConstructorUsedError;
   bool get wait => throw _privateConstructorUsedError;
+  bool get isResend => throw _privateConstructorUsedError;
+  String get code => throw _privateConstructorUsedError;
+  bool get clearText => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VerifyCodeStateCopyWith<VerifyCodeState> get copyWith =>
@@ -30,7 +33,8 @@ abstract class $VerifyCodeStateCopyWith<$Res> {
           VerifyCodeState value, $Res Function(VerifyCodeState) then) =
       _$VerifyCodeStateCopyWithImpl<$Res, VerifyCodeState>;
   @useResult
-  $Res call({bool errorEmail, bool wait});
+  $Res call(
+      {bool errorEmail, bool wait, bool isResend, String code, bool clearText});
 }
 
 /// @nodoc
@@ -48,6 +52,9 @@ class _$VerifyCodeStateCopyWithImpl<$Res, $Val extends VerifyCodeState>
   $Res call({
     Object? errorEmail = null,
     Object? wait = null,
+    Object? isResend = null,
+    Object? code = null,
+    Object? clearText = null,
   }) {
     return _then(_value.copyWith(
       errorEmail: null == errorEmail
@@ -57,6 +64,18 @@ class _$VerifyCodeStateCopyWithImpl<$Res, $Val extends VerifyCodeState>
       wait: null == wait
           ? _value.wait
           : wait // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isResend: null == isResend
+          ? _value.isResend
+          : isResend // ignore: cast_nullable_to_non_nullable
+              as bool,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      clearText: null == clearText
+          ? _value.clearText
+          : clearText // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -70,7 +89,8 @@ abstract class _$$VerifyCodeStateImplCopyWith<$Res>
       __$$VerifyCodeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool errorEmail, bool wait});
+  $Res call(
+      {bool errorEmail, bool wait, bool isResend, String code, bool clearText});
 }
 
 /// @nodoc
@@ -86,6 +106,9 @@ class __$$VerifyCodeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? errorEmail = null,
     Object? wait = null,
+    Object? isResend = null,
+    Object? code = null,
+    Object? clearText = null,
   }) {
     return _then(_$VerifyCodeStateImpl(
       errorEmail: null == errorEmail
@@ -96,6 +119,18 @@ class __$$VerifyCodeStateImplCopyWithImpl<$Res>
           ? _value.wait
           : wait // ignore: cast_nullable_to_non_nullable
               as bool,
+      isResend: null == isResend
+          ? _value.isResend
+          : isResend // ignore: cast_nullable_to_non_nullable
+              as bool,
+      code: null == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String,
+      clearText: null == clearText
+          ? _value.clearText
+          : clearText // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -103,7 +138,12 @@ class __$$VerifyCodeStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$VerifyCodeStateImpl implements _VerifyCodeState {
-  const _$VerifyCodeStateImpl({this.errorEmail = false, this.wait = false});
+  const _$VerifyCodeStateImpl(
+      {this.errorEmail = false,
+      this.wait = false,
+      this.isResend = false,
+      this.code = '',
+      this.clearText = false});
 
   @override
   @JsonKey()
@@ -111,10 +151,19 @@ class _$VerifyCodeStateImpl implements _VerifyCodeState {
   @override
   @JsonKey()
   final bool wait;
+  @override
+  @JsonKey()
+  final bool isResend;
+  @override
+  @JsonKey()
+  final String code;
+  @override
+  @JsonKey()
+  final bool clearText;
 
   @override
   String toString() {
-    return 'VerifyCodeState(errorEmail: $errorEmail, wait: $wait)';
+    return 'VerifyCodeState(errorEmail: $errorEmail, wait: $wait, isResend: $isResend, code: $code, clearText: $clearText)';
   }
 
   @override
@@ -124,11 +173,17 @@ class _$VerifyCodeStateImpl implements _VerifyCodeState {
             other is _$VerifyCodeStateImpl &&
             (identical(other.errorEmail, errorEmail) ||
                 other.errorEmail == errorEmail) &&
-            (identical(other.wait, wait) || other.wait == wait));
+            (identical(other.wait, wait) || other.wait == wait) &&
+            (identical(other.isResend, isResend) ||
+                other.isResend == isResend) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.clearText, clearText) ||
+                other.clearText == clearText));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, errorEmail, wait);
+  int get hashCode =>
+      Object.hash(runtimeType, errorEmail, wait, isResend, code, clearText);
 
   @JsonKey(ignore: true)
   @override
@@ -139,13 +194,23 @@ class _$VerifyCodeStateImpl implements _VerifyCodeState {
 }
 
 abstract class _VerifyCodeState implements VerifyCodeState {
-  const factory _VerifyCodeState({final bool errorEmail, final bool wait}) =
-      _$VerifyCodeStateImpl;
+  const factory _VerifyCodeState(
+      {final bool errorEmail,
+      final bool wait,
+      final bool isResend,
+      final String code,
+      final bool clearText}) = _$VerifyCodeStateImpl;
 
   @override
   bool get errorEmail;
   @override
   bool get wait;
+  @override
+  bool get isResend;
+  @override
+  String get code;
+  @override
+  bool get clearText;
   @override
   @JsonKey(ignore: true)
   _$$VerifyCodeStateImplCopyWith<_$VerifyCodeStateImpl> get copyWith =>

@@ -27,10 +27,10 @@ class ForgotPasswordNotifier extends _$ForgotPasswordNotifier {
       return;
     }
     try {
-      String time = await injection.getIt<IAuthService>().forgotPassword(
+      await injection.getIt<IAuthService>().forgotPassword(
             email: email.text,
           );
-      Routes.goToVerifyCodeView(context, email.text, time);
+      Routes.goToVerifyCodeView(context, email.text);
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
