@@ -7,4 +7,10 @@ class EndPoint {
   static const restUrlForgotPassword = '/auth/forgotPassword';
   static const restUrlVerifyCode = '/auth/verifyCode';
   static const restUrlResetPassword = '/auth/resetPassword';
+
+  static const restUrlCreateCar = '/createCar';
+  static const restUrlUpdateCar = '/updateCar';
+  static const restUrlDeleteCar = '/deleteCar';
+  static const restUrlGetAllCar = '/getAllCar';
+  static const restUrlGetCarById = '/getCarById';
 }

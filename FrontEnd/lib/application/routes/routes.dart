@@ -84,4 +84,14 @@ class Routes {
       },
     );
   }
+
+  static void goToAddCarView(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      RoutesName.addCar,
+    );
+  }
+
+  static void goToPreviousView(BuildContext context) {
+    Navigator.of(context).pop();
+  }
 }
