@@ -13,7 +13,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func RequireAuth(context *gin.Context) {
+func RequireAuth(context *gin.Context) (uuid.UUID, error) {
 	authorization := context.Request.Header.Get("Authorization")
 	tokenString := strings.Replace(authorization, "Bearer", "", 1)
 
@@ -33,7 +33,7 @@ func RequireAuth(context *gin.Context) {
 			"message": err.Error(),
 		})
 		log.Print("Eror line 26")
-		return
+		return uuid.UUID{}, err
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
@@ -42,7 +42,7 @@ func RequireAuth(context *gin.Context) {
 			"message": "Unauthorized",
 		})
 		log.Print("Eror line 37")
-		return
+		return uuid.UUID{}, err
 	}
 	exp := time.Unix(int64(claims["exp"].(float64)), 0)
 	if time.Now().After(exp) {
@@ -50,7 +50,7 @@ func RequireAuth(context *gin.Context) {
 			"message": "Token expired",
 		})
 		log.Print("Eror line 45")
-		return
+		return uuid.UUID{}, err
 	}
 	userId, err := uuid.Parse(claims["user_id"].(string))
 	if err != nil {
@@ -58,8 +58,7 @@ func RequireAuth(context *gin.Context) {
 			"message": "Unauthorized",
 		})
 		log.Print("Eror line 70")
-		return
+		return uuid.UUID{}, err
 	}
-	context.Set("user", userId)
-	context.Next()
+	return userId, err
 }

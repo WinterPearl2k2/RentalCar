@@ -101,7 +101,7 @@ class VerifyCodeWidget extends StatelessWidget {
               alignment: Alignment.center,
               child: Consumer(
                 builder: (context, ref, child) {
-                  final isResend = ref.watch(
+                  ref.watch(
                     forgotPasswordNotifierProvider
                         .select((value) => value.isResend),
                   );

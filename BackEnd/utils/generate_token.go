@@ -23,7 +23,7 @@ func GenerateRefreshToken(userId uuid.UUID) (string, error) {
 		"user_id": userId,
 		"exp":     time.Now().Add(30 * 24 * time.Hour).Unix(),
 	})
-	secret := os.Getenv("JWT_REFRESH_SECRET")
+	secret := os.Getenv("JWT_ACCESS_SECRET")
 	tokenString, err := token.SignedString([]byte(secret))
 	return tokenString, err
 }
