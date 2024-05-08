@@ -13,8 +13,8 @@ class CarDetailNotifier extends _$CarDetailNotifier{
 
   Future<void> getCarById({required String idCar}) async {
     try {
-      final car = await  injection.getIt<ICarService>().getCarById(idCar: idCar);
-      state = state.copyWith(car: car);
+      final carDetail = await  injection.getIt<ICarService>().getCarById(idCar: idCar);
+      state = state.copyWith(carDetail: carDetail);
       LogUtils.i("get Car oke");
     } catch (e) {
       LogUtils.i(e.toString());

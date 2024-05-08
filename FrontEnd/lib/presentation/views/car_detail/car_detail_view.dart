@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
@@ -32,18 +33,18 @@ class _CarDetailView
     return Scaffold(
       body: Consumer(
         builder: (_, ref, __) {
-          final car = ref.watch(
-            carDetailNotifierProvider.select((value) => value.car),
+          final carDetail = ref.watch(
+            carDetailNotifierProvider.select((value) => value.carDetail),
           );
-          return car.idCar.isNotEmpty
+          return carDetail.idCar.isNotEmpty
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     HeaderCarDetailWidget(
-                      car: car,
+                      carDetail: carDetail,
                     ),
                     BodyDetailWidget(
-                      car: car,
+                      carDetail: carDetail,
                     ),
                     const Spacer(),
                     Padding(
@@ -54,7 +55,7 @@ class _CarDetailView
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                car.nameCar,
+                                carDetail.nameCar,
                                 style: TextStyle(
                                   color: ColorUtils.primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -62,7 +63,7 @@ class _CarDetailView
                                 ),
                               ),
                               Text(
-                                "${FormatUtils.formatCurrency(car.priceCar)}VND / day",
+                                "${FormatUtils.formatCurrency(carDetail.priceCar)}VND / day",
                                 style: TextStyle(
                                   color: ColorUtils.blueColor,
                                   fontWeight: FontWeight.bold,
@@ -74,9 +75,12 @@ class _CarDetailView
                           const Spacer(),
                           SizedBox(
                             width: 150.w,
-                            child: const TextButtonWidget(
-                              label: "Rental Car",
-                            ),
+                            child:
+                                PreferenceService.getUUID() == carDetail.idUser
+                                    ? const SizedBox()
+                                    : const TextButtonWidget(
+                                        label: "Rental Car",
+                                      ),
                           ),
                         ],
                       ),

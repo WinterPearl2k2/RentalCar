@@ -16,7 +16,7 @@ class ListTopVehicleWidget extends StatelessWidget {
     return Consumer(
       builder: (_, ref, __) {
         final listCar = ref.watch(
-          homeNotifierProvider.select((value) => value.listCar),
+          homeNotifierProvider.select((value) => value.listTopCar),
         );
         return listCar.isNotEmpty
             ? Expanded(
@@ -32,8 +32,8 @@ class ListTopVehicleWidget extends StatelessWidget {
                         listCar[index].imagesCar,
                       ),
                       title: listCar[index].nameCar,
-                      star: 0,
-                      countReview: 0,
+                      star: listCar[index].starCar,
+                      countReview: listCar[index].countReviewCar,
                     ),
                   ),
                 ),
