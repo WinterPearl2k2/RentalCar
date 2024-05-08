@@ -24,3 +24,8 @@ type CodeData struct {
 	Code  string `binding:"required"`
 	Email string `binding:"required"`
 }
+
+type PasswordData struct {
+	OldPassword string `binding:"required"`
+	NewPassword string `binding:"required"`
+}

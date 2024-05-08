@@ -105,8 +105,8 @@ class AuthNotifier extends _$AuthNotifier {
         builder: (context) {
           return const AlertDialog(
             content: SuccessNotifyWidget(
-              title: 'Chúc mừng, bạn đã hoàn tất việc đăng ký!',
-              label: 'Đăng ký thành công',
+              title: 'Congratulations, you have successfully completed registration!',
+              label: 'Registration successful',
             ),
           );
         },
