@@ -6,7 +6,6 @@ import 'package:rental_car/presentation/views/auth/auth_view.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
 import 'package:rental_car/presentation/views/forgot_password/forgot_password_view.dart';
-import 'package:rental_car/presentation/views/verify_code/verify_code_view.dart';
 
 import 'routes_name.dart';
 
@@ -28,10 +27,6 @@ class Routes {
       case RoutesName.forgotPassword:
         return MaterialPageRoute(
           builder: (context) => const ForgotPasswordView(),
-        );
-      case RoutesName.verifyCode:
-        return MaterialPageRoute(
-          builder: (context) => const VerifyCodeView(),
         );
       case RoutesName.accountProfile:
         final args = settings.arguments as Map<String, UserProfileDTO>;
