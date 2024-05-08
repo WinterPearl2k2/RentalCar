@@ -8,6 +8,7 @@ import 'package:rental_car/presentation/common/base_state_delegate/base_state_de
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 import 'package:rental_car/presentation/views/account_profile/notifier/account_profile_notifier.dart';
 
+import '../../common/widgets/loading_widget.dart';
 import '../../common/widgets/text_form_field.dart';
 
 class AccountProfileView extends ConsumerStatefulWidget {
@@ -37,162 +38,213 @@ class _AccountProfileViewState
 
   @override
   Widget build(BuildContext context) {
-    // final args = (ModalRoute.of(context)?.settings.arguments ??
-    //     <String, dynamic>{}) as Map;
-    // final user = args['user'] ?? "";
-    // notifier.setUpData(user: user);
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-          appBar: AppBar(),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: Consumer(
+        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+          final user = ref.watch(
+            accountProfileNotifierProvider.select(
+              (value) => value.user,
+            ),
+          );
+          return Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                icon: SvgPicture.asset(
+                  'assets/icons/ic_arrow_back.svg',
+                ),
+                onPressed: () => Navigator.pop(context, user),
+              ),
+            ),
+            body: PopScope(
+              onPopInvoked: (didPop) async {
+                if (didPop) {
+                  return;
+                }
+                Navigator.pop(context, user);
+              },
+              canPop: false,
+              child: Stack(
                 children: [
-                  Text(
-                    'Account Profile',
-                    style: TextStyle(
-                      color: ColorUtils.primaryColor,
-                      fontSize: 26.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  Center(
-                    child: Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(right: 20.r),
-                          width: 80.w,
-                          height: 80.h,
-                          decoration: BoxDecoration(
-                            color: ColorUtils.textColor,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/images/avatar_empty.svg',
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Change profile picture',
+                  SingleChildScrollView(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Account Profile',
                             style: TextStyle(
                               color: ColorUtils.primaryColor,
-                              fontSize: 16.sp,
+                              fontSize: 26.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            height: 25.h,
+                          ),
+                          Center(
+                            child: Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(right: 20.r),
+                                  width: 80.w,
+                                  height: 80.h,
+                                  decoration: BoxDecoration(
+                                    color: ColorUtils.textColor,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: SvgPicture.asset(
+                                    'assets/images/avatar_empty.svg',
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'Change profile picture',
+                                    style: TextStyle(
+                                      color: ColorUtils.primaryColor,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 25.h,
+                          ),
+                          Consumer(
+                            builder: (BuildContext context, WidgetRef ref,
+                                Widget? child) {
+                              final err = ref.watch(
+                                accountProfileNotifierProvider.select(
+                                  (value) => value.errorName,
+                                ),
+                              );
+                              return TextFormFieldCustomWidget(
+                                hint: 'Your full name',
+                                label: "Full name",
+                                inputAction: TextInputAction.next,
+                                controller: _nameController,
+                                error: err
+                                    ? const Text(
+                                        'Name cannot be empty!',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 10,
+                                        ),
+                                      )
+                                    : null,
+                                onChanged: (value) => notifier.checkName(value),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 25.h,
+                          ),
+                          Consumer(
+                            builder: (BuildContext context, WidgetRef ref,
+                                Widget? child) {
+                              final err = ref.watch(
+                                accountProfileNotifierProvider.select(
+                                  (value) => value.errorEmail,
+                                ),
+                              );
+                              return TextFormFieldCustomWidget(
+                                hint: 'Your email address',
+                                label: "Email address",
+                                inputAction: TextInputAction.next,
+                                controller: _emailController,
+                                error: err
+                                    ? const Text(
+                                        'Invalid email!',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 10,
+                                        ),
+                                      )
+                                    : null,
+                                onChanged: (value) =>
+                                    notifier.checkEmail(value),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 25.h,
+                          ),
+                          Consumer(
+                            builder: (context, ref, child) {
+                              final err = ref.watch(
+                                accountProfileNotifierProvider.select(
+                                  (value) => value.errorPhone,
+                                ),
+                              );
+                              return TextFormFieldCustomWidget(
+                                hint: 'Your phone number',
+                                label: "Phone number",
+                                inputAction: TextInputAction.done,
+                                controller: _phoneController,
+                                error: err
+                                    ? const Text(
+                                        'Invalid phone number!',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 10,
+                                        ),
+                                      )
+                                    : null,
+                                onChanged: (value) =>
+                                    notifier.checkPhone(value),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 50.h,
+                          ),
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final isBlock = ref.watch(
+                                accountProfileNotifierProvider
+                                    .select((value) => value.blockButton),
+                              );
+                              return TextButtonWidget(
+                                label: 'Update profile',
+                                blockButton: !isBlock,
+                                onPressed: () => notifier.updateProfile(
+                                  name: _nameController,
+                                  email: _emailController,
+                                  phoneNumber: _phoneController,
+                                  context: context,
+                                ),
+                              );
+                            },
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  Consumer(
-                    builder:
-                        (BuildContext context, WidgetRef ref, Widget? child) {
-                      final err = ref.watch(
-                        accountProfileNotifierProvider.select(
-                          (value) => value.errorName,
-                        ),
-                      );
-                      return TextFormFieldCustomWidget(
-                        hint: 'Your full name',
-                        label: "Full name",
-                        inputAction: TextInputAction.next,
-                        controller: _nameController,
-                        error: err
-                            ? const Text(
-                                'Name cannot be empty!',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 10,
-                                ),
-                              )
-                            : null,
-                        onChanged: (value) => notifier.checkName(value),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 25.h,
-                  ),
-                  Consumer(
-                    builder:
-                        (BuildContext context, WidgetRef ref, Widget? child) {
-                      final err = ref.watch(
-                        accountProfileNotifierProvider.select(
-                          (value) => value.errorEmail,
-                        ),
-                      );
-                      return TextFormFieldCustomWidget(
-                        hint: 'Your email address',
-                        label: "Email address",
-                        inputAction: TextInputAction.next,
-                        controller: _emailController,
-                        error: err
-                            ? const Text(
-                                'Invalid email!',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 10,
-                                ),
-                              )
-                            : null,
-                        onChanged: (value) => notifier.checkEmail(value),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 25.h,
                   ),
                   Consumer(
                     builder: (context, ref, child) {
-                      final err = ref.watch(
+                      final isWaiting = ref.watch(
                         accountProfileNotifierProvider.select(
-                          (value) => value.errorPhone,
+                          (value) => value.wait,
                         ),
                       );
-                      return TextFormFieldCustomWidget(
-                        hint: 'Your phone number',
-                        label: "Phone number",
-                        inputAction: TextInputAction.done,
-                        controller: _phoneController,
-                        error: err
-                            ? const Text(
-                                'Invalid phone number!',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 10,
-                                ),
-                              )
-                            : null,
-                        onChanged: (value) => notifier.checkPhone(value),
-                      );
+                      return isWaiting
+                          ? const LoadingWidget()
+                          : const SizedBox();
                     },
                   ),
-                  SizedBox(
-                    height: 50.h,
-                  ),
-                  TextButtonWidget(
-                    label: 'Update profile',
-                    onPressed: () => notifier.updateProfile(
-                      name: _nameController,
-                      email: _emailController,
-                      phoneNumber: _phoneController,
-                      context: context,
-                    ),
-                  )
                 ],
               ),
             ),
-          )),
+          );
+        },
+      ),
     );
   }
 

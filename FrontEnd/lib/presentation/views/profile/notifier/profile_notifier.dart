@@ -1,6 +1,7 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rental_car/application/services/auth_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:rental_car/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -34,5 +35,14 @@ class ProfileNotifier extends _$ProfileNotifier {
       Fluttertoast.showToast(msg: e.message.toString());
     }
     state = state.copyWith(loading: false);
+  }
+
+  void updateUser({required Object? user}) {
+    if (user != null) {
+      LogUtils.i(user.toString());
+      state = state.copyWith(
+        user: user as UserProfileDTO,
+      );
+    }
   }
 }

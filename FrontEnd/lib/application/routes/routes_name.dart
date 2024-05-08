@@ -8,6 +8,8 @@ class RoutesName {
   static const forgotPassword = '/forgot_password';
   //reset password
   static const resetPassword = '/reset_password';
+  //reset password
+  static const changePassword = '/change_password';
   //verify code
   static const verifyCode = '/verify_code';
 

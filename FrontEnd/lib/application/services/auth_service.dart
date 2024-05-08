@@ -1,5 +1,6 @@
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
+import 'package:rental_car/data/dtos/password_dto.dart';
 import 'package:rental_car/data/dtos/reset_password_dto.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:rental_car/data/dtos/verify_code_dto.dart';
@@ -33,6 +34,16 @@ abstract class IAuthService {
   Future<UserProfileDTO> getUser({
     required String uuid,
   });
+
+  Future<UserProfileDTO> updateUser({
+    required UserProfileDTO userDTO,
+    required String uuid,
+  });
+
+  Future<void> changePassword({
+    required PasswordDto passwordDto,
+    required String uuid,
+  });
 }
 
 class AuthServiceImpl implements IAuthService {
@@ -62,7 +73,9 @@ class AuthServiceImpl implements IAuthService {
   }
 
   @override
-  Future<void> loginUser({required LoginDTO loginDTO}) async {
+  Future<void> loginUser({
+    required LoginDTO loginDTO,
+  }) async {
     try {
       final data = await _userRepository.loginUser(
         loginDTO: loginDTO,
@@ -77,22 +90,52 @@ class AuthServiceImpl implements IAuthService {
   }
 
   @override
-  Future<void> forgotPassword({required String email}) {
+  Future<void> forgotPassword({
+    required String email,
+  }) {
     return _userRepository.forgotPassword(email: email);
   }
 
   @override
-  Future<void> verifyCode({required VerifyCodeDto codeDto}) {
+  Future<void> verifyCode({
+    required VerifyCodeDto codeDto,
+  }) {
     return _userRepository.verifyCode(codeDto: codeDto);
   }
 
   @override
-  Future<void> resetPassword({required ResetPasswordDto resetPassword}) {
+  Future<void> resetPassword({
+    required ResetPasswordDto resetPassword,
+  }) {
     return _userRepository.resetPassword(resetPasswordDto: resetPassword);
   }
 
   @override
-  Future<UserProfileDTO> getUser({required String uuid}) {
+  Future<UserProfileDTO> getUser({
+    required String uuid,
+  }) {
     return _userRepository.getUser(uuid: uuid);
+  }
+
+  @override
+  Future<UserProfileDTO> updateUser({
+    required UserProfileDTO userDTO,
+    required String uuid,
+  }) {
+    return _userRepository.updateUser(
+      userDTO: userDTO,
+      uuid: uuid,
+    );
+  }
+
+  @override
+  Future<void> changePassword({
+    required PasswordDto passwordDto,
+    required String uuid,
+  }) {
+    return _userRepository.changePassword(
+      passwordDto: passwordDto,
+      uuid: uuid,
+    );
   }
 }

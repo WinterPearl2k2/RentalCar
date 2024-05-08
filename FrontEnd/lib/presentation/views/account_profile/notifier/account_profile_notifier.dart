@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -8,7 +8,6 @@ import '../../../../application/utils/log_utils.dart';
 import '../../../../application/utils/regex_check_utils.dart';
 import '../../../../data/data_sources/remote/dio/api_exception.dart';
 import '../../../../main.dart';
-import '../../../common/widgets/success_notify_widget.dart';
 import '../state/account_profile_state.dart';
 
 part 'account_profile_notifier.g.dart';
@@ -23,11 +22,12 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
   }) async {
     await Future.delayed(const Duration(milliseconds: 1),);
     state = state.copyWith(
-      email: user.email,
-      phone: user.phone,
-      name: user.name,
+      user: UserProfileDTO(
+        email: user.email,
+        phone: user.phone,
+        name: user.name,
+      ),
     );
-    print(state.email);
   }
 
   Future<void> updateProfile({
@@ -46,15 +46,26 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
       state = state.copyWith(wait: false);
       return;
     }
+    String uuid = PreferenceService.getUUID();
+    if(uuid.isEmpty) {
+      state = state.copyWith(wait: false);
+      return;
+    }
+
     final userProfileDto = UserProfileDTO(
       name: name.text,
       email: email.text,
       phone: phoneNumber.text,
     );
     try {
-      // await injection.getIt<IAuthService>().registerUser(
-      //   userDTO: userDTO,
-      // );
+      final userUpdated = await injection.getIt<IAuthService>().updateUser(
+        userDTO: userProfileDto,
+        uuid: uuid,
+      );
+      state = state.copyWith(
+        user: userUpdated,
+      );
+      state = state.copyWith(blockButton: false);
       Fluttertoast.showToast(msg: 'Information updated successfully.');
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
@@ -85,24 +96,39 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
   }
 
   void checkName(String value) {
+    if(value == state.user.name) {
+      state = state.copyWith(blockButton: false);
+      return;
+    }
     if (state.errorName) {
       state = state.copyWith(errorName: value.isEmpty);
     }
+    state = state.copyWith(blockButton: true);
   }
 
   void checkEmail(String value) {
+    if(value == state.user.email) {
+      state = state.copyWith(blockButton: false);
+      return;
+    }
     if (state.errorEmail) {
       state = state.copyWith(
         errorEmail: !RegexCheckUtils.emailRegex.hasMatch(value),
       );
     }
+    state = state.copyWith(blockButton: true);
   }
 
   void checkPhone(String value) {
+    if(value == state.user.phone) {
+      state = state.copyWith(blockButton: false);
+      return;
+    }
     if (state.errorPhone) {
       state = state.copyWith(
         errorPhone: !RegexCheckUtils.phoneRegex.hasMatch(value),
       );
     }
+    state = state.copyWith(blockButton: true);
   }
 }

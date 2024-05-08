@@ -1,6 +1,7 @@
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
+import 'package:rental_car/data/dtos/password_dto.dart';
 import 'package:rental_car/data/dtos/reset_password_dto.dart';
 import 'package:rental_car/data/dtos/user_dto.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
@@ -65,10 +66,36 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
   @override
   Future<UserProfileDTO> getUser({required String uuid}) {
     return get<UserProfileDTO>(
-      url: '${EndPoint.restUrlResetGetUser}/$uuid',
+      url: '${EndPoint.restUrlGetUser}/$uuid',
       mapper: (response) => UserProfileDTO.fromJson(
         response.data,
       ),
+    );
+  }
+
+  @override
+  Future<UserProfileDTO> updateUser({
+    required UserProfileDTO userDTO,
+    required String uuid,
+  }) {
+    return put<UserProfileDTO>(
+      url: '${EndPoint.restUrlUpdateUser}/$uuid',
+      data: userDTO.toJson(),
+      mapper: (response) => UserProfileDTO.fromJson(
+        response.data,
+      ),
+    );
+  }
+
+  @override
+  Future<void> changePassword({
+    required PasswordDto passwordDto,
+    required String uuid,
+  }) {
+    return put<void>(
+      url: '${EndPoint.restUrlChangePassword}/$uuid',
+      data: passwordDto.toJson(),
+      mapper: (_) {},
     );
   }
 }

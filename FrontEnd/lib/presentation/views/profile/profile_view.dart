@@ -127,6 +127,8 @@ class _ProfileViewState extends BaseStateDelegate<ProfileView, ProfileNotifier>
                             onPressed: () => Routes.goToAccountProfileView(
                               context,
                               user,
+                            ).then(
+                              (value) => notifier.updateUser(user: value),
                             ),
                           ),
                           Container(
@@ -139,7 +141,9 @@ class _ProfileViewState extends BaseStateDelegate<ProfileView, ProfileNotifier>
                               'assets/icons/ic_change_password.svg',
                             ),
                             title: 'Change Password',
-                            onPressed: () {},
+                            onPressed: () => Routes.goToChangePasswordView(
+                              context,
+                            ),
                           ),
                           const Expanded(
                             child: SizedBox.shrink(),

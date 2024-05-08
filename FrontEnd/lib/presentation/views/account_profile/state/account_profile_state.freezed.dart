@@ -20,9 +20,7 @@ mixin _$AccountProfileState {
   bool get errorName => throw _privateConstructorUsedError;
   bool get errorEmail => throw _privateConstructorUsedError;
   bool get errorPhone => throw _privateConstructorUsedError;
-  String get phone => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
+  UserProfileDTO get user => throw _privateConstructorUsedError;
   dynamic get blockButton => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -41,10 +39,10 @@ abstract class $AccountProfileStateCopyWith<$Res> {
       bool errorName,
       bool errorEmail,
       bool errorPhone,
-      String phone,
-      String email,
-      String name,
+      UserProfileDTO user,
       dynamic blockButton});
+
+  $UserProfileDTOCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -64,9 +62,7 @@ class _$AccountProfileStateCopyWithImpl<$Res, $Val extends AccountProfileState>
     Object? errorName = null,
     Object? errorEmail = null,
     Object? errorPhone = null,
-    Object? phone = null,
-    Object? email = null,
-    Object? name = null,
+    Object? user = null,
     Object? blockButton = freezed,
   }) {
     return _then(_value.copyWith(
@@ -86,23 +82,23 @@ class _$AccountProfileStateCopyWithImpl<$Res, $Val extends AccountProfileState>
           ? _value.errorPhone
           : errorPhone // ignore: cast_nullable_to_non_nullable
               as bool,
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserProfileDTO,
       blockButton: freezed == blockButton
           ? _value.blockButton
           : blockButton // ignore: cast_nullable_to_non_nullable
               as dynamic,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileDTOCopyWith<$Res> get user {
+    return $UserProfileDTOCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -119,10 +115,11 @@ abstract class _$$AccountProfileStateImplCopyWith<$Res>
       bool errorName,
       bool errorEmail,
       bool errorPhone,
-      String phone,
-      String email,
-      String name,
+      UserProfileDTO user,
       dynamic blockButton});
+
+  @override
+  $UserProfileDTOCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -140,9 +137,7 @@ class __$$AccountProfileStateImplCopyWithImpl<$Res>
     Object? errorName = null,
     Object? errorEmail = null,
     Object? errorPhone = null,
-    Object? phone = null,
-    Object? email = null,
-    Object? name = null,
+    Object? user = null,
     Object? blockButton = freezed,
   }) {
     return _then(_$AccountProfileStateImpl(
@@ -162,18 +157,10 @@ class __$$AccountProfileStateImplCopyWithImpl<$Res>
           ? _value.errorPhone
           : errorPhone // ignore: cast_nullable_to_non_nullable
               as bool,
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserProfileDTO,
       blockButton: freezed == blockButton ? _value.blockButton! : blockButton,
     ));
   }
@@ -187,9 +174,7 @@ class _$AccountProfileStateImpl implements _AccountProfileState {
       this.errorName = false,
       this.errorEmail = false,
       this.errorPhone = false,
-      this.phone = '',
-      this.email = '',
-      this.name = '',
+      this.user = const UserProfileDTO(),
       this.blockButton = false});
 
   @override
@@ -206,20 +191,14 @@ class _$AccountProfileStateImpl implements _AccountProfileState {
   final bool errorPhone;
   @override
   @JsonKey()
-  final String phone;
-  @override
-  @JsonKey()
-  final String email;
-  @override
-  @JsonKey()
-  final String name;
+  final UserProfileDTO user;
   @override
   @JsonKey()
   final dynamic blockButton;
 
   @override
   String toString() {
-    return 'AccountProfileState(wait: $wait, errorName: $errorName, errorEmail: $errorEmail, errorPhone: $errorPhone, phone: $phone, email: $email, name: $name, blockButton: $blockButton)';
+    return 'AccountProfileState(wait: $wait, errorName: $errorName, errorEmail: $errorEmail, errorPhone: $errorPhone, user: $user, blockButton: $blockButton)';
   }
 
   @override
@@ -234,24 +213,14 @@ class _$AccountProfileStateImpl implements _AccountProfileState {
                 other.errorEmail == errorEmail) &&
             (identical(other.errorPhone, errorPhone) ||
                 other.errorPhone == errorPhone) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality()
                 .equals(other.blockButton, blockButton));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      wait,
-      errorName,
-      errorEmail,
-      errorPhone,
-      phone,
-      email,
-      name,
-      const DeepCollectionEquality().hash(blockButton));
+  int get hashCode => Object.hash(runtimeType, wait, errorName, errorEmail,
+      errorPhone, user, const DeepCollectionEquality().hash(blockButton));
 
   @JsonKey(ignore: true)
   @override
@@ -267,9 +236,7 @@ abstract class _AccountProfileState implements AccountProfileState {
       final bool errorName,
       final bool errorEmail,
       final bool errorPhone,
-      final String phone,
-      final String email,
-      final String name,
+      final UserProfileDTO user,
       final dynamic blockButton}) = _$AccountProfileStateImpl;
 
   @override
@@ -281,11 +248,7 @@ abstract class _AccountProfileState implements AccountProfileState {
   @override
   bool get errorPhone;
   @override
-  String get phone;
-  @override
-  String get email;
-  @override
-  String get name;
+  UserProfileDTO get user;
   @override
   dynamic get blockButton;
   @override

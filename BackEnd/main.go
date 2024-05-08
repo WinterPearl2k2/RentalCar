@@ -26,7 +26,10 @@ func main() {
 	router.POST("/auth/forgotPassword/:email", AuthController.ForgotPassword)
 	router.POST("/auth/verifyCode", AuthController.VerifyCode)
 	router.POST("/auth/resetPassword", AuthController.ResetPasswordUser)
-	router.GET("/auth/getUserProfile/:uuid", UserController.GetUserProfile)
+	router.PUT("/auth/changePassword/:uuid", AuthController.ChangePassword)
+	//profile
+	router.GET("/profile/getUserProfile/:uuid", UserController.GetUserProfile)
+	router.PUT("/profile/updateUserProfile/:uuid", UserController.ChangeProfile)
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)

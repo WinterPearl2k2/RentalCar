@@ -35,8 +35,8 @@ class Routes {
       case RoutesName.accountProfile:
         final args = settings.arguments as Map<String, UserProfileDTO>;
         return MaterialPageRoute(
-          builder: (context) =>
-              AccountProfileView(user: args['user'] ?? UserProfileDTO(),
+          builder: (context) => AccountProfileView(
+            user: args['user'] ?? const UserProfileDTO(),
           ),
         );
       default:
@@ -81,16 +81,23 @@ class Routes {
     );
   }
 
+  static void goToChangePasswordView(
+    BuildContext context,
+  ) {
+    Navigator.pushNamed(
+      context,
+      RoutesName.changePassword,
+    );
+  }
+
   static void goToResetPasswordView(
-      BuildContext context,
-      String email,
-      ) {
+    BuildContext context,
+    String email,
+  ) {
     Navigator.pushReplacementNamed(
       context,
       RoutesName.resetPassword,
-      arguments: {
-        'email': email
-      },
+      arguments: {'email': email},
     );
   }
 
@@ -103,16 +110,15 @@ class Routes {
   static void goToPreviousView(BuildContext context) {
     Navigator.of(context).pop();
   }
-  static void goToAccountProfileView(
-      BuildContext context,
-      UserProfileDTO user,
-      ) {
-    Navigator.pushNamed(
+
+  static Future<Object?> goToAccountProfileView(
+    BuildContext context,
+    UserProfileDTO user,
+  ) {
+    return Navigator.pushNamed(
       context,
       RoutesName.accountProfile,
-      arguments: {
-        'user': user
-      },
+      arguments: {'user': user},
     );
   }
 }
