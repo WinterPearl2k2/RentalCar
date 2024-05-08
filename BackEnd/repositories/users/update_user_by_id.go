@@ -7,12 +7,11 @@ import (
 	"github.com/google/uuid"
 )
 
-func GetUserById(uuidStr string) (models.User, error) {
-	var user models.User
+func UpdateUserById(uuidStr string, user models.User) error {
 	uuid, errUUID := uuid.Parse(uuidStr)
 	if errUUID != nil {
-		return user, errUUID
+		return errUUID
 	}
-	err := initializers.DB.First(&user, uuid).Error
-	return user, err
+	err := initializers.DB.Where("id_user=?", uuid).Updates(user).Error
+	return err
 }

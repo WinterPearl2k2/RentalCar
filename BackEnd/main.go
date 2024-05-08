@@ -3,6 +3,7 @@ package main
 import (
 	AuthController "rent-car/controllers/auth"
 	CarController "rent-car/controllers/car"
+	UserController "rent-car/controllers/profile"
 	"rent-car/initializers"
 
 	"github.com/gin-gonic/gin"
@@ -25,6 +26,10 @@ func main() {
 	router.POST("/auth/forgotPassword/:email", AuthController.ForgotPassword)
 	router.POST("/auth/verifyCode", AuthController.VerifyCode)
 	router.POST("/auth/resetPassword", AuthController.ResetPasswordUser)
+	router.PUT("/auth/changePassword/:uuid", AuthController.ChangePassword)
+	//profile
+	router.GET("/profile/getUserProfile/:uuid", UserController.GetUserProfile)
+	router.PUT("/profile/updateUserProfile/:uuid", UserController.ChangeProfile)
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)

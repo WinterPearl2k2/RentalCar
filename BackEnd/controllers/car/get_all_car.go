@@ -22,7 +22,7 @@ func GetAllCar(context *gin.Context) {
 
 	for _, car := range cars {
 
-		user, err := UserRepository.GetUserByID(car.UserId)
+		user, err := UserRepository.GetUserById(car.UserId.String())
 		if err != nil {
 			context.JSON(http.StatusInternalServerError, gin.H{
 				"error": "Cannot find user for car",
@@ -32,7 +32,7 @@ func GetAllCar(context *gin.Context) {
 		carData := gin.H{
 			"idCar":           car.IdCar,
 			"idUser":          car.UserId,
-			"userName":        user.NameUser, 
+			"userName":        user.NameUser,
 			"idReview":        car.ReviewId,
 			"nameCar":         car.NameCar,
 			"priceCar":        car.PriceCar,

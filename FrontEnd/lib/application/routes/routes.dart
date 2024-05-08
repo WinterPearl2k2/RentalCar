@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/data/dtos/user_profile_dto.dart';
+import 'package:rental_car/presentation/views/account_profile/account_profile_view.dart';
 import 'package:rental_car/presentation/views/add_car/add_car_view.dart';
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
 import 'package:rental_car/presentation/views/forgot_password/forgot_password_view.dart';
-import 'package:rental_car/presentation/views/verify_code/verify_code_view.dart';
 
 import 'routes_name.dart';
 
@@ -27,9 +28,12 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => const ForgotPasswordView(),
         );
-      case RoutesName.verifyCode:
+      case RoutesName.accountProfile:
+        final args = settings.arguments as Map<String, UserProfileDTO>;
         return MaterialPageRoute(
-          builder: (context) => const VerifyCodeView(),
+          builder: (context) => AccountProfileView(
+            user: args['user'] ?? const UserProfileDTO(),
+          ),
         );
       case RoutesName.carDetailView:
         final args = settings.arguments as Map<String, String>;
@@ -80,6 +84,15 @@ class Routes {
     );
   }
 
+  static void goToChangePasswordView(
+    BuildContext context,
+  ) {
+    Navigator.pushNamed(
+      context,
+      RoutesName.changePassword,
+    );
+  }
+
   static void goToResetPasswordView(
     BuildContext context,
     String email,
@@ -105,5 +118,16 @@ class Routes {
 
   static void goToPreviousView(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  static Future<Object?> goToAccountProfileView(
+    BuildContext context,
+    UserProfileDTO user,
+  ) {
+    return Navigator.pushNamed(
+      context,
+      RoutesName.accountProfile,
+      arguments: {'user': user},
+    );
   }
 }

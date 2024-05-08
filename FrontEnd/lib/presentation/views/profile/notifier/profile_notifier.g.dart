@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'reset_password_notifier.dart';
+part of 'profile_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$resetPasswordNotifierHash() =>
-    r'e44a7a350859c4c2b4d46befb1bbed5ee0bb7473';
+String _$profileNotifierHash() => r'e5b2cec22d350e25318e060332c78da009c6c635';
 
-/// See also [ResetPasswordNotifier].
-@ProviderFor(ResetPasswordNotifier)
-final resetPasswordNotifierProvider = AutoDisposeNotifierProvider<
-    ResetPasswordNotifier, ResetPasswordState>.internal(
-  ResetPasswordNotifier.new,
-  name: r'resetPasswordNotifierProvider',
+/// See also [ProfileNotifier].
+@ProviderFor(ProfileNotifier)
+final profileNotifierProvider =
+    AutoDisposeNotifierProvider<ProfileNotifier, ProfileState>.internal(
+  ProfileNotifier.new,
+  name: r'profileNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$resetPasswordNotifierHash,
+      : _$profileNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$ResetPasswordNotifier = AutoDisposeNotifier<ResetPasswordState>;
+typedef _$ProfileNotifier = AutoDisposeNotifier<ProfileState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

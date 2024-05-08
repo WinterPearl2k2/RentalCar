@@ -6,11 +6,11 @@ import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/notifier/bottom_navigation_notifier.dart';
 import 'package:rental_car/presentation/views/history/history_view.dart';
 import 'package:rental_car/presentation/views/home/home_view.dart';
+import 'package:rental_car/presentation/views/manager_car/manager_car_view.dart';
 import 'package:rental_car/presentation/views/profile/profile_view.dart';
 
 import '../../../application/utils/colors_utils.dart';
 import '../../common/base_state_delegate/base_state_delegate.dart';
-import '../contract/contract_view.dart';
 
 class BottomNavigationView extends ConsumerStatefulWidget {
   const BottomNavigationView({super.key});
@@ -46,7 +46,7 @@ class _BottomNavigationViewState
               controller: _pageController,
               children: const [
                 HomeView(),
-                ContractView(),
+                ManagerCarView(),
                 HistoryView(),
                 ProfileView(),
               ],
