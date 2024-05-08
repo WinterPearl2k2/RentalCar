@@ -9,30 +9,32 @@ class NoCarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Text(
-          "Currently, you don't have any cars!",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: ColorUtils.primaryColor,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            "Currently, you don't have any cars!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: ColorUtils.primaryColor,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        Text(
-          "You can add more cars below.",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: ColorUtils.textColor,
-            fontSize: 14.sp,
+          SizedBox(
+            height: 10.h,
           ),
-        ),
-      ],
+          Text(
+            "You can add more cars below.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: ColorUtils.textColor,
+              fontSize: 14.sp,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

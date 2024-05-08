@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeState {
-  List<Car> get listCar => throw _privateConstructorUsedError;
+  List<TopCarDTO> get listTopCar => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -28,7 +28,7 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({List<Car> listCar});
+  $Res call({List<TopCarDTO> listTopCar});
 }
 
 /// @nodoc
@@ -44,13 +44,13 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? listCar = null,
+    Object? listTopCar = null,
   }) {
     return _then(_value.copyWith(
-      listCar: null == listCar
-          ? _value.listCar
-          : listCar // ignore: cast_nullable_to_non_nullable
-              as List<Car>,
+      listTopCar: null == listTopCar
+          ? _value.listTopCar
+          : listTopCar // ignore: cast_nullable_to_non_nullable
+              as List<TopCarDTO>,
     ) as $Val);
   }
 }
@@ -63,7 +63,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Car> listCar});
+  $Res call({List<TopCarDTO> listTopCar});
 }
 
 /// @nodoc
@@ -77,13 +77,13 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? listCar = null,
+    Object? listTopCar = null,
   }) {
     return _then(_$HomeStateImpl(
-      listCar: null == listCar
-          ? _value._listCar
-          : listCar // ignore: cast_nullable_to_non_nullable
-              as List<Car>,
+      listTopCar: null == listTopCar
+          ? _value._listTopCar
+          : listTopCar // ignore: cast_nullable_to_non_nullable
+              as List<TopCarDTO>,
     ));
   }
 }
@@ -91,21 +91,21 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HomeStateImpl implements _HomeState {
-  const _$HomeStateImpl({final List<Car> listCar = const []})
-      : _listCar = listCar;
+  const _$HomeStateImpl({final List<TopCarDTO> listTopCar = const []})
+      : _listTopCar = listTopCar;
 
-  final List<Car> _listCar;
+  final List<TopCarDTO> _listTopCar;
   @override
   @JsonKey()
-  List<Car> get listCar {
-    if (_listCar is EqualUnmodifiableListView) return _listCar;
+  List<TopCarDTO> get listTopCar {
+    if (_listTopCar is EqualUnmodifiableListView) return _listTopCar;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listCar);
+    return EqualUnmodifiableListView(_listTopCar);
   }
 
   @override
   String toString() {
-    return 'HomeState(listCar: $listCar)';
+    return 'HomeState(listTopCar: $listTopCar)';
   }
 
   @override
@@ -113,12 +113,13 @@ class _$HomeStateImpl implements _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
-            const DeepCollectionEquality().equals(other._listCar, _listCar));
+            const DeepCollectionEquality()
+                .equals(other._listTopCar, _listTopCar));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_listCar));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_listTopCar));
 
   @JsonKey(ignore: true)
   @override
@@ -128,10 +129,11 @@ class _$HomeStateImpl implements _HomeState {
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState({final List<Car> listCar}) = _$HomeStateImpl;
+  const factory _HomeState({final List<TopCarDTO> listTopCar}) =
+      _$HomeStateImpl;
 
   @override
-  List<Car> get listCar;
+  List<TopCarDTO> get listTopCar;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>

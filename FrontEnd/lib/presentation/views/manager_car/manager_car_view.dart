@@ -67,7 +67,7 @@ class _HomeViewState
                     );
                     switch (status) {
                       case Status.loading:
-                        return const CircularProgressIndicator();
+                        return const Center(child: CircularProgressIndicator());
 
                       case Status.success:
                         return listCarUser.isNotEmpty
@@ -76,7 +76,9 @@ class _HomeViewState
                                   listCarUser: listCarUser,
                                 ),
                               )
-                            : const NoCarWidget();
+                            : const Expanded(
+                                child: NoCarWidget(),
+                              );
                     }
                   },
                 )

@@ -1,6 +1,8 @@
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
+import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
+import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 
 import '../../domain/repositories/car_repository.dart';
@@ -33,13 +35,13 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<List<Car>> getAllCar() {
-    return get<List<Car>>(
+  Future<List<TopCarDTO>> getAllTopCar() {
+    return get<List<TopCarDTO>>(
       url: EndPoint.restUrlGetAllCar,
       mapper: (response) {
         return (response.data as List)
             .map(
-              (json) => Car.fromJson(json),
+              (json) => TopCarDTO.fromJson(json),
         )
             .toList();
       },
@@ -61,11 +63,11 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<Car> getCarById({required String idCar}) {
-    return get<Car>(
+  Future<CarDetailDTO> getCarById({required String idCar}) {
+    return get<CarDetailDTO>(
       url:"${EndPoint.restUrlGetCarById}/$idCar",
       mapper: (response) {
-        return Car.fromJson(response.data);
+        return CarDetailDTO.fromJson(response.data);
       },
     );
   }
