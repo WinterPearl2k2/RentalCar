@@ -3,14 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/domain/model/car.dart';
-
 
 class BodyDetailWidget extends StatelessWidget {
   const BodyDetailWidget({
-    super.key, required this.car,
+    super.key,
+    required this.car,
   });
+
   final Car car;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,7 +49,10 @@ class BodyDetailWidget extends StatelessWidget {
           ),
           buildDetailRow(title: "Fuel", attribute: car.fuelTypeCar),
           buildDetailRow(title: "Interior Color", attribute: car.colorCar),
-          buildDetailRow(title: "Kilometers", attribute: car.kilometersCar.toString()),
+          buildDetailRow(
+            title: "Kilometers",
+            attribute: FormatUtils.formatKilometers(car.kilometersCar),
+          ),
           buildDetailRow(title: "Seats", attribute: car.seatsCar.toString()),
           buildDetailRow(title: "Transmission", attribute: car.transmissionCar),
           SizedBox(
@@ -136,6 +142,7 @@ class BodyDetailWidget extends StatelessWidget {
     );
   }
 }
+
 Padding buildDetailRow({required String title, required String attribute}) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 5.0.h),
@@ -160,5 +167,4 @@ Padding buildDetailRow({required String title, required String attribute}) {
       ],
     ),
   );
-
 }
