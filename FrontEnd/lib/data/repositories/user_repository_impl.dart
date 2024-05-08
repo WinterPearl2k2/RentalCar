@@ -64,9 +64,9 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
   }
 
   @override
-  Future<UserProfileDTO> getUser({required String uuid}) {
+  Future<UserProfileDTO> getUser() {
     return get<UserProfileDTO>(
-      url: '${EndPoint.restUrlGetUser}/$uuid',
+      url: EndPoint.restUrlGetUser,
       mapper: (response) => UserProfileDTO.fromJson(
         response.data,
       ),
@@ -76,10 +76,9 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
   @override
   Future<UserProfileDTO> updateUser({
     required UserProfileDTO userDTO,
-    required String uuid,
   }) {
     return put<UserProfileDTO>(
-      url: '${EndPoint.restUrlUpdateUser}/$uuid',
+      url: EndPoint.restUrlUpdateUser,
       data: userDTO.toJson(),
       mapper: (response) => UserProfileDTO.fromJson(
         response.data,
@@ -90,10 +89,9 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
   @override
   Future<void> changePassword({
     required PasswordDto passwordDto,
-    required String uuid,
   }) {
     return put<void>(
-      url: '${EndPoint.restUrlChangePassword}/$uuid',
+      url: EndPoint.restUrlChangePassword,
       data: passwordDto.toJson(),
       mapper: (_) {},
     );

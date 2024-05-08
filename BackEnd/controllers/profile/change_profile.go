@@ -12,11 +12,14 @@ import (
 
 func ChangeProfile(context *gin.Context) {
 	var body UserProfile
-	// uuid := context.Param("uuid")
 	uuid, err := Middleware.RequireAuth(context)
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	if err := context.ShouldBindJSON(&body); err != nil {
-		context.JSON(http.StatusUnprocessableEntity, gin.H{
-			"message": "Invalid information",
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
 		})
 		return
 	}

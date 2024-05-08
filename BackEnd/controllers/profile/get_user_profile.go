@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"net/http"
+	Middleware "rent-car/middleware"
 	UserRepository "rent-car/repositories/users"
 
 	"github.com/gin-gonic/gin"
@@ -10,9 +11,13 @@ import (
 )
 
 func GetUserProfile(context *gin.Context) {
-	uuid := context.Param("uuid")
+	uuid, err := Middleware.RequireAuth(context)
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 
-	user, err := UserRepository.GetUserById(uuid)
+	user, err := UserRepository.GetUserById(uuid.String())
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			context.JSON(http.StatusBadRequest, gin.H{

@@ -46,11 +46,6 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
       state = state.copyWith(wait: false);
       return;
     }
-    String uuid = PreferenceService.getUUID();
-    if(uuid.isEmpty) {
-      state = state.copyWith(wait: false);
-      return;
-    }
 
     final userProfileDto = UserProfileDTO(
       name: name.text,
@@ -60,7 +55,6 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
     try {
       final userUpdated = await injection.getIt<IAuthService>().updateUser(
         userDTO: userProfileDto,
-        uuid: uuid,
       );
       state = state.copyWith(
         user: userUpdated,

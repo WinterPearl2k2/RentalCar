@@ -31,18 +31,14 @@ abstract class IAuthService {
     required ResetPasswordDto resetPassword,
   });
 
-  Future<UserProfileDTO> getUser({
-    required String uuid,
-  });
+  Future<UserProfileDTO> getUser();
 
   Future<UserProfileDTO> updateUser({
     required UserProfileDTO userDTO,
-    required String uuid,
   });
 
   Future<void> changePassword({
     required PasswordDto passwordDto,
-    required String uuid,
   });
 }
 
@@ -111,31 +107,25 @@ class AuthServiceImpl implements IAuthService {
   }
 
   @override
-  Future<UserProfileDTO> getUser({
-    required String uuid,
-  }) {
-    return _userRepository.getUser(uuid: uuid);
+  Future<UserProfileDTO> getUser() {
+    return _userRepository.getUser();
   }
 
   @override
   Future<UserProfileDTO> updateUser({
     required UserProfileDTO userDTO,
-    required String uuid,
   }) {
     return _userRepository.updateUser(
       userDTO: userDTO,
-      uuid: uuid,
     );
   }
 
   @override
   Future<void> changePassword({
     required PasswordDto passwordDto,
-    required String uuid,
   }) {
     return _userRepository.changePassword(
       passwordDto: passwordDto,
-      uuid: uuid,
     );
   }
 }

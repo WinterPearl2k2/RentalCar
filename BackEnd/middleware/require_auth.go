@@ -15,20 +15,20 @@ import (
 
 func RequireAuth(context *gin.Context) (uuid.UUID, error) {
 	authorization := context.Request.Header.Get("Authorization")
-	tokenString := strings.Replace(authorization, "Bearer", "", 1)
+	tokenString := strings.TrimPrefix(authorization, "Bearer ")
 
 	secret := []byte(os.Getenv("JWT_ACCESS_SECRET"))
+	log.Print(os.Getenv("JWT_ACCESS_SECRET"))
 	log.Print(tokenString)
 
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		_, ok := token.Method.(*jwt.SigningMethodHMAC)
-		if !ok {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 		return secret, nil
 	})
 
-	if err != nil || !token.Valid {
+	if err != nil {
 		context.JSON(http.StatusUnauthorized, gin.H{
 			"message": err.Error(),
 		})
@@ -37,7 +37,7 @@ func RequireAuth(context *gin.Context) (uuid.UUID, error) {
 	}
 
 	claims, ok := token.Claims.(jwt.MapClaims)
-	if !ok || !token.Valid {
+	if !ok {
 		context.JSON(http.StatusUnauthorized, gin.H{
 			"message": "Unauthorized",
 		})

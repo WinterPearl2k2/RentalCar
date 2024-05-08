@@ -32,17 +32,13 @@ abstract class IUserRepository {
     required ResetPasswordDto resetPasswordDto,
   });
 
-  Future<UserProfileDTO> getUser({
-    required String uuid,
-  });
+  Future<UserProfileDTO> getUser();
 
   Future<UserProfileDTO> updateUser({
     required UserProfileDTO userDTO,
-    required String uuid,
   });
 
   Future<void> changePassword({
     required PasswordDto passwordDto,
-    required String uuid,
   });
 }

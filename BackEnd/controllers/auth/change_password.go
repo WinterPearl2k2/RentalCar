@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"net/http"
+	Middleware "rent-car/middleware"
 	UserRepository "rent-car/repositories/users"
 
 	"github.com/gin-gonic/gin"
@@ -12,7 +13,11 @@ import (
 
 func ChangePassword(context *gin.Context) {
 	var body PasswordData
-	uuid := context.Param("uuid")
+	uuid, err := Middleware.RequireAuth(context)
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	if err := context.ShouldBindJSON(&body); err != nil {
 		context.JSON(http.StatusUnprocessableEntity, gin.H{
 			"message": "Invalid information",
@@ -20,7 +25,7 @@ func ChangePassword(context *gin.Context) {
 		return
 	}
 
-	user, err := UserRepository.GetUserById(uuid)
+	user, err := UserRepository.GetUserById(uuid.String())
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -56,7 +61,7 @@ func ChangePassword(context *gin.Context) {
 
 	user.PasswordUser = string(hash)
 
-	errUpdate := UserRepository.UpdateUserById(uuid, user)
+	errUpdate := UserRepository.UpdateUserById(uuid.String(), user)
 	if errUpdate != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to update password",

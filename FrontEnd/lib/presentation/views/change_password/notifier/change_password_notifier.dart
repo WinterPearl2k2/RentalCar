@@ -36,10 +36,8 @@ class ChangePasswordNotifier extends _$ChangePasswordNotifier {
         oldPassword: oldPassword.text,
         newPassword: confirmPassword.text,
       );
-      final uuid = PreferenceService.getUUID();
       await injection.getIt<IAuthService>().changePassword(
             passwordDto: passwordDto,
-            uuid: uuid,
           );
       oldPassword.clear();
       newPassword.clear();
