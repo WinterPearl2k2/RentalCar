@@ -7,5 +7,20 @@ class ForgotPasswordState with _$ForgotPasswordState {
   const factory ForgotPasswordState({
     @Default(false) bool errorEmail,
     @Default(false) bool wait,
-}) = _ForgotPasswordState;
+    @Default(false) bool showNewPassword,
+    @Default(false) bool showConfirmPassword,
+    @Default(false) bool errNewPassword,
+    @Default(false) bool errConfirmPassword,
+    @Default(false) bool isResend,
+    @Default('') String code,
+    @Default('') String emailString,
+    @Default(false) bool clearText,
+    @Default(ForgotPasswordStatus.senEmail) ForgotPasswordStatus status,
+  }) = _ForgotPasswordState;
+}
+
+enum ForgotPasswordStatus {
+  senEmail,
+  verifyCode,
+  resetPassword,
 }

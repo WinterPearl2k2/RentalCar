@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../application/utils/colors_utils.dart';
+import 'package:rental_car/presentation/views/forgot_password/state/forgot_password_state.dart';
+import 'package:rental_car/presentation/views/forgot_password/widgets/forgot_password_widget.dart';
+import 'package:rental_car/presentation/views/forgot_password/widgets/reset_password_widget.dart';
+import 'package:rental_car/presentation/views/forgot_password/widgets/verify_code_widget.dart';
 import '../../common/base_state_delegate/base_state_delegate.dart';
 import '../../common/widgets/loading_widget.dart';
-import '../../common/widgets/text_button_widget.dart';
-import '../../common/widgets/text_form_field.dart';
 import 'notifier/forgot_password_notifier.dart';
 
 class ForgotPasswordView extends ConsumerStatefulWidget {
@@ -18,8 +18,6 @@ class ForgotPasswordView extends ConsumerStatefulWidget {
 
 class _ForgotPasswordViewState
     extends BaseStateDelegate<ForgotPasswordView, ForgotPasswordNotifier> {
-  final TextEditingController emailController = TextEditingController();
-
   @override
   void initNotifier() {
     notifier = ref.read(
@@ -35,78 +33,35 @@ class _ForgotPasswordViewState
         appBar: AppBar(),
         body: Stack(
           children: [
-            Container(
-              margin: const EdgeInsets.symmetric(
-                vertical: 20,
-                horizontal: 30,
-              ).r,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Forgot Password?',
-                    style: TextStyle(
-                        color: ColorUtils.primaryColor,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold),
+            Consumer(
+              builder: (context, ref, _) {
+                final statusView = ref.watch(
+                  forgotPasswordNotifierProvider.select(
+                    (value) => value.status,
                   ),
-                  Text(
-                    'Please input your email to recover your RentalCar account.',
-                    style: TextStyle(
-                      color: ColorUtils.textColor,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Consumer(
-                    builder: (BuildContext context, WidgetRef ref,
-                        Widget? child) {
-                      final err = ref.watch(
-                        forgotPasswordNotifierProvider.select(
-                          (value) => value.errorEmail,
-                        ),
-                      );
-                      return TextFormFieldCustomWidget(
-                        hint: 'Your email address',
-                        label: "Email address",
-                        inputAction: TextInputAction.done,
-                        controller: emailController,
-                        error: err
-                            ? const Text(
-                                'Invalid email!',
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 10,
-                                ),
-                              )
-                            : null,
-                        onChanged: (value) => notifier.checkEmail(value),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 50.h,
-                  ),
-                  TextButtonWidget(
-                    label: 'Recover account',
-                    onPressed: () => notifier.forgotPassword(
-                      email: emailController,
-                      context: context,
-                    ),
-                  ),
-                ],
-              ),
+                );
+                switch (statusView) {
+                  case ForgotPasswordStatus.senEmail:
+                    return ForgotPasswordWidget(
+                      notifier: notifier,
+                    );
+                  case ForgotPasswordStatus.verifyCode:
+                    return VerifyCodeWidget(
+                      notifier: notifier,
+                    );
+                  case ForgotPasswordStatus.resetPassword:
+                    return ResetPasswordWidget(
+                      notifier: notifier,
+                    );
+                }
+              },
             ),
             Consumer(
               builder: (context, ref, child) {
                 final isWaiting = ref.watch(
-                  forgotPasswordNotifierProvider
-                      .select((value) => value.wait),
+                  forgotPasswordNotifierProvider.select(
+                    (value) => value.wait,
+                  ),
                 );
                 return isWaiting ? const LoadingWidget() : const SizedBox();
               },
@@ -115,11 +70,5 @@ class _ForgotPasswordViewState
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    emailController.dispose();
   }
 }
