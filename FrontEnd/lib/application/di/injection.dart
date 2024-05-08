@@ -1,10 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:rental_car/application/services/auth_service.dart';
 import 'package:rental_car/application/services/car_service.dart';
+import 'package:rental_car/application/services/home_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/repositories/car_repository_impl.dart';
+import 'package:rental_car/data/repositories/home_repository_impl.dart';
 import 'package:rental_car/data/repositories/user_repository_impl.dart';
 import 'package:rental_car/domain/repositories/car_repository.dart';
+import 'package:rental_car/domain/repositories/home_repository.dart';
 import 'package:rental_car/domain/repositories/user_repository.dart';
 
 
@@ -31,10 +34,20 @@ class Injection {
     getIt.registerLazySingleton<ICarRepository>(
       () => CarRepositoryImpl(),
     );
-    //IAuthService
+    //ICarService
     getIt.registerLazySingleton<ICarService>(
       () => CarServiceImpl(
         getIt<ICarRepository>(),
+      ),
+    );
+    //IHomeRepository
+    getIt.registerLazySingleton<IHomeRepository>(
+      () => HomeRepositoryImpl(),
+    );
+    //IHomeService
+    getIt.registerLazySingleton<IHomeService>(
+      () => HomeServiceImpl(
+        getIt<IHomeRepository>(),
       ),
     );
   }

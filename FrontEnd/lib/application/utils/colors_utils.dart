@@ -10,4 +10,5 @@ class ColorUtils {
   static Color blueColor = const Color(0xff2F57CF);
   static Color blueMiddleColor = const Color(0xff678BE6);
   static Color primaryBackgroundColor = const Color(0xffF7F7FA);
+  static Color yellowColor = const Color(0xffffbd16);
 }

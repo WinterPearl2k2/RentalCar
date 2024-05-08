@@ -6,19 +6,20 @@ part 'car.g.dart';
 class Car with _$Car {
   const factory Car({
     @Default('') String idCar,
-    @Default('') String idBrand,
-    @Default('') String idOwner,
-    @Default([]) List<String> idReview,
+    @Default('') String idUser,
+    @Default('') String idReview,
     @Default('') String nameCar,
-    @Default('') String priceCar,
-    @Default(TypeFuel.gasFuel) TypeFuel fuelTypeCar,
+    @Default(0) double priceCar,
+    @Default('') String fuelTypeCar,
+    @Default('') String brandCar,
     @Default('') String colorCar,
     @Default('') String descriptionCar,
     @Default(0) int kilometersCar,
     @Default(0) int seatsCar,
-    @Default(Transmission.manual) Transmission transmissionCar,
-    @Default([]) List<String> imagesCar,
-    @Default(StatusCar.available) StatusCar statusCar,
+    @Default('') String transmissionCar,
+    @Default('') String addressCar,
+    @Default("") String imagesCar,
+    @Default('') String statusCar,
     @Default('') String createAt,
   }) = _Car;
 
@@ -28,16 +29,4 @@ class Car with _$Car {
 enum StatusCar {
   renting,
   available,
-}
-
-enum TypeFuel {
-  dieselFuel,
-  gasFuel,
-  hybridFuel,
-  electricFuel,
-}
-
-enum Transmission {
-  automatic,
-  manual,
 }

@@ -21,19 +21,20 @@ Car _$CarFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Car {
   String get idCar => throw _privateConstructorUsedError;
-  String get idBrand => throw _privateConstructorUsedError;
-  String get idOwner => throw _privateConstructorUsedError;
-  List<String> get idReview => throw _privateConstructorUsedError;
+  String get idUser => throw _privateConstructorUsedError;
+  String get idReview => throw _privateConstructorUsedError;
   String get nameCar => throw _privateConstructorUsedError;
-  String get priceCar => throw _privateConstructorUsedError;
-  TypeFuel get fuelTypeCar => throw _privateConstructorUsedError;
+  double get priceCar => throw _privateConstructorUsedError;
+  String get fuelTypeCar => throw _privateConstructorUsedError;
+  String get brandCar => throw _privateConstructorUsedError;
   String get colorCar => throw _privateConstructorUsedError;
   String get descriptionCar => throw _privateConstructorUsedError;
   int get kilometersCar => throw _privateConstructorUsedError;
   int get seatsCar => throw _privateConstructorUsedError;
-  Transmission get transmissionCar => throw _privateConstructorUsedError;
-  List<String> get imagesCar => throw _privateConstructorUsedError;
-  StatusCar get statusCar => throw _privateConstructorUsedError;
+  String get transmissionCar => throw _privateConstructorUsedError;
+  String get addressCar => throw _privateConstructorUsedError;
+  String get imagesCar => throw _privateConstructorUsedError;
+  String get statusCar => throw _privateConstructorUsedError;
   String get createAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,19 +49,20 @@ abstract class $CarCopyWith<$Res> {
   @useResult
   $Res call(
       {String idCar,
-      String idBrand,
-      String idOwner,
-      List<String> idReview,
+      String idUser,
+      String idReview,
       String nameCar,
-      String priceCar,
-      TypeFuel fuelTypeCar,
+      double priceCar,
+      String fuelTypeCar,
+      String brandCar,
       String colorCar,
       String descriptionCar,
       int kilometersCar,
       int seatsCar,
-      Transmission transmissionCar,
-      List<String> imagesCar,
-      StatusCar statusCar,
+      String transmissionCar,
+      String addressCar,
+      String imagesCar,
+      String statusCar,
       String createAt});
 }
 
@@ -77,17 +79,18 @@ class _$CarCopyWithImpl<$Res, $Val extends Car> implements $CarCopyWith<$Res> {
   @override
   $Res call({
     Object? idCar = null,
-    Object? idBrand = null,
-    Object? idOwner = null,
+    Object? idUser = null,
     Object? idReview = null,
     Object? nameCar = null,
     Object? priceCar = null,
     Object? fuelTypeCar = null,
+    Object? brandCar = null,
     Object? colorCar = null,
     Object? descriptionCar = null,
     Object? kilometersCar = null,
     Object? seatsCar = null,
     Object? transmissionCar = null,
+    Object? addressCar = null,
     Object? imagesCar = null,
     Object? statusCar = null,
     Object? createAt = null,
@@ -97,18 +100,14 @@ class _$CarCopyWithImpl<$Res, $Val extends Car> implements $CarCopyWith<$Res> {
           ? _value.idCar
           : idCar // ignore: cast_nullable_to_non_nullable
               as String,
-      idBrand: null == idBrand
-          ? _value.idBrand
-          : idBrand // ignore: cast_nullable_to_non_nullable
-              as String,
-      idOwner: null == idOwner
-          ? _value.idOwner
-          : idOwner // ignore: cast_nullable_to_non_nullable
+      idUser: null == idUser
+          ? _value.idUser
+          : idUser // ignore: cast_nullable_to_non_nullable
               as String,
       idReview: null == idReview
           ? _value.idReview
           : idReview // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
       nameCar: null == nameCar
           ? _value.nameCar
           : nameCar // ignore: cast_nullable_to_non_nullable
@@ -116,11 +115,15 @@ class _$CarCopyWithImpl<$Res, $Val extends Car> implements $CarCopyWith<$Res> {
       priceCar: null == priceCar
           ? _value.priceCar
           : priceCar // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       fuelTypeCar: null == fuelTypeCar
           ? _value.fuelTypeCar
           : fuelTypeCar // ignore: cast_nullable_to_non_nullable
-              as TypeFuel,
+              as String,
+      brandCar: null == brandCar
+          ? _value.brandCar
+          : brandCar // ignore: cast_nullable_to_non_nullable
+              as String,
       colorCar: null == colorCar
           ? _value.colorCar
           : colorCar // ignore: cast_nullable_to_non_nullable
@@ -140,15 +143,19 @@ class _$CarCopyWithImpl<$Res, $Val extends Car> implements $CarCopyWith<$Res> {
       transmissionCar: null == transmissionCar
           ? _value.transmissionCar
           : transmissionCar // ignore: cast_nullable_to_non_nullable
-              as Transmission,
+              as String,
+      addressCar: null == addressCar
+          ? _value.addressCar
+          : addressCar // ignore: cast_nullable_to_non_nullable
+              as String,
       imagesCar: null == imagesCar
           ? _value.imagesCar
           : imagesCar // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
       statusCar: null == statusCar
           ? _value.statusCar
           : statusCar // ignore: cast_nullable_to_non_nullable
-              as StatusCar,
+              as String,
       createAt: null == createAt
           ? _value.createAt
           : createAt // ignore: cast_nullable_to_non_nullable
@@ -165,19 +172,20 @@ abstract class _$$CarImplCopyWith<$Res> implements $CarCopyWith<$Res> {
   @useResult
   $Res call(
       {String idCar,
-      String idBrand,
-      String idOwner,
-      List<String> idReview,
+      String idUser,
+      String idReview,
       String nameCar,
-      String priceCar,
-      TypeFuel fuelTypeCar,
+      double priceCar,
+      String fuelTypeCar,
+      String brandCar,
       String colorCar,
       String descriptionCar,
       int kilometersCar,
       int seatsCar,
-      Transmission transmissionCar,
-      List<String> imagesCar,
-      StatusCar statusCar,
+      String transmissionCar,
+      String addressCar,
+      String imagesCar,
+      String statusCar,
       String createAt});
 }
 
@@ -191,17 +199,18 @@ class __$$CarImplCopyWithImpl<$Res> extends _$CarCopyWithImpl<$Res, _$CarImpl>
   @override
   $Res call({
     Object? idCar = null,
-    Object? idBrand = null,
-    Object? idOwner = null,
+    Object? idUser = null,
     Object? idReview = null,
     Object? nameCar = null,
     Object? priceCar = null,
     Object? fuelTypeCar = null,
+    Object? brandCar = null,
     Object? colorCar = null,
     Object? descriptionCar = null,
     Object? kilometersCar = null,
     Object? seatsCar = null,
     Object? transmissionCar = null,
+    Object? addressCar = null,
     Object? imagesCar = null,
     Object? statusCar = null,
     Object? createAt = null,
@@ -211,18 +220,14 @@ class __$$CarImplCopyWithImpl<$Res> extends _$CarCopyWithImpl<$Res, _$CarImpl>
           ? _value.idCar
           : idCar // ignore: cast_nullable_to_non_nullable
               as String,
-      idBrand: null == idBrand
-          ? _value.idBrand
-          : idBrand // ignore: cast_nullable_to_non_nullable
-              as String,
-      idOwner: null == idOwner
-          ? _value.idOwner
-          : idOwner // ignore: cast_nullable_to_non_nullable
+      idUser: null == idUser
+          ? _value.idUser
+          : idUser // ignore: cast_nullable_to_non_nullable
               as String,
       idReview: null == idReview
-          ? _value._idReview
+          ? _value.idReview
           : idReview // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
       nameCar: null == nameCar
           ? _value.nameCar
           : nameCar // ignore: cast_nullable_to_non_nullable
@@ -230,11 +235,15 @@ class __$$CarImplCopyWithImpl<$Res> extends _$CarCopyWithImpl<$Res, _$CarImpl>
       priceCar: null == priceCar
           ? _value.priceCar
           : priceCar // ignore: cast_nullable_to_non_nullable
-              as String,
+              as double,
       fuelTypeCar: null == fuelTypeCar
           ? _value.fuelTypeCar
           : fuelTypeCar // ignore: cast_nullable_to_non_nullable
-              as TypeFuel,
+              as String,
+      brandCar: null == brandCar
+          ? _value.brandCar
+          : brandCar // ignore: cast_nullable_to_non_nullable
+              as String,
       colorCar: null == colorCar
           ? _value.colorCar
           : colorCar // ignore: cast_nullable_to_non_nullable
@@ -254,15 +263,19 @@ class __$$CarImplCopyWithImpl<$Res> extends _$CarCopyWithImpl<$Res, _$CarImpl>
       transmissionCar: null == transmissionCar
           ? _value.transmissionCar
           : transmissionCar // ignore: cast_nullable_to_non_nullable
-              as Transmission,
+              as String,
+      addressCar: null == addressCar
+          ? _value.addressCar
+          : addressCar // ignore: cast_nullable_to_non_nullable
+              as String,
       imagesCar: null == imagesCar
-          ? _value._imagesCar
+          ? _value.imagesCar
           : imagesCar // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as String,
       statusCar: null == statusCar
           ? _value.statusCar
           : statusCar // ignore: cast_nullable_to_non_nullable
-              as StatusCar,
+              as String,
       createAt: null == createAt
           ? _value.createAt
           : createAt // ignore: cast_nullable_to_non_nullable
@@ -276,22 +289,21 @@ class __$$CarImplCopyWithImpl<$Res> extends _$CarCopyWithImpl<$Res, _$CarImpl>
 class _$CarImpl implements _Car {
   const _$CarImpl(
       {this.idCar = '',
-      this.idBrand = '',
-      this.idOwner = '',
-      final List<String> idReview = const [],
+      this.idUser = '',
+      this.idReview = '',
       this.nameCar = '',
-      this.priceCar = '',
-      this.fuelTypeCar = TypeFuel.gasFuel,
+      this.priceCar = 0,
+      this.fuelTypeCar = '',
+      this.brandCar = '',
       this.colorCar = '',
       this.descriptionCar = '',
       this.kilometersCar = 0,
       this.seatsCar = 0,
-      this.transmissionCar = Transmission.manual,
-      final List<String> imagesCar = const [],
-      this.statusCar = StatusCar.available,
-      this.createAt = ''})
-      : _idReview = idReview,
-        _imagesCar = imagesCar;
+      this.transmissionCar = '',
+      this.addressCar = '',
+      this.imagesCar = "",
+      this.statusCar = '',
+      this.createAt = ''});
 
   factory _$CarImpl.fromJson(Map<String, dynamic> json) =>
       _$$CarImplFromJson(json);
@@ -301,28 +313,22 @@ class _$CarImpl implements _Car {
   final String idCar;
   @override
   @JsonKey()
-  final String idBrand;
+  final String idUser;
   @override
   @JsonKey()
-  final String idOwner;
-  final List<String> _idReview;
-  @override
-  @JsonKey()
-  List<String> get idReview {
-    if (_idReview is EqualUnmodifiableListView) return _idReview;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_idReview);
-  }
-
+  final String idReview;
   @override
   @JsonKey()
   final String nameCar;
   @override
   @JsonKey()
-  final String priceCar;
+  final double priceCar;
   @override
   @JsonKey()
-  final TypeFuel fuelTypeCar;
+  final String fuelTypeCar;
+  @override
+  @JsonKey()
+  final String brandCar;
   @override
   @JsonKey()
   final String colorCar;
@@ -337,26 +343,23 @@ class _$CarImpl implements _Car {
   final int seatsCar;
   @override
   @JsonKey()
-  final Transmission transmissionCar;
-  final List<String> _imagesCar;
+  final String transmissionCar;
   @override
   @JsonKey()
-  List<String> get imagesCar {
-    if (_imagesCar is EqualUnmodifiableListView) return _imagesCar;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_imagesCar);
-  }
-
+  final String addressCar;
   @override
   @JsonKey()
-  final StatusCar statusCar;
+  final String imagesCar;
+  @override
+  @JsonKey()
+  final String statusCar;
   @override
   @JsonKey()
   final String createAt;
 
   @override
   String toString() {
-    return 'Car(idCar: $idCar, idBrand: $idBrand, idOwner: $idOwner, idReview: $idReview, nameCar: $nameCar, priceCar: $priceCar, fuelTypeCar: $fuelTypeCar, colorCar: $colorCar, descriptionCar: $descriptionCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, transmissionCar: $transmissionCar, imagesCar: $imagesCar, statusCar: $statusCar, createAt: $createAt)';
+    return 'Car(idCar: $idCar, idUser: $idUser, idReview: $idReview, nameCar: $nameCar, priceCar: $priceCar, fuelTypeCar: $fuelTypeCar, brandCar: $brandCar, colorCar: $colorCar, descriptionCar: $descriptionCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, transmissionCar: $transmissionCar, addressCar: $addressCar, imagesCar: $imagesCar, statusCar: $statusCar, createAt: $createAt)';
   }
 
   @override
@@ -365,14 +368,16 @@ class _$CarImpl implements _Car {
         (other.runtimeType == runtimeType &&
             other is _$CarImpl &&
             (identical(other.idCar, idCar) || other.idCar == idCar) &&
-            (identical(other.idBrand, idBrand) || other.idBrand == idBrand) &&
-            (identical(other.idOwner, idOwner) || other.idOwner == idOwner) &&
-            const DeepCollectionEquality().equals(other._idReview, _idReview) &&
+            (identical(other.idUser, idUser) || other.idUser == idUser) &&
+            (identical(other.idReview, idReview) ||
+                other.idReview == idReview) &&
             (identical(other.nameCar, nameCar) || other.nameCar == nameCar) &&
             (identical(other.priceCar, priceCar) ||
                 other.priceCar == priceCar) &&
             (identical(other.fuelTypeCar, fuelTypeCar) ||
                 other.fuelTypeCar == fuelTypeCar) &&
+            (identical(other.brandCar, brandCar) ||
+                other.brandCar == brandCar) &&
             (identical(other.colorCar, colorCar) ||
                 other.colorCar == colorCar) &&
             (identical(other.descriptionCar, descriptionCar) ||
@@ -383,8 +388,10 @@ class _$CarImpl implements _Car {
                 other.seatsCar == seatsCar) &&
             (identical(other.transmissionCar, transmissionCar) ||
                 other.transmissionCar == transmissionCar) &&
-            const DeepCollectionEquality()
-                .equals(other._imagesCar, _imagesCar) &&
+            (identical(other.addressCar, addressCar) ||
+                other.addressCar == addressCar) &&
+            (identical(other.imagesCar, imagesCar) ||
+                other.imagesCar == imagesCar) &&
             (identical(other.statusCar, statusCar) ||
                 other.statusCar == statusCar) &&
             (identical(other.createAt, createAt) ||
@@ -396,18 +403,19 @@ class _$CarImpl implements _Car {
   int get hashCode => Object.hash(
       runtimeType,
       idCar,
-      idBrand,
-      idOwner,
-      const DeepCollectionEquality().hash(_idReview),
+      idUser,
+      idReview,
       nameCar,
       priceCar,
       fuelTypeCar,
+      brandCar,
       colorCar,
       descriptionCar,
       kilometersCar,
       seatsCar,
       transmissionCar,
-      const DeepCollectionEquality().hash(_imagesCar),
+      addressCar,
+      imagesCar,
       statusCar,
       createAt);
 
@@ -428,19 +436,20 @@ class _$CarImpl implements _Car {
 abstract class _Car implements Car {
   const factory _Car(
       {final String idCar,
-      final String idBrand,
-      final String idOwner,
-      final List<String> idReview,
+      final String idUser,
+      final String idReview,
       final String nameCar,
-      final String priceCar,
-      final TypeFuel fuelTypeCar,
+      final double priceCar,
+      final String fuelTypeCar,
+      final String brandCar,
       final String colorCar,
       final String descriptionCar,
       final int kilometersCar,
       final int seatsCar,
-      final Transmission transmissionCar,
-      final List<String> imagesCar,
-      final StatusCar statusCar,
+      final String transmissionCar,
+      final String addressCar,
+      final String imagesCar,
+      final String statusCar,
       final String createAt}) = _$CarImpl;
 
   factory _Car.fromJson(Map<String, dynamic> json) = _$CarImpl.fromJson;
@@ -448,17 +457,17 @@ abstract class _Car implements Car {
   @override
   String get idCar;
   @override
-  String get idBrand;
+  String get idUser;
   @override
-  String get idOwner;
-  @override
-  List<String> get idReview;
+  String get idReview;
   @override
   String get nameCar;
   @override
-  String get priceCar;
+  double get priceCar;
   @override
-  TypeFuel get fuelTypeCar;
+  String get fuelTypeCar;
+  @override
+  String get brandCar;
   @override
   String get colorCar;
   @override
@@ -468,11 +477,13 @@ abstract class _Car implements Car {
   @override
   int get seatsCar;
   @override
-  Transmission get transmissionCar;
+  String get transmissionCar;
   @override
-  List<String> get imagesCar;
+  String get addressCar;
   @override
-  StatusCar get statusCar;
+  String get imagesCar;
+  @override
+  String get statusCar;
   @override
   String get createAt;
   @override
