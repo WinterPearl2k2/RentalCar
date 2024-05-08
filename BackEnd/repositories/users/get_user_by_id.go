@@ -13,6 +13,6 @@ func GetUserById(uuidStr string) (models.User, error) {
 	if errUUID != nil {
 		return user, errUUID
 	}
-	err := initializers.DB.Where("id_user = ?", uuid).Take(&user).Error
+	err := initializers.DB.First(&user, uuid).Error
 	return user, err
 }

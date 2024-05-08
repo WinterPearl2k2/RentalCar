@@ -38,5 +38,7 @@ func main() {
 	router.PUT("/updateCar/:id", CarController.UpdateCar)
 	router.DELETE("/deleteCar/:id", CarController.DeleteCar)
 
+	router.GET("/getAllCarByIdUser/:idUser", CarController.GetAllCarByIdUser)
+
 	router.Run()
 }
