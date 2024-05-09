@@ -12,7 +12,7 @@ class CarDTO with _$CarDTO {
     @Default("") String fuelTypeCar,
     @Default('') String colorCar,
     @Default('') String descriptionCar,
-    @Default(0) int kilometersCar,
+    @Default(0) double kilometersCar,
     @Default(0) int seatsCar,
     @Default("") String addressOwner,
     @Default("") String transmissionCar,

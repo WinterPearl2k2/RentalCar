@@ -13,7 +13,7 @@ _$CarDTOImpl _$$CarDTOImplFromJson(Map<String, dynamic> json) => _$CarDTOImpl(
       fuelTypeCar: json['fuelTypeCar'] as String? ?? "",
       colorCar: json['colorCar'] as String? ?? '',
       descriptionCar: json['descriptionCar'] as String? ?? '',
-      kilometersCar: (json['kilometersCar'] as num?)?.toInt() ?? 0,
+      kilometersCar: (json['kilometersCar'] as num?)?.toDouble() ?? 0,
       seatsCar: (json['seatsCar'] as num?)?.toInt() ?? 0,
       addressOwner: json['addressOwner'] as String? ?? "",
       transmissionCar: json['transmissionCar'] as String? ?? "",

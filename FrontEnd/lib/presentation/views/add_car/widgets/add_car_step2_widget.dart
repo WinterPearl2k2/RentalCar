@@ -53,13 +53,10 @@ class AddCarStep2Widget extends StatelessWidget {
           ),
           Consumer(
             builder: (_, ref, __) {
-              final isCheckKilometers = ref.watch(
-                addCarNotifierProvider
-                    .select((value) => value.isCheckKilometers),
-              );
               return TextFormFieldCustomWidget(
                 hint: 'Kilometers',
                 label: "Your kilometers",
+                inputFormatters: true,
                 inputAction: TextInputAction.next,
                 controller: kilometersController,
                 suffixIcon: Padding(
@@ -69,9 +66,6 @@ class AddCarStep2Widget extends StatelessWidget {
                 textInputType: TextInputType.number,
                 onChanged: (value) => notifier.isCheckKilometers(
                     kilometers: kilometersController.text),
-                error: isCheckKilometers
-                    ? null
-                    : const Text("Phần này không được để trống"),
               );
             },
           ),
@@ -80,9 +74,6 @@ class AddCarStep2Widget extends StatelessWidget {
           ),
           Consumer(
             builder: (_, ref, __) {
-              final isCheckSeatsCars = ref.watch(
-                addCarNotifierProvider.select((value) => value.isCheckSeatsCar),
-              );
               return TextFormFieldCustomWidget(
                 hint: 'Seats',
                 label: "Your seats",
@@ -91,9 +82,6 @@ class AddCarStep2Widget extends StatelessWidget {
                 textInputType: TextInputType.number,
                 onChanged: (value) =>
                     notifier.isCheckSeatsCar(seatsCar: seatsController.text),
-                error: isCheckSeatsCars
-                    ? null
-                    : const Text("Phần này không được để trống"),
               );
             },
           ),

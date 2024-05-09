@@ -31,9 +31,6 @@ class AddCarStep1Widget extends StatelessWidget {
         children: [
           Consumer(
             builder: (_, ref, __) {
-              final isCheckNameCar = ref.watch(
-                addCarNotifierProvider.select((value) => value.isCheckNameCar),
-              );
               return TextFormFieldCustomWidget(
                 hint: 'Car Name',
                 label: "Your car name",
@@ -41,9 +38,6 @@ class AddCarStep1Widget extends StatelessWidget {
                 controller: carNameController,
                 onChanged: (value) =>
                     notifier.isCheckNameCar(nameCar: carNameController.text),
-                error: isCheckNameCar
-                    ? null
-                    : const Text("Phần này không được để trống"),
               );
             },
           ),
@@ -79,9 +73,6 @@ class AddCarStep1Widget extends StatelessWidget {
           ),
           Consumer(
             builder: (_, ref, __) {
-              final isCheckColorCar = ref.watch(
-                addCarNotifierProvider.select((value) => value.isCheckColorCar),
-              );
               return TextFormFieldCustomWidget(
                 hint: 'Car Color',
                 label: "Your car color",
@@ -89,9 +80,6 @@ class AddCarStep1Widget extends StatelessWidget {
                 controller: carColorController,
                 onChanged: (value) =>
                     notifier.isCheckColorCar(colorCar: carColorController.text),
-                error: isCheckColorCar
-                    ? null
-                    : const Text("Phần này không được để trống"),
               );
             },
           ),

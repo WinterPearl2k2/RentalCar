@@ -27,24 +27,19 @@ class AddCarStep3Widget extends StatelessWidget {
         children: [
           Consumer(
             builder: (_, ref, __) {
-              final isCheckPriceCar = ref.watch(
-                addCarNotifierProvider.select((value) => value.isCheckPriceCar),
-              );
               return TextFormFieldCustomWidget(
                 hint: 'Car Price',
                 label: "Your car price",
+                inputFormatters: true,
                 inputAction: TextInputAction.next,
                 controller: carPriceController,
                 textInputType: TextInputType.number,
                 suffixIcon:  Padding(
                   padding: const EdgeInsets.all(12.0).r,
-                  child: const Text('VND'),
+                  child: const Text('VND / Day'),
                 ),
                 onChanged: (value) =>
                     notifier.isCheckPriceCar(priceCar: carPriceController.text),
-                error: isCheckPriceCar
-                    ? null
-                    : const Text("Phần này không được để trống"),
               );
             },
           ),
@@ -53,9 +48,6 @@ class AddCarStep3Widget extends StatelessWidget {
           ),
           Consumer(
             builder: (_, ref, __) {
-              final isCheckAddressCar = ref.watch(
-                addCarNotifierProvider.select((value) => value.isCheckAddressCar),
-              );
               return TextFormFieldCustomWidget(
                 hint: 'Car Address',
                 label: "Your car address",
@@ -63,9 +55,6 @@ class AddCarStep3Widget extends StatelessWidget {
                 controller: addressController,
                 onChanged: (value) =>
                     notifier.isCheckAddressCar(addressCar: addressController.text),
-                error: isCheckAddressCar
-                    ? null
-                    : const Text("Phần này không được để trống"),
               );
             },
           ),

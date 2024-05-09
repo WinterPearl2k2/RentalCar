@@ -23,19 +23,13 @@ class AddCarNotifier extends _$AddCarNotifier {
       case AddCarStep.step0:
         break;
       case AddCarStep.step1:
-        if (state.isCheckNameCar && state.isCheckColorCar) {
           state = state.copyWith(addCarStep: AddCarStep.step2);
-        }
         break;
       case AddCarStep.step2:
-        if (state.isCheckKilometers && state.isCheckSeatsCar) {
           state = state.copyWith(addCarStep: AddCarStep.step3);
-        }
         break;
       case AddCarStep.step3:
-        if (state.isCheckPriceCar && state.isCheckAddressCar) {
           state = state.copyWith(addCarStep: AddCarStep.step4);
-        }
         break;
       case AddCarStep.step4:
         state = state.copyWith(addCarStep: AddCarStep.success);
@@ -74,7 +68,7 @@ class AddCarNotifier extends _$AddCarNotifier {
     required String fuelTypeCar,
     required String colorCar,
     required String descriptionCar,
-    required int kilometersCar,
+    required double kilometersCar,
     required int seatsCar,
     required String addressOwner,
     required String transmissionCar,
@@ -96,6 +90,7 @@ class AddCarNotifier extends _$AddCarNotifier {
     );
     try {
       await injection.getIt<ICarService>().createCar(carDTO: carDTO);
+      Fluttertoast.showToast(msg: "Tạo xe thành công");
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
