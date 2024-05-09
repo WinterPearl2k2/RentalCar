@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_outline_widget.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
@@ -95,4 +96,113 @@ class PopupUtils {
       },
     );
   }
+
+  static Future<void> showBottomSheetAddImageDialog({
+    required BuildContext context,
+    VoidCallback? onSelectPressedCamera,
+    VoidCallback? onSelectPressedGallary,
+  }) {
+    return showModalBottomSheet(
+      backgroundColor: ColorUtils.whiteColor,
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          topRight: Radius.circular(16.r),
+        ),
+      ),
+      builder: (_) {
+        return Wrap(
+          children: [
+            Container(
+              width: 414.w,
+              margin: EdgeInsets.only(
+                bottom: 20.h,
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: 4.h,
+                    width: 40.w,
+                    decoration: BoxDecoration(
+                      color: ColorUtils.blueColor,
+                      borderRadius: BorderRadius.circular(2.h),
+                    ),
+                    margin: EdgeInsets.symmetric(vertical: 8.h),
+                  ),
+                  SizedBox(height: 16.h),
+                  buildIconOption(
+                    iconName: AssetUtils.icSearch,
+                    title: "camera",
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      onSelectPressedCamera?.call();
+                    },
+                  ),
+                  Container(
+                    height: 1.h,
+                    color: ColorUtils.primaryColor,
+                    margin: EdgeInsets.only(
+                      left: 72.w,
+                      right: 16.w,
+                    ),
+                  ),
+                  buildIconOption(
+                    iconName: AssetUtils.icSearch,
+                    title: "gallary",
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      onSelectPressedGallary?.call();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+Widget buildIconOption({
+  required String iconName,
+  required String title,
+  VoidCallback? onPressed,
+}) {
+  return InkWell(
+    onTap: onPressed,
+    child: Container(
+      height: 56.h,
+      padding: EdgeInsets.only(
+        left: 24.w,
+        right: 16.w,
+      ),
+      alignment: Alignment.center,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+              height: 48.h,
+              width: 48.h,
+              alignment: Alignment.center,
+              child: SvgPicture.asset(
+                iconName,
+                color: Colors.grey,
+                height: 20.h,
+                width: 20.w,
+              )),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                  fontSize: 15.sp,
+                  fontWeight: FontWeight.w500,
+                  color: ColorUtils.textColor),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

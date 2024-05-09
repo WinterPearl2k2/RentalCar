@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/application/utils/popup_utils.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
 
 class AddCarStep4Widget extends StatelessWidget {
-  const AddCarStep4Widget(
-      {super.key, required this.notifier});
+  const AddCarStep4Widget({super.key, required this.notifier});
 
   final ManagerCarNotifier notifier;
 
@@ -51,7 +51,11 @@ class CarImageTextFormFieldWidget extends StatelessWidget {
           managerCarNotifierProvider.select((value) => value.imageFile),
         );
         return GestureDetector(
-          onTap: () => notifier.pickImageFromGallery(),
+          onTap: () => PopupUtils.showBottomSheetAddImageDialog(
+            context: context,
+            onSelectPressedCamera: notifier.pickImageFromCamera,
+            onSelectPressedGallary: notifier.pickImageFromGallery,
+          ),
           child: Container(
             height: 100.h,
             width: 100.w,

@@ -320,6 +320,17 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     );
   }
 
+  Future<void> pickImageFromCamera() async {
+    final pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 20)
+        .onError((error, stackTrace) {
+      return null;
+    });
+    state = state.copyWith(
+      imageFile: pickedFile?.path ?? "",
+    );
+  }
+
   Future<void> clearImage() async {
     state = state.copyWith(
       imageFile: "",
