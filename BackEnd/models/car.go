@@ -25,6 +25,7 @@ type Car struct {
 	UserId          uuid.UUID `gorm:"type:uuid;notNull"`
 	ReviewId        uuid.UUID `gorm:"type:uuid;"`
 
-	User       *User
-	CarReviews []CarReview
+	User        *User
+	CarReviews  []CarReview
+	CarRentails []CarRentail
 }

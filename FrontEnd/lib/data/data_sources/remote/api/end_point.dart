@@ -21,4 +21,5 @@ class EndPoint {
   static const restUrlGetAllCar = '/getAllCar';
   static const restUrlGetCarById = '/getCarById';
   static const restUrlGetAllCarByIdUser = '/getAllCarByIdUser';
+  static const restUrlRentalCar = '/rentalCar';
 }

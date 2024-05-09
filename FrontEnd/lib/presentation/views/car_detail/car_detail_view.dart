@@ -74,8 +74,9 @@ class _CarDetailView
                           const Spacer(),
                           SizedBox(
                             width: 150.w,
-                            child: const TextButtonWidget(
+                            child: TextButtonWidget(
                               label: "Rental Car",
+                              onPressed: () => notifier.rentingCar(context),
                             ),
                           ),
                         ],

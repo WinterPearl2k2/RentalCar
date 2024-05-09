@@ -1,5 +1,4 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

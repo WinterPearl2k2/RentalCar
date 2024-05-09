@@ -12,9 +12,13 @@ class RoutesName {
   static const changePassword = '/change_password';
   //verify code
   static const verifyCode = '/verify_code';
+  //rental
+  static const rentalCar = '/rental_car';
 
   //account profile
   static const accountProfile = '/account_profile';
+  //account profile
+  static const notification = '/notification';
 
   //car
   static const addCar = 'add_car_view';

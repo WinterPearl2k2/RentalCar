@@ -1,3 +1,4 @@
+import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/main.dart';
@@ -19,5 +20,9 @@ class CarDetailNotifier extends _$CarDetailNotifier{
     } catch (e) {
       LogUtils.i(e.toString());
     }
+  }
+
+  void rentingCar(context) {
+    Routes.goToRentalCarView(context, state.car);
   }
 }

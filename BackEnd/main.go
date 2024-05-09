@@ -31,6 +31,9 @@ func main() {
 	router.GET("/profile/getUserProfile", UserController.GetUserProfile)
 	router.PUT("/profile/updateUserProfile", UserController.ChangeProfile)
 
+	//Test
+	router.POST("/rentalCar", CarController.RentalCar)
+
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)
 	router.GET("/getCarById/:id", CarController.GetCarById)

@@ -6,12 +6,16 @@ class TextButtonWidget extends StatelessWidget {
   final String? label;
   final Function()? onPressed;
   final bool? blockButton;
+  final Color? colorButton;
+  final Color? textColor;
 
   const TextButtonWidget({
     super.key,
     this.label,
     this.onPressed,
     this.blockButton,
+    this.colorButton,
+    this.textColor,
   });
 
   @override
@@ -22,7 +26,7 @@ class TextButtonWidget extends StatelessWidget {
         backgroundColor: MaterialStateColor.resolveWith(
           (states) => blockButton ?? false
               ? ColorUtils.textColor
-              : ColorUtils.primaryColor,
+              : colorButton??ColorUtils.primaryColor,
         ),
         minimumSize: MaterialStateProperty.resolveWith(
           (states) => const Size(double.infinity, 60),
@@ -37,7 +41,7 @@ class TextButtonWidget extends StatelessWidget {
         child: Text(
           label ?? '',
           style: TextStyle(
-            color: ColorUtils.whiteColor,
+            color: textColor ?? ColorUtils.whiteColor,
           ),
         ),
       ),

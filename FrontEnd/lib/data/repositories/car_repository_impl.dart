@@ -1,6 +1,7 @@
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
+import 'package:rental_car/data/dtos/car_rental_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 
 import '../../domain/repositories/car_repository.dart';
@@ -67,6 +68,15 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
       mapper: (response) {
         return Car.fromJson(response.data);
       },
+    );
+  }
+
+  @override
+  Future<void> rentalCar({required CarRentalDto carRentalDto}) {
+    return post<void>(
+      url:EndPoint.restUrlRentalCar,
+      data: carRentalDto.toJson(),
+      mapper: (_) {},
     );
   }
 }

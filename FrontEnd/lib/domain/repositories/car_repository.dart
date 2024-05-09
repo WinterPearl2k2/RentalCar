@@ -1,3 +1,4 @@
+import 'package:rental_car/data/dtos/car_rental_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 
 import '../../data/dtos/car_dto.dart';
@@ -9,4 +10,5 @@ abstract class ICarRepository{
   Future<List<Car>> getAllCar();
   Future<Car> getCarById({required String idCar});
   Future<List<Car>> getAllCarByIdUser({required String idUser});
+  Future<void> rentalCar({required CarRentalDto carRentalDto});
 }

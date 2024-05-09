@@ -4,11 +4,11 @@ class DateTimeFormatUtils {
   DateTimeFormatUtils._();
 
   static String dateToFormat({
-    required String date,
+    required DateTime date,
     required String format,
   }) {
-    DateTime dateTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
-    return DateFormat(format).format(dateTime);
+    final formattedDate = DateFormat('dd/MM/yyyy').format(date);
+    return formattedDate;
   }
 
   static int pareDate({
