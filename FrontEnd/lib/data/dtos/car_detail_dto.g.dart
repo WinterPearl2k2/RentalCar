@@ -15,7 +15,7 @@ _$CarDetailDTOImpl _$$CarDetailDTOImplFromJson(Map<String, dynamic> json) =>
       descriptionCar: json['descriptionCar'] as String? ?? '',
       fuelTypeCar: json['fuelTypeCar'] as String? ?? "",
       colorCar: json['colorCar'] as String? ?? '',
-      kilometersCar: (json['kilometersCar'] as num?)?.toInt() ?? 0,
+      kilometersCar: (json['kilometersCar'] as num?)?.toDouble() ?? 0,
       seatsCar: (json['seatsCar'] as num?)?.toInt() ?? 0,
       transmissionCar: json['transmissionCar'] as String? ?? "",
       userName: json['userName'] as String? ?? "",

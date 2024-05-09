@@ -15,6 +15,7 @@ class AssetUtils {
   static const icNotification = 'assets/icons/ic_notification.svg';
   static const icSearch = 'assets/icons/ic_search.svg';
   static const icStar = 'assets/icons/ic_star.svg';
+  static const icDelete = 'assets/icons/ic_delete.svg';
 
   //images
   static const imgHondaBrV = 'assets/images/img_honda_br_v.jpg';

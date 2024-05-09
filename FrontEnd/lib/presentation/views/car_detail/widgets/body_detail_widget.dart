@@ -51,7 +51,7 @@ class BodyDetailWidget extends StatelessWidget {
           buildDetailRow(title: "Interior Color", attribute: carDetail.colorCar),
           buildDetailRow(
             title: "Kilometers",
-            attribute: FormatUtils.formatKilometers(carDetail.kilometersCar),
+            attribute: "${FormatUtils.formatNumber(carDetail.kilometersCar)} km",
           ),
           buildDetailRow(title: "Seats", attribute: carDetail.seatsCar.toString()),
           buildDetailRow(title: "Transmission", attribute: carDetail.transmissionCar),

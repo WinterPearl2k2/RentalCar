@@ -14,4 +14,15 @@ extension TransmissionExtension on Transmission {
         return '';
     }
   }
+
+  static Transmission fromString(String value) {
+    switch (value.toLowerCase()) {
+      case 'automatic':
+        return Transmission.automatic;
+      case 'manual':
+        return Transmission.manual;
+      default:
+        throw ArgumentError('Invalid value: $value');
+    }
+  }
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/domain/model/car.dart';
@@ -24,14 +22,7 @@ class ListManagerCarWidget extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 20.h),
         child: ItemManagerCarWidget(
           notifier: notifier,
-          idCar: listCarUser[index].idCar,
-          imageFile: const Base64Decoder().convert(
-            listCarUser[index].imagesCar,
-          ),
-          title: listCarUser[index].nameCar,
-          star: 0,
-          countReview: 0,
-          price: listCarUser[index].priceCar,
+          car: listCarUser[index],
         ),
       ),
     );

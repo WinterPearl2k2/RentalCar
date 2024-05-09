@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'dart:convert';
 import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +8,7 @@ import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/application/utils/popup_utils.dart';
+import 'package:rental_car/domain/model/car.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_outline_widget.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
@@ -16,21 +16,11 @@ import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_n
 class ItemManagerCarWidget extends StatelessWidget {
   const ItemManagerCarWidget({
     super.key,
-    required this.idCar,
-    required this.imageFile,
-    required this.title,
-    required this.star,
-    required this.countReview,
-    required this.price, 
+    required this.car,
     required this.notifier,
   });
 
-  final String idCar;
-  final Uint8List imageFile;
-  final String title;
-  final double star;
-  final int countReview;
-  final double price;
+  final Car car;
   final ManagerCarNotifier notifier;
 
   @override
@@ -57,8 +47,10 @@ class ItemManagerCarWidget extends StatelessWidget {
                   topLeft: Radius.circular(10.r),
                 ),
                 child: CachedMemoryImage(
-                  uniqueKey: idCar,
-                  bytes: imageFile,
+                  uniqueKey: car.idCar,
+                  bytes: const Base64Decoder().convert(
+                    car.imagesCar,
+                  ),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -68,7 +60,7 @@ class ItemManagerCarWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      car.nameCar,
                       style: TextStyle(
                         color: ColorUtils.primaryColor,
                         fontWeight: FontWeight.bold,
@@ -89,7 +81,7 @@ class ItemManagerCarWidget extends StatelessWidget {
                           width: 5.0.w,
                         ),
                         Text(
-                          star.toString(),
+                          "0",
                           style: TextStyle(
                             color: ColorUtils.primaryColor,
                             fontWeight: FontWeight.bold,
@@ -100,7 +92,7 @@ class ItemManagerCarWidget extends StatelessWidget {
                           width: 5.0.w,
                         ),
                         Text(
-                          "($countReview review)",
+                          "(0 review)",
                           style: TextStyle(
                             color: ColorUtils.textColor,
                             fontWeight: FontWeight.bold,
@@ -111,7 +103,7 @@ class ItemManagerCarWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      "${FormatUtils.formatCurrency(price)} VND / day",
+                      "${FormatUtils.formatNumber(car.priceCar)} VND / day",
                       style: TextStyle(
                         color: ColorUtils.blueColor,
                         fontWeight: FontWeight.bold,
@@ -126,8 +118,8 @@ class ItemManagerCarWidget extends StatelessWidget {
                             height: 50.h,
                             child: TextButtonWidget(
                               onPressed: () =>
-                                  Routes.goToCarDetailView(context, idCar),
-                              label: "Xem chi tiết",
+                                  Routes.goToCarDetailView(context, car.idCar),
+                              label: "See details",
                             ),
                           ),
                         ),
@@ -138,8 +130,8 @@ class ItemManagerCarWidget extends StatelessWidget {
                           child: SizedBox(
                             height: 50.h,
                             child: TextButtonOutlineWidget(
-                              onPressed: () {},
-                              label: "Chỉnh sửa",
+                              onPressed: () => Routes.goToEditCarView(context, car),
+                              label: "Edit",
                             ),
                           ),
                         )
@@ -157,10 +149,10 @@ class ItemManagerCarWidget extends StatelessWidget {
                 onPressed: () {
                   PopupUtils.showPopup(
                     context,
-                    icon: AssetUtils.icSearch,
+                    icon: AssetUtils.icDelete,
                     title: "Bạn có chắc chắn muốn xóa xe này không?",
                     onTap: () {
-                      notifier.deleteCar(idCar: idCar);
+                      notifier.deleteCar(idCar: car.idCar);
                       Navigator.pop(context);
                     },
                   );

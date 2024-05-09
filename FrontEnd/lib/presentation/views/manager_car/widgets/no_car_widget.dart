@@ -13,6 +13,7 @@ class NoCarWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
+          SizedBox(height: 230.h),
           Text(
             "Currently, you don't have any cars!",
             textAlign: TextAlign.center,

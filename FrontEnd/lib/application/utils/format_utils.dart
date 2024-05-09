@@ -4,18 +4,9 @@ import 'package:intl/intl.dart';
 class FormatUtils {
   const FormatUtils._();
 
-  static String formatCurrency(double amount) {
+  static String formatNumber(double amount) {
     final formatter = NumberFormat.currency(locale: 'vi_VN', symbol: '');
     return formatter.format(amount);
-  }
-
-  static String formatKilometers(int kilometers) {
-    final formatter = NumberFormat('#,###');
-    if (kilometers >= 1000) {
-      return formatter.format(kilometers);
-    } else {
-      return kilometers.toString();
-    }
   }
 
   static ThousandsFormatter thousandsFormatter() {
@@ -29,8 +20,8 @@ class FormatUtils {
 
 class ThousandsFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue,
+      TextEditingValue newValue) {
     if (newValue.text.isEmpty) {
       return newValue;
     }
@@ -57,5 +48,3 @@ class ThousandsFormatter extends TextInputFormatter {
     return buffer.toString();
   }
 }
-
-

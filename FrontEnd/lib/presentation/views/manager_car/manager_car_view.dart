@@ -67,7 +67,13 @@ class _HomeViewState
                     );
                     switch (status) {
                       case Status.loading:
-                        return const Center(child: CircularProgressIndicator());
+                        return const Expanded(
+                          child: Center(
+                            child: SingleChildScrollView(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                        );
 
                       case Status.success:
                         return listCarUser.isNotEmpty

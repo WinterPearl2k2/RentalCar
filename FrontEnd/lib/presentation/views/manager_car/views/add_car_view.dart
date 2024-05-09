@@ -1,55 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/domain/model/car.dart';
+import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
+import 'package:rental_car/presentation/common/enum/car_brand.dart';
+import 'package:rental_car/presentation/common/enum/transmission.dart';
+import 'package:rental_car/presentation/common/enum/type_fuel.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
-import 'package:rental_car/presentation/views/add_car/notifier/add_car_notifier.dart';
-import 'package:rental_car/presentation/views/add_car/state/add_car_state.dart';
-import 'package:rental_car/presentation/views/add_car/widgets/add_car_step1_widget.dart';
-import 'package:rental_car/presentation/views/add_car/widgets/add_car_step2_widget.dart';
-import 'package:rental_car/presentation/views/add_car/widgets/add_car_step3_widget.dart';
-import 'package:rental_car/presentation/views/add_car/widgets/add_car_step4_widget.dart';
-import 'package:rental_car/presentation/views/add_car/widgets/add_car_step_success_widget.dart';
-import 'package:rental_car/presentation/views/add_car/enum/car_brand.dart'
-    as car_brands;
-import 'package:rental_car/presentation/views/add_car/enum/transmission.dart'
-    as transmission;
-import 'package:rental_car/presentation/views/add_car/enum/type_fuel.dart'
-    as type_fuel;
-import '../../../application/routes/routes.dart';
-import '../../common/base_state_delegate/base_state_delegate.dart';
+import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
+import 'package:rental_car/presentation/views/manager_car/state/manager_car_state.dart';
+import 'package:rental_car/presentation/views/manager_car/widgets/add_car_step1_widget.dart';
+import 'package:rental_car/presentation/views/manager_car/widgets/add_car_step2_widget.dart';
+import 'package:rental_car/presentation/views/manager_car/widgets/add_car_step3_widget.dart';
+import 'package:rental_car/presentation/views/manager_car/widgets/add_car_step4_widget.dart';
+import 'package:rental_car/presentation/views/manager_car/widgets/add_car_step_success_widget.dart';
 
 class AddCarView extends ConsumerStatefulWidget {
   const AddCarView({super.key});
 
   @override
-  BaseStateDelegate<AddCarView, AddCarNotifier> createState() =>
-      _AuthViewState();
+  BaseStateDelegate<AddCarView, ManagerCarNotifier> createState() =>
+      _AddCarState();
 }
 
-class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
+class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
   final TextEditingController carNameController = TextEditingController();
   final TextEditingController carBrandController =
-      TextEditingController(text: car_brands.CarBrands.toyota.brandName);
+      TextEditingController(text: CarBrands.toyota.brandName);
   final TextEditingController carDescriptionController =
       TextEditingController();
   final TextEditingController carColorController = TextEditingController();
 
   final TextEditingController fuelController =
-      TextEditingController(text: type_fuel.TypeFuel.dieselFuel.fuelName);
+      TextEditingController(text: TypeFuel.dieselFuel.fuelName);
   final TextEditingController kilometersController = TextEditingController();
   final TextEditingController seatsController = TextEditingController();
-  final TextEditingController transmissionController = TextEditingController(
-      text: transmission.Transmission.automatic.transmissionName);
+  final TextEditingController transmissionController =
+      TextEditingController(text: Transmission.automatic.transmissionName);
 
   final TextEditingController carPriceController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
   @override
   void initNotifier() {
-    notifier = ref.read(addCarNotifierProvider.notifier);
+    notifier = ref.read(managerCarNotifierProvider.notifier);
   }
 
   @override
@@ -67,17 +64,19 @@ class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
               Consumer(
                 builder: (_, WidgetRef ref, __) {
                   final stateView = ref.watch(
-                    addCarNotifierProvider.select((value) => value.addCarStep),
+                    managerCarNotifierProvider
+                        .select((value) => value.addCarStep),
                   );
-                  if (stateView == AddCarStep.step0) {
-                    WidgetsBinding.instance.addPostFrameCallback(
-                      (_) {
+                  if (stateView == AddCarStep.success) {
+                    return const SizedBox();
+                  }
+                  if (stateView == AddCarStep.step1) {
+                    return IconButton(
+                      onPressed: () {
                         Routes.goToPreviousView(context);
                       },
+                      icon: const Icon(Icons.arrow_back_ios),
                     );
-                    if (stateView == AddCarStep.success) {
-                      return const SizedBox();
-                    }
                   }
                   return IconButton(
                     onPressed: () => notifier.changeBackwardView(),
@@ -101,13 +100,14 @@ class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
               Consumer(
                 builder: (_, WidgetRef ref, __) {
                   final stateView = ref.watch(
-                    addCarNotifierProvider.select((value) => value.addCarStep),
+                    managerCarNotifierProvider
+                        .select((value) => value.addCarStep),
                   );
                   if (stateView == AddCarStep.success) {
                     return const SizedBox();
                   }
                   return Text(
-                    "STEP ${stateView.index} OF 4",
+                    "STEP ${stateView.index + 1} OF 4",
                     style: TextStyle(
                       color: ColorUtils.primaryColor,
                       fontSize: 10.sp,
@@ -123,11 +123,10 @@ class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
                 child: Consumer(
                   builder: (_, ref, __) {
                     final stateView = ref.watch(
-                      addCarNotifierProvider
+                      managerCarNotifierProvider
                           .select((value) => value.addCarStep),
                     );
                     switch (stateView) {
-                      case AddCarStep.step0:
                       case AddCarStep.step1:
                         return AddCarStep1Widget(
                           carNameController: carNameController,
@@ -164,34 +163,37 @@ class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
               Consumer(
                 builder: (_, WidgetRef ref, __) {
                   final stateView = ref.watch(
-                    addCarNotifierProvider.select((value) => value.addCarStep),
+                    managerCarNotifierProvider.select(
+                      (value) => value.addCarStep,
+                    ),
                   );
                   final isCheckNameCar = ref.watch(
-                    addCarNotifierProvider
+                    managerCarNotifierProvider
                         .select((value) => value.isCheckNameCar),
                   );
                   final isCheckColorCar = ref.watch(
-                    addCarNotifierProvider
+                    managerCarNotifierProvider
                         .select((value) => value.isCheckColorCar),
                   );
                   final isCheckKilometers = ref.watch(
-                    addCarNotifierProvider
+                    managerCarNotifierProvider
                         .select((value) => value.isCheckKilometers),
                   );
                   final isCheckSeatsCar = ref.watch(
-                    addCarNotifierProvider
+                    managerCarNotifierProvider
                         .select((value) => value.isCheckSeatsCar),
                   );
                   final isCheckPriceCar = ref.watch(
-                    addCarNotifierProvider
+                    managerCarNotifierProvider
                         .select((value) => value.isCheckPriceCar),
                   );
                   final isCheckAddressCar = ref.watch(
-                    addCarNotifierProvider
+                    managerCarNotifierProvider
                         .select((value) => value.isCheckAddressCar),
                   );
                   final isCheckImageFile = ref.watch(
-                    addCarNotifierProvider.select((value) => value.imageFile),
+                    managerCarNotifierProvider
+                        .select((value) => value.imageFile),
                   );
                   bool isContinueButtonEnabled = true;
 
@@ -232,9 +234,12 @@ class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
                       statusCar: StatusCar.available.name,
                     );
                     return TextButtonWidget(
-                      label: "Back to homepage",
-                      onPressed: () => Routes.goToPreviousView(context),
-                    );
+                        label: "Back to homepage",
+                        onPressed: () {
+                          Routes.goToPreviousView(context);
+                          notifier.changeForwardView();
+                          notifier.clearImage();
+                        });
                   }
                   return TextButtonWidget(
                     blockButton: isContinueButtonEnabled,
@@ -248,5 +253,20 @@ class _AuthViewState extends BaseStateDelegate<AddCarView, AddCarNotifier> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    carNameController.dispose();
+    carBrandController.dispose();
+    carDescriptionController.dispose();
+    carColorController.dispose();
+    fuelController.dispose();
+    kilometersController.dispose();
+    seatsController.dispose();
+    transmissionController.dispose();
+    carPriceController.dispose();
+    addressController.dispose();
+    super.dispose();
   }
 }

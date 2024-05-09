@@ -63,7 +63,7 @@ class _CarDetailView
                                 ),
                               ),
                               Text(
-                                "${FormatUtils.formatCurrency(carDetail.priceCar)}VND / day",
+                                "${FormatUtils.formatNumber(carDetail.priceCar)}VND / day",
                                 style: TextStyle(
                                   color: ColorUtils.blueColor,
                                   fontWeight: FontWeight.bold,
