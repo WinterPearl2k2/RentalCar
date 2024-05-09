@@ -163,7 +163,7 @@ class AddCarNotifier extends _$AddCarNotifier {
       return null;
     });
     state = state.copyWith(
-      imageFile: pickedFile!.path,
+      imageFile: pickedFile?.path ?? "",
     );
   }
 }

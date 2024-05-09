@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
@@ -19,11 +20,28 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
                 idUser: PreferenceService.getUUID(),
               );
       state = state.copyWith(status: Status.success);
-      if (listCarUser.isNotEmpty) {
+      if(listCarUser.isNotEmpty){
         state = state.copyWith(listCarUser: listCarUser);
+      }else{
+        state = state.copyWith(listCarUser: []);
+
       }
       LogUtils.i("getList oke");
     } catch (e) {
+      LogUtils.i(e.toString());
+    }
+  }
+
+  Future<void> deleteCar({required String idCar}) async {
+    try {
+      await injection.getIt<ICarService>().deleteCar(
+            idCar: idCar,
+          );
+      getListCarByIdUser();
+      Fluttertoast.showToast(msg: "Xóa thành công");
+      LogUtils.i("delete oke");
+    } catch (e) {
+      Fluttertoast.showToast(msg: "Xóa thất bại");
       LogUtils.i(e.toString());
     }
   }

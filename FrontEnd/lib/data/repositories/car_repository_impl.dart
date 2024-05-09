@@ -19,7 +19,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
 
   @override
   Future<void> deleteCar({required String idCar}) {
-    return post(
+    return delete(
       url: "${EndPoint.restUrlDeleteCar}/$idCar",
       mapper: (_) {},
     );
@@ -27,7 +27,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
 
   @override
   Future<void> updateCar({required String idCar, required CarDTO carDTO}) {
-    return post<CarDTO>(
+    return put<CarDTO>(
       url:  "${EndPoint.restUrlUpdateCar}/$idCar",
       data: carDTO.toJson(),
       mapper: (response) => CarDTO.fromJson(response.data),

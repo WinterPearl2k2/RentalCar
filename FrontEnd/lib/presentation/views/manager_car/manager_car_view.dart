@@ -73,6 +73,7 @@ class _HomeViewState
                         return listCarUser.isNotEmpty
                             ? Expanded(
                                 child: ListManagerCarWidget(
+                                  notifier: notifier,
                                   listCarUser: listCarUser,
                                 ),
                               )
