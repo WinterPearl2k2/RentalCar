@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rental_car/application/utils/format_utils.dart';
 
 import '../../../application/utils/colors_utils.dart';
 
@@ -13,6 +14,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
   final Function(String value)? onChanged;
   final TextInputType? textInputType;
   final Widget? error;
+  final bool inputFormatters;
 
   const TextFormFieldCustomWidget({
     super.key,
@@ -25,6 +27,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
     this.inputAction,
     this.textInputType,
     this.error,
+    this.inputFormatters = false,
   });
 
   @override
@@ -44,6 +47,11 @@ class TextFormFieldCustomWidget extends StatelessWidget {
           height: 5.h,
         ),
         TextFormField(
+          inputFormatters: inputFormatters
+              ? [
+                  FormatUtils.thousandsFormatter(),
+                ]
+              : [],
           controller: controller,
           obscureText: obscureText ?? false,
           onChanged: onChanged,

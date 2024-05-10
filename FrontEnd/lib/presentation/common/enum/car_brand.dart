@@ -15,4 +15,19 @@ extension CarBrandExtension on CarBrands {
         return '';
     }
   }
+
+  static CarBrands fromString(String value) {
+    switch (value.toLowerCase()) {
+      case 'toyota':
+        return CarBrands.toyota;
+      case 'honda':
+        return CarBrands.honda;
+      case 'ford':
+        return CarBrands.ford;
+      case 'other':
+        return CarBrands.other;
+      default:
+        throw ArgumentError('Invalid value: $value');
+    }
+  }
 }

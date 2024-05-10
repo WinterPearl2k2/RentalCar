@@ -7,5 +7,10 @@ part 'car_detail_state.freezed.dart';
 class CarDetailState with _$CarDetailState {
   const factory CarDetailState({
     @Default(CarDetailDTO()) CarDetailDTO carDetail,
+    @Default(Status.loading) Status status,
   }) = _CarDetailState;
+}
+enum Status {
+  loading,
+  success,
 }

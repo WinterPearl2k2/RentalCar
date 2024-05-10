@@ -20,8 +20,12 @@ func GetAllCar(context *gin.Context) {
 
 	var carsData []gin.H
 
-	for _, car := range cars {
+	if len(cars) == 0 {
+		context.JSON(http.StatusOK, []gin.H{})
+		return
+	}
 
+	for _, car := range cars {
 		user, err := UserRepository.GetUserById(car.UserId.String())
 		if err != nil {
 			context.JSON(http.StatusInternalServerError, gin.H{

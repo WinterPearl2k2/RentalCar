@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
+import 'package:rental_car/domain/model/car.dart';
 import 'package:rental_car/presentation/views/account_profile/account_profile_view.dart';
-import 'package:rental_car/presentation/views/add_car/add_car_view.dart';
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
+import 'package:rental_car/presentation/views/manager_car/views/add_car_view.dart';
+import 'package:rental_car/presentation/views/manager_car/views/edit_car_view.dart';
 import 'package:rental_car/presentation/views/forgot_password/forgot_password_view.dart';
 
 import 'routes_name.dart';
@@ -40,6 +42,13 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => CarDetailView(
             idCar: args['idCar'] ?? '',
+          ),
+        );
+        case RoutesName.editCar:
+        final args = settings.arguments as Map<String, Car>;
+        return MaterialPageRoute(
+          builder: (context) => EditCarView(
+            car: args['car'] ?? const Car(),
           ),
         );
       default:
@@ -113,6 +122,11 @@ class Routes {
   static void goToCarDetailView(BuildContext context, String idCar) {
     Navigator.of(context).pushNamed(RoutesName.carDetailView, arguments: {
       "idCar": idCar,
+    });
+  }
+  static void goToEditCarView(BuildContext context, Car car) {
+    Navigator.of(context).pushNamed(RoutesName.editCar, arguments: {
+      "car": car,
     });
   }
 

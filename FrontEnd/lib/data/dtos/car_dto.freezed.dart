@@ -26,7 +26,7 @@ mixin _$CarDTO {
   String get fuelTypeCar => throw _privateConstructorUsedError;
   String get colorCar => throw _privateConstructorUsedError;
   String get descriptionCar => throw _privateConstructorUsedError;
-  int get kilometersCar => throw _privateConstructorUsedError;
+  double get kilometersCar => throw _privateConstructorUsedError;
   int get seatsCar => throw _privateConstructorUsedError;
   String get addressOwner => throw _privateConstructorUsedError;
   String get transmissionCar => throw _privateConstructorUsedError;
@@ -50,7 +50,7 @@ abstract class $CarDTOCopyWith<$Res> {
       String fuelTypeCar,
       String colorCar,
       String descriptionCar,
-      int kilometersCar,
+      double kilometersCar,
       int seatsCar,
       String addressOwner,
       String transmissionCar,
@@ -112,7 +112,7 @@ class _$CarDTOCopyWithImpl<$Res, $Val extends CarDTO>
       kilometersCar: null == kilometersCar
           ? _value.kilometersCar
           : kilometersCar // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       seatsCar: null == seatsCar
           ? _value.seatsCar
           : seatsCar // ignore: cast_nullable_to_non_nullable
@@ -151,7 +151,7 @@ abstract class _$$CarDTOImplCopyWith<$Res> implements $CarDTOCopyWith<$Res> {
       String fuelTypeCar,
       String colorCar,
       String descriptionCar,
-      int kilometersCar,
+      double kilometersCar,
       int seatsCar,
       String addressOwner,
       String transmissionCar,
@@ -211,7 +211,7 @@ class __$$CarDTOImplCopyWithImpl<$Res>
       kilometersCar: null == kilometersCar
           ? _value.kilometersCar
           : kilometersCar // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
       seatsCar: null == seatsCar
           ? _value.seatsCar
           : seatsCar // ignore: cast_nullable_to_non_nullable
@@ -276,7 +276,7 @@ class _$CarDTOImpl implements _CarDTO {
   final String descriptionCar;
   @override
   @JsonKey()
-  final int kilometersCar;
+  final double kilometersCar;
   @override
   @JsonKey()
   final int seatsCar;
@@ -367,7 +367,7 @@ abstract class _CarDTO implements CarDTO {
       final String fuelTypeCar,
       final String colorCar,
       final String descriptionCar,
-      final int kilometersCar,
+      final double kilometersCar,
       final int seatsCar,
       final String addressOwner,
       final String transmissionCar,
@@ -389,7 +389,7 @@ abstract class _CarDTO implements CarDTO {
   @override
   String get descriptionCar;
   @override
-  int get kilometersCar;
+  double get kilometersCar;
   @override
   int get seatsCar;
   @override
