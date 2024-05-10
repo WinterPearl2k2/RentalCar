@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
@@ -346,27 +347,37 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   }
 
   Future<void> pickImageFromGallery() async {
-    final pickedFile = await ImagePicker()
-        .pickImage(source: ImageSource.gallery, imageQuality: 20)
-        .onError((error, stackTrace) {
-      return null;
-    });
-    state = state.copyWith(
-      imageFile: pickedFile?.path ?? "",
-      isEditButton: true,
-    );
+    PermissionStatus permission = await Permission.camera.request();
+    if (permission.isGranted) {
+      final pickedFile = await ImagePicker()
+          .pickImage(source: ImageSource.gallery, imageQuality: 20)
+          .onError((error, stackTrace) {
+        return null;
+      });
+      state = state.copyWith(
+        imageFile: pickedFile?.path ?? "",
+        isEditButton: true,
+      );
+    } else if (permission.isDenied) {
+      Fluttertoast.showToast(msg: "Gallery access has not been granted");
+    }
   }
 
   Future<void> pickImageFromCamera() async {
-    final pickedFile = await ImagePicker()
-        .pickImage(source: ImageSource.camera, imageQuality: 20)
-        .onError((error, stackTrace) {
-      return null;
-    });
-    state = state.copyWith(
-      imageFile: pickedFile?.path ?? "",
-      isEditButton: true,
-    );
+    PermissionStatus permission = await Permission.camera.request();
+    if (permission.isGranted) {
+      final pickedFile = await ImagePicker()
+          .pickImage(source: ImageSource.camera, imageQuality: 20)
+          .onError((error, stackTrace) {
+        return null;
+      });
+      state = state.copyWith(
+        imageFile: pickedFile?.path ?? "",
+        isEditButton: true,
+      );
+    } else if (permission.isDenied) {
+      Fluttertoast.showToast(msg: "Camera access has not been granted");
+    }
   }
 
   Future<void> clearImage() async {
