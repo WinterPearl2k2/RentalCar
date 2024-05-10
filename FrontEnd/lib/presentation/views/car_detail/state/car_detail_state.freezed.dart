@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CarDetailState {
   CarDetailDTO get carDetail => throw _privateConstructorUsedError;
+  Status get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CarDetailStateCopyWith<CarDetailState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $CarDetailStateCopyWith<$Res> {
           CarDetailState value, $Res Function(CarDetailState) then) =
       _$CarDetailStateCopyWithImpl<$Res, CarDetailState>;
   @useResult
-  $Res call({CarDetailDTO carDetail});
+  $Res call({CarDetailDTO carDetail, Status status});
 
   $CarDetailDTOCopyWith<$Res> get carDetail;
 }
@@ -48,12 +49,17 @@ class _$CarDetailStateCopyWithImpl<$Res, $Val extends CarDetailState>
   @override
   $Res call({
     Object? carDetail = null,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
       carDetail: null == carDetail
           ? _value.carDetail
           : carDetail // ignore: cast_nullable_to_non_nullable
               as CarDetailDTO,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
     ) as $Val);
   }
 
@@ -74,7 +80,7 @@ abstract class _$$CarDetailStateImplCopyWith<$Res>
       __$$CarDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({CarDetailDTO carDetail});
+  $Res call({CarDetailDTO carDetail, Status status});
 
   @override
   $CarDetailDTOCopyWith<$Res> get carDetail;
@@ -92,12 +98,17 @@ class __$$CarDetailStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? carDetail = null,
+    Object? status = null,
   }) {
     return _then(_$CarDetailStateImpl(
       carDetail: null == carDetail
           ? _value.carDetail
           : carDetail // ignore: cast_nullable_to_non_nullable
               as CarDetailDTO,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
     ));
   }
 }
@@ -105,15 +116,19 @@ class __$$CarDetailStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CarDetailStateImpl implements _CarDetailState {
-  const _$CarDetailStateImpl({this.carDetail = const CarDetailDTO()});
+  const _$CarDetailStateImpl(
+      {this.carDetail = const CarDetailDTO(), this.status = Status.loading});
 
   @override
   @JsonKey()
   final CarDetailDTO carDetail;
+  @override
+  @JsonKey()
+  final Status status;
 
   @override
   String toString() {
-    return 'CarDetailState(carDetail: $carDetail)';
+    return 'CarDetailState(carDetail: $carDetail, status: $status)';
   }
 
   @override
@@ -122,11 +137,12 @@ class _$CarDetailStateImpl implements _CarDetailState {
         (other.runtimeType == runtimeType &&
             other is _$CarDetailStateImpl &&
             (identical(other.carDetail, carDetail) ||
-                other.carDetail == carDetail));
+                other.carDetail == carDetail) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, carDetail);
+  int get hashCode => Object.hash(runtimeType, carDetail, status);
 
   @JsonKey(ignore: true)
   @override
@@ -137,11 +153,14 @@ class _$CarDetailStateImpl implements _CarDetailState {
 }
 
 abstract class _CarDetailState implements CarDetailState {
-  const factory _CarDetailState({final CarDetailDTO carDetail}) =
-      _$CarDetailStateImpl;
+  const factory _CarDetailState(
+      {final CarDetailDTO carDetail,
+      final Status status}) = _$CarDetailStateImpl;
 
   @override
   CarDetailDTO get carDetail;
+  @override
+  Status get status;
   @override
   @JsonKey(ignore: true)
   _$$CarDetailStateImplCopyWith<_$CarDetailStateImpl> get copyWith =>

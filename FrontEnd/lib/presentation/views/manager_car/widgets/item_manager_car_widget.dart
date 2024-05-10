@@ -47,7 +47,9 @@ class ItemManagerCarWidget extends StatelessWidget {
                   topLeft: Radius.circular(10.r),
                 ),
                 child: CachedMemoryImage(
-                  uniqueKey: car.idCar,
+                  height: 200.h,
+                  width: 360.w,
+                  uniqueKey: car.imagesCar,
                   bytes: const Base64Decoder().convert(
                     car.imagesCar,
                   ),

@@ -132,8 +132,8 @@ class PopupUtils {
                   ),
                   SizedBox(height: 16.h),
                   buildIconOption(
-                    iconName: AssetUtils.icSearch,
-                    title: "camera",
+                    iconName: AssetUtils.icCamera,
+                    title: "Thêm ảnh từ camera",
                     onPressed: () {
                       Navigator.of(context).pop();
                       onSelectPressedCamera?.call();
@@ -148,8 +148,8 @@ class PopupUtils {
                     ),
                   ),
                   buildIconOption(
-                    iconName: AssetUtils.icSearch,
-                    title: "gallary",
+                    iconName: AssetUtils.icGallery,
+                    title: "Thêm ảnh từ Gallery",
                     onPressed: () {
                       Navigator.of(context).pop();
                       onSelectPressedGallary?.call();
@@ -188,7 +188,10 @@ Widget buildIconOption({
               alignment: Alignment.center,
               child: SvgPicture.asset(
                 iconName,
-                color: Colors.grey,
+                colorFilter: ColorFilter.mode(
+                  ColorUtils.primaryColor,
+                  BlendMode.srcIn,
+                ),
                 height: 20.h,
                 width: 20.w,
               )),
@@ -198,7 +201,7 @@ Widget buildIconOption({
               style: TextStyle(
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w500,
-                  color: ColorUtils.textColor),
+                  color: ColorUtils.primaryColor),
             ),
           ),
         ],

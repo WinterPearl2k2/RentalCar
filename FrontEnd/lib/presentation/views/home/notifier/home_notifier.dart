@@ -14,7 +14,13 @@ class HomeNotifier extends _$HomeNotifier {
   Future<void> getListCars() async {
     try {
       final listTopCar = await  injection.getIt<ICarService>().getAllTopCar();
-      state = state.copyWith(listTopCar: listTopCar);
+      if(listTopCar.isEmpty){
+        state = state.copyWith(status: Status.success);
+        state = state.copyWith(listTopCar: []);
+      }else{
+        state = state.copyWith(status: Status.success);
+        state = state.copyWith(listTopCar: listTopCar);
+      }
       LogUtils.i("getList oke");
     } catch (e) {
       LogUtils.i(e.toString());

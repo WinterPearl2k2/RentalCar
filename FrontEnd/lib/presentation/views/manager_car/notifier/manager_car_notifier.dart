@@ -66,18 +66,46 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
         seatsCar: carDTO.seatsCar,
         addressOwner: carDTO.addressOwner,
         transmissionCar: carDTO.transmissionCar,
-        imagesCar: carDTO.imagesCar,
         statusCar: carDTO.statusCar,
       ),
+      imageFile: carDTO.imagesCar,
+      isEditButton: false,
     );
   }
 
-  Future<void> updateCar(
-      {required String idCar, required CarDTO carDTO}) async {
+  Future<void> updateCar({
+    required String idCar,
+    required String nameCar,
+    required double priceCar,
+    required String brandCar,
+    required String fuelTypeCar,
+    required String colorCar,
+    required String descriptionCar,
+    required double kilometersCar,
+    required int seatsCar,
+    required String addressOwner,
+    required String transmissionCar,
+    required String statusCar,
+  }) async {
     try {
-      await injection
-          .getIt<ICarService>()
-          .updateCar(idCar: idCar, carDTO: carDTO);
+      await injection.getIt<ICarService>().updateCar(
+          idCar: idCar,
+          carDTO: CarDTO(
+            nameCar: nameCar,
+            priceCar: priceCar,
+            fuelTypeCar: fuelTypeCar,
+            colorCar: colorCar,
+            brandCar: brandCar,
+            descriptionCar: descriptionCar,
+            kilometersCar: kilometersCar,
+            seatsCar: seatsCar,
+            addressOwner: addressOwner,
+            transmissionCar: transmissionCar,
+            imagesCar: await convertImageToBase64(
+              File(state.imageFile),
+            ),
+            statusCar: statusCar,
+          ));
       getListCarByIdUser();
       Fluttertoast.showToast(msg: "Sửa thành công");
       LogUtils.i("sửa oke");
@@ -303,6 +331,14 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     }
   }
 
+  void isCheckAddressImageChange({required String imageCar}) {
+    if (imageCar != state.carDTO.imagesCar && imageCar.toString().isNotEmpty) {
+      state = state.copyWith(isEditButton: true);
+    } else {
+      state = state.copyWith(isEditButton: false);
+    }
+  }
+
   Future<String> convertImageToBase64(File imageFile) async {
     List<int> imageBytes = await imageFile.readAsBytes();
     String base64Image = base64Encode(imageBytes);
@@ -317,6 +353,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     });
     state = state.copyWith(
       imageFile: pickedFile?.path ?? "",
+      isEditButton: true,
     );
   }
 
@@ -328,6 +365,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     });
     state = state.copyWith(
       imageFile: pickedFile?.path ?? "",
+      isEditButton: true,
     );
   }
 

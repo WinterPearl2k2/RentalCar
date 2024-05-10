@@ -7,6 +7,11 @@ part 'home_state.freezed.dart';
 class HomeState with _$HomeState {
   const factory HomeState({
     @Default([]) List<TopCarDTO> listTopCar,
+    @Default(Status.loading) Status status,
   }) = _HomeState;
 }
 
+enum Status {
+  loading,
+  success,
+}

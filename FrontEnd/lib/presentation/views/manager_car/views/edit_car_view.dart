@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
+import 'package:rental_car/application/utils/popup_utils.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
@@ -41,7 +43,6 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
   late final TextEditingController transmissionController;
   late final TextEditingController carPriceController;
   late final TextEditingController addressController;
-  late final TextEditingController imageController;
 
   @override
   void initNotifier() {
@@ -64,7 +65,6 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
       text: FormatUtils.formatNumber(widget.car.priceCar),
     );
     addressController = TextEditingController(text: widget.car.addressCar);
-    imageController = TextEditingController(text: widget.car.imagesCar);
     notifier.setUpData(
       carDTO: CarDTO(
         nameCar: widget.car.nameCar,
@@ -96,7 +96,10 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               IconButton(
-                onPressed: () => Routes.goToPreviousView(context),
+                onPressed: () {
+                  Routes.goToPreviousView(context);
+                  notifier.clearImage();
+                },
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               SizedBox(
@@ -105,9 +108,10 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
               Text(
                 "Edit Car",
                 style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold),
+                  color: ColorUtils.primaryColor,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(
                 height: 10.h,
@@ -116,6 +120,7 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                 flex: 10,
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CarNameTextFormFieldWidget(
                         carNameController: carNameController,
@@ -126,24 +131,24 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                         height: 20.h,
                       ),
                       DropdownFormFieldCustomWidget<CarBrands>(
-                          hint: 'Car Brand',
-                          label: "Your car brand",
-                          value: CarBrandExtension.fromString(
-                              carBrandController.text),
-                          items: CarBrands.values
-                              .map(
-                                (brand) => DropdownMenuItem(
-                                  value: brand,
-                                  child: Text(brand.brandName),
-                                ),
-                              )
-                              .toList(),
-                          onChanged: (brand) {
-                            carBrandController.text =
-                                brand!.brandName.toString();
-                            notifier.isCheckBrandCarChange(
-                                brandCar: carBrandController.text);
-                          }),
+                        hint: 'Car Brand',
+                        label: "Your car brand",
+                        value: CarBrandExtension.fromString(
+                            carBrandController.text),
+                        items: CarBrands.values
+                            .map(
+                              (brand) => DropdownMenuItem(
+                                value: brand,
+                                child: Text(brand.brandName),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (brand) {
+                          carBrandController.text = brand!.brandName.toString();
+                          notifier.isCheckBrandCarChange(
+                              brandCar: carBrandController.text);
+                        },
+                      ),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -165,25 +170,26 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                         height: 20.h,
                       ),
                       DropdownFormFieldCustomWidget<TypeFuel>(
-                          hint: 'Fuel',
-                          label: "Your fuel",
-                          value:
-                              TypeFuelExtension.fromString(fuelController.text),
-                          items: TypeFuel.values
-                              .map(
-                                (typeFuel) => DropdownMenuItem(
-                                  value: typeFuel,
-                                  child: Text(
-                                    typeFuel.fuelName.toString(),
-                                  ),
+                        hint: 'Fuel',
+                        label: "Your fuel",
+                        value:
+                            TypeFuelExtension.fromString(fuelController.text),
+                        items: TypeFuel.values
+                            .map(
+                              (typeFuel) => DropdownMenuItem(
+                                value: typeFuel,
+                                child: Text(
+                                  typeFuel.fuelName.toString(),
                                 ),
-                              )
-                              .toList(),
-                          onChanged: (fuel) {
-                            fuelController.text = fuel!.fuelName.toString();
-                            notifier.isCheckFuelTypeCarChange(
-                                fuelTypeCar: fuelController.text);
-                          }),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (fuel) {
+                          fuelController.text = fuel!.fuelName.toString();
+                          notifier.isCheckFuelTypeCarChange(
+                              fuelTypeCar: fuelController.text);
+                        },
+                      ),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -230,16 +236,16 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                       ),
                       CarPriceTextFormFieldWidget(
                         carPriceController: carPriceController,
-                        onChanged: (value) =>
-                            notifier.isCheckPriceCarChange(priceCar: carPriceController.text),
+                        onChanged: (value) => notifier.isCheckPriceCarChange(
+                            priceCar: carPriceController.text),
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
                       CarAddressTextFormFieldWidget(
                         addressController: addressController,
-                        onChanged: (value) =>
-                            notifier.isCheckAddressCarChange(addressCar: addressController.text),
+                        onChanged: (value) => notifier.isCheckAddressCarChange(
+                            addressCar: addressController.text),
                       ),
                       SizedBox(
                         height: 20.h,
@@ -251,7 +257,14 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                                 .select((value) => value.imageFile),
                           );
                           return GestureDetector(
-                            onTap: () => notifier.pickImageFromGallery(),
+                            onTap: () =>
+                                PopupUtils.showBottomSheetAddImageDialog(
+                              context: context,
+                              onSelectPressedCamera:
+                                  notifier.pickImageFromCamera,
+                              onSelectPressedGallary:
+                                  notifier.pickImageFromGallery,
+                            ),
                             child: Container(
                               height: 100.h,
                               width: 100.w,
@@ -266,13 +279,19 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                                       borderRadius: const BorderRadius.all(
                                         Radius.circular(10),
                                       ),
-                                      child: CachedMemoryImage(
-                                        uniqueKey: widget.car.idCar,
-                                        bytes: const Base64Decoder().convert(
-                                          imageController.text,
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: imageFile.contains('.jpg')
+                                          ? Image.file(
+                                              File(imageFile),
+                                              fit: BoxFit.cover,
+                                            )
+                                          : CachedMemoryImage(
+                                              uniqueKey: widget.car.imagesCar,
+                                              bytes:
+                                                  const Base64Decoder().convert(
+                                                imageFile,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
                                     )
                                   : const Icon(Icons.add),
                             ),
@@ -294,25 +313,24 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                   return TextButtonWidget(
                     blockButton: !isEditButton,
                     label: "Edit",
-                    onPressed: () => notifier.updateCar(
-                        idCar: widget.car.idCar,
-                        carDTO: CarDTO(
-                          nameCar: carNameController.text,
-                          priceCar: double.parse(
-                            FormatUtils.removeDot(carPriceController.text),
-                          ),
-                          brandCar: carBrandController.text,
-                          fuelTypeCar: fuelController.text,
-                          colorCar: carColorController.text,
-                          descriptionCar: carDescriptionController.text,
-                          kilometersCar: double.parse(
-                            FormatUtils.removeDot(kilometersController.text),
-                          ),
-                          seatsCar: int.parse(seatsController.text),
-                          addressOwner: addressController.text,
-                          transmissionCar: transmissionController.text,
-                          statusCar: StatusCar.available.name,
-                        )),
+                    onPressed: () async => notifier.updateCar(
+                      idCar: widget.car.idCar,
+                      nameCar: carNameController.text,
+                      priceCar: double.parse(
+                        FormatUtils.removeDot(carPriceController.text),
+                      ),
+                      brandCar: carBrandController.text,
+                      fuelTypeCar: fuelController.text,
+                      colorCar: carColorController.text,
+                      descriptionCar: carDescriptionController.text,
+                      kilometersCar: double.parse(
+                        FormatUtils.removeDot(kilometersController.text),
+                      ),
+                      seatsCar: int.parse(seatsController.text),
+                      addressOwner: addressController.text,
+                      transmissionCar: transmissionController.text,
+                      statusCar: StatusCar.available.name,
+                    ),
                   );
                 },
               ),
@@ -335,7 +353,6 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
     transmissionController.dispose();
     carPriceController.dispose();
     addressController.dispose();
-    imageController.dispose();
     super.dispose();
   }
 }

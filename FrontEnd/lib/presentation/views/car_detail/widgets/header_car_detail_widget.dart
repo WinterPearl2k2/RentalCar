@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
@@ -19,8 +20,11 @@ class HeaderCarDetailWidget extends StatelessWidget {
     return Stack(
       children: [
         CachedMemoryImage(
-          uniqueKey: carDetail.idCar,
-          bytes: const Base64Decoder().convert(carDetail.idCar),
+          width: 360.w,
+          height: 200.h,
+          uniqueKey: carDetail.imagesCar,
+          fit: BoxFit.cover,
+          bytes: const Base64Decoder().convert(carDetail.imagesCar),
         ),
         Positioned(
           top: 30,

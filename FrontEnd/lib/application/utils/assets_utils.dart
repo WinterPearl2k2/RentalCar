@@ -16,6 +16,8 @@ class AssetUtils {
   static const icSearch = 'assets/icons/ic_search.svg';
   static const icStar = 'assets/icons/ic_star.svg';
   static const icDelete = 'assets/icons/ic_delete.svg';
+  static const icCamera = 'assets/icons/ic_camera.svg';
+  static const icGallery = 'assets/icons/ic_gallery.svg';
 
   //images
   static const imgHondaBrV = 'assets/images/img_honda_br_v.jpg';
