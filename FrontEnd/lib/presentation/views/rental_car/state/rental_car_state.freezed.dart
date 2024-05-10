@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$RentalCarState {
   dynamic get loading => throw _privateConstructorUsedError;
   UserProfileDTO get user => throw _privateConstructorUsedError;
-  Car get car => throw _privateConstructorUsedError;
+  CarDetailDTO get car => throw _privateConstructorUsedError;
   String get startDate => throw _privateConstructorUsedError;
   String get endDate => throw _privateConstructorUsedError;
   int get numberDays => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $RentalCarStateCopyWith<$Res> {
   $Res call(
       {dynamic loading,
       UserProfileDTO user,
-      Car car,
+      CarDetailDTO car,
       String startDate,
       String endDate,
       int numberDays,
@@ -47,7 +47,7 @@ abstract class $RentalCarStateCopyWith<$Res> {
       RentalCarStatus statusView});
 
   $UserProfileDTOCopyWith<$Res> get user;
-  $CarCopyWith<$Res> get car;
+  $CarDetailDTOCopyWith<$Res> get car;
 }
 
 /// @nodoc
@@ -84,7 +84,7 @@ class _$RentalCarStateCopyWithImpl<$Res, $Val extends RentalCarState>
       car: null == car
           ? _value.car
           : car // ignore: cast_nullable_to_non_nullable
-              as Car,
+              as CarDetailDTO,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -118,8 +118,8 @@ class _$RentalCarStateCopyWithImpl<$Res, $Val extends RentalCarState>
 
   @override
   @pragma('vm:prefer-inline')
-  $CarCopyWith<$Res> get car {
-    return $CarCopyWith<$Res>(_value.car, (value) {
+  $CarDetailDTOCopyWith<$Res> get car {
+    return $CarDetailDTOCopyWith<$Res>(_value.car, (value) {
       return _then(_value.copyWith(car: value) as $Val);
     });
   }
@@ -136,7 +136,7 @@ abstract class _$$RentalCarStateImplCopyWith<$Res>
   $Res call(
       {dynamic loading,
       UserProfileDTO user,
-      Car car,
+      CarDetailDTO car,
       String startDate,
       String endDate,
       int numberDays,
@@ -146,7 +146,7 @@ abstract class _$$RentalCarStateImplCopyWith<$Res>
   @override
   $UserProfileDTOCopyWith<$Res> get user;
   @override
-  $CarCopyWith<$Res> get car;
+  $CarDetailDTOCopyWith<$Res> get car;
 }
 
 /// @nodoc
@@ -178,7 +178,7 @@ class __$$RentalCarStateImplCopyWithImpl<$Res>
       car: null == car
           ? _value.car
           : car // ignore: cast_nullable_to_non_nullable
-              as Car,
+              as CarDetailDTO,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -209,7 +209,7 @@ class _$RentalCarStateImpl implements _RentalCarState {
   const _$RentalCarStateImpl(
       {this.loading = false,
       this.user = const UserProfileDTO(),
-      this.car = const Car(),
+      this.car = const CarDetailDTO(),
       this.startDate = '',
       this.endDate = '',
       this.numberDays = 0,
@@ -224,7 +224,7 @@ class _$RentalCarStateImpl implements _RentalCarState {
   final UserProfileDTO user;
   @override
   @JsonKey()
-  final Car car;
+  final CarDetailDTO car;
   @override
   @JsonKey()
   final String startDate;
@@ -288,7 +288,7 @@ abstract class _RentalCarState implements RentalCarState {
   const factory _RentalCarState(
       {final dynamic loading,
       final UserProfileDTO user,
-      final Car car,
+      final CarDetailDTO car,
       final String startDate,
       final String endDate,
       final int numberDays,
@@ -300,7 +300,7 @@ abstract class _RentalCarState implements RentalCarState {
   @override
   UserProfileDTO get user;
   @override
-  Car get car;
+  CarDetailDTO get car;
   @override
   String get startDate;
   @override

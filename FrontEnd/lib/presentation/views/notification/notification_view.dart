@@ -181,7 +181,7 @@ class _NotificationViewState
                                           ),
                                         ),
                                         Text(
-                                          'Rental Fee: ${FormatUtils.formatCurrency(
+                                          'Rental Fee: ${FormatUtils.formatNumber(
                                             user[index].rentalPrice,
                                           )} VND',
                                           style: TextStyle(

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../application/utils/colors_utils.dart';
 import '../../../../application/utils/format_utils.dart';
+import '../../../../data/dtos/car_detail_dto.dart';
 import '../../../../domain/model/car.dart';
 
 class InfoCarDetailWidget extends StatelessWidget {
@@ -14,7 +15,7 @@ class InfoCarDetailWidget extends StatelessWidget {
     required this.car,
   });
 
-  final Car car;
+  final CarDetailDTO car;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class InfoCarDetailWidget extends StatelessWidget {
               height: 5.h,
             ),
             Text(
-              '${FormatUtils.formatCurrency(car.priceCar)} VND / day',
+              '${FormatUtils.formatNumber(car.priceCar)} VND / day',
               style: TextStyle(
                 color: ColorUtils.blueMiddleColor,
                 fontSize: 14.sp,
@@ -47,7 +48,7 @@ class InfoCarDetailWidget extends StatelessWidget {
               height: 5.h,
             ),
             Text(
-              car.addressCar,
+              car.descriptionCar,
               style: TextStyle(
                 color: ColorUtils.primaryColor,
                 fontSize: 14.sp,

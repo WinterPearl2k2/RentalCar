@@ -8,7 +8,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../application/utils/log_utils.dart';
 import '../../../../data/data_sources/remote/dio/api_exception.dart';
-import '../../../../domain/model/car.dart';
+import '../../../../data/dtos/car_detail_dto.dart';
 import '../state/rental_car_state.dart';
 
 part 'rental_car_notifier.g.dart';
@@ -18,7 +18,7 @@ class RentalCarNotifier extends _$RentalCarNotifier {
   @override
   RentalCarState build() => const RentalCarState();
 
-  Future<void> setUpData(Car carData) async {
+  Future<void> setUpData(CarDetailDTO carData) async {
     try {
       final user = await injection.getIt<IAuthService>().getUser();
       final dateTime = DateTime.now();

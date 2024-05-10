@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
+import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:rental_car/presentation/views/home/widgets/item_vehicle_widget.dart';
 
 class ListTopVehicleWidget extends StatelessWidget {
@@ -15,32 +16,43 @@ class ListTopVehicleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (_, ref, __) {
-        final listCar = ref.watch(
-          homeNotifierProvider.select((value) => value.listCar),
+        final status = ref.watch(
+          homeNotifierProvider.select((value) => value.status),
         );
-        return listCar.isNotEmpty
-            ? Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: listCar.length,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () =>
-                        Routes.goToCarDetailView(context, listCar[index].idCar),
-                    child: ItemVehicleWidget(
-                      idCar: listCar[index].idCar,
-                      imageFile: const Base64Decoder().convert(
-                        listCar[index].imagesCar,
+        final listCar = ref.watch(
+          homeNotifierProvider.select((value) => value.listTopCar),
+        );
+        switch (status) {
+          case Status.loading:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          case Status.success:
+            return listCar.isNotEmpty
+                ? Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: listCar.length,
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () => Routes.goToCarDetailView(
+                            context, listCar[index].idCar),
+                        child: ItemVehicleWidget(
+                          idCar:  listCar[index].imagesCar,
+                          imageFile: const Base64Decoder().convert(
+                            listCar[index].imagesCar,
+                          ),
+                          title: listCar[index].nameCar,
+                          star: listCar[index].starCar,
+                          countReview: listCar[index].countReviewCar,
+                        ),
                       ),
-                      title: listCar[index].nameCar,
-                      star: 0,
-                      countReview: 0,
                     ),
-                  ),
-                ),
-              )
-            : const Center(
-                child: CircularProgressIndicator(),
-              );
+                  )
+                : const Center(
+                    child: Text(
+                        "There are no vehicles in the top category of vehicles"),
+                  );
+        }
       },
     );
   }

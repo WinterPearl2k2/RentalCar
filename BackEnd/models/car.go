@@ -14,7 +14,7 @@ type Car struct {
 	BrandCar        string    `gorm:"type:string;notNull"`
 	ColorCar        string    `gorm:"type:varchar(255)"`
 	DescriptionCar  string    `gorm:"type:text"`
-	KilometersCar   int       `gorm:"type:int"`
+	KilometersCar   float64   `gorm:"type:float8"`
 	SeatsCar        int       `gorm:"type:int"`
 	TransmissionCar string    `gorm:"type:text"`
 	AddressOwner    string    `gorm:"type:string;notNull"`

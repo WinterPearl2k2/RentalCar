@@ -22,9 +22,9 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
     await Future.delayed(const Duration(milliseconds: 1),);
     state = state.copyWith(
       user: UserProfileDTO(
-        email: user.email,
-        phone: user.phone,
-        name: user.name,
+        email: user.email.trim(),
+        phone: user.phone.trim(),
+        name: user.name.trim(),
       ),
     );
   }
@@ -37,9 +37,9 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
   }) async {
     state = state.copyWith(wait: true);
     if (_checkValid(
-      name.text,
-      email.text,
-      phoneNumber.text,
+      name.text.trim(),
+      email.text.trim(),
+      phoneNumber.text.trim(),
     )) {
       Fluttertoast.showToast(msg: 'Invalid information!');
       state = state.copyWith(wait: false);
@@ -47,9 +47,9 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
     }
 
     final userProfileDto = UserProfileDTO(
-      name: name.text,
-      email: email.text,
-      phone: phoneNumber.text,
+      name: name.text.trim(),
+      email: email.text.trim(),
+      phone: phoneNumber.text.trim(),
     );
     try {
       final userUpdated = await injection.getIt<IAuthService>().updateUser(

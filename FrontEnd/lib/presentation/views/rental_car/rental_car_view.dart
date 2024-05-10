@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rental_car/domain/model/car.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/views/rental_car/state/rental_car_state.dart';
 import 'package:rental_car/presentation/views/rental_car/widgets/rental_car_widget.dart';
 import 'package:rental_car/presentation/views/rental_car/widgets/rental_success_widget.dart';
 import '../../../application/utils/colors_utils.dart';
+import '../../../data/dtos/car_detail_dto.dart';
 import '../../common/widgets/loading_widget.dart';
 import 'notifier/rental_car_notifier.dart';
 
 class RentalCarView extends ConsumerStatefulWidget {
   const RentalCarView({super.key, required this.carData});
 
-  final Car carData;
+  final CarDetailDTO carData;
 
   @override
   BaseStateDelegate<RentalCarView, RentalCarNotifier> createState() =>

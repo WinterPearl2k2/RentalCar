@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	CarRepository "rent-car/repositories/car"
+	UserRepository "rent-car/repositories/users"
 
 	"github.com/gin-gonic/gin"
 
@@ -32,9 +33,17 @@ func GetCarById(context *gin.Context) {
 		return
 	}
 
+	user, err := UserRepository.GetUserById(car.UserId.String())
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Cannot find user for car",
+		})
+		return
+	}
 	context.JSON(http.StatusOK, gin.H{
 		"idCar":           car.IdCar,
 		"idUser":          car.UserId,
+		"userName":        user.NameUser,
 		"idReview":        car.ReviewId,
 		"nameCar":         car.NameCar,
 		"priceCar":        car.PriceCar,

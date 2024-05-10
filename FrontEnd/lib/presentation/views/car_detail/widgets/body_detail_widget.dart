@@ -4,15 +4,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
-import 'package:rental_car/domain/model/car.dart';
+import 'package:rental_car/data/dtos/car_detail_dto.dart';
 
 class BodyDetailWidget extends StatelessWidget {
   const BodyDetailWidget({
     super.key,
-    required this.car,
+    required this.carDetail,
   });
 
-  final Car car;
+  final CarDetailDTO carDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class BodyDetailWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            car.nameCar,
+            carDetail.nameCar,
             style: TextStyle(
               color: ColorUtils.primaryColor,
               fontWeight: FontWeight.bold,
@@ -30,7 +30,7 @@ class BodyDetailWidget extends StatelessWidget {
             ),
           ),
           Text(
-            car.descriptionCar,
+            carDetail.descriptionCar,
             style: TextStyle(
               color: ColorUtils.textColor,
               fontSize: 14.sp,
@@ -47,14 +47,14 @@ class BodyDetailWidget extends StatelessWidget {
               fontSize: 13.sp,
             ),
           ),
-          buildDetailRow(title: "Fuel", attribute: car.fuelTypeCar),
-          buildDetailRow(title: "Interior Color", attribute: car.colorCar),
+          buildDetailRow(title: "Fuel", attribute: carDetail.fuelTypeCar),
+          buildDetailRow(title: "Interior Color", attribute: carDetail.colorCar),
           buildDetailRow(
             title: "Kilometers",
-            attribute: FormatUtils.formatKilometers(car.kilometersCar),
+            attribute: "${FormatUtils.formatNumber(carDetail.kilometersCar)} km",
           ),
-          buildDetailRow(title: "Seats", attribute: car.seatsCar.toString()),
-          buildDetailRow(title: "Transmission", attribute: car.transmissionCar),
+          buildDetailRow(title: "Seats", attribute: carDetail.seatsCar.toString()),
+          buildDetailRow(title: "Transmission", attribute: carDetail.transmissionCar),
           SizedBox(
             height: 10.0.h,
           ),
@@ -84,9 +84,10 @@ class BodyDetailWidget extends StatelessWidget {
                 width: 10.0.w,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Tran Quan",
+                    carDetail.userName,
                     style: TextStyle(
                       color: ColorUtils.primaryColor,
                       fontWeight: FontWeight.w700,
@@ -117,7 +118,7 @@ class BodyDetailWidget extends StatelessWidget {
                 width: 5.0.w,
               ),
               Text(
-                "0.0",
+                carDetail.starCar.toString(),
                 style: TextStyle(
                   color: ColorUtils.primaryColor,
                   fontWeight: FontWeight.bold,
@@ -130,7 +131,7 @@ class BodyDetailWidget extends StatelessWidget {
             height: 15.0.h,
           ),
           Text(
-            "REVIEW (0)",
+            "REVIEW (${carDetail.countReviewCar})",
             style: TextStyle(
               color: ColorUtils.primaryColor,
               fontWeight: FontWeight.w700,
