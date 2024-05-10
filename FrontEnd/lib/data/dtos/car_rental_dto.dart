@@ -9,6 +9,8 @@ class CarRentalDto with _$CarRentalDto {
     @Default('') String idCar,
     @Default(0) double rentalPrice,
     @Default(0) int rentalDays,
+    @Default('') String startDate,
+    @Default('') String endDate,
   }) = _CarRentalDto;
 
   factory CarRentalDto.fromJson(Map<String, dynamic> json) => _$CarRentalDtoFromJson(json);

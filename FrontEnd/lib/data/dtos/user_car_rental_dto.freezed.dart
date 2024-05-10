@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'car_rental_dto.dart';
+part of 'user_car_rental_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,42 +14,41 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-CarRentalDto _$CarRentalDtoFromJson(Map<String, dynamic> json) {
-  return _CarRentalDto.fromJson(json);
-}
-
 /// @nodoc
-mixin _$CarRentalDto {
-  String get idCar => throw _privateConstructorUsedError;
+mixin _$UserCarRentalDto {
   double get rentalPrice => throw _privateConstructorUsedError;
   int get rentalDays => throw _privateConstructorUsedError;
   String get startDate => throw _privateConstructorUsedError;
   String get endDate => throw _privateConstructorUsedError;
+  String get createAt => throw _privateConstructorUsedError;
+  String get nameUser => throw _privateConstructorUsedError;
+  String get phoneUser => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CarRentalDtoCopyWith<CarRentalDto> get copyWith =>
+  $UserCarRentalDtoCopyWith<UserCarRentalDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CarRentalDtoCopyWith<$Res> {
-  factory $CarRentalDtoCopyWith(
-          CarRentalDto value, $Res Function(CarRentalDto) then) =
-      _$CarRentalDtoCopyWithImpl<$Res, CarRentalDto>;
+abstract class $UserCarRentalDtoCopyWith<$Res> {
+  factory $UserCarRentalDtoCopyWith(
+          UserCarRentalDto value, $Res Function(UserCarRentalDto) then) =
+      _$UserCarRentalDtoCopyWithImpl<$Res, UserCarRentalDto>;
   @useResult
   $Res call(
-      {String idCar,
-      double rentalPrice,
+      {double rentalPrice,
       int rentalDays,
       String startDate,
-      String endDate});
+      String endDate,
+      String createAt,
+      String nameUser,
+      String phoneUser});
 }
 
 /// @nodoc
-class _$CarRentalDtoCopyWithImpl<$Res, $Val extends CarRentalDto>
-    implements $CarRentalDtoCopyWith<$Res> {
-  _$CarRentalDtoCopyWithImpl(this._value, this._then);
+class _$UserCarRentalDtoCopyWithImpl<$Res, $Val extends UserCarRentalDto>
+    implements $UserCarRentalDtoCopyWith<$Res> {
+  _$UserCarRentalDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -59,17 +58,15 @@ class _$CarRentalDtoCopyWithImpl<$Res, $Val extends CarRentalDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? idCar = null,
     Object? rentalPrice = null,
     Object? rentalDays = null,
     Object? startDate = null,
     Object? endDate = null,
+    Object? createAt = null,
+    Object? nameUser = null,
+    Object? phoneUser = null,
   }) {
     return _then(_value.copyWith(
-      idCar: null == idCar
-          ? _value.idCar
-          : idCar // ignore: cast_nullable_to_non_nullable
-              as String,
       rentalPrice: null == rentalPrice
           ? _value.rentalPrice
           : rentalPrice // ignore: cast_nullable_to_non_nullable
@@ -85,49 +82,61 @@ class _$CarRentalDtoCopyWithImpl<$Res, $Val extends CarRentalDto>
       endDate: null == endDate
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
+              as String,
+      createAt: null == createAt
+          ? _value.createAt
+          : createAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameUser: null == nameUser
+          ? _value.nameUser
+          : nameUser // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneUser: null == phoneUser
+          ? _value.phoneUser
+          : phoneUser // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$CarRentalDtoImplCopyWith<$Res>
-    implements $CarRentalDtoCopyWith<$Res> {
-  factory _$$CarRentalDtoImplCopyWith(
-          _$CarRentalDtoImpl value, $Res Function(_$CarRentalDtoImpl) then) =
-      __$$CarRentalDtoImplCopyWithImpl<$Res>;
+abstract class _$$UserCarRentalDtoImplCopyWith<$Res>
+    implements $UserCarRentalDtoCopyWith<$Res> {
+  factory _$$UserCarRentalDtoImplCopyWith(_$UserCarRentalDtoImpl value,
+          $Res Function(_$UserCarRentalDtoImpl) then) =
+      __$$UserCarRentalDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String idCar,
-      double rentalPrice,
+      {double rentalPrice,
       int rentalDays,
       String startDate,
-      String endDate});
+      String endDate,
+      String createAt,
+      String nameUser,
+      String phoneUser});
 }
 
 /// @nodoc
-class __$$CarRentalDtoImplCopyWithImpl<$Res>
-    extends _$CarRentalDtoCopyWithImpl<$Res, _$CarRentalDtoImpl>
-    implements _$$CarRentalDtoImplCopyWith<$Res> {
-  __$$CarRentalDtoImplCopyWithImpl(
-      _$CarRentalDtoImpl _value, $Res Function(_$CarRentalDtoImpl) _then)
+class __$$UserCarRentalDtoImplCopyWithImpl<$Res>
+    extends _$UserCarRentalDtoCopyWithImpl<$Res, _$UserCarRentalDtoImpl>
+    implements _$$UserCarRentalDtoImplCopyWith<$Res> {
+  __$$UserCarRentalDtoImplCopyWithImpl(_$UserCarRentalDtoImpl _value,
+      $Res Function(_$UserCarRentalDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? idCar = null,
     Object? rentalPrice = null,
     Object? rentalDays = null,
     Object? startDate = null,
     Object? endDate = null,
+    Object? createAt = null,
+    Object? nameUser = null,
+    Object? phoneUser = null,
   }) {
-    return _then(_$CarRentalDtoImpl(
-      idCar: null == idCar
-          ? _value.idCar
-          : idCar // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_$UserCarRentalDtoImpl(
       rentalPrice: null == rentalPrice
           ? _value.rentalPrice
           : rentalPrice // ignore: cast_nullable_to_non_nullable
@@ -144,26 +153,34 @@ class __$$CarRentalDtoImplCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as String,
+      createAt: null == createAt
+          ? _value.createAt
+          : createAt // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameUser: null == nameUser
+          ? _value.nameUser
+          : nameUser // ignore: cast_nullable_to_non_nullable
+              as String,
+      phoneUser: null == phoneUser
+          ? _value.phoneUser
+          : phoneUser // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
-class _$CarRentalDtoImpl implements _CarRentalDto {
-  const _$CarRentalDtoImpl(
-      {this.idCar = '',
-      this.rentalPrice = 0,
+
+class _$UserCarRentalDtoImpl implements _UserCarRentalDto {
+  const _$UserCarRentalDtoImpl(
+      {this.rentalPrice = 0,
       this.rentalDays = 0,
       this.startDate = '',
-      this.endDate = ''});
+      this.endDate = '',
+      this.createAt = '',
+      this.nameUser = '',
+      this.phoneUser = ''});
 
-  factory _$CarRentalDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CarRentalDtoImplFromJson(json);
-
-  @override
-  @JsonKey()
-  final String idCar;
   @override
   @JsonKey()
   final double rentalPrice;
@@ -176,59 +193,63 @@ class _$CarRentalDtoImpl implements _CarRentalDto {
   @override
   @JsonKey()
   final String endDate;
+  @override
+  @JsonKey()
+  final String createAt;
+  @override
+  @JsonKey()
+  final String nameUser;
+  @override
+  @JsonKey()
+  final String phoneUser;
 
   @override
   String toString() {
-    return 'CarRentalDto(idCar: $idCar, rentalPrice: $rentalPrice, rentalDays: $rentalDays, startDate: $startDate, endDate: $endDate)';
+    return 'UserCarRentalDto(rentalPrice: $rentalPrice, rentalDays: $rentalDays, startDate: $startDate, endDate: $endDate, createAt: $createAt, nameUser: $nameUser, phoneUser: $phoneUser)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CarRentalDtoImpl &&
-            (identical(other.idCar, idCar) || other.idCar == idCar) &&
+            other is _$UserCarRentalDtoImpl &&
             (identical(other.rentalPrice, rentalPrice) ||
                 other.rentalPrice == rentalPrice) &&
             (identical(other.rentalDays, rentalDays) ||
                 other.rentalDays == rentalDays) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
-            (identical(other.endDate, endDate) || other.endDate == endDate));
+            (identical(other.endDate, endDate) || other.endDate == endDate) &&
+            (identical(other.createAt, createAt) ||
+                other.createAt == createAt) &&
+            (identical(other.nameUser, nameUser) ||
+                other.nameUser == nameUser) &&
+            (identical(other.phoneUser, phoneUser) ||
+                other.phoneUser == phoneUser));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, idCar, rentalPrice, rentalDays, startDate, endDate);
+  int get hashCode => Object.hash(runtimeType, rentalPrice, rentalDays,
+      startDate, endDate, createAt, nameUser, phoneUser);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CarRentalDtoImplCopyWith<_$CarRentalDtoImpl> get copyWith =>
-      __$$CarRentalDtoImplCopyWithImpl<_$CarRentalDtoImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$CarRentalDtoImplToJson(
-      this,
-    );
-  }
+  _$$UserCarRentalDtoImplCopyWith<_$UserCarRentalDtoImpl> get copyWith =>
+      __$$UserCarRentalDtoImplCopyWithImpl<_$UserCarRentalDtoImpl>(
+          this, _$identity);
 }
 
-abstract class _CarRentalDto implements CarRentalDto {
-  const factory _CarRentalDto(
-      {final String idCar,
-      final double rentalPrice,
+abstract class _UserCarRentalDto implements UserCarRentalDto {
+  const factory _UserCarRentalDto(
+      {final double rentalPrice,
       final int rentalDays,
       final String startDate,
-      final String endDate}) = _$CarRentalDtoImpl;
+      final String endDate,
+      final String createAt,
+      final String nameUser,
+      final String phoneUser}) = _$UserCarRentalDtoImpl;
 
-  factory _CarRentalDto.fromJson(Map<String, dynamic> json) =
-      _$CarRentalDtoImpl.fromJson;
-
-  @override
-  String get idCar;
   @override
   double get rentalPrice;
   @override
@@ -238,7 +259,13 @@ abstract class _CarRentalDto implements CarRentalDto {
   @override
   String get endDate;
   @override
+  String get createAt;
+  @override
+  String get nameUser;
+  @override
+  String get phoneUser;
+  @override
   @JsonKey(ignore: true)
-  _$$CarRentalDtoImplCopyWith<_$CarRentalDtoImpl> get copyWith =>
+  _$$UserCarRentalDtoImplCopyWith<_$UserCarRentalDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

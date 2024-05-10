@@ -70,10 +70,20 @@ class RentalCarNotifier extends _$RentalCarNotifier {
   Future<void> rentalCar() async {
     state = state.copyWith(loading: false);
     try {
+      final startDate = DateTimeFormatUtils.stringToDateFormat(
+        date: state.startDate,
+        format: 'dd/MM/yyyy',
+      ).toString();
+      final endDate = DateTimeFormatUtils.stringToDateFormat(
+        date: state.endDate,
+        format: 'dd/MM/yyyy',
+      ).toString();
       final carRentalDto = CarRentalDto(
         idCar: state.car.idCar,
         rentalDays: state.numberDays,
         rentalPrice: state.total,
+        startDate: startDate,
+        endDate: endDate,
       );
       await injection.getIt<ICarService>().rentalCar(
             carRentalDto: carRentalDto,

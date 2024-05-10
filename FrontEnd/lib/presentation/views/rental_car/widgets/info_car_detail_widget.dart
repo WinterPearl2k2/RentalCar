@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -56,10 +57,9 @@ class InfoCarDetailWidget extends StatelessWidget {
         ),
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.memory(
-            const Base64Decoder().convert(
-              car.imagesCar,
-            ),
+          child: CachedMemoryImage(
+            uniqueKey: car.idCar,
+            bytes: const Base64Decoder().convert(car.idCar),
             fit: BoxFit.cover,
             height: 80.h,
             width: 80.w,

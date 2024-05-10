@@ -2,6 +2,7 @@ import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
+import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 
 import '../../domain/repositories/car_repository.dart';
@@ -27,7 +28,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   @override
   Future<void> updateCar({required String idCar, required CarDTO carDTO}) {
     return post<CarDTO>(
-      url:  "${EndPoint.restUrlUpdateCar}/$idCar",
+      url: "${EndPoint.restUrlUpdateCar}/$idCar",
       data: carDTO.toJson(),
       mapper: (response) => CarDTO.fromJson(response.data),
     );
@@ -41,7 +42,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
         return (response.data as List)
             .map(
               (json) => Car.fromJson(json),
-        )
+            )
             .toList();
       },
     );
@@ -55,7 +56,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
         return (response.data as List)
             .map(
               (json) => Car.fromJson(json),
-        )
+            )
             .toList();
       },
     );
@@ -64,7 +65,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   @override
   Future<Car> getCarById({required String idCar}) {
     return get<Car>(
-      url:"${EndPoint.restUrlGetCarById}/$idCar",
+      url: "${EndPoint.restUrlGetCarById}/$idCar",
       mapper: (response) {
         return Car.fromJson(response.data);
       },
@@ -74,9 +75,26 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   @override
   Future<void> rentalCar({required CarRentalDto carRentalDto}) {
     return post<void>(
-      url:EndPoint.restUrlRentalCar,
+      url: EndPoint.restUrlRentalCar,
       data: carRentalDto.toJson(),
       mapper: (_) {},
+    );
+  }
+
+  @override
+  Future<List<UserCarRentalDto>> getRentalCars() {
+    return get(
+      url: EndPoint.restUrlGetRentalCars,
+      mapper: (response) {
+        if(response.data ==  null) {
+          return [];
+        }
+        return (response.data as List)
+            .map(
+              (json) => UserCarRentalDto.fromJson(json),
+            )
+            .toList();
+      },
     );
   }
 }

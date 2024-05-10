@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"strings"
+	"time"
 
 	"rent-car/initializers"
 	Middleware "rent-car/middleware"
@@ -61,12 +62,17 @@ func RentalCar(context *gin.Context) {
 		return
 	}
 
+	startDate, _ := parseDateString(body.StartDate)
+	endDate, _ := parseDateString(body.StartDate)
+
 	rentalCar := models.CarRentail{
 		StatusCar:   0,
 		User:        &user,
 		Car:         &car,
 		RentalPrice: body.RentalPrice,
 		RentalDays:  body.RentalDays,
+		StartDate:   startDate,
+		EndDate:     endDate,
 	}
 
 	result := initializers.DB.Create(&rentalCar)
@@ -88,4 +94,9 @@ func RentalCar(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{
 		"message": "Booking success.",
 	})
+}
+
+func parseDateString(dateString string) (time.Time, error) {
+	layout := "2006-01-02 15:04:05.000"
+	return time.Parse(layout, dateString)
 }

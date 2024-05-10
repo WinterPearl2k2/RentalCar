@@ -11,6 +11,25 @@ class DateTimeFormatUtils {
     return formattedDate;
   }
 
+  static DateTime stringToDateFormat({
+    required String date,
+    required String format,
+  }) {
+    final formatter = DateFormat(format);
+    final dateTime = formatter.parse(date);
+    return dateTime;
+  }
+
+  static String convertDateFormat({
+    required String inputDate,
+    required String format,
+  }) {
+    final initialDate = DateTime.parse(inputDate);
+    final adjustedDateTime = initialDate.toLocal();
+    final formattedDate = DateFormat(format).format(adjustedDateTime);
+    return formattedDate;
+  }
+
   static int pareDate({
     required String date1,
     required String date2,
