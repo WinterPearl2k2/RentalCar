@@ -12,7 +12,6 @@ class RoutesTest {
       RoutesName.forgotPassword: (context) => const ForgotPasswordView(),
       RoutesName.bottomNavigation: (context) => const BottomNavigationView(),
       RoutesName.changePassword: (context) => const ChangePasswordView(),
-      // RoutesName.accountProfile: (context) => const AccountProfileView(),
     };
   }
 }

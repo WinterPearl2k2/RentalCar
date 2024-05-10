@@ -23,7 +23,7 @@ func NewToken(context *gin.Context) {
 		return
 	}
 	log.Print(refreshToken.RefreshToken)
-	secret := []byte(os.Getenv("JWT_REFRESH_SECRET"))
+	secret := []byte(os.Getenv("JWT_ACCESS_SECRET"))
 
 	token, err := jwt.Parse(refreshToken.RefreshToken, func(token *jwt.Token) (interface{}, error) {
 		_, ok := token.Method.(*jwt.SigningMethodHMAC)

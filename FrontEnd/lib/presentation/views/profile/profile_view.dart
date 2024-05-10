@@ -138,6 +138,20 @@ class _ProfileViewState extends BaseStateDelegate<ProfileView, ProfileNotifier>
                           ),
                           ButtonSettingsWidget(
                             icon: SvgPicture.asset(
+                              'assets/icons/ic_notification.svg',
+                            ),
+                            title: 'Notifications',
+                            onPressed: () => Routes.goToNotificationView(
+                              context,
+                            ),
+                          ),
+                          Container(
+                            height: 1,
+                            width: double.infinity,
+                            color: ColorUtils.textColor,
+                          ),
+                          ButtonSettingsWidget(
+                            icon: SvgPicture.asset(
                               'assets/icons/ic_change_password.svg',
                             ),
                             title: 'Change Password',

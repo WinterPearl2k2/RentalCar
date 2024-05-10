@@ -89,15 +89,20 @@ class _CarDetailView
                                 child: PreferenceService.getUUID() ==
                                         carDetail.idUser
                                     ? const SizedBox()
-                                    : const TextButtonWidget(
-                                        label: "Rental Car",
+                                    : SizedBox(
+                                        width: 150.w,
+                                        child: TextButtonWidget(
+                                          label: "Rental Car",
+                                          onPressed: () =>
+                                              notifier.rentingCar(context),
+                                        ),
                                       ),
                               ),
                             ],
                           ),
                         ),
                         SizedBox(
-                          height: 10.0.h,
+                          height: 10.h,
                         )
                       ],
                     )

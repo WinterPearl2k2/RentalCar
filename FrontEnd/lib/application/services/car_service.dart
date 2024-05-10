@@ -1,8 +1,10 @@
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
+import 'package:rental_car/data/dtos/car_rental_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 
+import '../../data/dtos/user_car_rental_dto.dart';
 import '../../domain/repositories/car_repository.dart';
 
 abstract class ICarService {
@@ -15,11 +17,14 @@ abstract class ICarService {
     required CarDTO carDTO,
   });
 
+  Future<List<UserCarRentalDto>> getRentalCars();
   Future<List<TopCarDTO>> getAllTopCar();
 
   Future<CarDetailDTO> getCarById({required String idCar});
 
   Future<List<Car>> getAllCarByIdUser({required String idUser});
+
+  Future<void> rentalCar({required CarRentalDto carRentalDto});
 }
 
 class CarServiceImpl implements ICarService {
@@ -57,5 +62,15 @@ class CarServiceImpl implements ICarService {
   @override
   Future<void> updateCar({required String idCar, required CarDTO carDTO}) {
     return _carRepository.updateCar(idCar: idCar, carDTO: carDTO);
+  }
+
+  @override
+  Future<void> rentalCar({required CarRentalDto carRentalDto}) {
+    return _carRepository.rentalCar(carRentalDto: carRentalDto);
+  }
+
+  @override
+  Future<List<UserCarRentalDto>> getRentalCars() {
+    return _carRepository.getRentalCars();
   }
 }

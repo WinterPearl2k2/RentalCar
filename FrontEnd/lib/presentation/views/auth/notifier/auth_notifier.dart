@@ -54,8 +54,8 @@ class AuthNotifier extends _$AuthNotifier {
   }) async {
     state = state.copyWith(wait: true);
     final loginDTO = LoginDTO(
-      email: email.text,
-      password: password.text,
+      email: email.text.trim(),
+      password: password.text.trim(),
     );
     try {
       await injection.getIt<IAuthService>().loginUser(
@@ -79,20 +79,20 @@ class AuthNotifier extends _$AuthNotifier {
   }) async {
     state = state.copyWith(wait: true);
     if (_checkValid(
-      password.text,
-      name.text,
-      email.text,
-      phoneNumber.text,
+      password.text.trim(),
+      name.text.trim(),
+      email.text.trim(),
+      phoneNumber.text.trim(),
     )) {
       Fluttertoast.showToast(msg: 'Invalid information!');
       state = state.copyWith(wait: false);
       return;
     }
     final userDTO = UserDTO(
-      password: password.text,
-      name: name.text,
-      email: email.text,
-      phoneNumber: phoneNumber.text,
+      password: password.text.trim(),
+      name: name.text.trim(),
+      email: email.text.trim(),
+      phoneNumber: phoneNumber.text.trim(),
     );
     try {
       await injection.getIt<IAuthService>().registerUser(
@@ -153,7 +153,7 @@ class AuthNotifier extends _$AuthNotifier {
   void checkEmail(String value) {
     if (state.errorEmail) {
       state = state.copyWith(
-        errorEmail: !RegexCheckUtils.emailRegex.hasMatch(value),
+        errorEmail: !RegexCheckUtils.emailRegex.hasMatch(value.trim()),
       );
     }
   }
@@ -161,7 +161,7 @@ class AuthNotifier extends _$AuthNotifier {
   void checkPhone(String value) {
     if (state.errorPhone) {
       state = state.copyWith(
-        errorPhone: !RegexCheckUtils.phoneRegex.hasMatch(value),
+        errorPhone: !RegexCheckUtils.phoneRegex.hasMatch(value.trim()),
       );
     }
   }
@@ -169,7 +169,7 @@ class AuthNotifier extends _$AuthNotifier {
   void checkPassword(String value) {
     if (state.errorPassword) {
       state = state.copyWith(
-        errorPassword: !RegexCheckUtils.passwordRegex.hasMatch(value),
+        errorPassword: !RegexCheckUtils.passwordRegex.hasMatch(value.trim()),
       );
     }
   }

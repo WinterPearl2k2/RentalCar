@@ -2,6 +2,8 @@ import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
+import 'package:rental_car/data/dtos/car_rental_dto.dart';
+import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 
@@ -56,7 +58,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
         return (response.data as List)
             .map(
               (json) => Car.fromJson(json),
-        )
+            )
             .toList();
       },
     );
@@ -68,6 +70,32 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
       url:"${EndPoint.restUrlGetCarById}/$idCar",
       mapper: (response) {
         return CarDetailDTO.fromJson(response.data);
+      },
+    );
+  }
+
+  @override
+  Future<void> rentalCar({required CarRentalDto carRentalDto}) {
+    return post<void>(
+      url: EndPoint.restUrlRentalCar,
+      data: carRentalDto.toJson(),
+      mapper: (_) {},
+    );
+  }
+
+  @override
+  Future<List<UserCarRentalDto>> getRentalCars() {
+    return get(
+      url: EndPoint.restUrlGetRentalCars,
+      mapper: (response) {
+        if(response.data ==  null) {
+          return [];
+        }
+        return (response.data as List)
+            .map(
+              (json) => UserCarRentalDto.fromJson(json),
+            )
+            .toList();
       },
     );
   }

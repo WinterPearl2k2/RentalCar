@@ -1,3 +1,4 @@
+import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
@@ -23,5 +24,9 @@ class CarDetailNotifier extends _$CarDetailNotifier {
       state = state.copyWith(
           carDetail: const CarDetailDTO(), status: Status.success);
     }
+  }
+
+  void rentingCar(context) {
+    Routes.goToRentalCarView(context, state.carDetail);
   }
 }

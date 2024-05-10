@@ -18,5 +18,6 @@ func main() {
 		&models.Contract{},
 		&models.RentHistory{},
 		&models.Verification{},
+		&models.CarRentail{},
 	)
 }

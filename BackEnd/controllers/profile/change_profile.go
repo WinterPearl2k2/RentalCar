@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	"net/http"
+	Middleware "rent-car/middleware"
 	UserRepository "rent-car/repositories/users"
 
 	"github.com/gin-gonic/gin"
@@ -11,15 +12,19 @@ import (
 
 func ChangeProfile(context *gin.Context) {
 	var body UserProfile
-	uuid := context.Param("uuid")
+	uuid, err := Middleware.RequireAuth(context)
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	if err := context.ShouldBindJSON(&body); err != nil {
-		context.JSON(http.StatusUnprocessableEntity, gin.H{
-			"message": "Invalid information",
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
 		})
 		return
 	}
 
-	user, err := UserRepository.GetUserById(uuid)
+	user, err := UserRepository.GetUserById(uuid.String())
 
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -57,7 +62,7 @@ func ChangeProfile(context *gin.Context) {
 	user.EmailUser = body.Email
 	user.PhoneUser = body.Phone
 	user.NameUser = body.Name
-	errUpdate := UserRepository.UpdateUserById(uuid, user)
+	errUpdate := UserRepository.UpdateUserById(uuid.String(), user)
 	if errUpdate != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to update profile",

@@ -27,8 +27,7 @@ class ProfileNotifier extends _$ProfileNotifier {
 
   Future<void> getUser() async {
     try {
-      String uuid = PreferenceService.getUUID();
-      final user = await injection.getIt<IAuthService>().getUser(uuid: uuid);
+      final user = await injection.getIt<IAuthService>().getUser();
       state = state.copyWith(user: user);
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());

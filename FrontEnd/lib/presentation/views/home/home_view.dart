@@ -1,7 +1,5 @@
 import 'package:easy_refresh/easy_refresh.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';

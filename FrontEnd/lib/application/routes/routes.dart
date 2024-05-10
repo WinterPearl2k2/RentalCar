@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 import 'package:rental_car/presentation/views/account_profile/account_profile_view.dart';
@@ -8,7 +9,9 @@ import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/add_car_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/edit_car_view.dart';
 import 'package:rental_car/presentation/views/forgot_password/forgot_password_view.dart';
+import 'package:rental_car/presentation/views/notification/notification_view.dart';
 
+import '../../presentation/views/rental_car/rental_car_view.dart';
 import 'routes_name.dart';
 
 class Routes {
@@ -30,11 +33,22 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => const ForgotPasswordView(),
         );
+      case RoutesName.notification:
+        return MaterialPageRoute(
+          builder: (context) => const NotificationView(),
+        );
       case RoutesName.accountProfile:
         final args = settings.arguments as Map<String, UserProfileDTO>;
         return MaterialPageRoute(
           builder: (context) => AccountProfileView(
             user: args['user'] ?? const UserProfileDTO(),
+          ),
+        );
+      case RoutesName.rentalCar:
+        final args = settings.arguments as Map<String, CarDetailDTO>;
+        return MaterialPageRoute(
+          builder: (context) => RentalCarView(
+            carData: args['car'] ?? const CarDetailDTO(),
           ),
         );
       case RoutesName.carDetailView:
@@ -142,6 +156,26 @@ class Routes {
       context,
       RoutesName.accountProfile,
       arguments: {'user': user},
+    );
+  }
+
+  static Future<Object?> goToNotificationView(
+      BuildContext context,
+      ) {
+    return Navigator.pushNamed(
+      context,
+      RoutesName.notification,
+    );
+  }
+
+  static void goToRentalCarView(
+      BuildContext context,
+      CarDetailDTO car,
+      ) {
+    Navigator.pushNamed(
+      context,
+      RoutesName.rentalCar,
+      arguments: {'car': car},
     );
   }
 }

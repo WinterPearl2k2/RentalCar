@@ -14,3 +14,11 @@ type CarBody struct {
 	ImagesCar       string
 	StatusCar       string `binding:"required"`
 }
+
+type CarRent struct {
+	RentalPrice float64 `binding:"required"`
+	RentalDays  int     `binding:"required"`
+	IdCar       string  `binding:"required"`
+	StartDate   string  `binding:"required"`
+	EndDate     string  `binding:"required"`
+}

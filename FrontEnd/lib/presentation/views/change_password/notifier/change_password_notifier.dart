@@ -1,5 +1,4 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/dtos/password_dto.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../application/services/auth_service.dart';
@@ -23,9 +22,9 @@ class ChangePasswordNotifier extends _$ChangePasswordNotifier {
   }) async {
     state = state.copyWith(wait: true);
     if (_checkValid(
-      oldPassword.text,
-      newPassword.text,
-      confirmPassword.text,
+      oldPassword.text.trim(),
+      newPassword.text.trim(),
+      confirmPassword.text.trim(),
     )) {
       Fluttertoast.showToast(msg: 'Invalid information!');
       state = state.copyWith(wait: false);
@@ -33,13 +32,11 @@ class ChangePasswordNotifier extends _$ChangePasswordNotifier {
     }
     try {
       final passwordDto = PasswordDto(
-        oldPassword: oldPassword.text,
-        newPassword: confirmPassword.text,
+        oldPassword: oldPassword.text.trim(),
+        newPassword: confirmPassword.text.trim(),
       );
-      final uuid = PreferenceService.getUUID();
       await injection.getIt<IAuthService>().changePassword(
             passwordDto: passwordDto,
-            uuid: uuid,
           );
       oldPassword.clear();
       newPassword.clear();
@@ -60,17 +57,17 @@ class ChangePasswordNotifier extends _$ChangePasswordNotifier {
   }) {
     if (state.errorOldPassword && ChangePassword.oldPassword == type) {
       state = state.copyWith(
-        errorOldPassword: value.isEmpty,
+        errorOldPassword: value.trim().isEmpty,
       );
     }
     if (state.errorNewPassword && ChangePassword.newPassword == type) {
       state = state.copyWith(
-        errorNewPassword: !RegexCheckUtils.passwordRegex.hasMatch(value),
+        errorNewPassword: !RegexCheckUtils.passwordRegex.hasMatch(value.trim()),
       );
     }
     if (state.errorConfirmPassword && ChangePassword.confirmPassword == type) {
       state = state.copyWith(
-        errorConfirmPassword: value.isEmpty,
+        errorConfirmPassword: value.trim().isEmpty,
       );
     }
   }
@@ -98,11 +95,11 @@ class ChangePasswordNotifier extends _$ChangePasswordNotifier {
     String confirmPassword,
   ) {
     bool check = false;
-    if (oldPassword.isEmpty) {
+    if (oldPassword.trim().isEmpty) {
       state = state.copyWith(errorOldPassword: true);
       check = true;
     }
-    if (!RegexCheckUtils.passwordRegex.hasMatch(newPassword)) {
+    if (!RegexCheckUtils.passwordRegex.hasMatch(newPassword.trim())) {
       state = state.copyWith(errorNewPassword: true);
       check = true;
     }

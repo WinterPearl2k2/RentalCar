@@ -3,6 +3,7 @@ package main
 import (
 	AuthController "rent-car/controllers/auth"
 	CarController "rent-car/controllers/car"
+	ContractController "rent-car/controllers/contract"
 	UserController "rent-car/controllers/profile"
 	"rent-car/initializers"
 
@@ -26,13 +27,17 @@ func main() {
 	router.POST("/auth/forgotPassword/:email", AuthController.ForgotPassword)
 	router.POST("/auth/verifyCode", AuthController.VerifyCode)
 	router.POST("/auth/resetPassword", AuthController.ResetPasswordUser)
-	router.PUT("/auth/changePassword/:uuid", AuthController.ChangePassword)
+	router.PUT("/auth/changePassword", AuthController.ChangePassword)
 	//profile
-	router.GET("/profile/getUserProfile/:uuid", UserController.GetUserProfile)
-	router.PUT("/profile/updateUserProfile/:uuid", UserController.ChangeProfile)
+	router.GET("/profile/getUserProfile", UserController.GetUserProfile)
+	router.PUT("/profile/updateUserProfile", UserController.ChangeProfile)
+
+	//Test
+	router.GET("/getRentalCar", ContractController.GetRentalCar)
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)
+	router.POST("/rentalCar", CarController.RentalCar)
 	router.GET("/getCarById/:id", CarController.GetCarById)
 	router.POST("/createCar", CarController.CreateCar)
 	router.PUT("/updateCar/:id", CarController.UpdateCar)
