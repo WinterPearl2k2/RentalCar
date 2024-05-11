@@ -7,7 +7,7 @@ part of 'forgot_password_notifier.dart';
 // **************************************************************************
 
 String _$forgotPasswordNotifierHash() =>
-    r'7165ba266d75a13dd185d8278fc4f2e612901da4';
+    r'25239982b29542f36fe4e58ccb732a51eed74e17';
 
 /// See also [ForgotPasswordNotifier].
 @ProviderFor(ForgotPasswordNotifier)

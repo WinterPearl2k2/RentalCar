@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 
 class HeaderHomeWidget extends StatelessWidget {
   const HeaderHomeWidget({
     super.key,
+    required this.notifier,
   });
-
+  final HomeNotifier notifier;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,13 +45,20 @@ class HeaderHomeWidget extends StatelessWidget {
               SizedBox(
                 height: 2.h,
               ),
-              Text(
-                "California, USA",
-                style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp),
-              )
+              Consumer(builder: (_, ref, __) {
+                final placemarks = ref.watch(
+                  homeNotifierProvider.select((value) => value.placemarks),
+                );
+                return Text(
+                  placemarks.isNotEmpty
+                      ? "${placemarks[0].country}"
+                      : "Loading...",
+                  style: TextStyle(
+                      color: ColorUtils.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp),
+                );
+              })
             ],
           ),
           const Spacer(),

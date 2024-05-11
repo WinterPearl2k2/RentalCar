@@ -19,10 +19,12 @@ class HomeView extends ConsumerStatefulWidget {
 
 class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
     with AutomaticKeepAliveClientMixin {
+
   @override
   void initNotifier() {
     notifier = ref.read(homeNotifierProvider.notifier);
     notifier.getListCars();
+    notifier.getLocationUser();
   }
 
   @override
@@ -35,7 +37,7 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const HeaderHomeWidget(),
+               HeaderHomeWidget(notifier: notifier,),
               SingleChildScrollView(
                 child: Column(children: [
                   const SlideBannerHomeWidget(),
