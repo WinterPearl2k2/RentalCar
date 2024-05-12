@@ -1,4 +1,3 @@
-import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,7 +18,6 @@ class HomeView extends ConsumerStatefulWidget {
 
 class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
     with AutomaticKeepAliveClientMixin {
-
   @override
   void initNotifier() {
     notifier = ref.read(homeNotifierProvider.notifier);
@@ -32,54 +30,45 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
     super.build(context);
     return SafeArea(
       child: Scaffold(
-        body: EasyRefresh(
-          onRefresh: () => notifier.getListCars(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-               HeaderHomeWidget(notifier: notifier,),
-              SingleChildScrollView(
-                child: Column(children: [
-                  const SlideBannerHomeWidget(),
-                  const DividerWidget(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 14.0.w,
-                      vertical: 10.0.h,
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Top vehicle",
-                          style: TextStyle(
-                            color: ColorUtils.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17.sp,
-                          ),
-                        ),
-                        const Spacer(),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Text(
-                            "See all",
-                            style: TextStyle(
-                              color: ColorUtils.textColor,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                        ),
-                      ],
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            HeaderHomeWidget(
+              notifier: notifier,
+            ),
+            const SlideBannerHomeWidget(),
+            const DividerWidget(),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 14.0.w,
+                vertical: 10.0.h,
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    "Top vehicle",
+                    style: TextStyle(
+                      color: ColorUtils.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17.sp,
                     ),
                   ),
-                  SizedBox(
-                    height: 180.h,
-                    child: ListTopVehicleWidget(notifier: notifier),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      "See all",
+                      style: TextStyle(
+                        color: ColorUtils.textColor,
+                        fontSize: 14.sp,
+                      ),
+                    ),
                   ),
-                ],),
-              )
-
-            ],
-          ),
+                ],
+              ),
+            ),
+            ListTopVehicleWidget(notifier: notifier)
+          ],
         ),
       ),
     );

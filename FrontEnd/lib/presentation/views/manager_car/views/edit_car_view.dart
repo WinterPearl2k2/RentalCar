@@ -246,6 +246,7 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                         addressController: addressController,
                         onChanged: (value) => notifier.isCheckAddressCarChange(
                             addressCar: addressController.text),
+                        notifier: notifier,
                       ),
                       SizedBox(
                         height: 20.h,

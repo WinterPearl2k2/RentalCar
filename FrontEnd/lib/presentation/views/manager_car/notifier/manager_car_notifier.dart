@@ -340,6 +340,14 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     }
   }
 
+  void changeAddressCar({required String addressCar}){
+    if(addressCar.isEmpty){
+      state = state.copyWith(addressCar: '');
+    } else{
+      state = state.copyWith(addressCar: addressCar);
+    }
+  }
+
   Future<String> convertImageToBase64(File imageFile) async {
     List<int> imageBytes = await imageFile.readAsBytes();
     String base64Image = base64Encode(imageBytes);

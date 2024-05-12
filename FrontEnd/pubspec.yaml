@@ -58,9 +58,10 @@ dependencies:
   syncfusion_flutter_datepicker: ^25.2.3
   progressive_image: ^2.0.1
   permission_handler: ^11.3.1
-  geolocator: ^11.0.0
+  geolocator: ^10.1.1
   const_date_time: ^1.1.0
   geocoding: ^3.0.0
+  open_street_map_search_and_pick: ^0.1.1
 
 dev_dependencies:
   flutter_test:

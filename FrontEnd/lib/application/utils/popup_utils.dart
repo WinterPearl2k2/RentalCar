@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
@@ -93,6 +92,30 @@ class PopupUtils {
             ),
           ),
         );
+      },
+    );
+  }
+
+  static Future<void> showBottomSheetDialog({
+    required BuildContext context,
+    required Widget dialog,
+  }) {
+    return showModalBottomSheet(
+      backgroundColor: ColorUtils.whiteColor,
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          topRight: Radius.circular(16.r),
+        ),
+      ),
+      builder: (_) {
+        return ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.r),
+              topRight: Radius.circular(16.r),
+            ),
+            child: dialog);
       },
     );
   }

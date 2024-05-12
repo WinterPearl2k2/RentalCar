@@ -51,7 +51,7 @@ class HeaderHomeWidget extends StatelessWidget {
                 );
                 return Text(
                   placemarks.isNotEmpty
-                      ? "${placemarks[0].country}"
+                      ? "${placemarks[0].locality}, ${placemarks[0].country}"
                       : "Loading...",
                   style: TextStyle(
                       color: ColorUtils.primaryColor,
