@@ -90,6 +90,22 @@ func RentalCar(context *gin.Context) {
 		})
 		return
 	}
+	user.CarRentails = append(user.CarRentails, rentalCar)
+	resultUser := initializers.DB.Save(&user)
+	if result.Error != nil {
+		errorMessage := resultUser.Error.Error()
+		if strings.Contains(errorMessage, "unique constraint") {
+			context.JSON(http.StatusConflict, gin.H{
+				"message": errorMessage,
+			})
+			return
+		}
+
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": errorMessage,
+		})
+		return
+	}
 
 	context.JSON(http.StatusCreated, gin.H{
 		"message": "Booking success.",
