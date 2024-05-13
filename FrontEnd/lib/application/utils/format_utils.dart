@@ -16,6 +16,17 @@ class FormatUtils {
     return text.replaceAll(".", "");
   }
 
+  static String formatDistance(double distance) {
+    String distanceString = '';
+    if (distance < 1000) {
+      distanceString = '${distance.toStringAsFixed(0)} m';
+    } else {
+      double kmDistance = distance / 1000;
+      distanceString = '${kmDistance.toStringAsFixed(0)} km';
+    }
+    return distanceString;
+  }
+
 }
 
 class ThousandsFormatter extends TextInputFormatter {

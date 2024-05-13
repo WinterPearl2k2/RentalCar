@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:const_date_time/const_date_time.dart';
 
@@ -10,6 +11,8 @@ part 'home_state.freezed.dart';
 class HomeState with _$HomeState {
   const factory HomeState({
     @Default([]) List<TopCarDTO> listTopCar,
+    @Default([]) List<AllCarDTO> listAllCar,
+    @Default(0) double instanceCar,
     @Default(Status.loading) Status status,
     @Default([]) List<Placemark> placemarks,
     @Default(

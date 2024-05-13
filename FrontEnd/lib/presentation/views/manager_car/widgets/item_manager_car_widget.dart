@@ -105,7 +105,7 @@ class ItemManagerCarWidget extends StatelessWidget {
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      "${FormatUtils.formatNumber(car.priceCar)} VND / day",
+                      "${FormatUtils.formatNumber(car.priceCar)} USD / day",
                       style: TextStyle(
                         color: ColorUtils.blueColor,
                         fontWeight: FontWeight.bold,

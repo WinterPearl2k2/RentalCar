@@ -7,7 +7,7 @@ part of 'manager_car_notifier.dart';
 // **************************************************************************
 
 String _$managerCarNotifierHash() =>
-    r'c5a79432b8376fbccbdabbfca5b54315e11219ef';
+    r'0240e3c7fdbe990bc9fbf5d715ce2ab7c6a3481f';
 
 /// See also [ManagerCarNotifier].
 @ProviderFor(ManagerCarNotifier)

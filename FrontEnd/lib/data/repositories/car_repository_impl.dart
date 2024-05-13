@@ -1,5 +1,6 @@
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
+import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
@@ -33,20 +34,6 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
       url:  "${EndPoint.restUrlUpdateCar}/$idCar",
       data: carDTO.toJson(),
       mapper: (response) => CarDTO.fromJson(response.data),
-    );
-  }
-
-  @override
-  Future<List<TopCarDTO>> getAllTopCar() {
-    return get<List<TopCarDTO>>(
-      url: EndPoint.restUrlGetAllCar,
-      mapper: (response) {
-        return (response.data as List)
-            .map(
-              (json) => TopCarDTO.fromJson(json),
-        )
-            .toList();
-      },
     );
   }
 
@@ -95,6 +82,34 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
             .map(
               (json) => UserCarRentalDto.fromJson(json),
             )
+            .toList();
+      },
+    );
+  }
+
+  @override
+  Future<List<AllCarDTO>> getAllCar() {
+    return get<List<AllCarDTO>>(
+      url: EndPoint.restUrlGetAllCar,
+      mapper: (response) {
+        return (response.data as List)
+            .map(
+              (json) => AllCarDTO.fromJson(json),
+        )
+            .toList();
+      },
+    );
+  }
+
+  @override
+  Future<List<TopCarDTO>> getTopCar() {
+    return get<List<TopCarDTO>>(
+      url: EndPoint.restUrlGetTopCar,
+      mapper: (response) {
+        return (response.data as List)
+            .map(
+              (json) => TopCarDTO.fromJson(json),
+        )
             .toList();
       },
     );

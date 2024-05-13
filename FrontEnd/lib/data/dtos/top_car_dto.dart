@@ -9,6 +9,7 @@ class TopCarDTO with _$TopCarDTO {
     @Default('') String idCar,
     @Default('') String imagesCar,
     @Default('') String nameCar,
+    @Default(0) double priceCar,
     @Default(0) double starCar,
     @Default(0) int countReviewCar,
   }) = _TopCarDTO;

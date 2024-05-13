@@ -6,6 +6,8 @@ import 'package:rental_car/presentation/views/account_profile/account_profile_vi
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
+import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
+import 'package:rental_car/presentation/views/home/views/see_all_car_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/add_car_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/edit_car_view.dart';
 import 'package:rental_car/presentation/views/forgot_password/forgot_password_view.dart';
@@ -52,17 +54,27 @@ class Routes {
           ),
         );
       case RoutesName.carDetailView:
-        final args = settings.arguments as Map<String, String>;
+        final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (context) => CarDetailView(
             idCar: args['idCar'] ?? '',
+            distance: args['distance'] ?? 0.0,
+            latCar: args['distance'] ?? 0.0,
+            longCar: args['distance'] ?? 0.0,
           ),
         );
-        case RoutesName.editCar:
+      case RoutesName.editCar:
         final args = settings.arguments as Map<String, Car>;
         return MaterialPageRoute(
           builder: (context) => EditCarView(
             car: args['car'] ?? const Car(),
+          ),
+        );
+      case RoutesName.seeAllCar:
+        final args = settings.arguments as Map<String, HomeNotifier>;
+        return MaterialPageRoute(
+          builder: (context) => SeeAllCarView(
+            notifier: args['notifier'] ?? HomeNotifier(),
           ),
         );
       default:
@@ -133,11 +145,16 @@ class Routes {
     );
   }
 
-  static void goToCarDetailView(BuildContext context, String idCar) {
+  static void goToCarDetailView(BuildContext context, String idCar,
+      [double distance = 0.0, double latCar = 0.0, double longCar = 0.0]) {
     Navigator.of(context).pushNamed(RoutesName.carDetailView, arguments: {
       "idCar": idCar,
+      "distance": distance,
+      "latCar": latCar,
+      "longCar": longCar,
     });
   }
+
   static void goToEditCarView(BuildContext context, Car car) {
     Navigator.of(context).pushNamed(RoutesName.editCar, arguments: {
       "car": car,
@@ -160,8 +177,8 @@ class Routes {
   }
 
   static Future<Object?> goToNotificationView(
-      BuildContext context,
-      ) {
+    BuildContext context,
+  ) {
     return Navigator.pushNamed(
       context,
       RoutesName.notification,
@@ -169,13 +186,18 @@ class Routes {
   }
 
   static void goToRentalCarView(
-      BuildContext context,
-      CarDetailDTO car,
-      ) {
+    BuildContext context,
+    CarDetailDTO car,
+  ) {
     Navigator.pushNamed(
       context,
       RoutesName.rentalCar,
       arguments: {'car': car},
     );
+  }
+
+  static void goToSeeAllCarView(BuildContext context, HomeNotifier notifier) {
+    Navigator.of(context)
+        .pushNamed(RoutesName.seeAllCar, arguments: {'notifier': notifier});
   }
 }
