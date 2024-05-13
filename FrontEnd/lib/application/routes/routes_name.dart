@@ -19,6 +19,8 @@ class RoutesName {
   static const accountProfile = '/account_profile';
   //account profile
   static const notification = '/notification';
+  //detail contract
+  static const detailContract = '/detail_contract';
 
   //car
   static const addCar = 'add_car_view';

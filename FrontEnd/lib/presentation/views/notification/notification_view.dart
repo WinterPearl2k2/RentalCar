@@ -123,7 +123,8 @@ class _NotificationViewState
                                       IconButtonNotificationWidget(
                                         onPressed: () {
                                           launchUrlString(
-                                              "tel://${user[index].phoneUser}");
+                                            "tel://${user[index].phoneUser}",
+                                          );
                                         },
                                         icon: SvgPicture.asset(
                                           'assets/icons/ic_phone.svg',

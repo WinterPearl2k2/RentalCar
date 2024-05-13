@@ -14,11 +14,21 @@ class ContractNotifier extends _$ContractNotifier {
   @override
   ContractState build() => const ContractState();
 
+  Future<void> setUpData() async {
+    await Future.delayed(const Duration(milliseconds: 1),);
+    state = state.copyWith(
+      rentalFilter: -1,
+      leaseFilter: -1,
+    );
+  }
+
   Future<void> getRentalContract() async {
     try {
-      final contracts = await injection
-          .getIt<IContractService>()
-          .getRentalContract(offset: 0);
+      final contracts =
+          await injection.getIt<IContractService>().getRentalContract(
+                offset: 0,
+                filter: state.rentalFilter,
+              );
       state = state.copyWith(
         rentalContracts: contracts,
       );
@@ -28,13 +38,46 @@ class ContractNotifier extends _$ContractNotifier {
     }
   }
 
+  void filterRental(int value) {
+    int filter = -1;
+    switch (value) {
+      case 0:
+        filter = -1;
+      case 1:
+        filter = 0;
+      case 2:
+        filter = 1;
+      case 3:
+        filter = 3;
+      case 4:
+        filter = 4;
+    }
+    state = state.copyWith(rentalFilter: filter);
+    getRentalContract();
+  }
+
+  void filterLease(int value) {
+    int filter = -1;
+    switch (value) {
+      case 0:
+        filter = -1;
+      case 1:
+        filter = 1;
+      case 2:
+        filter = 4;
+    }
+    state = state.copyWith(leaseFilter: filter);
+    getLeaseContract();
+  }
+
   Future<void> getMoreRentalContract() async {
     try {
       final contracts =
           await injection.getIt<IContractService>().getRentalContract(
                 offset: state.rentalContracts.length,
+                filter: state.rentalFilter,
               );
-      if(contracts.isEmpty) return;
+      if (contracts.isEmpty) return;
       state = state.copyWith(
         rentalContracts: [...state.rentalContracts, ...contracts],
       );
@@ -46,9 +89,11 @@ class ContractNotifier extends _$ContractNotifier {
 
   Future<void> getLeaseContract() async {
     try {
-      final contracts = await injection
-          .getIt<IContractService>()
-          .getLeaseContract(offset: 0);
+      final contracts =
+          await injection.getIt<IContractService>().getLeaseContract(
+                offset: 0,
+                filter: state.leaseFilter,
+              );
       state = state.copyWith(
         leaseContracts: contracts,
       );
@@ -61,10 +106,11 @@ class ContractNotifier extends _$ContractNotifier {
   Future<void> getMoreLeaseContract() async {
     try {
       final contracts =
-      await injection.getIt<IContractService>().getLeaseContract(
-        offset: state.leaseContracts.length,
-      );
-      if(contracts.isEmpty) return;
+          await injection.getIt<IContractService>().getLeaseContract(
+                offset: state.leaseContracts.length,
+                filter: state.leaseFilter,
+              );
+      if (contracts.isEmpty) return;
       state = state.copyWith(
         leaseContracts: [...state.leaseContracts, ...contracts],
       );

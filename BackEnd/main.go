@@ -39,9 +39,9 @@ func main() {
 	//Contract
 	router.GET("/getRentalCar", ContractController.GetRentalCar)
 	router.DELETE("/cancelRentalCar/:id", ContractController.CancelRentalCar)
-	router.GET("/getRentalContract/:offset", ContractController.GetRentalContract)
+	router.GET("/getRentalContract/:offset/:filter", ContractController.GetRentalContract)
 	router.PUT("/signContract/:id", ContractController.SignContract)
-	router.GET("/getLeaseContract/:offset", ContractController.GetLeaseContract)
+	router.GET("/getLeaseContract/:offset/:filter", ContractController.GetLeaseContract)
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)

@@ -20,6 +20,8 @@ mixin _$ContractState {
       throw _privateConstructorUsedError;
   List<RentalContractDto> get leaseContracts =>
       throw _privateConstructorUsedError;
+  int get rentalFilter => throw _privateConstructorUsedError;
+  int get leaseFilter => throw _privateConstructorUsedError;
   bool get wait => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,6 +38,8 @@ abstract class $ContractStateCopyWith<$Res> {
   $Res call(
       {List<RentalContractDto> rentalContracts,
       List<RentalContractDto> leaseContracts,
+      int rentalFilter,
+      int leaseFilter,
       bool wait});
 }
 
@@ -54,6 +58,8 @@ class _$ContractStateCopyWithImpl<$Res, $Val extends ContractState>
   $Res call({
     Object? rentalContracts = null,
     Object? leaseContracts = null,
+    Object? rentalFilter = null,
+    Object? leaseFilter = null,
     Object? wait = null,
   }) {
     return _then(_value.copyWith(
@@ -65,6 +71,14 @@ class _$ContractStateCopyWithImpl<$Res, $Val extends ContractState>
           ? _value.leaseContracts
           : leaseContracts // ignore: cast_nullable_to_non_nullable
               as List<RentalContractDto>,
+      rentalFilter: null == rentalFilter
+          ? _value.rentalFilter
+          : rentalFilter // ignore: cast_nullable_to_non_nullable
+              as int,
+      leaseFilter: null == leaseFilter
+          ? _value.leaseFilter
+          : leaseFilter // ignore: cast_nullable_to_non_nullable
+              as int,
       wait: null == wait
           ? _value.wait
           : wait // ignore: cast_nullable_to_non_nullable
@@ -84,6 +98,8 @@ abstract class _$$ContractStateImplCopyWith<$Res>
   $Res call(
       {List<RentalContractDto> rentalContracts,
       List<RentalContractDto> leaseContracts,
+      int rentalFilter,
+      int leaseFilter,
       bool wait});
 }
 
@@ -100,6 +116,8 @@ class __$$ContractStateImplCopyWithImpl<$Res>
   $Res call({
     Object? rentalContracts = null,
     Object? leaseContracts = null,
+    Object? rentalFilter = null,
+    Object? leaseFilter = null,
     Object? wait = null,
   }) {
     return _then(_$ContractStateImpl(
@@ -111,6 +129,14 @@ class __$$ContractStateImplCopyWithImpl<$Res>
           ? _value._leaseContracts
           : leaseContracts // ignore: cast_nullable_to_non_nullable
               as List<RentalContractDto>,
+      rentalFilter: null == rentalFilter
+          ? _value.rentalFilter
+          : rentalFilter // ignore: cast_nullable_to_non_nullable
+              as int,
+      leaseFilter: null == leaseFilter
+          ? _value.leaseFilter
+          : leaseFilter // ignore: cast_nullable_to_non_nullable
+              as int,
       wait: null == wait
           ? _value.wait
           : wait // ignore: cast_nullable_to_non_nullable
@@ -125,6 +151,8 @@ class _$ContractStateImpl implements _ContractState {
   const _$ContractStateImpl(
       {final List<RentalContractDto> rentalContracts = const [],
       final List<RentalContractDto> leaseContracts = const [],
+      this.rentalFilter = -1,
+      this.leaseFilter = -1,
       this.wait = false})
       : _rentalContracts = rentalContracts,
         _leaseContracts = leaseContracts;
@@ -149,11 +177,17 @@ class _$ContractStateImpl implements _ContractState {
 
   @override
   @JsonKey()
+  final int rentalFilter;
+  @override
+  @JsonKey()
+  final int leaseFilter;
+  @override
+  @JsonKey()
   final bool wait;
 
   @override
   String toString() {
-    return 'ContractState(rentalContracts: $rentalContracts, leaseContracts: $leaseContracts, wait: $wait)';
+    return 'ContractState(rentalContracts: $rentalContracts, leaseContracts: $leaseContracts, rentalFilter: $rentalFilter, leaseFilter: $leaseFilter, wait: $wait)';
   }
 
   @override
@@ -165,6 +199,10 @@ class _$ContractStateImpl implements _ContractState {
                 .equals(other._rentalContracts, _rentalContracts) &&
             const DeepCollectionEquality()
                 .equals(other._leaseContracts, _leaseContracts) &&
+            (identical(other.rentalFilter, rentalFilter) ||
+                other.rentalFilter == rentalFilter) &&
+            (identical(other.leaseFilter, leaseFilter) ||
+                other.leaseFilter == leaseFilter) &&
             (identical(other.wait, wait) || other.wait == wait));
   }
 
@@ -173,6 +211,8 @@ class _$ContractStateImpl implements _ContractState {
       runtimeType,
       const DeepCollectionEquality().hash(_rentalContracts),
       const DeepCollectionEquality().hash(_leaseContracts),
+      rentalFilter,
+      leaseFilter,
       wait);
 
   @JsonKey(ignore: true)
@@ -186,12 +226,18 @@ abstract class _ContractState implements ContractState {
   const factory _ContractState(
       {final List<RentalContractDto> rentalContracts,
       final List<RentalContractDto> leaseContracts,
+      final int rentalFilter,
+      final int leaseFilter,
       final bool wait}) = _$ContractStateImpl;
 
   @override
   List<RentalContractDto> get rentalContracts;
   @override
   List<RentalContractDto> get leaseContracts;
+  @override
+  int get rentalFilter;
+  @override
+  int get leaseFilter;
   @override
   bool get wait;
   @override

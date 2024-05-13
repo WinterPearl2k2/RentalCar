@@ -24,6 +24,7 @@ class _ContractViewState
   @override
   void initNotifier() {
     notifier = ref.read(contractNotifierProvider.notifier);
+    notifier.setUpData();
     _controller = TabController(length: 2, vsync: this);
   }
 

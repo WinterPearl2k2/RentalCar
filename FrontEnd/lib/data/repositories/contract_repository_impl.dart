@@ -14,17 +14,18 @@ class ContractRepositoryImpl extends NetworkApi implements IContractRepository {
   }
 
   @override
-  Future<List<RentalContractDto>> getRentalCar({required int offset}) {
+  Future<List<RentalContractDto>> getRentalCar(
+      {required int offset, required int filter}) {
     return get(
-      url: '${EndPoint.restUrlGetRentalContract}/$offset',
+      url: '${EndPoint.restUrlGetRentalContract}/$offset/$filter',
       mapper: (response) {
-        if(response.data ==  null) {
+        if (response.data == null) {
           return [];
         }
         return (response.data as List)
             .map(
               (json) => RentalContractDto.fromJson(json),
-        )
+            )
             .toList();
       },
     );
@@ -39,20 +40,20 @@ class ContractRepositoryImpl extends NetworkApi implements IContractRepository {
   }
 
   @override
-  Future<List<RentalContractDto>> getLeaseCar({required int offset}) {
+  Future<List<RentalContractDto>> getLeaseCar(
+      {required int offset, required int filter}) {
     return get(
-      url: '${EndPoint.restUrlGetLeaseContract}/$offset',
+      url: '${EndPoint.restUrlGetLeaseContract}/$offset/$filter',
       mapper: (response) {
-        if(response.data ==  null) {
+        if (response.data == null) {
           return [];
         }
         return (response.data as List)
             .map(
               (json) => RentalContractDto.fromJson(json),
-        )
+            )
             .toList();
       },
     );
   }
-
 }
