@@ -3,9 +3,12 @@ import 'package:rental_car/domain/repositories/contract_repository.dart';
 
 abstract class IContractService {
   Future<void> cancelRentalCar({required String idTransaction});
+
   Future<void> signContract({required String idTransaction});
 
   Future<List<RentalContractDto>> getRentalContract({required int offset});
+
+  Future<List<RentalContractDto>> getLeaseContract({required int offset});
 }
 
 class ContractServiceImpl implements IContractService {
@@ -32,5 +35,12 @@ class ContractServiceImpl implements IContractService {
     return _contractRepository.signContract(
       idTransaction: idTransaction,
     );
+  }
+
+  @override
+  Future<List<RentalContractDto>> getLeaseContract({
+    required int offset,
+  }) {
+    return _contractRepository.getLeaseCar(offset: offset);
   }
 }

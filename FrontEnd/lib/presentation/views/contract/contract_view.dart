@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/views/contract/notifier/contract_notifier.dart';
 import 'package:rental_car/presentation/views/contract/widgets/contract_widget.dart';
-import 'package:rental_car/presentation/views/contract/widgets/history_widget.dart';
+import 'package:rental_car/presentation/views/contract/widgets/lease_contract_widget.dart';
 
 import '../../../application/utils/colors_utils.dart';
 
@@ -65,7 +65,7 @@ class _ContractViewState
               physics: const NeverScrollableScrollPhysics(),
               children: [
                 ContractWidget(notifier: notifier),
-                HistoryWidget()
+                LeaseContractWidget(notifier: notifier)
               ],
             ),
           ),

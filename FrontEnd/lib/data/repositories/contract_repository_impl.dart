@@ -38,4 +38,21 @@ class ContractRepositoryImpl extends NetworkApi implements IContractRepository {
     );
   }
 
+  @override
+  Future<List<RentalContractDto>> getLeaseCar({required int offset}) {
+    return get(
+      url: '${EndPoint.restUrlGetLeaseContract}/$offset',
+      mapper: (response) {
+        if(response.data ==  null) {
+          return [];
+        }
+        return (response.data as List)
+            .map(
+              (json) => RentalContractDto.fromJson(json),
+        )
+            .toList();
+      },
+    );
+  }
+
 }

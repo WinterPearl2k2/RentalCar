@@ -63,7 +63,7 @@ func RentalCar(context *gin.Context) {
 	}
 
 	startDate, _ := parseDateString(body.StartDate)
-	endDate, _ := parseDateString(body.StartDate)
+	endDate, _ := parseDateString(body.EndDate)
 
 	rentalCar := models.CarRentail{
 		StatusCar:   0,

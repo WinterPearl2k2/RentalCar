@@ -9,7 +9,6 @@ import 'package:rental_car/presentation/common/base_state_delegate/base_state_de
 import 'package:rental_car/presentation/views/notification/notifier/notification_notifier.dart';
 import 'package:rental_car/presentation/views/notification/widgets/icon_button_notification_widget.dart';
 import 'package:rental_car/presentation/views/notification/widgets/text_button_notification_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../application/utils/colors_utils.dart';
 import '../../common/widgets/loading_widget.dart';

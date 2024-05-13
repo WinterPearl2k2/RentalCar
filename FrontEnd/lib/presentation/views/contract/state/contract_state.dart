@@ -8,6 +8,7 @@ part 'contract_state.freezed.dart';
 class ContractState with _$ContractState {
   const factory ContractState({
     @Default([]) List<RentalContractDto> rentalContracts,
+    @Default([]) List<RentalContractDto> leaseContracts,
     @Default(false) bool wait,
   }) = _ContractState;
 }

@@ -1,5 +1,7 @@
 package car
 
+import "time"
+
 type CarBody struct {
 	NameCar         string  `binding:"required"`
 	PriceCar        float64 `binding:"required"`
@@ -21,4 +23,9 @@ type CarRent struct {
 	IdCar       string  `binding:"required"`
 	StartDate   string  `binding:"required"`
 	EndDate     string  `binding:"required"`
+}
+
+type DateTimeCar struct {
+	StartDate time.Time `binding:"required"`
+	EndDate   time.Time `binding:"required"`
 }

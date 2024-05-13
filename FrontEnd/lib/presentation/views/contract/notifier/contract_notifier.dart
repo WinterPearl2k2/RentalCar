@@ -43,4 +43,34 @@ class ContractNotifier extends _$ContractNotifier {
       Fluttertoast.showToast(msg: e.message.toString());
     }
   }
+
+  Future<void> getLeaseContract() async {
+    try {
+      final contracts = await injection
+          .getIt<IContractService>()
+          .getLeaseContract(offset: 0);
+      state = state.copyWith(
+        leaseContracts: contracts,
+      );
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
+  }
+
+  Future<void> getMoreLeaseContract() async {
+    try {
+      final contracts =
+      await injection.getIt<IContractService>().getLeaseContract(
+        offset: state.leaseContracts.length,
+      );
+      if(contracts.isEmpty) return;
+      state = state.copyWith(
+        leaseContracts: [...state.leaseContracts, ...contracts],
+      );
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
+  }
 }

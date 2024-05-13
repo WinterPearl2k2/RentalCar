@@ -28,7 +28,7 @@ class BookDaysWidget extends StatelessWidget {
                 builder: (_, ref, __) {
                   final startDay = ref.watch(
                     rentalCarNotifierProvider.select(
-                          (value) => value.startDate,
+                      (value) => value.startDate,
                     ),
                   );
                   return DayUIWidget(
@@ -44,7 +44,7 @@ class BookDaysWidget extends StatelessWidget {
                 builder: (_, ref, __) {
                   final endDay = ref.watch(
                     rentalCarNotifierProvider.select(
-                          (value) => value.endDate,
+                      (value) => value.endDate,
                     ),
                   );
                   return DayUIWidget(
@@ -71,11 +71,12 @@ class BookDaysWidget extends StatelessWidget {
               onPressed: () => showDialog(
                 context: context,
                 builder: (context) => DialogTimePickerWidget(
-                  onSubmitted: (start, end) =>
-                      notifier.bookDay(
-                        startDay: start!,
-                        endDay: end!,
-                      ),
+                  onSubmitted: (start, end) => notifier.bookDay(
+                    startDay: start!,
+                    endDay: end!,
+                  ),
+                  onSelectionChanged: notifier.onSelectionChanged,
+                  selectableDayPredicate: notifier.selectableDayPredicate,
                 ),
               ),
             ),

@@ -19,10 +19,12 @@ mixin _$RentalCarState {
   dynamic get loading => throw _privateConstructorUsedError;
   UserProfileDTO get user => throw _privateConstructorUsedError;
   CarDetailDTO get car => throw _privateConstructorUsedError;
+  List<DateTimeDto> get dates => throw _privateConstructorUsedError;
   String get startDate => throw _privateConstructorUsedError;
   String get endDate => throw _privateConstructorUsedError;
   int get numberDays => throw _privateConstructorUsedError;
   double get total => throw _privateConstructorUsedError;
+  bool get isSelectRental => throw _privateConstructorUsedError;
   RentalCarStatus get statusView => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -40,10 +42,12 @@ abstract class $RentalCarStateCopyWith<$Res> {
       {dynamic loading,
       UserProfileDTO user,
       CarDetailDTO car,
+      List<DateTimeDto> dates,
       String startDate,
       String endDate,
       int numberDays,
       double total,
+      bool isSelectRental,
       RentalCarStatus statusView});
 
   $UserProfileDTOCopyWith<$Res> get user;
@@ -66,10 +70,12 @@ class _$RentalCarStateCopyWithImpl<$Res, $Val extends RentalCarState>
     Object? loading = freezed,
     Object? user = null,
     Object? car = null,
+    Object? dates = null,
     Object? startDate = null,
     Object? endDate = null,
     Object? numberDays = null,
     Object? total = null,
+    Object? isSelectRental = null,
     Object? statusView = null,
   }) {
     return _then(_value.copyWith(
@@ -85,6 +91,10 @@ class _$RentalCarStateCopyWithImpl<$Res, $Val extends RentalCarState>
           ? _value.car
           : car // ignore: cast_nullable_to_non_nullable
               as CarDetailDTO,
+      dates: null == dates
+          ? _value.dates
+          : dates // ignore: cast_nullable_to_non_nullable
+              as List<DateTimeDto>,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -101,6 +111,10 @@ class _$RentalCarStateCopyWithImpl<$Res, $Val extends RentalCarState>
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
               as double,
+      isSelectRental: null == isSelectRental
+          ? _value.isSelectRental
+          : isSelectRental // ignore: cast_nullable_to_non_nullable
+              as bool,
       statusView: null == statusView
           ? _value.statusView
           : statusView // ignore: cast_nullable_to_non_nullable
@@ -137,10 +151,12 @@ abstract class _$$RentalCarStateImplCopyWith<$Res>
       {dynamic loading,
       UserProfileDTO user,
       CarDetailDTO car,
+      List<DateTimeDto> dates,
       String startDate,
       String endDate,
       int numberDays,
       double total,
+      bool isSelectRental,
       RentalCarStatus statusView});
 
   @override
@@ -163,10 +179,12 @@ class __$$RentalCarStateImplCopyWithImpl<$Res>
     Object? loading = freezed,
     Object? user = null,
     Object? car = null,
+    Object? dates = null,
     Object? startDate = null,
     Object? endDate = null,
     Object? numberDays = null,
     Object? total = null,
+    Object? isSelectRental = null,
     Object? statusView = null,
   }) {
     return _then(_$RentalCarStateImpl(
@@ -179,6 +197,10 @@ class __$$RentalCarStateImplCopyWithImpl<$Res>
           ? _value.car
           : car // ignore: cast_nullable_to_non_nullable
               as CarDetailDTO,
+      dates: null == dates
+          ? _value._dates
+          : dates // ignore: cast_nullable_to_non_nullable
+              as List<DateTimeDto>,
       startDate: null == startDate
           ? _value.startDate
           : startDate // ignore: cast_nullable_to_non_nullable
@@ -195,6 +217,10 @@ class __$$RentalCarStateImplCopyWithImpl<$Res>
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
               as double,
+      isSelectRental: null == isSelectRental
+          ? _value.isSelectRental
+          : isSelectRental // ignore: cast_nullable_to_non_nullable
+              as bool,
       statusView: null == statusView
           ? _value.statusView
           : statusView // ignore: cast_nullable_to_non_nullable
@@ -210,11 +236,14 @@ class _$RentalCarStateImpl implements _RentalCarState {
       {this.loading = false,
       this.user = const UserProfileDTO(),
       this.car = const CarDetailDTO(),
+      final List<DateTimeDto> dates = const [],
       this.startDate = '',
       this.endDate = '',
       this.numberDays = 0,
       this.total = 0,
-      this.statusView = RentalCarStatus.rentalCar});
+      this.isSelectRental = false,
+      this.statusView = RentalCarStatus.rentalCar})
+      : _dates = dates;
 
   @override
   @JsonKey()
@@ -225,6 +254,15 @@ class _$RentalCarStateImpl implements _RentalCarState {
   @override
   @JsonKey()
   final CarDetailDTO car;
+  final List<DateTimeDto> _dates;
+  @override
+  @JsonKey()
+  List<DateTimeDto> get dates {
+    if (_dates is EqualUnmodifiableListView) return _dates;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dates);
+  }
+
   @override
   @JsonKey()
   final String startDate;
@@ -239,11 +277,14 @@ class _$RentalCarStateImpl implements _RentalCarState {
   final double total;
   @override
   @JsonKey()
+  final bool isSelectRental;
+  @override
+  @JsonKey()
   final RentalCarStatus statusView;
 
   @override
   String toString() {
-    return 'RentalCarState(loading: $loading, user: $user, car: $car, startDate: $startDate, endDate: $endDate, numberDays: $numberDays, total: $total, statusView: $statusView)';
+    return 'RentalCarState(loading: $loading, user: $user, car: $car, dates: $dates, startDate: $startDate, endDate: $endDate, numberDays: $numberDays, total: $total, isSelectRental: $isSelectRental, statusView: $statusView)';
   }
 
   @override
@@ -254,12 +295,15 @@ class _$RentalCarStateImpl implements _RentalCarState {
             const DeepCollectionEquality().equals(other.loading, loading) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.car, car) || other.car == car) &&
+            const DeepCollectionEquality().equals(other._dates, _dates) &&
             (identical(other.startDate, startDate) ||
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.numberDays, numberDays) ||
                 other.numberDays == numberDays) &&
             (identical(other.total, total) || other.total == total) &&
+            (identical(other.isSelectRental, isSelectRental) ||
+                other.isSelectRental == isSelectRental) &&
             (identical(other.statusView, statusView) ||
                 other.statusView == statusView));
   }
@@ -270,10 +314,12 @@ class _$RentalCarStateImpl implements _RentalCarState {
       const DeepCollectionEquality().hash(loading),
       user,
       car,
+      const DeepCollectionEquality().hash(_dates),
       startDate,
       endDate,
       numberDays,
       total,
+      isSelectRental,
       statusView);
 
   @JsonKey(ignore: true)
@@ -289,10 +335,12 @@ abstract class _RentalCarState implements RentalCarState {
       {final dynamic loading,
       final UserProfileDTO user,
       final CarDetailDTO car,
+      final List<DateTimeDto> dates,
       final String startDate,
       final String endDate,
       final int numberDays,
       final double total,
+      final bool isSelectRental,
       final RentalCarStatus statusView}) = _$RentalCarStateImpl;
 
   @override
@@ -302,6 +350,8 @@ abstract class _RentalCarState implements RentalCarState {
   @override
   CarDetailDTO get car;
   @override
+  List<DateTimeDto> get dates;
+  @override
   String get startDate;
   @override
   String get endDate;
@@ -309,6 +359,8 @@ abstract class _RentalCarState implements RentalCarState {
   int get numberDays;
   @override
   double get total;
+  @override
+  bool get isSelectRental;
   @override
   RentalCarStatus get statusView;
   @override

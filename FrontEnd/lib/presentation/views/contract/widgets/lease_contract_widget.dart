@@ -12,21 +12,21 @@ import 'package:rental_car/presentation/views/contract/notifier/contract_notifie
 import '../../../../application/utils/colors_utils.dart';
 import '../../../../application/utils/date_time_format_untils.dart';
 
-class ContractWidget extends StatefulWidget {
+class LeaseContractWidget extends StatefulWidget {
   final ContractNotifier notifier;
 
-  const ContractWidget({super.key, required this.notifier});
+  const LeaseContractWidget({super.key, required this.notifier});
 
   @override
-  State<ContractWidget> createState() => _ContractWidgetState();
+  State<LeaseContractWidget> createState() => _ContractWidgetState();
 }
 
-class _ContractWidgetState extends State<ContractWidget>
+class _ContractWidgetState extends State<LeaseContractWidget>
     with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
-    widget.notifier.getRentalContract();
+    widget.notifier.getLeaseContract();
   }
 
   final statusStr = [
@@ -46,13 +46,13 @@ class _ContractWidgetState extends State<ContractWidget>
   Widget build(BuildContext context) {
     super.build(context);
     return EasyRefresh(
-      onRefresh: () => widget.notifier.getRentalContract(),
-      onLoad: () => widget.notifier.getMoreRentalContract(),
+      onRefresh: () => widget.notifier.getLeaseContract(),
+      onLoad: () => widget.notifier.getMoreLeaseContract(),
       child: Consumer(
         builder: (_, ref, __) {
           final rentalContracts = ref.watch(
             contractNotifierProvider.select(
-                  (value) => value.rentalContracts,
+                  (value) => value.leaseContracts,
             ),
           );
           return ListView.builder(

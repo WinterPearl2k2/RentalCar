@@ -35,7 +35,8 @@ func SignContract(context *gin.Context) {
 		return
 	}
 	now := time.Now()
-	if rentalCar.StartDate.After(now) {
+	if rentalCar.StartDate.Before(now) {
+		log.Print("39")
 		context.JSON(http.StatusBadRequest, gin.H{
 			"message": "The contract has passed the current date and cannot be signed.",
 		})
@@ -47,6 +48,7 @@ func SignContract(context *gin.Context) {
 		Count(&count).Error
 	log.Print(count)
 	if errorFind != nil || count > 0 {
+		log.Print("50")
 		context.JSON(http.StatusBadRequest, gin.H{
 			"message": "The request is rejected, there is already a contract signed for these dates.",
 		})
@@ -54,7 +56,7 @@ func SignContract(context *gin.Context) {
 	}
 	rentalCar.StatusCar = 1
 
-	errUpdate := initializers.DB.Where("transaction=?", id).Updates(rentalCar).Error
+	errUpdate := initializers.DB.Where("transaction=?", id).Updates(&rentalCar).Error
 	if errUpdate != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Error for Sign",
