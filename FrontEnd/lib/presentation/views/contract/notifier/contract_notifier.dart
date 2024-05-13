@@ -48,9 +48,9 @@ class ContractNotifier extends _$ContractNotifier {
       case 2:
         filter = 1;
       case 3:
-        filter = 3;
+        filter = 2;
       case 4:
-        filter = 4;
+        filter = 3;
     }
     state = state.copyWith(rentalFilter: filter);
     getRentalContract();
@@ -64,7 +64,7 @@ class ContractNotifier extends _$ContractNotifier {
       case 1:
         filter = 1;
       case 2:
-        filter = 4;
+        filter = 3;
     }
     state = state.copyWith(leaseFilter: filter);
     getLeaseContract();

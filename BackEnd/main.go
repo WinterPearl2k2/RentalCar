@@ -69,14 +69,14 @@ func scheduleUpdateStatusCar() {
 
 		if err := initializers.DB.
 			Model(&models.CarRentail{}).
-			Where("end_date > ? AND status_car=?", now, 1).
+			Where("end_date < ? AND status_car=?", now, 1).
 			Update("status_car", 4).
 			Error; err != nil {
 			log.Fatalf("Error updating statusCar: %v", err)
 		}
 		if err := initializers.DB.
 			Model(&models.CarRentail{}).
-			Where("end_date > ? AND status_car!=?", now, 1).
+			Where("end_date < ? AND status_car!=?", now, 1).
 			Update("status_car", 3).
 			Error; err != nil {
 			log.Fatalf("Error updating statusCar: %v", err)

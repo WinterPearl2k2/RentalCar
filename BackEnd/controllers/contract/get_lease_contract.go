@@ -2,7 +2,6 @@ package contract
 
 import (
 	"errors"
-	"log"
 	"net/http"
 	Middleware "rent-car/middleware"
 	ContractRepository "rent-car/repositories/contracts"
@@ -35,6 +34,5 @@ func GetLeaseContract(context *gin.Context) {
 		})
 		return
 	}
-	log.Print(contracts)
 	context.JSON(http.StatusOK, contracts)
 }

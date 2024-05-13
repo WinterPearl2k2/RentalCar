@@ -19,7 +19,7 @@ func GetLeaseContractByIdUser(uuid uuid.UUID, offset int, filter int) ([]RentalC
 
 	for _, car := range cars {
 		var carRentails []models.CarRentail
-		dbQuery := initializers.DB.Where("car_id = ? ANd status_car = ? OR status_car = ?", car.IdCar, 1, 4)
+		dbQuery := initializers.DB.Where("car_id = ? ANd status_car = ? OR status_car = ?", car.IdCar, 1, 3)
 		if filter != -1 {
 			dbQuery = dbQuery.Where("status_car=?", filter)
 		}
