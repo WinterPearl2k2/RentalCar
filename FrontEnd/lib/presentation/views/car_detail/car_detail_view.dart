@@ -57,7 +57,6 @@ class _CarDetailView
                         BodyDetailWidget(
                           carDetail: carDetail,
                         ),
-                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
                           child: Row(

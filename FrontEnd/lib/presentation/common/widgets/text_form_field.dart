@@ -15,6 +15,9 @@ class TextFormFieldCustomWidget extends StatelessWidget {
   final TextInputType? textInputType;
   final Widget? error;
   final bool inputFormatters;
+  final bool readOnly;
+  final String? initialValue;
+
 
   const TextFormFieldCustomWidget({
     super.key,
@@ -28,6 +31,8 @@ class TextFormFieldCustomWidget extends StatelessWidget {
     this.textInputType,
     this.error,
     this.inputFormatters = false,
+    this.readOnly = false,
+    this.initialValue,
   });
 
   @override
@@ -52,6 +57,8 @@ class TextFormFieldCustomWidget extends StatelessWidget {
                   FormatUtils.thousandsFormatter(),
                 ]
               : [],
+          readOnly: readOnly,
+          initialValue: initialValue,
           controller: controller,
           obscureText: obscureText ?? false,
           onChanged: onChanged,

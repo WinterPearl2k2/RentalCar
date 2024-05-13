@@ -53,7 +53,9 @@ func UpdateCar(context *gin.Context) {
 		KilometersCar:   body.KilometersCar,
 		SeatsCar:        body.SeatsCar,
 		TransmissionCar: body.TransmissionCar,
-		AddressOwner:    body.AddressOwner,
+		AddressCar:      body.AddressCar,
+		LatCar:          body.LatCar,
+		LongCar:         body.LongCar,
 		ImagesCar:       body.ImagesCar,
 		StatusCar:       body.StatusCar,
 	})

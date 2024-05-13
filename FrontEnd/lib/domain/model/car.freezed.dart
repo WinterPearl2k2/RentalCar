@@ -33,6 +33,8 @@ mixin _$Car {
   int get seatsCar => throw _privateConstructorUsedError;
   String get transmissionCar => throw _privateConstructorUsedError;
   String get addressCar => throw _privateConstructorUsedError;
+  double get latCar => throw _privateConstructorUsedError;
+  double get longCar => throw _privateConstructorUsedError;
   String get imagesCar => throw _privateConstructorUsedError;
   String get statusCar => throw _privateConstructorUsedError;
   String get createAt => throw _privateConstructorUsedError;
@@ -61,6 +63,8 @@ abstract class $CarCopyWith<$Res> {
       int seatsCar,
       String transmissionCar,
       String addressCar,
+      double latCar,
+      double longCar,
       String imagesCar,
       String statusCar,
       String createAt});
@@ -91,6 +95,8 @@ class _$CarCopyWithImpl<$Res, $Val extends Car> implements $CarCopyWith<$Res> {
     Object? seatsCar = null,
     Object? transmissionCar = null,
     Object? addressCar = null,
+    Object? latCar = null,
+    Object? longCar = null,
     Object? imagesCar = null,
     Object? statusCar = null,
     Object? createAt = null,
@@ -148,6 +154,14 @@ class _$CarCopyWithImpl<$Res, $Val extends Car> implements $CarCopyWith<$Res> {
           ? _value.addressCar
           : addressCar // ignore: cast_nullable_to_non_nullable
               as String,
+      latCar: null == latCar
+          ? _value.latCar
+          : latCar // ignore: cast_nullable_to_non_nullable
+              as double,
+      longCar: null == longCar
+          ? _value.longCar
+          : longCar // ignore: cast_nullable_to_non_nullable
+              as double,
       imagesCar: null == imagesCar
           ? _value.imagesCar
           : imagesCar // ignore: cast_nullable_to_non_nullable
@@ -184,6 +198,8 @@ abstract class _$$CarImplCopyWith<$Res> implements $CarCopyWith<$Res> {
       int seatsCar,
       String transmissionCar,
       String addressCar,
+      double latCar,
+      double longCar,
       String imagesCar,
       String statusCar,
       String createAt});
@@ -211,6 +227,8 @@ class __$$CarImplCopyWithImpl<$Res> extends _$CarCopyWithImpl<$Res, _$CarImpl>
     Object? seatsCar = null,
     Object? transmissionCar = null,
     Object? addressCar = null,
+    Object? latCar = null,
+    Object? longCar = null,
     Object? imagesCar = null,
     Object? statusCar = null,
     Object? createAt = null,
@@ -268,6 +286,14 @@ class __$$CarImplCopyWithImpl<$Res> extends _$CarCopyWithImpl<$Res, _$CarImpl>
           ? _value.addressCar
           : addressCar // ignore: cast_nullable_to_non_nullable
               as String,
+      latCar: null == latCar
+          ? _value.latCar
+          : latCar // ignore: cast_nullable_to_non_nullable
+              as double,
+      longCar: null == longCar
+          ? _value.longCar
+          : longCar // ignore: cast_nullable_to_non_nullable
+              as double,
       imagesCar: null == imagesCar
           ? _value.imagesCar
           : imagesCar // ignore: cast_nullable_to_non_nullable
@@ -301,6 +327,8 @@ class _$CarImpl implements _Car {
       this.seatsCar = 0,
       this.transmissionCar = '',
       this.addressCar = '',
+      this.latCar = 0,
+      this.longCar = 0,
       this.imagesCar = "",
       this.statusCar = '',
       this.createAt = ''});
@@ -349,6 +377,12 @@ class _$CarImpl implements _Car {
   final String addressCar;
   @override
   @JsonKey()
+  final double latCar;
+  @override
+  @JsonKey()
+  final double longCar;
+  @override
+  @JsonKey()
   final String imagesCar;
   @override
   @JsonKey()
@@ -359,7 +393,7 @@ class _$CarImpl implements _Car {
 
   @override
   String toString() {
-    return 'Car(idCar: $idCar, idUser: $idUser, idReview: $idReview, nameCar: $nameCar, priceCar: $priceCar, fuelTypeCar: $fuelTypeCar, brandCar: $brandCar, colorCar: $colorCar, descriptionCar: $descriptionCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, transmissionCar: $transmissionCar, addressCar: $addressCar, imagesCar: $imagesCar, statusCar: $statusCar, createAt: $createAt)';
+    return 'Car(idCar: $idCar, idUser: $idUser, idReview: $idReview, nameCar: $nameCar, priceCar: $priceCar, fuelTypeCar: $fuelTypeCar, brandCar: $brandCar, colorCar: $colorCar, descriptionCar: $descriptionCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, transmissionCar: $transmissionCar, addressCar: $addressCar, latCar: $latCar, longCar: $longCar, imagesCar: $imagesCar, statusCar: $statusCar, createAt: $createAt)';
   }
 
   @override
@@ -390,6 +424,8 @@ class _$CarImpl implements _Car {
                 other.transmissionCar == transmissionCar) &&
             (identical(other.addressCar, addressCar) ||
                 other.addressCar == addressCar) &&
+            (identical(other.latCar, latCar) || other.latCar == latCar) &&
+            (identical(other.longCar, longCar) || other.longCar == longCar) &&
             (identical(other.imagesCar, imagesCar) ||
                 other.imagesCar == imagesCar) &&
             (identical(other.statusCar, statusCar) ||
@@ -415,6 +451,8 @@ class _$CarImpl implements _Car {
       seatsCar,
       transmissionCar,
       addressCar,
+      latCar,
+      longCar,
       imagesCar,
       statusCar,
       createAt);
@@ -448,6 +486,8 @@ abstract class _Car implements Car {
       final int seatsCar,
       final String transmissionCar,
       final String addressCar,
+      final double latCar,
+      final double longCar,
       final String imagesCar,
       final String statusCar,
       final String createAt}) = _$CarImpl;
@@ -480,6 +520,10 @@ abstract class _Car implements Car {
   String get transmissionCar;
   @override
   String get addressCar;
+  @override
+  double get latCar;
+  @override
+  double get longCar;
   @override
   String get imagesCar;
   @override

@@ -27,7 +27,6 @@ mixin _$ManagerCarState {
   bool get isCheckSeatsCar => throw _privateConstructorUsedError;
   bool get isCheckPriceCar => throw _privateConstructorUsedError;
   bool get isCheckAddressCar => throw _privateConstructorUsedError;
-  String get addressCar => throw _privateConstructorUsedError;
   bool get isCheckImageCar => throw _privateConstructorUsedError;
   String get imageFile => throw _privateConstructorUsedError;
   bool get isEditButton => throw _privateConstructorUsedError;
@@ -55,7 +54,6 @@ abstract class $ManagerCarStateCopyWith<$Res> {
       bool isCheckSeatsCar,
       bool isCheckPriceCar,
       bool isCheckAddressCar,
-      String addressCar,
       bool isCheckImageCar,
       String imageFile,
       bool isEditButton});
@@ -87,7 +85,6 @@ class _$ManagerCarStateCopyWithImpl<$Res, $Val extends ManagerCarState>
     Object? isCheckSeatsCar = null,
     Object? isCheckPriceCar = null,
     Object? isCheckAddressCar = null,
-    Object? addressCar = null,
     Object? isCheckImageCar = null,
     Object? imageFile = null,
     Object? isEditButton = null,
@@ -137,10 +134,6 @@ class _$ManagerCarStateCopyWithImpl<$Res, $Val extends ManagerCarState>
           ? _value.isCheckAddressCar
           : isCheckAddressCar // ignore: cast_nullable_to_non_nullable
               as bool,
-      addressCar: null == addressCar
-          ? _value.addressCar
-          : addressCar // ignore: cast_nullable_to_non_nullable
-              as String,
       isCheckImageCar: null == isCheckImageCar
           ? _value.isCheckImageCar
           : isCheckImageCar // ignore: cast_nullable_to_non_nullable
@@ -185,7 +178,6 @@ abstract class _$$ManagerCarStateImplCopyWith<$Res>
       bool isCheckSeatsCar,
       bool isCheckPriceCar,
       bool isCheckAddressCar,
-      String addressCar,
       bool isCheckImageCar,
       String imageFile,
       bool isEditButton});
@@ -216,7 +208,6 @@ class __$$ManagerCarStateImplCopyWithImpl<$Res>
     Object? isCheckSeatsCar = null,
     Object? isCheckPriceCar = null,
     Object? isCheckAddressCar = null,
-    Object? addressCar = null,
     Object? isCheckImageCar = null,
     Object? imageFile = null,
     Object? isEditButton = null,
@@ -266,10 +257,6 @@ class __$$ManagerCarStateImplCopyWithImpl<$Res>
           ? _value.isCheckAddressCar
           : isCheckAddressCar // ignore: cast_nullable_to_non_nullable
               as bool,
-      addressCar: null == addressCar
-          ? _value.addressCar
-          : addressCar // ignore: cast_nullable_to_non_nullable
-              as String,
       isCheckImageCar: null == isCheckImageCar
           ? _value.isCheckImageCar
           : isCheckImageCar // ignore: cast_nullable_to_non_nullable
@@ -301,7 +288,6 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
       this.isCheckSeatsCar = false,
       this.isCheckPriceCar = false,
       this.isCheckAddressCar = false,
-      this.addressCar = '',
       this.isCheckImageCar = false,
       this.imageFile = '',
       this.isEditButton = false})
@@ -348,9 +334,6 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
   final bool isCheckAddressCar;
   @override
   @JsonKey()
-  final String addressCar;
-  @override
-  @JsonKey()
   final bool isCheckImageCar;
   @override
   @JsonKey()
@@ -361,7 +344,7 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
 
   @override
   String toString() {
-    return 'ManagerCarState(listCarUser: $listCarUser, carDTO: $carDTO, status: $status, addCarStep: $addCarStep, isCheckNameCar: $isCheckNameCar, isCheckColorCar: $isCheckColorCar, isCheckDescriptionCar: $isCheckDescriptionCar, isCheckKilometers: $isCheckKilometers, isCheckSeatsCar: $isCheckSeatsCar, isCheckPriceCar: $isCheckPriceCar, isCheckAddressCar: $isCheckAddressCar, addressCar: $addressCar, isCheckImageCar: $isCheckImageCar, imageFile: $imageFile, isEditButton: $isEditButton)';
+    return 'ManagerCarState(listCarUser: $listCarUser, carDTO: $carDTO, status: $status, addCarStep: $addCarStep, isCheckNameCar: $isCheckNameCar, isCheckColorCar: $isCheckColorCar, isCheckDescriptionCar: $isCheckDescriptionCar, isCheckKilometers: $isCheckKilometers, isCheckSeatsCar: $isCheckSeatsCar, isCheckPriceCar: $isCheckPriceCar, isCheckAddressCar: $isCheckAddressCar, isCheckImageCar: $isCheckImageCar, imageFile: $imageFile, isEditButton: $isEditButton)';
   }
 
   @override
@@ -389,8 +372,6 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
                 other.isCheckPriceCar == isCheckPriceCar) &&
             (identical(other.isCheckAddressCar, isCheckAddressCar) ||
                 other.isCheckAddressCar == isCheckAddressCar) &&
-            (identical(other.addressCar, addressCar) ||
-                other.addressCar == addressCar) &&
             (identical(other.isCheckImageCar, isCheckImageCar) ||
                 other.isCheckImageCar == isCheckImageCar) &&
             (identical(other.imageFile, imageFile) ||
@@ -413,7 +394,6 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
       isCheckSeatsCar,
       isCheckPriceCar,
       isCheckAddressCar,
-      addressCar,
       isCheckImageCar,
       imageFile,
       isEditButton);
@@ -439,7 +419,6 @@ abstract class _ManagerCarState implements ManagerCarState {
       final bool isCheckSeatsCar,
       final bool isCheckPriceCar,
       final bool isCheckAddressCar,
-      final String addressCar,
       final bool isCheckImageCar,
       final String imageFile,
       final bool isEditButton}) = _$ManagerCarStateImpl;
@@ -466,8 +445,6 @@ abstract class _ManagerCarState implements ManagerCarState {
   bool get isCheckPriceCar;
   @override
   bool get isCheckAddressCar;
-  @override
-  String get addressCar;
   @override
   bool get isCheckImageCar;
   @override

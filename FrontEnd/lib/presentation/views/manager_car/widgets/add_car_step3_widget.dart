@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
+import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/popup_utils.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
 
@@ -12,11 +13,15 @@ class AddCarStep3Widget extends StatelessWidget {
     super.key,
     required this.carPriceController,
     required this.addressController,
+    required this.latController,
+    required this.longController,
     required this.notifier,
   });
 
   final TextEditingController carPriceController;
   final TextEditingController addressController;
+  final TextEditingController latController;
+  final TextEditingController longController;
   final ManagerCarNotifier notifier;
 
   @override
@@ -36,8 +41,8 @@ class AddCarStep3Widget extends StatelessWidget {
           ),
           CarAddressTextFormFieldWidget(
             addressController: addressController,
-            onChanged: (value) => notifier.isCheckAddressCarEmpty(
-                addressCar: addressController.text),
+            latController: latController,
+            longController: longController,
             notifier: notifier,
           ),
         ],
@@ -50,27 +55,26 @@ class CarAddressTextFormFieldWidget extends StatelessWidget {
   const CarAddressTextFormFieldWidget({
     super.key,
     required this.addressController,
-    required this.onChanged,
+    required this.latController,
+    required this.longController,
     required this.notifier,
   });
 
   final TextEditingController addressController;
-  final Function(String)? onChanged;
+  final TextEditingController latController;
+  final TextEditingController longController;
   final ManagerCarNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
     return Consumer(
       builder: (_, ref, __) {
-        final addressCar = ref.watch(
-          managerCarNotifierProvider.select((value) => value.addressCar),
-        );
         return TextFormFieldCustomWidget(
-          hint: 'Car Address',
-          label: addressCar,
-          inputAction: TextInputAction.next,
+          hint: 'Choose car Address',
+          label: "Your car address",
+          readOnly: true,
           controller: addressController,
-          onChanged: onChanged,
+          inputAction: TextInputAction.next,
           suffixIcon: IconButton(
             icon: const Icon(Icons.location_on_rounded),
             onPressed: () => PopupUtils.showBottomSheetDialog(
@@ -78,11 +82,17 @@ class CarAddressTextFormFieldWidget extends StatelessWidget {
               dialog: OpenStreetMapSearchAndPick(
                 buttonTextStyle:
                     const TextStyle(fontSize: 18, fontStyle: FontStyle.normal),
-                buttonColor: Colors.blue,
+                buttonColor: ColorUtils.primaryColor,
+                locationPinIconColor: Colors.redAccent,
                 buttonText: 'Set Current Location',
                 onPicked: (pickedData) {
-                  notifier.changeAddressCar(addressCar: pickedData.addressName);
-                  Navigator.pop(context);
+                  addressController.text = pickedData.addressName;
+                  latController.text = pickedData.latLong.latitude.toString();
+                  longController.text = pickedData.latLong.longitude.toString();
+                  notifier.isCheckAddressCarEmpty(
+                      addressCar: addressController.text);
+                  notifier.isCheckAddressImageChange(
+                      imageCar: addressController.text);
                 },
               ),
             ),
@@ -116,7 +126,7 @@ class CarPriceTextFormFieldWidget extends StatelessWidget {
           textInputType: TextInputType.number,
           suffixIcon: Padding(
             padding: const EdgeInsets.all(12.0).r,
-            child: const Text('VND / Day'),
+            child: const Text('USD / Day'),
           ),
           onChanged: onChanged,
         );

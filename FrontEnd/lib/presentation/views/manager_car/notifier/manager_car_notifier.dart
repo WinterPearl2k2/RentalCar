@@ -65,7 +65,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
         descriptionCar: carDTO.descriptionCar,
         kilometersCar: carDTO.kilometersCar,
         seatsCar: carDTO.seatsCar,
-        addressOwner: carDTO.addressOwner,
+        addressCar: carDTO.addressCar,
         transmissionCar: carDTO.transmissionCar,
         statusCar: carDTO.statusCar,
       ),
@@ -84,34 +84,41 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     required String descriptionCar,
     required double kilometersCar,
     required int seatsCar,
-    required String addressOwner,
+    required String addressCar,
+    required double latCar,
+    required double longCar,
     required String transmissionCar,
     required String statusCar,
   }) async {
     try {
       await injection.getIt<ICarService>().updateCar(
-          idCar: idCar,
-          carDTO: CarDTO(
-            nameCar: nameCar,
-            priceCar: priceCar,
-            fuelTypeCar: fuelTypeCar,
-            colorCar: colorCar,
-            brandCar: brandCar,
-            descriptionCar: descriptionCar,
-            kilometersCar: kilometersCar,
-            seatsCar: seatsCar,
-            addressOwner: addressOwner,
-            transmissionCar: transmissionCar,
-            imagesCar: await convertImageToBase64(
-              File(state.imageFile),
+            idCar: idCar,
+            carDTO: CarDTO(
+              nameCar: nameCar,
+              priceCar: priceCar,
+              fuelTypeCar: fuelTypeCar,
+              colorCar: colorCar,
+              brandCar: brandCar,
+              descriptionCar: descriptionCar,
+              kilometersCar: kilometersCar,
+              seatsCar: seatsCar,
+              addressCar: addressCar,
+              latCar: latCar,
+              longCar: longCar,
+              transmissionCar: transmissionCar,
+              imagesCar: isFileExtension(imageFile: state.imageFile)
+                  ? await convertImageToBase64(
+                      File(state.imageFile),
+                    )
+                  : state.carDTO.imagesCar,
+              statusCar: statusCar,
             ),
-            statusCar: statusCar,
-          ));
+          );
       getListCarByIdUser();
-      Fluttertoast.showToast(msg: "Sửa thành công");
+      Fluttertoast.showToast(msg: "Edited successfully");
       LogUtils.i("sửa oke");
     } catch (e) {
-      Fluttertoast.showToast(msg: "Sửa thất bại");
+      Fluttertoast.showToast(msg: "Edited failed");
       LogUtils.i(e.toString());
     }
   }
@@ -164,7 +171,9 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     required String descriptionCar,
     required double kilometersCar,
     required int seatsCar,
-    required String addressOwner,
+    required String addressCar,
+    required double latCar,
+    required double longCar,
     required String transmissionCar,
     required String statusCar,
   }) async {
@@ -177,14 +186,16 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       descriptionCar: descriptionCar,
       kilometersCar: kilometersCar,
       seatsCar: seatsCar,
-      addressOwner: addressOwner,
+      addressCar: addressCar,
+      latCar: latCar,
+      longCar: longCar,
       transmissionCar: transmissionCar,
       imagesCar: await convertImageToBase64(File(state.imageFile)),
       statusCar: statusCar,
     );
     try {
       await injection.getIt<ICarService>().createCar(carDTO: carDTO);
-      Fluttertoast.showToast(msg: "Tạo xe thành công");
+      Fluttertoast.showToast(msg: "Create a successful car");
       getListCarByIdUser();
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
@@ -324,7 +335,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   }
 
   void isCheckAddressCarChange({required String addressCar}) {
-    if (addressCar != state.carDTO.addressOwner &&
+    if (addressCar != state.carDTO.addressCar &&
         addressCar.toString().isNotEmpty) {
       state = state.copyWith(isEditButton: true);
     } else {
@@ -337,14 +348,6 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       state = state.copyWith(isEditButton: true);
     } else {
       state = state.copyWith(isEditButton: false);
-    }
-  }
-
-  void changeAddressCar({required String addressCar}){
-    if(addressCar.isEmpty){
-      state = state.copyWith(addressCar: '');
-    } else{
-      state = state.copyWith(addressCar: addressCar);
     }
   }
 
@@ -392,5 +395,21 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     state = state.copyWith(
       imageFile: "",
     );
+  }
+
+  bool isFileExtension({required String imageFile}) {
+    String fileExtension = imageFile.split('.').last.toLowerCase();
+    if (fileExtension == 'jpg' ||
+        fileExtension == 'jpeg' ||
+        fileExtension == 'png' ||
+        fileExtension == 'gif' ||
+        fileExtension == 'bmp' ||
+        fileExtension == 'webp' ||
+        fileExtension == 'tif' ||
+        fileExtension == 'tiff') {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

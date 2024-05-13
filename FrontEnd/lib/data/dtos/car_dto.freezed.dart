@@ -28,7 +28,9 @@ mixin _$CarDTO {
   String get descriptionCar => throw _privateConstructorUsedError;
   double get kilometersCar => throw _privateConstructorUsedError;
   int get seatsCar => throw _privateConstructorUsedError;
-  String get addressOwner => throw _privateConstructorUsedError;
+  String get addressCar => throw _privateConstructorUsedError;
+  double get latCar => throw _privateConstructorUsedError;
+  double get longCar => throw _privateConstructorUsedError;
   String get transmissionCar => throw _privateConstructorUsedError;
   String get imagesCar => throw _privateConstructorUsedError;
   String get statusCar => throw _privateConstructorUsedError;
@@ -52,7 +54,9 @@ abstract class $CarDTOCopyWith<$Res> {
       String descriptionCar,
       double kilometersCar,
       int seatsCar,
-      String addressOwner,
+      String addressCar,
+      double latCar,
+      double longCar,
       String transmissionCar,
       String imagesCar,
       String statusCar});
@@ -79,7 +83,9 @@ class _$CarDTOCopyWithImpl<$Res, $Val extends CarDTO>
     Object? descriptionCar = null,
     Object? kilometersCar = null,
     Object? seatsCar = null,
-    Object? addressOwner = null,
+    Object? addressCar = null,
+    Object? latCar = null,
+    Object? longCar = null,
     Object? transmissionCar = null,
     Object? imagesCar = null,
     Object? statusCar = null,
@@ -117,10 +123,18 @@ class _$CarDTOCopyWithImpl<$Res, $Val extends CarDTO>
           ? _value.seatsCar
           : seatsCar // ignore: cast_nullable_to_non_nullable
               as int,
-      addressOwner: null == addressOwner
-          ? _value.addressOwner
-          : addressOwner // ignore: cast_nullable_to_non_nullable
+      addressCar: null == addressCar
+          ? _value.addressCar
+          : addressCar // ignore: cast_nullable_to_non_nullable
               as String,
+      latCar: null == latCar
+          ? _value.latCar
+          : latCar // ignore: cast_nullable_to_non_nullable
+              as double,
+      longCar: null == longCar
+          ? _value.longCar
+          : longCar // ignore: cast_nullable_to_non_nullable
+              as double,
       transmissionCar: null == transmissionCar
           ? _value.transmissionCar
           : transmissionCar // ignore: cast_nullable_to_non_nullable
@@ -153,7 +167,9 @@ abstract class _$$CarDTOImplCopyWith<$Res> implements $CarDTOCopyWith<$Res> {
       String descriptionCar,
       double kilometersCar,
       int seatsCar,
-      String addressOwner,
+      String addressCar,
+      double latCar,
+      double longCar,
       String transmissionCar,
       String imagesCar,
       String statusCar});
@@ -178,7 +194,9 @@ class __$$CarDTOImplCopyWithImpl<$Res>
     Object? descriptionCar = null,
     Object? kilometersCar = null,
     Object? seatsCar = null,
-    Object? addressOwner = null,
+    Object? addressCar = null,
+    Object? latCar = null,
+    Object? longCar = null,
     Object? transmissionCar = null,
     Object? imagesCar = null,
     Object? statusCar = null,
@@ -216,10 +234,18 @@ class __$$CarDTOImplCopyWithImpl<$Res>
           ? _value.seatsCar
           : seatsCar // ignore: cast_nullable_to_non_nullable
               as int,
-      addressOwner: null == addressOwner
-          ? _value.addressOwner
-          : addressOwner // ignore: cast_nullable_to_non_nullable
+      addressCar: null == addressCar
+          ? _value.addressCar
+          : addressCar // ignore: cast_nullable_to_non_nullable
               as String,
+      latCar: null == latCar
+          ? _value.latCar
+          : latCar // ignore: cast_nullable_to_non_nullable
+              as double,
+      longCar: null == longCar
+          ? _value.longCar
+          : longCar // ignore: cast_nullable_to_non_nullable
+              as double,
       transmissionCar: null == transmissionCar
           ? _value.transmissionCar
           : transmissionCar // ignore: cast_nullable_to_non_nullable
@@ -248,7 +274,9 @@ class _$CarDTOImpl implements _CarDTO {
       this.descriptionCar = '',
       this.kilometersCar = 0,
       this.seatsCar = 0,
-      this.addressOwner = "",
+      this.addressCar = "",
+      this.latCar = 0,
+      this.longCar = 0,
       this.transmissionCar = "",
       this.imagesCar = "",
       this.statusCar = ""});
@@ -282,7 +310,13 @@ class _$CarDTOImpl implements _CarDTO {
   final int seatsCar;
   @override
   @JsonKey()
-  final String addressOwner;
+  final String addressCar;
+  @override
+  @JsonKey()
+  final double latCar;
+  @override
+  @JsonKey()
+  final double longCar;
   @override
   @JsonKey()
   final String transmissionCar;
@@ -295,7 +329,7 @@ class _$CarDTOImpl implements _CarDTO {
 
   @override
   String toString() {
-    return 'CarDTO(nameCar: $nameCar, priceCar: $priceCar, brandCar: $brandCar, fuelTypeCar: $fuelTypeCar, colorCar: $colorCar, descriptionCar: $descriptionCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, addressOwner: $addressOwner, transmissionCar: $transmissionCar, imagesCar: $imagesCar, statusCar: $statusCar)';
+    return 'CarDTO(nameCar: $nameCar, priceCar: $priceCar, brandCar: $brandCar, fuelTypeCar: $fuelTypeCar, colorCar: $colorCar, descriptionCar: $descriptionCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, addressCar: $addressCar, latCar: $latCar, longCar: $longCar, transmissionCar: $transmissionCar, imagesCar: $imagesCar, statusCar: $statusCar)';
   }
 
   @override
@@ -318,8 +352,10 @@ class _$CarDTOImpl implements _CarDTO {
                 other.kilometersCar == kilometersCar) &&
             (identical(other.seatsCar, seatsCar) ||
                 other.seatsCar == seatsCar) &&
-            (identical(other.addressOwner, addressOwner) ||
-                other.addressOwner == addressOwner) &&
+            (identical(other.addressCar, addressCar) ||
+                other.addressCar == addressCar) &&
+            (identical(other.latCar, latCar) || other.latCar == latCar) &&
+            (identical(other.longCar, longCar) || other.longCar == longCar) &&
             (identical(other.transmissionCar, transmissionCar) ||
                 other.transmissionCar == transmissionCar) &&
             (identical(other.imagesCar, imagesCar) ||
@@ -340,7 +376,9 @@ class _$CarDTOImpl implements _CarDTO {
       descriptionCar,
       kilometersCar,
       seatsCar,
-      addressOwner,
+      addressCar,
+      latCar,
+      longCar,
       transmissionCar,
       imagesCar,
       statusCar);
@@ -369,7 +407,9 @@ abstract class _CarDTO implements CarDTO {
       final String descriptionCar,
       final double kilometersCar,
       final int seatsCar,
-      final String addressOwner,
+      final String addressCar,
+      final double latCar,
+      final double longCar,
       final String transmissionCar,
       final String imagesCar,
       final String statusCar}) = _$CarDTOImpl;
@@ -393,7 +433,11 @@ abstract class _CarDTO implements CarDTO {
   @override
   int get seatsCar;
   @override
-  String get addressOwner;
+  String get addressCar;
+  @override
+  double get latCar;
+  @override
+  double get longCar;
   @override
   String get transmissionCar;
   @override

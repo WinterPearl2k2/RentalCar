@@ -123,7 +123,7 @@ class PopupUtils {
   static Future<void> showBottomSheetAddImageDialog({
     required BuildContext context,
     VoidCallback? onSelectPressedCamera,
-    VoidCallback? onSelectPressedGallary,
+    VoidCallback? onSelectPressedGallery,
   }) {
     return showModalBottomSheet(
       backgroundColor: ColorUtils.whiteColor,
@@ -156,7 +156,7 @@ class PopupUtils {
                   SizedBox(height: 16.h),
                   buildIconOption(
                     iconName: AssetUtils.icCamera,
-                    title: "Thêm ảnh từ camera",
+                    title: "Add photos from camera",
                     onPressed: () {
                       Navigator.of(context).pop();
                       onSelectPressedCamera?.call();
@@ -172,10 +172,10 @@ class PopupUtils {
                   ),
                   buildIconOption(
                     iconName: AssetUtils.icGallery,
-                    title: "Thêm ảnh từ Gallery",
+                    title: "Add photos from Gallery",
                     onPressed: () {
                       Navigator.of(context).pop();
-                      onSelectPressedGallary?.call();
+                      onSelectPressedGallery?.call();
                     },
                   ),
                 ],

@@ -43,6 +43,8 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
 
   final TextEditingController carPriceController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final TextEditingController latController = TextEditingController();
+  final TextEditingController longController = TextEditingController();
 
   @override
   void initNotifier() {
@@ -147,6 +149,8 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                         return AddCarStep3Widget(
                           carPriceController: carPriceController,
                           addressController: addressController,
+                          latController: latController,
+                          longController: longController,
                           notifier: notifier,
                         );
                       case AddCarStep.step4:
@@ -229,7 +233,9 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                         FormatUtils.removeDot(kilometersController.text),
                       ),
                       seatsCar: int.parse(seatsController.text),
-                      addressOwner: addressController.text,
+                      addressCar: addressController.text,
+                      latCar: double.parse(latController.text),
+                      longCar: double.parse(longController.text),
                       transmissionCar: transmissionController.text,
                       statusCar: StatusCar.available.name,
                     );
@@ -267,6 +273,8 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
     transmissionController.dispose();
     carPriceController.dispose();
     addressController.dispose();
+    latController.dispose();
+    longController.dispose();
     super.dispose();
   }
 }

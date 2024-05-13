@@ -18,7 +18,6 @@ class ManagerCarState with _$ManagerCarState {
     @Default(false) bool isCheckSeatsCar,
     @Default(false) bool isCheckPriceCar,
     @Default(false) bool isCheckAddressCar,
-    @Default('') String addressCar,
     @Default(false) bool isCheckImageCar,
     @Default('') String imageFile,
     @Default(false) bool isEditButton,

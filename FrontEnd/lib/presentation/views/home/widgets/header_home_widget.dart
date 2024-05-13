@@ -11,7 +11,9 @@ class HeaderHomeWidget extends StatelessWidget {
     super.key,
     required this.notifier,
   });
+
   final HomeNotifier notifier;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -46,17 +48,23 @@ class HeaderHomeWidget extends StatelessWidget {
                 height: 2.h,
               ),
               Consumer(builder: (_, ref, __) {
-                final placemarks = ref.watch(
+                final placeMarks = ref.watch(
                   homeNotifierProvider.select((value) => value.placemarks),
                 );
-                return Text(
-                  placemarks.isNotEmpty
-                      ? "${placemarks[0].locality}, ${placemarks[0].country}"
-                      : "Loading...",
-                  style: TextStyle(
+                return SizedBox(
+                  width: 250.w,
+                  child: Text(
+                    placeMarks.isNotEmpty
+                        ? "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}"
+                        : "Loading...",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
                       color: ColorUtils.primaryColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 16.sp),
+                      fontSize: 16.sp,
+                    ),
+                  ),
                 );
               })
             ],
