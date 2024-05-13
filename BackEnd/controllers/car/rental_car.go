@@ -63,7 +63,7 @@ func RentalCar(context *gin.Context) {
 	}
 
 	startDate, _ := parseDateString(body.StartDate)
-	endDate, _ := parseDateString(body.StartDate)
+	endDate, _ := parseDateString(body.EndDate)
 
 	rentalCar := models.CarRentail{
 		StatusCar:   0,
@@ -78,6 +78,22 @@ func RentalCar(context *gin.Context) {
 	result := initializers.DB.Create(&rentalCar)
 	if result.Error != nil {
 		errorMessage := result.Error.Error()
+		if strings.Contains(errorMessage, "unique constraint") {
+			context.JSON(http.StatusConflict, gin.H{
+				"message": errorMessage,
+			})
+			return
+		}
+
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": errorMessage,
+		})
+		return
+	}
+	user.CarRentails = append(user.CarRentails, rentalCar)
+	resultUser := initializers.DB.Save(&user)
+	if result.Error != nil {
+		errorMessage := resultUser.Error.Error()
 		if strings.Contains(errorMessage, "unique constraint") {
 			context.JSON(http.StatusConflict, gin.H{
 				"message": errorMessage,

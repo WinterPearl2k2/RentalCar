@@ -11,6 +11,11 @@ class DateTimeFormatUtils {
     return formattedDate;
   }
 
+  static DateTime parseDateString(String dateString) {
+    DateFormat format = DateFormat("yyyy-MM-dd HH:mm:ss.S");
+    return format.parse(dateString);
+  }
+
   static DateTime stringToDateFormat({
     required String date,
     required String format,

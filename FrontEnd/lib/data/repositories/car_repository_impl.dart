@@ -3,6 +3,7 @@ import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
+import 'package:rental_car/data/dtos/date_time_dto.dart';
 import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
@@ -95,6 +96,23 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
             .map(
               (json) => UserCarRentalDto.fromJson(json),
             )
+            .toList();
+      },
+    );
+  }
+
+  @override
+  Future<List<DateTimeDto>> getDateTimeCar({required String idCar}) {
+    return get(
+      url: '${EndPoint.restUrlGetDateTimeCar}/$idCar',
+      mapper: (response) {
+        if(response.data ==  null) {
+          return [];
+        }
+        return (response.data as List)
+            .map(
+              (json) => DateTimeDto.fromJson(json),
+        )
             .toList();
       },
     );

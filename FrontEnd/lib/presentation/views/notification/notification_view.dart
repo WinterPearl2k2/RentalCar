@@ -9,6 +9,7 @@ import 'package:rental_car/presentation/common/base_state_delegate/base_state_de
 import 'package:rental_car/presentation/views/notification/notifier/notification_notifier.dart';
 import 'package:rental_car/presentation/views/notification/widgets/icon_button_notification_widget.dart';
 import 'package:rental_car/presentation/views/notification/widgets/text_button_notification_widget.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../../application/utils/colors_utils.dart';
 import '../../common/widgets/loading_widget.dart';
 
@@ -120,16 +121,20 @@ class _NotificationViewState
                                         ),
                                       ),
                                       IconButtonNotificationWidget(
-                                          onPressed: () {},
-                                          icon: SvgPicture.asset(
-                                            'assets/icons/ic_phone.svg',
-                                            colorFilter: ColorFilter.mode(
-                                              ColorUtils.primaryColor,
-                                              BlendMode.srcIn,
-                                            ),
-                                            height: 15.h,
-                                            width: 15.h,
-                                          )),
+                                        onPressed: () {
+                                          launchUrlString(
+                                              "tel://${user[index].phoneUser}");
+                                        },
+                                        icon: SvgPicture.asset(
+                                          'assets/icons/ic_phone.svg',
+                                          colorFilter: ColorFilter.mode(
+                                            ColorUtils.primaryColor,
+                                            BlendMode.srcIn,
+                                          ),
+                                          height: 15.h,
+                                          width: 15.h,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   SizedBox(
@@ -211,7 +216,10 @@ class _NotificationViewState
                                       ),
                                       TextButtonNotificationWidget(
                                         label: 'Sign contract',
-                                        onPressed: () {},
+                                        onPressed: () => notifier.signContract(
+                                          idTransaction:
+                                              user[index].transaction,
+                                        ),
                                         backgroundColor:
                                             ColorUtils.primaryColor,
                                         textColor: ColorUtils.whiteColor,
@@ -221,7 +229,11 @@ class _NotificationViewState
                                       ),
                                       TextButtonNotificationWidget(
                                         label: 'Cancel',
-                                        onPressed: () {},
+                                        onPressed: () =>
+                                            notifier.cancelRentalCar(
+                                          idTransaction:
+                                              user[index].transaction,
+                                        ),
                                         backgroundColor: Colors.redAccent,
                                         textColor: ColorUtils.whiteColor,
                                       ),
@@ -242,7 +254,7 @@ class _NotificationViewState
               builder: (context, ref, child) {
                 final isWaiting = ref.watch(
                   notificationNotifierProvider.select(
-                        (value) => value.wait,
+                    (value) => value.wait,
                   ),
                 );
                 return !isWaiting ? const LoadingWidget() : const SizedBox();

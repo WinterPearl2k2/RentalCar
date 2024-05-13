@@ -1,28 +1,29 @@
-package controllers
+package contract
 
 import (
 	"errors"
-	"log"
 	"net/http"
 	Middleware "rent-car/middleware"
-	UserRepository "rent-car/repositories/users"
+	ContractRepository "rent-car/repositories/contracts"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
-func GetUserProfile(context *gin.Context) {
+func GetRentalContract(context *gin.Context) {
+	offset := context.Param("offset")
 	uuid, err := Middleware.RequireAuth(context)
 	if err != nil {
 		context.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
-
-	user, err := UserRepository.GetUserById(uuid.String())
+	offsetInt, _ := strconv.Atoi(offset)
+	contracts, err := ContractRepository.GetRentalContractById(uuid, offsetInt)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			context.JSON(http.StatusBadRequest, gin.H{
-				"message": "Incorrect User",
+				"message": "Unauthorize",
 			})
 			return
 		}
@@ -32,11 +33,5 @@ func GetUserProfile(context *gin.Context) {
 		return
 	}
 
-	log.Print(user)
-
-	context.JSON(http.StatusOK, gin.H{
-		"name":  user.NameUser,
-		"email": user.EmailUser,
-		"phone": user.PhoneUser,
-	})
+	context.JSON(http.StatusOK, contracts)
 }

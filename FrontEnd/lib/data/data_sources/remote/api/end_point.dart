@@ -13,6 +13,10 @@ class EndPoint {
 
   //Contract
   static const restUrlGetRentalCars = '/getRentalCar';
+  static const restUrlCancelRentalCar = '/cancelRentalCar';
+  static const restUrlSignContract = '/signContract';
+  static const restUrlGetRentalContract = '/getRentalContract';
+  static const restUrlGetLeaseContract = '/getLeaseContract';
 
   //Profile
   static const restUrlGetUser = '/profile/getUserProfile';
@@ -25,4 +29,5 @@ class EndPoint {
   static const restUrlGetCarById = '/getCarById';
   static const restUrlGetAllCarByIdUser = '/getAllCarByIdUser';
   static const restUrlRentalCar = '/rentalCar';
+  static const restUrlGetDateTimeCar = '/getDateTimeCar';
 }
