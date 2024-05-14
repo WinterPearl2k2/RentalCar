@@ -27,6 +27,7 @@ class _BottomNavigationViewState
   @override
   void initNotifier() {
     notifier = ref.read(bottomNavigationNotifierProvider.notifier);
+    notifier.listenMessage();
   }
 
   @override

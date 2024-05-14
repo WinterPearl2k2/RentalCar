@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	Notification "rent-car/controllers/notification"
 	"rent-car/initializers"
 	Middleware "rent-car/middleware"
 	"rent-car/models"
@@ -106,6 +107,9 @@ func RentalCar(context *gin.Context) {
 		})
 		return
 	}
+
+	// ownerUser, _ := UserRepository.GetUserById(car.UserId.String())
+	Notification.SendNotification(user.DeviceToken)
 
 	context.JSON(http.StatusCreated, gin.H{
 		"message": "Booking success.",

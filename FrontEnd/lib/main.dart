@@ -1,8 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/di/injection.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/data/data_sources/remote/api/firebase_api.dart';
+import 'firebase_options.dart';
 
 import 'application/routes/routes.dart';
 import 'application/routes/routes_name.dart';
@@ -10,9 +13,13 @@ import 'application/routes/routes_test.dart';
 
 Injection injection = Injection();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   injection.configDependencies();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseApi().initNotifications();
   runApp(const ProviderScope(child: MyApp()));
 }
 

@@ -53,11 +53,12 @@ class AuthNotifier extends _$AuthNotifier {
     required context,
   }) async {
     state = state.copyWith(wait: true);
-    final loginDTO = LoginDTO(
-      email: email.text.trim(),
-      password: password.text.trim(),
-    );
     try {
+      final loginDTO = LoginDTO(
+        email: email.text.trim(),
+        password: password.text.trim(),
+        deviceToken: PreferenceService.getDeviceToken(),
+      );
       await injection.getIt<IAuthService>().loginUser(
             loginDTO: loginDTO,
           );

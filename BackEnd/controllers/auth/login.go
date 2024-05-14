@@ -4,6 +4,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"rent-car/initializers"
 	UserRepository "rent-car/repositories/users"
 	"rent-car/utils"
 
@@ -58,6 +59,10 @@ func Login(context *gin.Context) {
 		log.Print(errAccess.Error() + errRefresh.Error())
 		return
 	}
+
+	user.DeviceToken = body.DeviceToken
+
+	initializers.DB.Updates(&user)
 
 	context.JSON(http.StatusOK, gin.H{
 		"accessToken":  accessToken,

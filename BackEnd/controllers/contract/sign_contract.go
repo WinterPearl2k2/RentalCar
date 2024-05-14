@@ -35,7 +35,7 @@ func SignContract(context *gin.Context) {
 		return
 	}
 	now := time.Now()
-	if rentalCar.StartDate.Before(now) {
+	if now.After(rentalCar.StartDate) {
 		log.Print("39")
 		context.JSON(http.StatusBadRequest, gin.H{
 			"message": "The contract has passed the current date and cannot be signed.",
