@@ -1,11 +1,14 @@
 package main
 
 import (
+	"log"
 	AuthController "rent-car/controllers/auth"
 	CarController "rent-car/controllers/car"
 	ContractController "rent-car/controllers/contract"
 	UserController "rent-car/controllers/profile"
 	"rent-car/initializers"
+	"rent-car/models"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,6 +19,7 @@ func init() {
 }
 
 func main() {
+	go scheduleUpdateStatusCar()
 	router := gin.Default()
 	//check connect
 	router.GET("/")
@@ -32,8 +36,12 @@ func main() {
 	router.GET("/profile/getUserProfile", UserController.GetUserProfile)
 	router.PUT("/profile/updateUserProfile", UserController.ChangeProfile)
 
-	//Test
+	//Contract
 	router.GET("/getRentalCar", ContractController.GetRentalCar)
+	router.DELETE("/cancelRentalCar/:id", ContractController.CancelRentalCar)
+	router.GET("/getRentalContract/:offset/:filter", ContractController.GetRentalContract)
+	router.PUT("/signContract/:id", ContractController.SignContract)
+	router.GET("/getLeaseContract/:offset/:filter", ContractController.GetLeaseContract)
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)
@@ -42,10 +50,38 @@ func main() {
 	router.POST("/createCar", CarController.CreateCar)
 	router.PUT("/updateCar/:id", CarController.UpdateCar)
 	router.DELETE("/deleteCar/:id", CarController.DeleteCar)
+	router.GET("/getDateTimeCar/:id", CarController.GetDateTimeCar)
 
 	router.GET("/getAllCarByIdUser/:idUser", CarController.GetAllCarByIdUser)
 
 	router.GET("/getTopCar", CarController.GetTopCar)
 
 	router.Run()
+}
+
+// Tự động cập nhật khi qua ngày mới
+func scheduleUpdateStatusCar() {
+	for {
+		now := time.Now()
+		next := now.AddDate(0, 0, 1)
+
+		duration := time.Until(time.Date(next.Year(), next.Month(), next.Day(), 0, 0, 0, 0, next.Location()))
+
+		time.Sleep(duration)
+
+		if err := initializers.DB.
+			Model(&models.CarRentail{}).
+			Where("end_date < ? AND status_car=?", now, 1).
+			Update("status_car", 4).
+			Error; err != nil {
+			log.Fatalf("Error updating statusCar: %v", err)
+		}
+		if err := initializers.DB.
+			Model(&models.CarRentail{}).
+			Where("end_date < ? AND status_car!=?", now, 1).
+			Update("status_car", 3).
+			Error; err != nil {
+			log.Fatalf("Error updating statusCar: %v", err)
+		}
+	}
 }

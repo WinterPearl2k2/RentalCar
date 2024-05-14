@@ -10,6 +10,7 @@ import (
 )
 
 type UserRentalDto struct {
+	Transaction string    `gorm:"type:varchar(255);notNull"`
 	RentalPrice float64   `gorm:"type:float8;notNull"`
 	RentalDays  int       `gorm:"type:int"`
 	CreatedAt   time.Time `gorm:"notNull"`
@@ -29,7 +30,7 @@ func GetRentalCarByIdUser(uuid uuid.UUID) ([]UserRentalDto, error) {
 
 	for _, car := range cars {
 		var carRentails []models.CarRentail
-		if err := initializers.DB.Where("car_id = ?", car.IdCar).Find(&carRentails).Error; err != nil {
+		if err := initializers.DB.Where("car_id = ? ANd status_car = ?", car.IdCar, 0).Find(&carRentails).Error; err != nil {
 			return userDtos, err
 		}
 
@@ -46,6 +47,7 @@ func GetRentalCarByIdUser(uuid uuid.UUID) ([]UserRentalDto, error) {
 				PhoneUser:   user.PhoneUser,
 				StartDate:   carRentail.StartDate,
 				EndDate:     carRentail.EndDate,
+				Transaction: carRentail.Transaction.String(),
 			})
 		}
 	}

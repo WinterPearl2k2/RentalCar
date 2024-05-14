@@ -1,5 +1,6 @@
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rental_car/application/services/car_service.dart';
+import 'package:rental_car/application/services/contract_service.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
 import 'package:rental_car/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -29,5 +30,35 @@ class NotificationNotifier extends _$NotificationNotifier {
     state = state.copyWith(
       wait: true,
     );
+  }
+
+  Future<void> cancelRentalCar({required String idTransaction}) async {
+    try {
+      await injection.getIt<IContractService>().cancelRentalCar(
+            idTransaction: idTransaction,
+          );
+      state = state.copyWith(
+        user: state.user.where((user) => idTransaction != user.transaction).toList(),
+      );
+      Fluttertoast.showToast(msg: 'Cancellation successful.');
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
+  }
+
+  Future<void> signContract({required String idTransaction}) async {
+    try {
+      await injection.getIt<IContractService>().signContract(
+        idTransaction: idTransaction,
+      );
+      state = state.copyWith(
+        user: state.user.where((user) => idTransaction != user.transaction).toList(),
+      );
+      Fluttertoast.showToast(msg: 'Sign successful.');
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
   }
 }

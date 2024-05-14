@@ -6,7 +6,7 @@ part of 'rental_car_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$rentalCarNotifierHash() => r'1997473534726daca1757ed974e6801ef37021ae';
+String _$rentalCarNotifierHash() => r'e720210bbf35fa78292ec824cb128a41d6a1e984';
 
 /// See also [RentalCarNotifier].
 @ProviderFor(RentalCarNotifier)

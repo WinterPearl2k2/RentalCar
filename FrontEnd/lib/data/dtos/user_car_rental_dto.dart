@@ -12,6 +12,7 @@ class UserCarRentalDto with _$UserCarRentalDto {
     @Default('') String createAt,
     @Default('') String nameUser,
     @Default('') String phoneUser,
+    @Default('') String transaction,
   }) = _UserCarRentalDto;
 
   factory UserCarRentalDto.fromJson(Map<String, dynamic> json) {
@@ -23,7 +24,7 @@ class UserCarRentalDto with _$UserCarRentalDto {
       phoneUser: json['PhoneUser'] ?? '',
       startDate: json['StartDate'] ?? '',
       endDate: json['EndDate'] ?? '',
+      transaction: json['Transaction'] ?? '',
     );
   }
-
 }

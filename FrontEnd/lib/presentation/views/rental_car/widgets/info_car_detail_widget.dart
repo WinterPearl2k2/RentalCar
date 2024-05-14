@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../application/utils/colors_utils.dart';
 import '../../../../application/utils/format_utils.dart';
 import '../../../../data/dtos/car_detail_dto.dart';
-import '../../../../domain/model/car.dart';
 
 class InfoCarDetailWidget extends StatelessWidget {
   const InfoCarDetailWidget({
@@ -60,7 +59,7 @@ class InfoCarDetailWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           child: CachedMemoryImage(
             uniqueKey: car.idCar,
-            bytes: const Base64Decoder().convert(car.idCar),
+            bytes: const Base64Decoder().convert(car.imagesCar),
             fit: BoxFit.cover,
             height: 80.h,
             width: 80.w,

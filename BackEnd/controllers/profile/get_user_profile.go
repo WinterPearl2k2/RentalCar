@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	"log"
 	"net/http"
 	Middleware "rent-car/middleware"
 	UserRepository "rent-car/repositories/users"
@@ -30,6 +31,8 @@ func GetUserProfile(context *gin.Context) {
 		})
 		return
 	}
+
+	log.Print(user)
 
 	context.JSON(http.StatusOK, gin.H{
 		"name":  user.NameUser,

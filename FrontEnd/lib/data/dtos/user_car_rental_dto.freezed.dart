@@ -23,6 +23,7 @@ mixin _$UserCarRentalDto {
   String get createAt => throw _privateConstructorUsedError;
   String get nameUser => throw _privateConstructorUsedError;
   String get phoneUser => throw _privateConstructorUsedError;
+  String get transaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserCarRentalDtoCopyWith<UserCarRentalDto> get copyWith =>
@@ -42,7 +43,8 @@ abstract class $UserCarRentalDtoCopyWith<$Res> {
       String endDate,
       String createAt,
       String nameUser,
-      String phoneUser});
+      String phoneUser,
+      String transaction});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$UserCarRentalDtoCopyWithImpl<$Res, $Val extends UserCarRentalDto>
     Object? createAt = null,
     Object? nameUser = null,
     Object? phoneUser = null,
+    Object? transaction = null,
   }) {
     return _then(_value.copyWith(
       rentalPrice: null == rentalPrice
@@ -95,6 +98,10 @@ class _$UserCarRentalDtoCopyWithImpl<$Res, $Val extends UserCarRentalDto>
           ? _value.phoneUser
           : phoneUser // ignore: cast_nullable_to_non_nullable
               as String,
+      transaction: null == transaction
+          ? _value.transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -114,7 +121,8 @@ abstract class _$$UserCarRentalDtoImplCopyWith<$Res>
       String endDate,
       String createAt,
       String nameUser,
-      String phoneUser});
+      String phoneUser,
+      String transaction});
 }
 
 /// @nodoc
@@ -135,6 +143,7 @@ class __$$UserCarRentalDtoImplCopyWithImpl<$Res>
     Object? createAt = null,
     Object? nameUser = null,
     Object? phoneUser = null,
+    Object? transaction = null,
   }) {
     return _then(_$UserCarRentalDtoImpl(
       rentalPrice: null == rentalPrice
@@ -165,6 +174,10 @@ class __$$UserCarRentalDtoImplCopyWithImpl<$Res>
           ? _value.phoneUser
           : phoneUser // ignore: cast_nullable_to_non_nullable
               as String,
+      transaction: null == transaction
+          ? _value.transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -179,7 +192,8 @@ class _$UserCarRentalDtoImpl implements _UserCarRentalDto {
       this.endDate = '',
       this.createAt = '',
       this.nameUser = '',
-      this.phoneUser = ''});
+      this.phoneUser = '',
+      this.transaction = ''});
 
   @override
   @JsonKey()
@@ -202,10 +216,13 @@ class _$UserCarRentalDtoImpl implements _UserCarRentalDto {
   @override
   @JsonKey()
   final String phoneUser;
+  @override
+  @JsonKey()
+  final String transaction;
 
   @override
   String toString() {
-    return 'UserCarRentalDto(rentalPrice: $rentalPrice, rentalDays: $rentalDays, startDate: $startDate, endDate: $endDate, createAt: $createAt, nameUser: $nameUser, phoneUser: $phoneUser)';
+    return 'UserCarRentalDto(rentalPrice: $rentalPrice, rentalDays: $rentalDays, startDate: $startDate, endDate: $endDate, createAt: $createAt, nameUser: $nameUser, phoneUser: $phoneUser, transaction: $transaction)';
   }
 
   @override
@@ -225,12 +242,14 @@ class _$UserCarRentalDtoImpl implements _UserCarRentalDto {
             (identical(other.nameUser, nameUser) ||
                 other.nameUser == nameUser) &&
             (identical(other.phoneUser, phoneUser) ||
-                other.phoneUser == phoneUser));
+                other.phoneUser == phoneUser) &&
+            (identical(other.transaction, transaction) ||
+                other.transaction == transaction));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, rentalPrice, rentalDays,
-      startDate, endDate, createAt, nameUser, phoneUser);
+      startDate, endDate, createAt, nameUser, phoneUser, transaction);
 
   @JsonKey(ignore: true)
   @override
@@ -248,7 +267,8 @@ abstract class _UserCarRentalDto implements UserCarRentalDto {
       final String endDate,
       final String createAt,
       final String nameUser,
-      final String phoneUser}) = _$UserCarRentalDtoImpl;
+      final String phoneUser,
+      final String transaction}) = _$UserCarRentalDtoImpl;
 
   @override
   double get rentalPrice;
@@ -264,6 +284,8 @@ abstract class _UserCarRentalDto implements UserCarRentalDto {
   String get nameUser;
   @override
   String get phoneUser;
+  @override
+  String get transaction;
   @override
   @JsonKey(ignore: true)
   _$$UserCarRentalDtoImplCopyWith<_$UserCarRentalDtoImpl> get copyWith =>

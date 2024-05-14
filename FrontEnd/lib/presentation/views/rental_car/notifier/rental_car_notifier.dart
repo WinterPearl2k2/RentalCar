@@ -5,6 +5,7 @@ import 'package:rental_car/application/utils/date_time_format_untils.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
 import 'package:rental_car/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../../application/utils/log_utils.dart';
 import '../../../../data/data_sources/remote/dio/api_exception.dart';
@@ -21,12 +22,16 @@ class RentalCarNotifier extends _$RentalCarNotifier {
   Future<void> setUpData(CarDetailDTO carData) async {
     try {
       final user = await injection.getIt<IAuthService>().getUser();
+      final dateTimeDto = await injection.getIt<ICarService>().getDateTimeCar(
+            idCar: carData.idCar,
+          );
       final dateTime = DateTime.now();
       final days = dateTime.difference(dateTime).inDays + 1;
       final total = carData.priceCar * days;
       state = state.copyWith(
         user: user,
         car: carData,
+        // isSelectRental: false,
         startDate: DateTimeFormatUtils.dateToFormat(
           date: dateTime,
           format: 'dd/MM/yyyy',
@@ -37,6 +42,7 @@ class RentalCarNotifier extends _$RentalCarNotifier {
         ),
         numberDays: days,
         total: total,
+        dates: dateTimeDto,
       );
       LogUtils.e(state.user.toString());
     } on APIException catch (e) {
@@ -98,5 +104,41 @@ class RentalCarNotifier extends _$RentalCarNotifier {
       Fluttertoast.showToast(msg: e.message.toString());
     }
     state = state.copyWith(loading: true);
+  }
+
+  void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+    final selectedStartDate = args.value.startDate;
+    final selectedEndDate = args.value.endDate;
+    bool isSelectRental = true;
+    if (selectedStartDate == null || selectedEndDate == null) return;
+    for (var dateTimeDto in state.dates) {
+      final startDate = DateTime.parse(dateTimeDto.startDate);
+      final endDate = DateTime.parse(dateTimeDto.endDate);
+      if (selectedStartDate.isBefore(startDate) && selectedEndDate.isAfter(endDate)) {
+        isSelectRental = false;
+        break;
+      }
+    }
+    state = state.copyWith(isSelectRental: isSelectRental);
+  }
+
+  bool selectableDayPredicate(DateTime date) {
+    for (var dateTimeDto in state.dates) {
+      final startDate = DateTime.parse(dateTimeDto.startDate);
+      final endDate = DateTime.parse(dateTimeDto.endDate);
+      if (date.isAfter(
+            startDate.subtract(
+              const Duration(days: 1),
+            ),
+          ) &&
+          date.isBefore(
+            endDate.add(
+              const Duration(days: 0),
+            ),
+          )) {
+        return false;
+      }
+    }
+    return true;
   }
 }
