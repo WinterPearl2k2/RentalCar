@@ -7,32 +7,38 @@ import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
-import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 
 class ItemCarWidget extends StatelessWidget {
   const ItemCarWidget({
     super.key,
-    required this.topCarDTO,
     required this.notifier,
+    required this.idCar,
+    required this.imagesCar,
+    required this.nameCar,
+    required this.priceCar,
   });
 
-  final TopCarDTO topCarDTO;
+  final String idCar;
+  final String imagesCar;
+  final String nameCar;
+  final double priceCar;
   final HomeNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Routes.goToCarDetailView(context, topCarDTO.idCar),
+      onTap: () => Routes.goToCarDetailView(context, idCar),
       child: Container(
+        margin: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
+                color: ColorUtils.textColor.withOpacity(.3),
+                blurRadius: 9,
+                spreadRadius: 3
             ),
           ],
         ),
@@ -46,9 +52,9 @@ class ItemCarWidget extends StatelessWidget {
               child: CachedMemoryImage(
                 height: 200.h,
                 width: 360.w,
-                uniqueKey: topCarDTO.imagesCar,
+                uniqueKey: imagesCar,
                 bytes: const Base64Decoder().convert(
-                  topCarDTO.imagesCar,
+                  imagesCar,
                 ),
                 fit: BoxFit.cover,
               ),
@@ -59,7 +65,7 @@ class ItemCarWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    topCarDTO.nameCar,
+                    nameCar,
                     style: TextStyle(
                       color: ColorUtils.primaryColor,
                       fontWeight: FontWeight.bold,
@@ -102,7 +108,7 @@ class ItemCarWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 5.h),
                   Text(
-                    "${FormatUtils.formatNumber(topCarDTO.priceCar)} USD / day",
+                    "${FormatUtils.formatNumber(priceCar)} USD / day",
                     style: TextStyle(
                       color: ColorUtils.blueColor,
                       fontWeight: FontWeight.bold,

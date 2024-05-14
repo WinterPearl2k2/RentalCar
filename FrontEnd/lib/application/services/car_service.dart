@@ -11,24 +11,19 @@ import '../../domain/repositories/car_repository.dart';
 
 abstract class ICarService {
   Future<void> createCar({required CarDTO carDTO});
-
   Future<void> deleteCar({required String idCar});
-
   Future<void> updateCar({
     required String idCar,
     required CarDTO carDTO,
   });
-
   Future<List<UserCarRentalDto>> getRentalCars();
   Future<List<TopCarDTO>> getTopCar();
   Future<List<AllCarDTO>> getAllCar();
-
   Future<CarDetailDTO> getCarById({required String idCar});
-
   Future<List<Car>> getAllCarByIdUser({required String idUser});
-
   Future<void> rentalCar({required CarRentalDto carRentalDto});
   Future<List<DateTimeDto>> getDateTimeCar({required String idCar});
+  Future<List<AllCarDTO>> getSearchCar({required String nameCar});
 }
 
 class CarServiceImpl implements ICarService {
@@ -86,5 +81,10 @@ class CarServiceImpl implements ICarService {
   @override
   Future<List<DateTimeDto>> getDateTimeCar({required String idCar}) {
     return _carRepository.getDateTimeCar(idCar: idCar);
+  }
+
+  @override
+  Future<List<AllCarDTO>> getSearchCar({required String nameCar}) {
+    return _carRepository.getSearchCar(nameCar: nameCar);
   }
 }

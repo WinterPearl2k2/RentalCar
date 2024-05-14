@@ -19,4 +19,5 @@ abstract class ICarRepository{
   Future<void> rentalCar({required CarRentalDto carRentalDto});
   Future<List<UserCarRentalDto>> getRentalCars();
   Future<List<DateTimeDto>> getDateTimeCar({required String idCar});
+  Future<List<AllCarDTO>> getSearchCar({required String nameCar});
 }

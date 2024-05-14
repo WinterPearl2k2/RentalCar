@@ -65,6 +65,8 @@ dependencies:
   geocoding: ^3.0.0
   open_street_map_search_and_pick: ^0.1.1
   url_launcher: ^6.2.6
+  map_launcher: ^3.3.0
+  jumping_dot: ^0.0.6
 
 dev_dependencies:
   flutter_test:

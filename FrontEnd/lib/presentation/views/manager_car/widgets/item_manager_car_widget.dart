@@ -26,15 +26,15 @@ class ItemManagerCarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.r),
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
+              color: ColorUtils.textColor.withOpacity(.3),
+              blurRadius: 9,
+              spreadRadius: 3),
         ],
       ),
       child: Stack(
@@ -132,7 +132,8 @@ class ItemManagerCarWidget extends StatelessWidget {
                           child: SizedBox(
                             height: 50.h,
                             child: TextButtonOutlineWidget(
-                              onPressed: () => Routes.goToEditCarView(context, car),
+                              onPressed: () =>
+                                  Routes.goToEditCarView(context, car),
                               label: "Edit",
                             ),
                           ),
@@ -145,25 +146,26 @@ class ItemManagerCarWidget extends StatelessWidget {
             ],
           ),
           Positioned(
-              top: 0.h,
-              right: 0.h,
-              child: IconButton(
-                onPressed: () {
-                  PopupUtils.showPopup(
-                    context,
-                    icon: AssetUtils.icDelete,
-                    title: "Bạn có chắc chắn muốn xóa xe này không?",
-                    onTap: () {
-                      notifier.deleteCar(idCar: car.idCar);
-                      Navigator.pop(context);
-                    },
-                  );
-                },
-                icon: const Icon(
-                  Icons.dangerous,
-                  color: Colors.redAccent,
-                ),
-              ))
+            top: 0.h,
+            right: 0.h,
+            child: IconButton(
+              onPressed: () {
+                PopupUtils.showPopup(
+                  context,
+                  icon: AssetUtils.icDelete,
+                  title: "Are you sure you want to delete this vehicle?",
+                  onTap: () {
+                    notifier.deleteCar(idCar: car.idCar);
+                    Navigator.pop(context);
+                  },
+                );
+              },
+              icon: const Icon(
+                Icons.dangerous,
+                color: Colors.redAccent,
+              ),
+            ),
+          )
         ],
       ),
     );

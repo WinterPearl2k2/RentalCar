@@ -1,3 +1,4 @@
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
@@ -8,7 +9,6 @@ import 'package:rental_car/data/dtos/date_time_dto.dart';
 import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
-
 import '../../domain/repositories/car_repository.dart';
 
 class CarRepositoryImpl extends NetworkApi implements ICarRepository {
@@ -91,7 +91,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   @override
   Future<List<AllCarDTO>> getAllCar() {
     return get<List<AllCarDTO>>(
-      url: EndPoint.restUrlGetAllCar,
+      url: '${EndPoint.restUrlGetAllCar}?userID=${PreferenceService.getUUID()}',
       mapper: (response) {
         return (response.data as List)
             .map(
@@ -121,12 +121,26 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
     return get(
       url: '${EndPoint.restUrlGetDateTimeCar}/$idCar',
       mapper: (response) {
-        if(response.data ==  null) {
+        if(response.data == null) {
           return [];
         }
         return (response.data as List)
             .map(
               (json) => DateTimeDto.fromJson(json),
+        )
+            .toList();
+      },
+    );
+  }
+
+  @override
+  Future<List<AllCarDTO>> getSearchCar({required String nameCar}) {
+    return get<List<AllCarDTO>>(
+      url: '${EndPoint.restUrlGetSearchCar}$nameCar&userID=${PreferenceService.getUUID()}',
+      mapper: (response) {
+        return (response.data as List)
+            .map(
+              (json) => AllCarDTO.fromJson(json),
         )
             .toList();
       },

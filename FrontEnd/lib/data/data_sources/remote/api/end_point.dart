@@ -22,6 +22,7 @@ class EndPoint {
   static const restUrlGetUser = '/profile/getUserProfile';
   static const restUrlUpdateUser = '/profile/updateUserProfile';
 
+  //car
   static const restUrlCreateCar = '/createCar';
   static const restUrlUpdateCar = '/updateCar';
   static const restUrlDeleteCar = '/deleteCar';
@@ -31,8 +32,6 @@ class EndPoint {
   static const restUrlGetAllCarByIdUser = '/getAllCarByIdUser';
   static const restUrlRentalCar = '/rentalCar';
   static const restUrlGetDateTimeCar = '/getDateTimeCar';
-
-  //map
-  static const restUrlGGMap = 'https://www.google.com/maps/dir/';
+  static const restUrlGetSearchCar = '/getSearchCar/?name=';
 
 }

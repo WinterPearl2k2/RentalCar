@@ -27,4 +27,5 @@ class RoutesName {
   static const carDetailView = 'car_detail_view';
   static const seeAllCar = 'see_all_car_view';
   static const editCar = 'edit_car_view';
+  static const searchCar = 'search_car_view';
 }
