@@ -6,9 +6,15 @@ abstract class IContractService {
 
   Future<void> signContract({required String idTransaction});
 
-  Future<List<RentalContractDto>> getRentalContract({required int offset});
+  Future<List<RentalContractDto>> getRentalContract({
+    required int offset,
+    required int filter,
+  });
 
-  Future<List<RentalContractDto>> getLeaseContract({required int offset});
+  Future<List<RentalContractDto>> getLeaseContract({
+    required int offset,
+    required int filter,
+  });
 }
 
 class ContractServiceImpl implements IContractService {
@@ -26,8 +32,12 @@ class ContractServiceImpl implements IContractService {
   @override
   Future<List<RentalContractDto>> getRentalContract({
     required int offset,
+    required int filter,
   }) {
-    return _contractRepository.getRentalCar(offset: offset);
+    return _contractRepository.getRentalCar(
+      offset: offset,
+      filter: filter,
+    );
   }
 
   @override
@@ -40,7 +50,11 @@ class ContractServiceImpl implements IContractService {
   @override
   Future<List<RentalContractDto>> getLeaseContract({
     required int offset,
+    required int filter,
   }) {
-    return _contractRepository.getLeaseCar(offset: offset);
+    return _contractRepository.getLeaseCar(
+      offset: offset,
+      filter: filter,
+    );
   }
 }

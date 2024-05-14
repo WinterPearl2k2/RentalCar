@@ -27,6 +27,7 @@ mixin _$RentalContractDto {
   String get endDate => throw _privateConstructorUsedError;
   String get imgCar => throw _privateConstructorUsedError;
   String get nameCar => throw _privateConstructorUsedError;
+  String get idCar => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RentalContractDtoCopyWith<RentalContractDto> get copyWith =>
@@ -50,7 +51,8 @@ abstract class $RentalContractDtoCopyWith<$Res> {
       String startDate,
       String endDate,
       String imgCar,
-      String nameCar});
+      String nameCar,
+      String idCar});
 }
 
 /// @nodoc
@@ -77,6 +79,7 @@ class _$RentalContractDtoCopyWithImpl<$Res, $Val extends RentalContractDto>
     Object? endDate = null,
     Object? imgCar = null,
     Object? nameCar = null,
+    Object? idCar = null,
   }) {
     return _then(_value.copyWith(
       nameOwner: null == nameOwner
@@ -123,6 +126,10 @@ class _$RentalContractDtoCopyWithImpl<$Res, $Val extends RentalContractDto>
           ? _value.nameCar
           : nameCar // ignore: cast_nullable_to_non_nullable
               as String,
+      idCar: null == idCar
+          ? _value.idCar
+          : idCar // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -146,7 +153,8 @@ abstract class _$$RentalContractDtoImplCopyWith<$Res>
       String startDate,
       String endDate,
       String imgCar,
-      String nameCar});
+      String nameCar,
+      String idCar});
 }
 
 /// @nodoc
@@ -171,6 +179,7 @@ class __$$RentalContractDtoImplCopyWithImpl<$Res>
     Object? endDate = null,
     Object? imgCar = null,
     Object? nameCar = null,
+    Object? idCar = null,
   }) {
     return _then(_$RentalContractDtoImpl(
       nameOwner: null == nameOwner
@@ -217,6 +226,10 @@ class __$$RentalContractDtoImplCopyWithImpl<$Res>
           ? _value.nameCar
           : nameCar // ignore: cast_nullable_to_non_nullable
               as String,
+      idCar: null == idCar
+          ? _value.idCar
+          : idCar // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -235,7 +248,8 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
       this.startDate = '',
       this.endDate = '',
       this.imgCar = '',
-      this.nameCar = ''});
+      this.nameCar = '',
+      this.idCar = ''});
 
   @override
   @JsonKey()
@@ -270,10 +284,13 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
   @override
   @JsonKey()
   final String nameCar;
+  @override
+  @JsonKey()
+  final String idCar;
 
   @override
   String toString() {
-    return 'RentalContractDto(nameOwner: $nameOwner, phone: $phone, email: $email, transaction: $transaction, statusCar: $statusCar, rentalPrice: $rentalPrice, rentalDays: $rentalDays, startDate: $startDate, endDate: $endDate, imgCar: $imgCar, nameCar: $nameCar)';
+    return 'RentalContractDto(nameOwner: $nameOwner, phone: $phone, email: $email, transaction: $transaction, statusCar: $statusCar, rentalPrice: $rentalPrice, rentalDays: $rentalDays, startDate: $startDate, endDate: $endDate, imgCar: $imgCar, nameCar: $nameCar, idCar: $idCar)';
   }
 
   @override
@@ -297,7 +314,8 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
                 other.startDate == startDate) &&
             (identical(other.endDate, endDate) || other.endDate == endDate) &&
             (identical(other.imgCar, imgCar) || other.imgCar == imgCar) &&
-            (identical(other.nameCar, nameCar) || other.nameCar == nameCar));
+            (identical(other.nameCar, nameCar) || other.nameCar == nameCar) &&
+            (identical(other.idCar, idCar) || other.idCar == idCar));
   }
 
   @override
@@ -313,7 +331,8 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
       startDate,
       endDate,
       imgCar,
-      nameCar);
+      nameCar,
+      idCar);
 
   @JsonKey(ignore: true)
   @override
@@ -335,7 +354,8 @@ abstract class _RentalContractDto implements RentalContractDto {
       final String startDate,
       final String endDate,
       final String imgCar,
-      final String nameCar}) = _$RentalContractDtoImpl;
+      final String nameCar,
+      final String idCar}) = _$RentalContractDtoImpl;
 
   @override
   String get nameOwner;
@@ -359,6 +379,8 @@ abstract class _RentalContractDto implements RentalContractDto {
   String get imgCar;
   @override
   String get nameCar;
+  @override
+  String get idCar;
   @override
   @JsonKey(ignore: true)
   _$$RentalContractDtoImplCopyWith<_$RentalContractDtoImpl> get copyWith =>

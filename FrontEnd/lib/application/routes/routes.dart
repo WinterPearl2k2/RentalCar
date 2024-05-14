@@ -6,11 +6,13 @@ import 'package:rental_car/presentation/views/account_profile/account_profile_vi
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
+import 'package:rental_car/presentation/views/detail_contract/detail_contract_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/add_car_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/edit_car_view.dart';
 import 'package:rental_car/presentation/views/forgot_password/forgot_password_view.dart';
 import 'package:rental_car/presentation/views/notification/notification_view.dart';
 
+import '../../data/dtos/rental_contract_dto.dart';
 import '../../presentation/views/rental_car/rental_car_view.dart';
 import 'routes_name.dart';
 
@@ -49,6 +51,13 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => RentalCarView(
             carData: args['car'] ?? const CarDetailDTO(),
+          ),
+        );
+      case RoutesName.detailContract:
+        final args = settings.arguments as Map<String, RentalContractDto>;
+        return MaterialPageRoute(
+          builder: (context) => DetailContractView(
+            data: args['rental'] ?? const RentalContractDto(),
           ),
         );
       case RoutesName.carDetailView:
@@ -156,6 +165,17 @@ class Routes {
       context,
       RoutesName.accountProfile,
       arguments: {'user': user},
+    );
+  }
+
+  static Future<Object?> goToDetailContractView(
+      BuildContext context,
+      RentalContractDto rentalContractDto,
+      ) {
+    return Navigator.pushNamed(
+      context,
+      RoutesName.detailContract,
+      arguments: {'rental': rentalContractDto},
     );
   }
 

@@ -155,7 +155,7 @@ class RentalCarWidget extends StatelessWidget {
           TextButtonWidget(
             label: 'Rental',
             onPressed: () => notifier.rentalCar(),
-          )
+          ),
         ],
       ),
     );

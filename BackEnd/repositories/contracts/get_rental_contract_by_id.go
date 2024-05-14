@@ -20,19 +20,32 @@ type RentalContractDto struct {
 	StartDate   time.Time `binding:"required"`
 	EndDate     time.Time `binding:"required"`
 	ImagesCar   string    `binding:"required"`
+	IdCar       string    `binding:"required"`
 }
 
-func GetRentalContractById(uuid uuid.UUID, offset int) ([]RentalContractDto, error) {
+func GetRentalContractById(uuid uuid.UUID, offset int, filter int) ([]RentalContractDto, error) {
 	var contracts []RentalContractDto
 	var carRentails []models.CarRentail
-	err := initializers.DB.Where("user_id=?", uuid).Offset(offset).Limit(10).Order("created_at asc").Find(&carRentails).Error
+	dbQuery := initializers.DB.Where("user_id=?", uuid)
+	if filter != -1 {
+		dbQuery = dbQuery.Where("status_car=?", filter)
+	}
+	err := dbQuery.
+		Offset(offset).
+		Limit(10).
+		Order("start_date DESC, status_car ASC").
+		Find(&carRentails).Error
 	for _, carRentail := range carRentails {
 		car := models.Car{}
-		if err := initializers.DB.Where("id_car = ?", carRentail.CarId).First(&car).Error; err != nil {
+		if err := initializers.DB.
+			Where("id_car = ?", carRentail.CarId).
+			First(&car).Error; err != nil {
 			return contracts, err
 		}
 		user := models.User{}
-		if err := initializers.DB.Where("id_user = ?", carRentail.UserId).First(&user).Error; err != nil {
+		if err := initializers.DB.
+			Where("id_user = ?", carRentail.UserId).
+			First(&user).Error; err != nil {
 			return contracts, err
 		}
 		contracts = append(contracts, RentalContractDto{
@@ -47,6 +60,7 @@ func GetRentalContractById(uuid uuid.UUID, offset int) ([]RentalContractDto, err
 			EndDate:     carRentail.EndDate,
 			ImagesCar:   car.ImagesCar,
 			NameCar:     car.NameCar,
+			IdCar:       car.IdCar.String(),
 		})
 	}
 	return contracts, err

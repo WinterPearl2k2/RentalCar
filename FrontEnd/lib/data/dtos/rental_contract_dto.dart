@@ -16,6 +16,7 @@ class RentalContractDto with _$RentalContractDto {
     @Default('') String endDate,
     @Default('') String imgCar,
     @Default('') String nameCar,
+    @Default('') String idCar,
   }) = _RentalContractDto;
 
   factory RentalContractDto.fromJson(Map<String, dynamic> json) {
@@ -31,6 +32,7 @@ class RentalContractDto with _$RentalContractDto {
       startDate: json['StartDate'] ?? '',
       endDate: json['EndDate'] ?? '',
       imgCar: json['ImagesCar'] ?? '',
+      idCar: json['IdCar'] ?? '',
     );
   }
 }

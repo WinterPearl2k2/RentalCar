@@ -39,9 +39,9 @@ func main() {
 	//Contract
 	router.GET("/getRentalCar", ContractController.GetRentalCar)
 	router.DELETE("/cancelRentalCar/:id", ContractController.CancelRentalCar)
-	router.GET("/getRentalContract/:offset", ContractController.GetRentalContract)
+	router.GET("/getRentalContract/:offset/:filter", ContractController.GetRentalContract)
 	router.PUT("/signContract/:id", ContractController.SignContract)
-	router.GET("/getLeaseContract/:offset", ContractController.GetLeaseContract)
+	router.GET("/getLeaseContract/:offset/:filter", ContractController.GetLeaseContract)
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)
@@ -69,14 +69,14 @@ func scheduleUpdateStatusCar() {
 
 		if err := initializers.DB.
 			Model(&models.CarRentail{}).
-			Where("end_date > ? AND status_car=?", now, 1).
+			Where("end_date < ? AND status_car=?", now, 1).
 			Update("status_car", 4).
 			Error; err != nil {
 			log.Fatalf("Error updating statusCar: %v", err)
 		}
 		if err := initializers.DB.
 			Model(&models.CarRentail{}).
-			Where("end_date > ? AND status_car!=?", now, 1).
+			Where("end_date < ? AND status_car!=?", now, 1).
 			Update("status_car", 3).
 			Error; err != nil {
 			log.Fatalf("Error updating statusCar: %v", err)
