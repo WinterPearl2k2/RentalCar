@@ -43,6 +43,8 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
   late final TextEditingController transmissionController;
   late final TextEditingController carPriceController;
   late final TextEditingController addressController;
+  late final TextEditingController latController;
+  late final TextEditingController longController;
 
   @override
   void initNotifier() {
@@ -54,7 +56,7 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
     carColorController = TextEditingController(text: widget.car.colorCar);
     fuelController = TextEditingController(text: widget.car.fuelTypeCar);
     kilometersController = TextEditingController(
-      text: FormatUtils.formatNumber(widget.car.kilometersCar),
+      text: FormatUtils.formatNumber(widget.car.kilometersCar).trim(),
     );
     seatsController = TextEditingController(
       text: widget.car.seatsCar.toString(),
@@ -62,9 +64,15 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
     transmissionController =
         TextEditingController(text: widget.car.transmissionCar);
     carPriceController = TextEditingController(
-      text: FormatUtils.formatNumber(widget.car.priceCar),
+      text: FormatUtils.formatNumber(widget.car.priceCar).trim(),
     );
     addressController = TextEditingController(text: widget.car.addressCar);
+    latController = TextEditingController(
+      text: FormatUtils.formatNumber(widget.car.latCar),
+    );
+    longController = TextEditingController(
+      text: FormatUtils.formatNumber(widget.car.longCar),
+    );
     notifier.setUpData(
       carDTO: CarDTO(
         nameCar: widget.car.nameCar,
@@ -75,7 +83,7 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
         descriptionCar: widget.car.descriptionCar,
         kilometersCar: widget.car.kilometersCar,
         seatsCar: widget.car.seatsCar,
-        addressOwner: widget.car.addressCar,
+        addressCar: widget.car.addressCar,
         transmissionCar: widget.car.transmissionCar,
         imagesCar: widget.car.imagesCar,
         statusCar: widget.car.statusCar,
@@ -234,6 +242,9 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                           );
                         },
                       ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                       CarPriceTextFormFieldWidget(
                         carPriceController: carPriceController,
                         onChanged: (value) => notifier.isCheckPriceCarChange(
@@ -244,8 +255,9 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                       ),
                       CarAddressTextFormFieldWidget(
                         addressController: addressController,
-                        onChanged: (value) => notifier.isCheckAddressCarChange(
-                            addressCar: addressController.text),
+                        latController: latController,
+                        longController: longController,
+                        notifier: notifier,
                       ),
                       SizedBox(
                         height: 20.h,
@@ -262,7 +274,7 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                               context: context,
                               onSelectPressedCamera:
                                   notifier.pickImageFromCamera,
-                              onSelectPressedGallary:
+                              onSelectPressedGallery:
                                   notifier.pickImageFromGallery,
                             ),
                             child: Container(
@@ -279,7 +291,8 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                                       borderRadius: const BorderRadius.all(
                                         Radius.circular(10),
                                       ),
-                                      child: imageFile.contains('.jpg')
+                                      child: notifier.isFileExtension(
+                                              imageFile: imageFile)
                                           ? Image.file(
                                               File(imageFile),
                                               fit: BoxFit.cover,
@@ -327,9 +340,11 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                         FormatUtils.removeDot(kilometersController.text),
                       ),
                       seatsCar: int.parse(seatsController.text),
-                      addressOwner: addressController.text,
+                      addressCar: addressController.text,
                       transmissionCar: transmissionController.text,
                       statusCar: StatusCar.available.name,
+                      latCar: double.parse(latController.text),
+                      longCar: double.parse(longController.text),
                     ),
                   );
                 },
@@ -353,6 +368,8 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
     transmissionController.dispose();
     carPriceController.dispose();
     addressController.dispose();
+    latController.dispose();
+    longController.dispose();
     super.dispose();
   }
 }

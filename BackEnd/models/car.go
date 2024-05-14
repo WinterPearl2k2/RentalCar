@@ -17,7 +17,9 @@ type Car struct {
 	KilometersCar   float64   `gorm:"type:float8"`
 	SeatsCar        int       `gorm:"type:int"`
 	TransmissionCar string    `gorm:"type:text"`
-	AddressOwner    string    `gorm:"type:string;notNull"`
+	AddressCar      string    `gorm:"type:string;notNull"`
+	LatCar          float64   `gorm:"type:float8;notNull"`
+	LongCar         float64   `gorm:"type:float8;notNull"`
 	ImagesCar       string    `gorm:"type:text"`
 	StatusCar       string    `gorm:"type:string"`
 	CreatedAt       time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`

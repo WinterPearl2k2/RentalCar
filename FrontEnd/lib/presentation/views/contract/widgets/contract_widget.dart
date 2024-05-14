@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:buttons_tabbar/buttons_tabbar.dart';
-import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,13 +5,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/presentation/views/contract/notifier/contract_notifier.dart';
 import 'package:rental_car/presentation/views/contract/widgets/contract_item_widget.dart';
 import 'package:rental_car/presentation/views/contract/widgets/rental_contract_filter_widget.dart';
-
 import '../../../../application/utils/colors_utils.dart';
-import '../../../../application/utils/date_time_format_untils.dart';
 
 class ContractWidget extends StatefulWidget {
   final ContractNotifier notifier;

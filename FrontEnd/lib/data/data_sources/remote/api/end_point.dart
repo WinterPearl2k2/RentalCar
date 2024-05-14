@@ -25,9 +25,14 @@ class EndPoint {
   static const restUrlCreateCar = '/createCar';
   static const restUrlUpdateCar = '/updateCar';
   static const restUrlDeleteCar = '/deleteCar';
+  static const restUrlGetTopCar = '/getTopCar';
   static const restUrlGetAllCar = '/getAllCar';
   static const restUrlGetCarById = '/getCarById';
   static const restUrlGetAllCarByIdUser = '/getAllCarByIdUser';
   static const restUrlRentalCar = '/rentalCar';
   static const restUrlGetDateTimeCar = '/getDateTimeCar';
+
+  //map
+  static const restUrlGGMap = 'https://www.google.com/maps/dir/';
+
 }

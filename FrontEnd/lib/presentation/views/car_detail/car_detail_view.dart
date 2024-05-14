@@ -13,9 +13,18 @@ import 'package:rental_car/presentation/views/car_detail/widgets/body_detail_wid
 import 'package:rental_car/presentation/views/car_detail/widgets/header_car_detail_widget.dart';
 
 class CarDetailView extends ConsumerStatefulWidget {
-  const CarDetailView({super.key, required this.idCar});
+  const CarDetailView({
+    super.key,
+    required this.idCar,
+    this.latCar,
+    this.longCar,
+    this.distance,
+  });
 
   final String idCar;
+  final double? latCar;
+  final double? longCar;
+  final double? distance;
 
   @override
   BaseStateDelegate<CarDetailView, CarDetailNotifier> createState() =>
@@ -53,11 +62,14 @@ class _CarDetailView
                       children: [
                         HeaderCarDetailWidget(
                           carDetail: carDetail,
+                          distance: widget.distance,
+                          carDetailNotifier: notifier,
+                          latCar: widget.latCar,
+                          longCar: widget.longCar,
                         ),
                         BodyDetailWidget(
                           carDetail: carDetail,
                         ),
-                        const Spacer(),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
                           child: Row(
@@ -74,7 +86,7 @@ class _CarDetailView
                                     ),
                                   ),
                                   Text(
-                                    "${FormatUtils.formatNumber(carDetail.priceCar)}VND / day",
+                                    "${FormatUtils.formatNumber(carDetail.priceCar)}USD / day",
                                     style: TextStyle(
                                       color: ColorUtils.blueColor,
                                       fontWeight: FontWeight.bold,

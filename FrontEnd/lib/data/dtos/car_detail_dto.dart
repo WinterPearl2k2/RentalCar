@@ -16,6 +16,7 @@ class CarDetailDTO with _$CarDetailDTO {
     @Default(0) double kilometersCar,
     @Default(0) int seatsCar,
     @Default("") String transmissionCar,
+    @Default("") String addressCar,
     @Default("") String userName,
     @Default(0) double starCar,
     @Default(0) double countReviewCar,

@@ -33,64 +33,66 @@ class _HomeViewState
       child: Scaffold(
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 14.0.w, vertical: 15.0.h),
-          child: EasyRefresh(
-            onRefresh: () async {
-              await notifier.getListCarByIdUser();
-            },
-            onLoad: () async {
-              await notifier.getListCarByIdUser();
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  "Manager Car",
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17.sp,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text(
+                "Manager Car",
+                style: TextStyle(
+                  color: ColorUtils.primaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17.sp,
+                ),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Expanded(
+                child: EasyRefresh(
+                  onRefresh: () async {
+                    await notifier.getListCarByIdUser();
+                  },
+                  onLoad: () async {
+                    await notifier.getListCarByIdUser();
+                  },
+                  child: Consumer(
+                    builder: (_, ref, __) {
+                      final listCarUser = ref.watch(
+                        managerCarNotifierProvider
+                            .select((value) => value.listCarUser),
+                      );
+                      final status = ref.watch(
+                        managerCarNotifierProvider
+                            .select((value) => value.status),
+                      );
+                      switch (status) {
+                        case Status.loading:
+                          return const Expanded(
+                            child: Center(
+                              child: SingleChildScrollView(
+                                child: CircularProgressIndicator(),
+                              ),
+                            ),
+                          );
+                
+                        case Status.success:
+                          return listCarUser.isNotEmpty
+                              ? Expanded(
+                                  child: ListManagerCarWidget(
+                                    notifier: notifier,
+                                    listCarUser: listCarUser,
+                                  ),
+                                )
+                              : const Expanded(
+                                  child: NoCarWidget(),
+                                );
+                      }
+                    },
                   ),
                 ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Consumer(
-                  builder: (_, ref, __) {
-                    final listCarUser = ref.watch(
-                      managerCarNotifierProvider
-                          .select((value) => value.listCarUser),
-                    );
-                    final status = ref.watch(
-                      managerCarNotifierProvider
-                          .select((value) => value.status),
-                    );
-                    switch (status) {
-                      case Status.loading:
-                        return const Expanded(
-                          child: Center(
-                            child: SingleChildScrollView(
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                        );
-
-                      case Status.success:
-                        return listCarUser.isNotEmpty
-                            ? Expanded(
-                                child: ListManagerCarWidget(
-                                  notifier: notifier,
-                                  listCarUser: listCarUser,
-                                ),
-                              )
-                            : const Expanded(
-                                child: NoCarWidget(),
-                              );
-                    }
-                  },
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),

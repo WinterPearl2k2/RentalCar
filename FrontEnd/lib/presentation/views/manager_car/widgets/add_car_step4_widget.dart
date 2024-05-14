@@ -54,7 +54,7 @@ class CarImageTextFormFieldWidget extends StatelessWidget {
           onTap: () => PopupUtils.showBottomSheetAddImageDialog(
             context: context,
             onSelectPressedCamera: notifier.pickImageFromCamera,
-            onSelectPressedGallary: notifier.pickImageFromGallery,
+            onSelectPressedGallery: notifier.pickImageFromGallery,
           ),
           child: Container(
             height: 100.h,

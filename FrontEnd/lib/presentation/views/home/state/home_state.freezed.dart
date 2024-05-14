@@ -17,7 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomeState {
   List<TopCarDTO> get listTopCar => throw _privateConstructorUsedError;
+  List<AllCarDTO> get listAllCar => throw _privateConstructorUsedError;
+  double get instanceCar => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
+  List<Placemark> get placemarks => throw _privateConstructorUsedError;
+  Position get position => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -29,7 +33,13 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({List<TopCarDTO> listTopCar, Status status});
+  $Res call(
+      {List<TopCarDTO> listTopCar,
+      List<AllCarDTO> listAllCar,
+      double instanceCar,
+      Status status,
+      List<Placemark> placemarks,
+      Position position});
 }
 
 /// @nodoc
@@ -46,17 +56,37 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @override
   $Res call({
     Object? listTopCar = null,
+    Object? listAllCar = null,
+    Object? instanceCar = null,
     Object? status = null,
+    Object? placemarks = null,
+    Object? position = null,
   }) {
     return _then(_value.copyWith(
       listTopCar: null == listTopCar
           ? _value.listTopCar
           : listTopCar // ignore: cast_nullable_to_non_nullable
               as List<TopCarDTO>,
+      listAllCar: null == listAllCar
+          ? _value.listAllCar
+          : listAllCar // ignore: cast_nullable_to_non_nullable
+              as List<AllCarDTO>,
+      instanceCar: null == instanceCar
+          ? _value.instanceCar
+          : instanceCar // ignore: cast_nullable_to_non_nullable
+              as double,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      placemarks: null == placemarks
+          ? _value.placemarks
+          : placemarks // ignore: cast_nullable_to_non_nullable
+              as List<Placemark>,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Position,
     ) as $Val);
   }
 }
@@ -69,7 +99,13 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<TopCarDTO> listTopCar, Status status});
+  $Res call(
+      {List<TopCarDTO> listTopCar,
+      List<AllCarDTO> listAllCar,
+      double instanceCar,
+      Status status,
+      List<Placemark> placemarks,
+      Position position});
 }
 
 /// @nodoc
@@ -84,17 +120,37 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? listTopCar = null,
+    Object? listAllCar = null,
+    Object? instanceCar = null,
     Object? status = null,
+    Object? placemarks = null,
+    Object? position = null,
   }) {
     return _then(_$HomeStateImpl(
       listTopCar: null == listTopCar
           ? _value._listTopCar
           : listTopCar // ignore: cast_nullable_to_non_nullable
               as List<TopCarDTO>,
+      listAllCar: null == listAllCar
+          ? _value._listAllCar
+          : listAllCar // ignore: cast_nullable_to_non_nullable
+              as List<AllCarDTO>,
+      instanceCar: null == instanceCar
+          ? _value.instanceCar
+          : instanceCar // ignore: cast_nullable_to_non_nullable
+              as double,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      placemarks: null == placemarks
+          ? _value._placemarks
+          : placemarks // ignore: cast_nullable_to_non_nullable
+              as List<Placemark>,
+      position: null == position
+          ? _value.position
+          : position // ignore: cast_nullable_to_non_nullable
+              as Position,
     ));
   }
 }
@@ -104,8 +160,24 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
       {final List<TopCarDTO> listTopCar = const [],
-      this.status = Status.loading})
-      : _listTopCar = listTopCar;
+      final List<AllCarDTO> listAllCar = const [],
+      this.instanceCar = 0,
+      this.status = Status.loading,
+      final List<Placemark> placemarks = const [],
+      this.position = const Position(
+          longitude: 0.0,
+          latitude: 0.0,
+          timestamp: ConstDateTime(2024),
+          accuracy: 0.0,
+          altitude: 0.0,
+          altitudeAccuracy: 0.0,
+          heading: 0.0,
+          headingAccuracy: 0.0,
+          speed: 0.0,
+          speedAccuracy: 0.0)})
+      : _listTopCar = listTopCar,
+        _listAllCar = listAllCar,
+        _placemarks = placemarks;
 
   final List<TopCarDTO> _listTopCar;
   @override
@@ -116,13 +188,37 @@ class _$HomeStateImpl implements _HomeState {
     return EqualUnmodifiableListView(_listTopCar);
   }
 
+  final List<AllCarDTO> _listAllCar;
+  @override
+  @JsonKey()
+  List<AllCarDTO> get listAllCar {
+    if (_listAllCar is EqualUnmodifiableListView) return _listAllCar;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listAllCar);
+  }
+
+  @override
+  @JsonKey()
+  final double instanceCar;
   @override
   @JsonKey()
   final Status status;
+  final List<Placemark> _placemarks;
+  @override
+  @JsonKey()
+  List<Placemark> get placemarks {
+    if (_placemarks is EqualUnmodifiableListView) return _placemarks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_placemarks);
+  }
+
+  @override
+  @JsonKey()
+  final Position position;
 
   @override
   String toString() {
-    return 'HomeState(listTopCar: $listTopCar, status: $status)';
+    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, instanceCar: $instanceCar, status: $status, placemarks: $placemarks, position: $position)';
   }
 
   @override
@@ -132,12 +228,26 @@ class _$HomeStateImpl implements _HomeState {
             other is _$HomeStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._listTopCar, _listTopCar) &&
-            (identical(other.status, status) || other.status == status));
+            const DeepCollectionEquality()
+                .equals(other._listAllCar, _listAllCar) &&
+            (identical(other.instanceCar, instanceCar) ||
+                other.instanceCar == instanceCar) &&
+            (identical(other.status, status) || other.status == status) &&
+            const DeepCollectionEquality()
+                .equals(other._placemarks, _placemarks) &&
+            (identical(other.position, position) ||
+                other.position == position));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_listTopCar), status);
+      runtimeType,
+      const DeepCollectionEquality().hash(_listTopCar),
+      const DeepCollectionEquality().hash(_listAllCar),
+      instanceCar,
+      status,
+      const DeepCollectionEquality().hash(_placemarks),
+      position);
 
   @JsonKey(ignore: true)
   @override
@@ -149,12 +259,24 @@ class _$HomeStateImpl implements _HomeState {
 abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {final List<TopCarDTO> listTopCar,
-      final Status status}) = _$HomeStateImpl;
+      final List<AllCarDTO> listAllCar,
+      final double instanceCar,
+      final Status status,
+      final List<Placemark> placemarks,
+      final Position position}) = _$HomeStateImpl;
 
   @override
   List<TopCarDTO> get listTopCar;
   @override
+  List<AllCarDTO> get listAllCar;
+  @override
+  double get instanceCar;
+  @override
   Status get status;
+  @override
+  List<Placemark> get placemarks;
+  @override
+  Position get position;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>

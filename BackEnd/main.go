@@ -54,6 +54,8 @@ func main() {
 
 	router.GET("/getAllCarByIdUser/:idUser", CarController.GetAllCarByIdUser)
 
+	router.GET("/getTopCar", CarController.GetTopCar)
+
 	router.Run()
 }
 

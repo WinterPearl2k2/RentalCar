@@ -30,6 +30,7 @@ mixin _$CarDetailDTO {
   double get kilometersCar => throw _privateConstructorUsedError;
   int get seatsCar => throw _privateConstructorUsedError;
   String get transmissionCar => throw _privateConstructorUsedError;
+  String get addressCar => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   double get starCar => throw _privateConstructorUsedError;
   double get countReviewCar => throw _privateConstructorUsedError;
@@ -58,6 +59,7 @@ abstract class $CarDetailDTOCopyWith<$Res> {
       double kilometersCar,
       int seatsCar,
       String transmissionCar,
+      String addressCar,
       String userName,
       double starCar,
       double countReviewCar,
@@ -87,6 +89,7 @@ class _$CarDetailDTOCopyWithImpl<$Res, $Val extends CarDetailDTO>
     Object? kilometersCar = null,
     Object? seatsCar = null,
     Object? transmissionCar = null,
+    Object? addressCar = null,
     Object? userName = null,
     Object? starCar = null,
     Object? countReviewCar = null,
@@ -133,6 +136,10 @@ class _$CarDetailDTOCopyWithImpl<$Res, $Val extends CarDetailDTO>
           ? _value.transmissionCar
           : transmissionCar // ignore: cast_nullable_to_non_nullable
               as String,
+      addressCar: null == addressCar
+          ? _value.addressCar
+          : addressCar // ignore: cast_nullable_to_non_nullable
+              as String,
       userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -172,6 +179,7 @@ abstract class _$$CarDetailDTOImplCopyWith<$Res>
       double kilometersCar,
       int seatsCar,
       String transmissionCar,
+      String addressCar,
       String userName,
       double starCar,
       double countReviewCar,
@@ -199,6 +207,7 @@ class __$$CarDetailDTOImplCopyWithImpl<$Res>
     Object? kilometersCar = null,
     Object? seatsCar = null,
     Object? transmissionCar = null,
+    Object? addressCar = null,
     Object? userName = null,
     Object? starCar = null,
     Object? countReviewCar = null,
@@ -245,6 +254,10 @@ class __$$CarDetailDTOImplCopyWithImpl<$Res>
           ? _value.transmissionCar
           : transmissionCar // ignore: cast_nullable_to_non_nullable
               as String,
+      addressCar: null == addressCar
+          ? _value.addressCar
+          : addressCar // ignore: cast_nullable_to_non_nullable
+              as String,
       userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -279,6 +292,7 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
       this.kilometersCar = 0,
       this.seatsCar = 0,
       this.transmissionCar = "",
+      this.addressCar = "",
       this.userName = "",
       this.starCar = 0,
       this.countReviewCar = 0,
@@ -319,6 +333,9 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
   final String transmissionCar;
   @override
   @JsonKey()
+  final String addressCar;
+  @override
+  @JsonKey()
   final String userName;
   @override
   @JsonKey()
@@ -332,7 +349,7 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
 
   @override
   String toString() {
-    return 'CarDetailDTO(idCar: $idCar, idUser: $idUser, imagesCar: $imagesCar, nameCar: $nameCar, descriptionCar: $descriptionCar, fuelTypeCar: $fuelTypeCar, colorCar: $colorCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, transmissionCar: $transmissionCar, userName: $userName, starCar: $starCar, countReviewCar: $countReviewCar, priceCar: $priceCar)';
+    return 'CarDetailDTO(idCar: $idCar, idUser: $idUser, imagesCar: $imagesCar, nameCar: $nameCar, descriptionCar: $descriptionCar, fuelTypeCar: $fuelTypeCar, colorCar: $colorCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, transmissionCar: $transmissionCar, addressCar: $addressCar, userName: $userName, starCar: $starCar, countReviewCar: $countReviewCar, priceCar: $priceCar)';
   }
 
   @override
@@ -357,6 +374,8 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
                 other.seatsCar == seatsCar) &&
             (identical(other.transmissionCar, transmissionCar) ||
                 other.transmissionCar == transmissionCar) &&
+            (identical(other.addressCar, addressCar) ||
+                other.addressCar == addressCar) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.starCar, starCar) || other.starCar == starCar) &&
@@ -380,6 +399,7 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
       kilometersCar,
       seatsCar,
       transmissionCar,
+      addressCar,
       userName,
       starCar,
       countReviewCar,
@@ -411,6 +431,7 @@ abstract class _CarDetailDTO implements CarDetailDTO {
       final double kilometersCar,
       final int seatsCar,
       final String transmissionCar,
+      final String addressCar,
       final String userName,
       final double starCar,
       final double countReviewCar,
@@ -439,6 +460,8 @@ abstract class _CarDetailDTO implements CarDetailDTO {
   int get seatsCar;
   @override
   String get transmissionCar;
+  @override
+  String get addressCar;
   @override
   String get userName;
   @override

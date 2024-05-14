@@ -12,7 +12,9 @@ type CarBody struct {
 	KilometersCar   float64 `binding:"required"`
 	SeatsCar        int     `binding:"required"`
 	TransmissionCar string  `binding:"required"`
-	AddressOwner    string  `binding:"required"`
+	AddressCar      string  `binding:"required"`
+	LatCar          float64  `binding:"required"`
+	LongCar         float64  `binding:"required"`
 	ImagesCar       string
 	StatusCar       string `binding:"required"`
 }

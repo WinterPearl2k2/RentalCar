@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
@@ -29,25 +30,26 @@ class ListTopVehicleWidget extends StatelessWidget {
             );
           case Status.success:
             return listCar.isNotEmpty
-                ? Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: listCar.length,
-                      itemBuilder: (context, index) => GestureDetector(
-                        onTap: () => Routes.goToCarDetailView(
-                            context, listCar[index].idCar),
-                        child: ItemVehicleWidget(
-                          idCar:  listCar[index].imagesCar,
-                          imageFile: const Base64Decoder().convert(
-                            listCar[index].imagesCar,
-                          ),
-                          title: listCar[index].nameCar,
-                          star: listCar[index].starCar,
-                          countReview: listCar[index].countReviewCar,
-                        ),
+                ? ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 7.0.w),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listCar.length,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () => Routes.goToCarDetailView(
+                        context, listCar[index].idCar),
+                    child: ItemVehicleWidget(
+                      idCar:  listCar[index].imagesCar,
+                      imageFile: const Base64Decoder().convert(
+                        listCar[index].imagesCar,
                       ),
+                      title: listCar[index].nameCar,
+                      star: listCar[index].starCar,
+                      countReview: listCar[index].countReviewCar,
+                      priceCar: listCar[index].priceCar,
                     ),
-                  )
+                  ),
+                )
                 : const Center(
                     child: Text(
                         "There are no vehicles in the top category of vehicles"),

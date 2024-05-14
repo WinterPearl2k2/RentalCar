@@ -1,13 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 
 class HeaderHomeWidget extends StatelessWidget {
   const HeaderHomeWidget({
     super.key,
+    required this.notifier,
   });
+
+  final HomeNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +49,26 @@ class HeaderHomeWidget extends StatelessWidget {
               SizedBox(
                 height: 2.h,
               ),
-              Text(
-                "California, USA",
-                style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp),
-              )
+              Consumer(builder: (_, ref, __) {
+                final placeMarks = ref.watch(
+                  homeNotifierProvider.select((value) => value.placemarks),
+                );
+                return SizedBox(
+                  width: 250.w,
+                  child: Text(
+                    placeMarks.isNotEmpty
+                        ? "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}"
+                        : "Loading...",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: ColorUtils.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                );
+              })
             ],
           ),
           const Spacer(),
@@ -59,9 +79,12 @@ class HeaderHomeWidget extends StatelessWidget {
           SizedBox(
             width: 10.w,
           ),
-          SvgPicture.asset(
-            AssetUtils.icNotification,
-            width: 22.w,
+          GestureDetector(
+            onTap: () => Routes.goToNotificationView(context),
+            child: SvgPicture.asset(
+              AssetUtils.icNotification,
+              width: 22.w,
+            ),
           ),
           SizedBox(
             width: 10.w,

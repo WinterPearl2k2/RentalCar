@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
@@ -97,10 +96,34 @@ class PopupUtils {
     );
   }
 
+  static Future<void> showBottomSheetDialog({
+    required BuildContext context,
+    required Widget dialog,
+  }) {
+    return showModalBottomSheet(
+      backgroundColor: ColorUtils.whiteColor,
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.r),
+          topRight: Radius.circular(16.r),
+        ),
+      ),
+      builder: (_) {
+        return ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16.r),
+              topRight: Radius.circular(16.r),
+            ),
+            child: dialog);
+      },
+    );
+  }
+
   static Future<void> showBottomSheetAddImageDialog({
     required BuildContext context,
     VoidCallback? onSelectPressedCamera,
-    VoidCallback? onSelectPressedGallary,
+    VoidCallback? onSelectPressedGallery,
   }) {
     return showModalBottomSheet(
       backgroundColor: ColorUtils.whiteColor,
@@ -133,7 +156,7 @@ class PopupUtils {
                   SizedBox(height: 16.h),
                   buildIconOption(
                     iconName: AssetUtils.icCamera,
-                    title: "Thêm ảnh từ camera",
+                    title: "Add photos from camera",
                     onPressed: () {
                       Navigator.of(context).pop();
                       onSelectPressedCamera?.call();
@@ -149,10 +172,10 @@ class PopupUtils {
                   ),
                   buildIconOption(
                     iconName: AssetUtils.icGallery,
-                    title: "Thêm ảnh từ Gallery",
+                    title: "Add photos from Gallery",
                     onPressed: () {
                       Navigator.of(context).pop();
-                      onSelectPressedGallary?.call();
+                      onSelectPressedGallery?.call();
                     },
                   ),
                 ],
