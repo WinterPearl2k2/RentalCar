@@ -17,12 +17,20 @@ class ProfileNotifier extends _$ProfileNotifier {
   @override
   ProfileState build() => const ProfileState();
 
-  void logOut({
+  Future<void> logOut({
     required context,
-  }) {
-    PreferenceService.clearUUID();
-    PreferenceService.clearToken();
-    Routes.goToAuthScreen(context);
+  }) async {
+    try {
+      await injection.getIt<IAuthService>().logout(
+            deviceToken: PreferenceService.getDeviceToken(),
+          );
+      PreferenceService.clearUUID();
+      PreferenceService.clearToken();
+      Routes.goToAuthScreen(context);
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
   }
 
   Future<void> getUser() async {

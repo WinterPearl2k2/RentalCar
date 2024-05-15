@@ -19,5 +19,6 @@ func main() {
 		&models.RentHistory{},
 		&models.Verification{},
 		&models.CarRentail{},
+		&models.DeviceToken{},
 	)
 }

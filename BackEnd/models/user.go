@@ -16,8 +16,8 @@ type User struct {
 	LongitudeUser float32   `gorm:"type:float8"`
 	CreatedAt     time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	UpdatedAt     time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
-	DeviceToken   string    `gorm:"type:text;not null"`
 
-	Cars        []Car
-	CarRentails []CarRentail
+	DeviceTokens []DeviceToken
+	Cars         []Car
+	CarRentails  []CarRentail
 }

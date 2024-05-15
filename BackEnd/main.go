@@ -26,6 +26,7 @@ func main() {
 
 	//auth
 	router.POST("/auth/register", AuthController.RegisterUser)
+	router.PUT("/auth/logout/:deviceToken", AuthController.Logout)
 	router.POST("/auth/login", AuthController.Login)
 	router.POST("/auth/refreshToken", AuthController.NewToken)
 	router.POST("/auth/forgotPassword/:email", AuthController.ForgotPassword)
