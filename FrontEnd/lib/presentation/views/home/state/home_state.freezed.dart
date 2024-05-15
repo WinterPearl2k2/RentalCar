@@ -18,9 +18,12 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeState {
   List<TopCarDTO> get listTopCar => throw _privateConstructorUsedError;
   List<AllCarDTO> get listAllCar => throw _privateConstructorUsedError;
+  List<AllCarDTO> get listSearchCar => throw _privateConstructorUsedError;
   double get instanceCar => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
-  List<Placemark> get placemarks => throw _privateConstructorUsedError;
+  Status get statusSearch => throw _privateConstructorUsedError;
+  bool get isCheckSearch => throw _privateConstructorUsedError;
+  List<Placemark> get placeMarks => throw _privateConstructorUsedError;
   Position get position => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,9 +39,12 @@ abstract class $HomeStateCopyWith<$Res> {
   $Res call(
       {List<TopCarDTO> listTopCar,
       List<AllCarDTO> listAllCar,
+      List<AllCarDTO> listSearchCar,
       double instanceCar,
       Status status,
-      List<Placemark> placemarks,
+      Status statusSearch,
+      bool isCheckSearch,
+      List<Placemark> placeMarks,
       Position position});
 }
 
@@ -57,9 +63,12 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? listTopCar = null,
     Object? listAllCar = null,
+    Object? listSearchCar = null,
     Object? instanceCar = null,
     Object? status = null,
-    Object? placemarks = null,
+    Object? statusSearch = null,
+    Object? isCheckSearch = null,
+    Object? placeMarks = null,
     Object? position = null,
   }) {
     return _then(_value.copyWith(
@@ -71,6 +80,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.listAllCar
           : listAllCar // ignore: cast_nullable_to_non_nullable
               as List<AllCarDTO>,
+      listSearchCar: null == listSearchCar
+          ? _value.listSearchCar
+          : listSearchCar // ignore: cast_nullable_to_non_nullable
+              as List<AllCarDTO>,
       instanceCar: null == instanceCar
           ? _value.instanceCar
           : instanceCar // ignore: cast_nullable_to_non_nullable
@@ -79,9 +92,17 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      placemarks: null == placemarks
-          ? _value.placemarks
-          : placemarks // ignore: cast_nullable_to_non_nullable
+      statusSearch: null == statusSearch
+          ? _value.statusSearch
+          : statusSearch // ignore: cast_nullable_to_non_nullable
+              as Status,
+      isCheckSearch: null == isCheckSearch
+          ? _value.isCheckSearch
+          : isCheckSearch // ignore: cast_nullable_to_non_nullable
+              as bool,
+      placeMarks: null == placeMarks
+          ? _value.placeMarks
+          : placeMarks // ignore: cast_nullable_to_non_nullable
               as List<Placemark>,
       position: null == position
           ? _value.position
@@ -102,9 +123,12 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   $Res call(
       {List<TopCarDTO> listTopCar,
       List<AllCarDTO> listAllCar,
+      List<AllCarDTO> listSearchCar,
       double instanceCar,
       Status status,
-      List<Placemark> placemarks,
+      Status statusSearch,
+      bool isCheckSearch,
+      List<Placemark> placeMarks,
       Position position});
 }
 
@@ -121,9 +145,12 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? listTopCar = null,
     Object? listAllCar = null,
+    Object? listSearchCar = null,
     Object? instanceCar = null,
     Object? status = null,
-    Object? placemarks = null,
+    Object? statusSearch = null,
+    Object? isCheckSearch = null,
+    Object? placeMarks = null,
     Object? position = null,
   }) {
     return _then(_$HomeStateImpl(
@@ -135,6 +162,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value._listAllCar
           : listAllCar // ignore: cast_nullable_to_non_nullable
               as List<AllCarDTO>,
+      listSearchCar: null == listSearchCar
+          ? _value._listSearchCar
+          : listSearchCar // ignore: cast_nullable_to_non_nullable
+              as List<AllCarDTO>,
       instanceCar: null == instanceCar
           ? _value.instanceCar
           : instanceCar // ignore: cast_nullable_to_non_nullable
@@ -143,9 +174,17 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      placemarks: null == placemarks
-          ? _value._placemarks
-          : placemarks // ignore: cast_nullable_to_non_nullable
+      statusSearch: null == statusSearch
+          ? _value.statusSearch
+          : statusSearch // ignore: cast_nullable_to_non_nullable
+              as Status,
+      isCheckSearch: null == isCheckSearch
+          ? _value.isCheckSearch
+          : isCheckSearch // ignore: cast_nullable_to_non_nullable
+              as bool,
+      placeMarks: null == placeMarks
+          ? _value._placeMarks
+          : placeMarks // ignore: cast_nullable_to_non_nullable
               as List<Placemark>,
       position: null == position
           ? _value.position
@@ -161,9 +200,12 @@ class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
       {final List<TopCarDTO> listTopCar = const [],
       final List<AllCarDTO> listAllCar = const [],
+      final List<AllCarDTO> listSearchCar = const [],
       this.instanceCar = 0,
       this.status = Status.loading,
-      final List<Placemark> placemarks = const [],
+      this.statusSearch = Status.loading,
+      this.isCheckSearch = false,
+      final List<Placemark> placeMarks = const [],
       this.position = const Position(
           longitude: 0.0,
           latitude: 0.0,
@@ -177,7 +219,8 @@ class _$HomeStateImpl implements _HomeState {
           speedAccuracy: 0.0)})
       : _listTopCar = listTopCar,
         _listAllCar = listAllCar,
-        _placemarks = placemarks;
+        _listSearchCar = listSearchCar,
+        _placeMarks = placeMarks;
 
   final List<TopCarDTO> _listTopCar;
   @override
@@ -197,19 +240,34 @@ class _$HomeStateImpl implements _HomeState {
     return EqualUnmodifiableListView(_listAllCar);
   }
 
+  final List<AllCarDTO> _listSearchCar;
+  @override
+  @JsonKey()
+  List<AllCarDTO> get listSearchCar {
+    if (_listSearchCar is EqualUnmodifiableListView) return _listSearchCar;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listSearchCar);
+  }
+
   @override
   @JsonKey()
   final double instanceCar;
   @override
   @JsonKey()
   final Status status;
-  final List<Placemark> _placemarks;
   @override
   @JsonKey()
-  List<Placemark> get placemarks {
-    if (_placemarks is EqualUnmodifiableListView) return _placemarks;
+  final Status statusSearch;
+  @override
+  @JsonKey()
+  final bool isCheckSearch;
+  final List<Placemark> _placeMarks;
+  @override
+  @JsonKey()
+  List<Placemark> get placeMarks {
+    if (_placeMarks is EqualUnmodifiableListView) return _placeMarks;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_placemarks);
+    return EqualUnmodifiableListView(_placeMarks);
   }
 
   @override
@@ -218,7 +276,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, instanceCar: $instanceCar, status: $status, placemarks: $placemarks, position: $position)';
+    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, status: $status, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, position: $position)';
   }
 
   @override
@@ -230,11 +288,17 @@ class _$HomeStateImpl implements _HomeState {
                 .equals(other._listTopCar, _listTopCar) &&
             const DeepCollectionEquality()
                 .equals(other._listAllCar, _listAllCar) &&
+            const DeepCollectionEquality()
+                .equals(other._listSearchCar, _listSearchCar) &&
             (identical(other.instanceCar, instanceCar) ||
                 other.instanceCar == instanceCar) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.statusSearch, statusSearch) ||
+                other.statusSearch == statusSearch) &&
+            (identical(other.isCheckSearch, isCheckSearch) ||
+                other.isCheckSearch == isCheckSearch) &&
             const DeepCollectionEquality()
-                .equals(other._placemarks, _placemarks) &&
+                .equals(other._placeMarks, _placeMarks) &&
             (identical(other.position, position) ||
                 other.position == position));
   }
@@ -244,9 +308,12 @@ class _$HomeStateImpl implements _HomeState {
       runtimeType,
       const DeepCollectionEquality().hash(_listTopCar),
       const DeepCollectionEquality().hash(_listAllCar),
+      const DeepCollectionEquality().hash(_listSearchCar),
       instanceCar,
       status,
-      const DeepCollectionEquality().hash(_placemarks),
+      statusSearch,
+      isCheckSearch,
+      const DeepCollectionEquality().hash(_placeMarks),
       position);
 
   @JsonKey(ignore: true)
@@ -260,9 +327,12 @@ abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {final List<TopCarDTO> listTopCar,
       final List<AllCarDTO> listAllCar,
+      final List<AllCarDTO> listSearchCar,
       final double instanceCar,
       final Status status,
-      final List<Placemark> placemarks,
+      final Status statusSearch,
+      final bool isCheckSearch,
+      final List<Placemark> placeMarks,
       final Position position}) = _$HomeStateImpl;
 
   @override
@@ -270,11 +340,17 @@ abstract class _HomeState implements HomeState {
   @override
   List<AllCarDTO> get listAllCar;
   @override
+  List<AllCarDTO> get listSearchCar;
+  @override
   double get instanceCar;
   @override
   Status get status;
   @override
-  List<Placemark> get placemarks;
+  Status get statusSearch;
+  @override
+  bool get isCheckSearch;
+  @override
+  List<Placemark> get placeMarks;
   @override
   Position get position;
   @override

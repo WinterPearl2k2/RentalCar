@@ -2,21 +2,26 @@ package car
 
 import (
 	"net/http"
-
 	CarRepository "rent-car/repositories/car"
 	UserRepository "rent-car/repositories/users"
 
 	"github.com/gin-gonic/gin"
 )
 
-func GetAllCar(context *gin.Context) {
+func SearchCarByName(context *gin.Context) {
+	name := context.Query("name")
 	userID := context.Query("userID")
 
-	cars, err := CarRepository.GetAll()
+	cars, err := CarRepository.GetCarsByName(name)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
+		return
+	}
+
+	if len(cars) == 0 {
+		context.JSON(http.StatusOK, []gin.H{})
 		return
 	}
 

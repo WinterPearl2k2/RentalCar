@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 
-class NoCarWidget extends StatelessWidget {
-  const NoCarWidget({
+class SearchCarInitWidget extends StatelessWidget {
+  const SearchCarInitWidget({
     super.key,
   });
 
@@ -21,10 +21,14 @@ class NoCarWidget extends StatelessWidget {
             height: 100.h,
           ),
           SvgPicture.asset(
-            AssetUtils.imgEmpty,
+            height: 50.h,
+            AssetUtils.icSearch,
+          ),
+          SizedBox(
+            height: 10.h,
           ),
           Text(
-            "Currently, you don't have any cars!",
+            'Find the right car for you',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: ColorUtils.primaryColor,
@@ -36,7 +40,7 @@ class NoCarWidget extends StatelessWidget {
             height: 10.h,
           ),
           Text(
-            "You can add more cars below.",
+            "Enter the vehicle you want to search for above",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: ColorUtils.textColor,

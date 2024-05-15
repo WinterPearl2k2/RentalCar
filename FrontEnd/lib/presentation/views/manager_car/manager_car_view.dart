@@ -2,6 +2,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
@@ -32,7 +33,7 @@ class _HomeViewState
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 14.0.w, vertical: 15.0.h),
+          padding: EdgeInsets.symmetric(horizontal: 5.0.w, vertical: 10.0.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.max,
@@ -68,25 +69,20 @@ class _HomeViewState
                       );
                       switch (status) {
                         case Status.loading:
-                          return const Expanded(
-                            child: Center(
-                              child: SingleChildScrollView(
-                                child: CircularProgressIndicator(),
+                          return Center(
+                            child: SingleChildScrollView(
+                              child: JumpingDots(
+                                  color: ColorUtils.primaryColor,
                               ),
                             ),
                           );
-                
                         case Status.success:
                           return listCarUser.isNotEmpty
-                              ? Expanded(
-                                  child: ListManagerCarWidget(
-                                    notifier: notifier,
-                                    listCarUser: listCarUser,
-                                  ),
-                                )
-                              : const Expanded(
-                                  child: NoCarWidget(),
-                                );
+                              ? ListManagerCarWidget(
+                                notifier: notifier,
+                                listCarUser: listCarUser,
+                              )
+                              : const NoCarWidget();
                       }
                     },
                   ),

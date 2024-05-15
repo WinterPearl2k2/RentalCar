@@ -9,7 +9,6 @@ import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:geocoding/geocoding.dart';
 
-
 part 'home_notifier.g.dart';
 
 @riverpod
@@ -21,15 +20,62 @@ class HomeNotifier extends _$HomeNotifier {
     try {
       final listTopCar = await injection.getIt<ICarService>().getTopCar();
       if (listTopCar.isEmpty) {
-        state = state.copyWith(status: Status.success);
-        state = state.copyWith(listTopCar: []);
+        state = state.copyWith(
+          status: Status.success,
+          listTopCar: [],
+        );
       } else {
-        state = state.copyWith(status: Status.success);
-        state = state.copyWith(listTopCar: listTopCar);
+        state = state.copyWith(
+          status: Status.success,
+          listTopCar: listTopCar,
+        );
       }
       LogUtils.i("getList oke");
     } catch (e) {
       LogUtils.i(e.toString());
+    }
+  }
+
+  Future<void> getListSearchCars({required String nameCar}) async {
+    try {
+      state = state.copyWith(
+        statusSearch: Status.loading,
+        listSearchCar: [],
+      );
+      final listSearchCar =
+          await injection.getIt<ICarService>().getSearchCar(nameCar: nameCar);
+      if (listSearchCar.isEmpty) {
+        state = state.copyWith(
+          statusSearch: Status.success,
+          listSearchCar: [],
+        );
+      } else {
+        state = state.copyWith(
+          statusSearch: Status.success,
+          listSearchCar: listSearchCar,
+        );
+      }
+      LogUtils.i("getList oke");
+    } catch (e) {
+      LogUtils.i(e.toString());
+    }
+  }
+
+  Future<void> clearSearch() async {
+    await Future.delayed(
+      const Duration(milliseconds: 1),
+    );
+    state = state.copyWith(
+      isCheckSearch: false,
+      listSearchCar: [],
+    );
+  }
+
+  void isCheckSearch({required String searchController}) {
+    if (searchController.isEmpty) {
+      state = state.copyWith(isCheckSearch: false);
+    } else {
+      state = state.copyWith(isCheckSearch: true, statusSearch: Status.loading);
     }
   }
 
@@ -57,18 +103,22 @@ class HomeNotifier extends _$HomeNotifier {
           if (dateComparison != 0) {
             return dateComparison;
           } else {
-            double distanceA = a.distanceCar ;
+            double distanceA = a.distanceCar;
             double distanceB = b.distanceCar;
             return distanceA.compareTo(distanceB);
           }
         });
-        state = state.copyWith(status: Status.success, listAllCar: updatedListAllCar);
+        state = state.copyWith(
+          status: Status.success,
+          listAllCar: updatedListAllCar,
+        );
       }
-      LogUtils.i("getList oke");
+      LogUtils.i("get list car near you oke");
     } catch (e) {
       LogUtils.i(e.toString());
     }
   }
+
 
   Future<void> getLocationUser() async {
     PermissionStatus permission = await Permission.location.request();
@@ -76,10 +126,11 @@ class HomeNotifier extends _$HomeNotifier {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
       state = state.copyWith(position: position);
-      List<Placemark> placemarks =
+      List<Placemark> placeMarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
-      state = state.copyWith(placemarks: placemarks);
-      PreferenceService.setLocation(latCar: position.latitude, longCar: position.longitude);
+      state = state.copyWith(placeMarks: placeMarks);
+      PreferenceService.setLocation(
+          latCar: position.latitude, longCar: position.longitude);
     }
   }
 }

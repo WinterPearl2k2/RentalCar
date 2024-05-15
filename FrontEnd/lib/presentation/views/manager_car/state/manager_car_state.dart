@@ -21,6 +21,7 @@ class ManagerCarState with _$ManagerCarState {
     @Default(false) bool isCheckImageCar,
     @Default('') String imageFile,
     @Default(false) bool isEditButton,
+    @Default(true) bool isContinueButtonEnabled,
   }) = _ManagerCarState;
 }
 enum Status {

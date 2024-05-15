@@ -24,4 +24,5 @@ class AssetUtils {
   static const imgHondaBrV = 'assets/images/img_honda_br_v.jpg';
   static const imgHondaCity = 'assets/images/img_honda_city.jpg';
   static const imgHondaCivic = 'assets/images/img_honda_civic.jpg';
+  static const imgEmpty = 'assets/images/img_empty.svg';
 }

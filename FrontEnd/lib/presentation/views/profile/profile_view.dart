@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
@@ -48,8 +49,10 @@ class _ProfileViewState extends BaseStateDelegate<ProfileView, ProfileNotifier>
             profileNotifierProvider.select((value) => value.loading),
           );
           return (loading || loading == null)
-              ? const Center(
-                  child: CircularProgressIndicator(),
+              ? Center(
+                  child: JumpingDots(
+                    color: ColorUtils.primaryColor,
+                  ),
                 )
               : Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20),

@@ -8,6 +8,7 @@ import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
 import 'package:rental_car/presentation/views/detail_contract/detail_contract_view.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
+import 'package:rental_car/presentation/views/home/views/search_car_view.dart';
 import 'package:rental_car/presentation/views/home/views/see_all_car_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/add_car_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/edit_car_view.dart';
@@ -68,8 +69,8 @@ class Routes {
           builder: (context) => CarDetailView(
             idCar: args['idCar'] ?? '',
             distance: args['distance'] ?? 0.0,
-            latCar: args['distance'] ?? 0.0,
-            longCar: args['distance'] ?? 0.0,
+            latCar: args['latCar'] ?? 0.0,
+            longCar: args['longCar'] ?? 0.0,
           ),
         );
       case RoutesName.editCar:
@@ -84,6 +85,11 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => SeeAllCarView(
             notifier: args['notifier'] ?? HomeNotifier(),
+          ),
+        );
+        case RoutesName.searchCar:
+        return MaterialPageRoute(
+          builder: (context) => const SearchCarView(
           ),
         );
       default:
@@ -219,5 +225,10 @@ class Routes {
   static void goToSeeAllCarView(BuildContext context, HomeNotifier notifier) {
     Navigator.of(context)
         .pushNamed(RoutesName.seeAllCar, arguments: {'notifier': notifier});
+  }
+
+  static void goToSearchCarView(BuildContext context) {
+    Navigator.of(context)
+        .pushNamed(RoutesName.searchCar);
   }
 }

@@ -69,7 +69,7 @@ class PopupUtils {
                           height: 50.h,
                           child: TextButtonWidget(
                             onPressed: onTap,
-                            label: "Xóa",
+                            label: "Delete",
                           ),
                         ),
                       ),
@@ -81,7 +81,7 @@ class PopupUtils {
                           height: 50.h,
                           child: TextButtonOutlineWidget(
                             onPressed: () => Navigator.pop(context),
-                            label: "Hủy",
+                            label: "Cancel",
                           ),
                         ),
                       )
