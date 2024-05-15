@@ -11,7 +11,6 @@ import (
 
 func GetAllCar(context *gin.Context) {
 	userID := context.Query("userID")
-
 	cars, err := CarRepository.GetAll()
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
@@ -22,11 +21,15 @@ func GetAllCar(context *gin.Context) {
 
 	var carsData []gin.H
 
+	if len(cars) == 0 {
+		context.JSON(http.StatusOK, []gin.H{})
+		return
+	}
+
 	for _, car := range cars {
 		if car.UserId.String() == userID {
 			continue
 		}
-
 		user, err := UserRepository.GetUserById(car.UserId.String())
 		if err != nil {
 			context.JSON(http.StatusInternalServerError, gin.H{
@@ -34,11 +37,34 @@ func GetAllCar(context *gin.Context) {
 			})
 			return
 		}
+
+		// Lấy tất cả các đánh giá của xe
+		reviews, err := CarRepository.GetReviewsByCarID(car.IdCar.String())
+		if err != nil {
+			context.JSON(http.StatusInternalServerError, gin.H{
+				"error": "Cannot get reviews for car",
+			})
+			return
+		}
+
+		reviewCount := len(reviews)
+		var totalRating float32 = 0.0
+		var commentCount int = 0
+		for _, review := range reviews {
+			totalRating += review.RateReview
+			if review.CommentReview != "" {
+				commentCount++
+			}
+		}
+		var averageRating float64
+		if reviewCount > 0 {
+			averageRating = float64(totalRating) / float64(reviewCount)
+		}
+
 		carData := gin.H{
 			"idCar":           car.IdCar,
 			"idUser":          car.UserId,
 			"userName":        user.NameUser,
-			"idReview":        car.ReviewId,
 			"nameCar":         car.NameCar,
 			"priceCar":        car.PriceCar,
 			"fuelTypeCar":     car.FuelTypeCar,
@@ -54,6 +80,8 @@ func GetAllCar(context *gin.Context) {
 			"imagesCar":       car.ImagesCar,
 			"statusCar":       car.StatusCar,
 			"createAt":        car.CreatedAt,
+			"reviewCount":     commentCount,
+			"averageRating":   averageRating,
 		}
 		carsData = append(carsData, carData)
 	}

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rental_car/data/dtos/comments_dto.dart';
 
 part 'car_detail_dto.freezed.dart';
 part 'car_detail_dto.g.dart';
@@ -18,8 +19,9 @@ class CarDetailDTO with _$CarDetailDTO {
     @Default("") String transmissionCar,
     @Default("") String addressCar,
     @Default("") String userName,
-    @Default(0) double starCar,
-    @Default(0) double countReviewCar,
+    @Default([]) List<CommentsDTO> comments,
+    @Default(0) double averageRating,
+    @Default(0) int reviewCount,
     @Default(0) double priceCar
   }) = _CarDetailDTO;
 

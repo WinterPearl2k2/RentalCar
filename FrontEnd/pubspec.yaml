@@ -67,6 +67,7 @@ dependencies:
   url_launcher: ^6.2.6
   map_launcher: ^3.3.0
   jumping_dot: ^0.0.6
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:

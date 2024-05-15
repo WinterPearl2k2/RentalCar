@@ -54,6 +54,7 @@ func main() {
 	router.GET("/getAllCarByIdUser/:idUser", CarController.GetAllCarByIdUser)
 	router.GET("/getTopCar", CarController.GetTopCar)
 	router.GET("/getSearchCar", CarController.SearchCarByName)
+	router.POST("/createCarReview", CarController.CreateCarReview)
 
 	router.Run()
 }
@@ -62,11 +63,11 @@ func main() {
 func scheduleUpdateStatusCar() {
 	for {
 		now := time.Now()
-		next := now.AddDate(0, 0, 1)
+		// next := now.AddDate(0, 0, 1)
 
-		duration := time.Until(time.Date(next.Year(), next.Month(), next.Day(), 0, 0, 0, 0, next.Location()))
+		// duration := time.Until(time.Date(next.Year(), next.Month(), next.Day(), 0, 0, 0, 0, next.Location()))
 
-		time.Sleep(duration)
+		// time.Sleep(duration)
 
 		if err := initializers.DB.
 			Model(&models.CarRentail{}).

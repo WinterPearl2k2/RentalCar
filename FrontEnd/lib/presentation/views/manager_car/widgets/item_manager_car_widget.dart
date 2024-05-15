@@ -83,7 +83,7 @@ class ItemManagerCarWidget extends StatelessWidget {
                           width: 5.0.w,
                         ),
                         Text(
-                          "0",
+                          car.averageRating.toString(),
                           style: TextStyle(
                             color: ColorUtils.primaryColor,
                             fontWeight: FontWeight.bold,
@@ -94,7 +94,7 @@ class ItemManagerCarWidget extends StatelessWidget {
                           width: 5.0.w,
                         ),
                         Text(
-                          "(0 review)",
+                          "(${car.reviewCount} review)",
                           style: TextStyle(
                             color: ColorUtils.textColor,
                             fontWeight: FontWeight.bold,

@@ -13,8 +13,8 @@ type CarBody struct {
 	SeatsCar        int     `binding:"required"`
 	TransmissionCar string  `binding:"required"`
 	AddressCar      string  `binding:"required"`
-	LatCar          float64  `binding:"required"`
-	LongCar         float64  `binding:"required"`
+	LatCar          float64 `binding:"required"`
+	LongCar         float64 `binding:"required"`
 	ImagesCar       string
 	StatusCar       string `binding:"required"`
 }
@@ -30,4 +30,13 @@ type CarRent struct {
 type DateTimeCar struct {
 	StartDate time.Time `binding:"required"`
 	EndDate   time.Time `binding:"required"`
+}
+type CarReviewBody struct {
+	RateReview    float32 `json:"rateReview" binding:"required"`
+	CommentReview string  `json:"commentReview"`
+	CarId         string  `json:"idCar" binding:"required"`
+}
+type CarInfo struct {
+	ReviewCount     int
+	AverageRating   float64
 }

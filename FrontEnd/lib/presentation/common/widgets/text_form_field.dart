@@ -17,6 +17,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
   final bool inputFormatters;
   final bool readOnly;
   final String? initialValue;
+  final int? maxLines;
 
 
   const TextFormFieldCustomWidget({
@@ -33,6 +34,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
     this.inputFormatters = false,
     this.readOnly = false,
     this.initialValue,
+    this.maxLines = 1
   });
 
   @override
@@ -64,6 +66,7 @@ class TextFormFieldCustomWidget extends StatelessWidget {
           onChanged: onChanged,
           keyboardType: textInputType,
           textInputAction: inputAction,
+          maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hint,
             contentPadding: EdgeInsets.symmetric(

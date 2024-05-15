@@ -17,12 +17,16 @@ class ItemCarWidget extends StatelessWidget {
     required this.imagesCar,
     required this.nameCar,
     required this.priceCar,
+    required this.averageRating,
+    required this.reviewCount,
   });
 
   final String idCar;
   final String imagesCar;
   final String nameCar;
   final double priceCar;
+  final double averageRating;
+  final int reviewCount;
   final HomeNotifier notifier;
 
   @override
@@ -86,7 +90,7 @@ class ItemCarWidget extends StatelessWidget {
                         width: 5.0.w,
                       ),
                       Text(
-                        "0",
+                        averageRating.toString(),
                         style: TextStyle(
                           color: ColorUtils.primaryColor,
                           fontWeight: FontWeight.bold,
@@ -97,7 +101,7 @@ class ItemCarWidget extends StatelessWidget {
                         width: 5.0.w,
                       ),
                       Text(
-                        "(0 review)",
+                        "($reviewCount review)",
                         style: TextStyle(
                           color: ColorUtils.textColor,
                           fontWeight: FontWeight.bold,

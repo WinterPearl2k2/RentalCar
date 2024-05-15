@@ -5,6 +5,7 @@ import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/main.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:geocoding/geocoding.dart';

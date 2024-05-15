@@ -47,7 +47,10 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
                   notifier.getListTopCars();
                   notifier.getListAllCars();
                 },
-                onLoad: () => notifier.getListAllCars(),
+                onLoad: (){
+                  notifier.getListTopCars();
+                  notifier.getListAllCars();
+                },
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

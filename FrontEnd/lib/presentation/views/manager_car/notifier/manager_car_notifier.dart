@@ -12,6 +12,8 @@ import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/views/manager_car/state/manager_car_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../common/enum/status.dart';
+
 part 'manager_car_notifier.g.dart';
 
 @riverpod

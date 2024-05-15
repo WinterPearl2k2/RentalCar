@@ -117,6 +117,7 @@ class CarDescriptionTextFormFieldWidget extends StatelessWidget {
         return TextFormFieldCustomWidget(
           hint: 'Car Description',
           label: "Your car description",
+          maxLines: 3,
           inputAction: TextInputAction.next,
           controller: carDescriptionController,
           onChanged: onChange,

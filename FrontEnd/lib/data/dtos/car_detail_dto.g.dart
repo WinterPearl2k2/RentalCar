@@ -20,8 +20,12 @@ _$CarDetailDTOImpl _$$CarDetailDTOImplFromJson(Map<String, dynamic> json) =>
       transmissionCar: json['transmissionCar'] as String? ?? "",
       addressCar: json['addressCar'] as String? ?? "",
       userName: json['userName'] as String? ?? "",
-      starCar: (json['starCar'] as num?)?.toDouble() ?? 0,
-      countReviewCar: (json['countReviewCar'] as num?)?.toDouble() ?? 0,
+      comments: (json['comments'] as List<dynamic>?)
+              ?.map((e) => CommentsDTO.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      averageRating: (json['averageRating'] as num?)?.toDouble() ?? 0,
+      reviewCount: (json['reviewCount'] as num?)?.toInt() ?? 0,
       priceCar: (json['priceCar'] as num?)?.toDouble() ?? 0,
     );
 
@@ -39,7 +43,8 @@ Map<String, dynamic> _$$CarDetailDTOImplToJson(_$CarDetailDTOImpl instance) =>
       'transmissionCar': instance.transmissionCar,
       'addressCar': instance.addressCar,
       'userName': instance.userName,
-      'starCar': instance.starCar,
-      'countReviewCar': instance.countReviewCar,
+      'comments': instance.comments,
+      'averageRating': instance.averageRating,
+      'reviewCount': instance.reviewCount,
       'priceCar': instance.priceCar,
     };

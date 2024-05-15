@@ -32,8 +32,9 @@ mixin _$CarDetailDTO {
   String get transmissionCar => throw _privateConstructorUsedError;
   String get addressCar => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
-  double get starCar => throw _privateConstructorUsedError;
-  double get countReviewCar => throw _privateConstructorUsedError;
+  List<CommentsDTO> get comments => throw _privateConstructorUsedError;
+  double get averageRating => throw _privateConstructorUsedError;
+  int get reviewCount => throw _privateConstructorUsedError;
   double get priceCar => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,8 +62,9 @@ abstract class $CarDetailDTOCopyWith<$Res> {
       String transmissionCar,
       String addressCar,
       String userName,
-      double starCar,
-      double countReviewCar,
+      List<CommentsDTO> comments,
+      double averageRating,
+      int reviewCount,
       double priceCar});
 }
 
@@ -91,8 +93,9 @@ class _$CarDetailDTOCopyWithImpl<$Res, $Val extends CarDetailDTO>
     Object? transmissionCar = null,
     Object? addressCar = null,
     Object? userName = null,
-    Object? starCar = null,
-    Object? countReviewCar = null,
+    Object? comments = null,
+    Object? averageRating = null,
+    Object? reviewCount = null,
     Object? priceCar = null,
   }) {
     return _then(_value.copyWith(
@@ -144,14 +147,18 @@ class _$CarDetailDTOCopyWithImpl<$Res, $Val extends CarDetailDTO>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String,
-      starCar: null == starCar
-          ? _value.starCar
-          : starCar // ignore: cast_nullable_to_non_nullable
+      comments: null == comments
+          ? _value.comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<CommentsDTO>,
+      averageRating: null == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
               as double,
-      countReviewCar: null == countReviewCar
-          ? _value.countReviewCar
-          : countReviewCar // ignore: cast_nullable_to_non_nullable
-              as double,
+      reviewCount: null == reviewCount
+          ? _value.reviewCount
+          : reviewCount // ignore: cast_nullable_to_non_nullable
+              as int,
       priceCar: null == priceCar
           ? _value.priceCar
           : priceCar // ignore: cast_nullable_to_non_nullable
@@ -181,8 +188,9 @@ abstract class _$$CarDetailDTOImplCopyWith<$Res>
       String transmissionCar,
       String addressCar,
       String userName,
-      double starCar,
-      double countReviewCar,
+      List<CommentsDTO> comments,
+      double averageRating,
+      int reviewCount,
       double priceCar});
 }
 
@@ -209,8 +217,9 @@ class __$$CarDetailDTOImplCopyWithImpl<$Res>
     Object? transmissionCar = null,
     Object? addressCar = null,
     Object? userName = null,
-    Object? starCar = null,
-    Object? countReviewCar = null,
+    Object? comments = null,
+    Object? averageRating = null,
+    Object? reviewCount = null,
     Object? priceCar = null,
   }) {
     return _then(_$CarDetailDTOImpl(
@@ -262,14 +271,18 @@ class __$$CarDetailDTOImplCopyWithImpl<$Res>
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
               as String,
-      starCar: null == starCar
-          ? _value.starCar
-          : starCar // ignore: cast_nullable_to_non_nullable
+      comments: null == comments
+          ? _value._comments
+          : comments // ignore: cast_nullable_to_non_nullable
+              as List<CommentsDTO>,
+      averageRating: null == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
               as double,
-      countReviewCar: null == countReviewCar
-          ? _value.countReviewCar
-          : countReviewCar // ignore: cast_nullable_to_non_nullable
-              as double,
+      reviewCount: null == reviewCount
+          ? _value.reviewCount
+          : reviewCount // ignore: cast_nullable_to_non_nullable
+              as int,
       priceCar: null == priceCar
           ? _value.priceCar
           : priceCar // ignore: cast_nullable_to_non_nullable
@@ -294,9 +307,11 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
       this.transmissionCar = "",
       this.addressCar = "",
       this.userName = "",
-      this.starCar = 0,
-      this.countReviewCar = 0,
-      this.priceCar = 0});
+      final List<CommentsDTO> comments = const [],
+      this.averageRating = 0,
+      this.reviewCount = 0,
+      this.priceCar = 0})
+      : _comments = comments;
 
   factory _$CarDetailDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$CarDetailDTOImplFromJson(json);
@@ -337,19 +352,28 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
   @override
   @JsonKey()
   final String userName;
+  final List<CommentsDTO> _comments;
   @override
   @JsonKey()
-  final double starCar;
+  List<CommentsDTO> get comments {
+    if (_comments is EqualUnmodifiableListView) return _comments;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_comments);
+  }
+
   @override
   @JsonKey()
-  final double countReviewCar;
+  final double averageRating;
+  @override
+  @JsonKey()
+  final int reviewCount;
   @override
   @JsonKey()
   final double priceCar;
 
   @override
   String toString() {
-    return 'CarDetailDTO(idCar: $idCar, idUser: $idUser, imagesCar: $imagesCar, nameCar: $nameCar, descriptionCar: $descriptionCar, fuelTypeCar: $fuelTypeCar, colorCar: $colorCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, transmissionCar: $transmissionCar, addressCar: $addressCar, userName: $userName, starCar: $starCar, countReviewCar: $countReviewCar, priceCar: $priceCar)';
+    return 'CarDetailDTO(idCar: $idCar, idUser: $idUser, imagesCar: $imagesCar, nameCar: $nameCar, descriptionCar: $descriptionCar, fuelTypeCar: $fuelTypeCar, colorCar: $colorCar, kilometersCar: $kilometersCar, seatsCar: $seatsCar, transmissionCar: $transmissionCar, addressCar: $addressCar, userName: $userName, comments: $comments, averageRating: $averageRating, reviewCount: $reviewCount, priceCar: $priceCar)';
   }
 
   @override
@@ -378,9 +402,11 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
                 other.addressCar == addressCar) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
-            (identical(other.starCar, starCar) || other.starCar == starCar) &&
-            (identical(other.countReviewCar, countReviewCar) ||
-                other.countReviewCar == countReviewCar) &&
+            const DeepCollectionEquality().equals(other._comments, _comments) &&
+            (identical(other.averageRating, averageRating) ||
+                other.averageRating == averageRating) &&
+            (identical(other.reviewCount, reviewCount) ||
+                other.reviewCount == reviewCount) &&
             (identical(other.priceCar, priceCar) ||
                 other.priceCar == priceCar));
   }
@@ -401,8 +427,9 @@ class _$CarDetailDTOImpl implements _CarDetailDTO {
       transmissionCar,
       addressCar,
       userName,
-      starCar,
-      countReviewCar,
+      const DeepCollectionEquality().hash(_comments),
+      averageRating,
+      reviewCount,
       priceCar);
 
   @JsonKey(ignore: true)
@@ -433,8 +460,9 @@ abstract class _CarDetailDTO implements CarDetailDTO {
       final String transmissionCar,
       final String addressCar,
       final String userName,
-      final double starCar,
-      final double countReviewCar,
+      final List<CommentsDTO> comments,
+      final double averageRating,
+      final int reviewCount,
       final double priceCar}) = _$CarDetailDTOImpl;
 
   factory _CarDetailDTO.fromJson(Map<String, dynamic> json) =
@@ -465,9 +493,11 @@ abstract class _CarDetailDTO implements CarDetailDTO {
   @override
   String get userName;
   @override
-  double get starCar;
+  List<CommentsDTO> get comments;
   @override
-  double get countReviewCar;
+  double get averageRating;
+  @override
+  int get reviewCount;
   @override
   double get priceCar;
   @override

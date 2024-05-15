@@ -40,6 +40,8 @@ class SeeAllCarView extends StatelessWidget {
                         imagesCar: listTopCar[index].imagesCar,
                         nameCar: listTopCar[index].nameCar,
                         priceCar: listTopCar[index].priceCar,
+                        averageRating: listTopCar[index].averageRating,
+                        reviewCount: listTopCar[index].reviewCount,
                       ),
                     ),
                   );

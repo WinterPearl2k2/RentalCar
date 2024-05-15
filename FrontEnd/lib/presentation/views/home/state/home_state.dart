@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:const_date_time/const_date_time.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 
 part 'home_state.freezed.dart';
 
@@ -36,7 +37,3 @@ class HomeState with _$HomeState {
   }) = _HomeState;
 }
 
-enum Status {
-  loading,
-  success,
-}

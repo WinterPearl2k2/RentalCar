@@ -2,6 +2,7 @@ import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
+import 'package:rental_car/data/dtos/car_review_dto.dart';
 import 'package:rental_car/data/dtos/date_time_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
@@ -24,6 +25,7 @@ abstract class ICarService {
   Future<void> rentalCar({required CarRentalDto carRentalDto});
   Future<List<DateTimeDto>> getDateTimeCar({required String idCar});
   Future<List<AllCarDTO>> getSearchCar({required String nameCar});
+  Future<void> createCarReview({required CarReviewDTO carReviewDTO});
 }
 
 class CarServiceImpl implements ICarService {
@@ -86,5 +88,10 @@ class CarServiceImpl implements ICarService {
   @override
   Future<List<AllCarDTO>> getSearchCar({required String nameCar}) {
     return _carRepository.getSearchCar(nameCar: nameCar);
+  }
+
+  @override
+  Future<void> createCarReview({required CarReviewDTO carReviewDTO}) {
+    return _carRepository.createCarReview(carReviewDTO: carReviewDTO);
   }
 }

@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/application/utils/date_time_format_untils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 
@@ -50,14 +53,19 @@ class BodyDetailWidget extends StatelessWidget {
                 ),
               ),
               buildDetailRow(title: "Fuel", attribute: carDetail.fuelTypeCar),
-              buildDetailRow(title: "Interior Color", attribute: carDetail.colorCar),
+              buildDetailRow(
+                  title: "Interior Color", attribute: carDetail.colorCar),
               buildDetailRow(
                 title: "Kilometers",
-                attribute: "${FormatUtils.formatNumber(carDetail.kilometersCar).trim()} km",
+                attribute:
+                    "${FormatUtils.formatNumber(carDetail.kilometersCar).trim()} km",
               ),
-              buildDetailRow(title: "Seats", attribute: carDetail.seatsCar.toString()),
-              buildDetailRow(title: "Transmission", attribute: carDetail.transmissionCar),
-              buildDetailRow(title: "Address Car", attribute: carDetail.addressCar),
+              buildDetailRow(
+                  title: "Seats", attribute: carDetail.seatsCar.toString()),
+              buildDetailRow(
+                  title: "Transmission", attribute: carDetail.transmissionCar),
+              buildDetailRow(
+                  title: "Address Car", attribute: carDetail.addressCar),
               SizedBox(
                 height: 10.0.h,
               ),
@@ -94,18 +102,11 @@ class BodyDetailWidget extends StatelessWidget {
                         style: TextStyle(
                           color: ColorUtils.primaryColor,
                           fontWeight: FontWeight.w700,
-                          fontSize: 14.sp,
+                          fontSize: 16.sp,
                         ),
                       ),
                       SizedBox(
                         height: 4.0.h,
-                      ),
-                      Text(
-                        "Thị trưởng",
-                        style: TextStyle(
-                          color: ColorUtils.textColor,
-                          fontSize: 14.sp,
-                        ),
                       ),
                     ],
                   ),
@@ -121,7 +122,7 @@ class BodyDetailWidget extends StatelessWidget {
                     width: 5.0.w,
                   ),
                   Text(
-                    carDetail.starCar.toString(),
+                    carDetail.averageRating.toString(),
                     style: TextStyle(
                       color: ColorUtils.primaryColor,
                       fontWeight: FontWeight.bold,
@@ -134,16 +135,83 @@ class BodyDetailWidget extends StatelessWidget {
                 height: 15.0.h,
               ),
               Text(
-                "REVIEW (${carDetail.countReviewCar})",
+                "REVIEW (${carDetail.reviewCount})",
                 style: TextStyle(
                   color: ColorUtils.primaryColor,
                   fontWeight: FontWeight.w700,
                   fontSize: 13.sp,
                 ),
               ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: carDetail.comments.length,
+
+                itemBuilder: (_, index) => itemComment(index: index),
+              )
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Padding itemComment({required int index}) {
+    return Padding(
+      padding:  EdgeInsets.only(bottom: 15.h),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15.0.r),
+            child: Image.asset(
+              AssetUtils.imgHondaCivic,
+              height: 50.h,
+              width: 50.w,
+              fit: BoxFit.cover,
+            ),
+          ),
+          SizedBox(
+            width: 10.w,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      carDetail.comments[index].commenter,
+                      style: TextStyle(
+                        color: ColorUtils.primaryColor,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                    Text(
+                      DateTimeFormatUtils.dateToFormat(
+                          date: carDetail.comments[index].createdAt,
+                          format: 'dd/MMM/yyyy'),
+                      style: TextStyle(
+                        color: ColorUtils.textColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14.sp,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  carDetail.comments[index].comment,
+                  style: TextStyle(
+                    color: ColorUtils.textColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

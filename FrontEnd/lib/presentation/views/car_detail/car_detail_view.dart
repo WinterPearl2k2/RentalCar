@@ -7,9 +7,9 @@ import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 import 'package:rental_car/presentation/views/car_detail/notifier/car_detail_notifier.dart';
-import 'package:rental_car/presentation/views/car_detail/state/car_detail_state.dart';
 import 'package:rental_car/presentation/views/car_detail/widgets/body_detail_widget.dart';
 import 'package:rental_car/presentation/views/car_detail/widgets/header_car_detail_widget.dart';
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/views/rental_car/state/rental_car_state.dart';
 import 'package:rental_car/presentation/views/rental_car/widgets/rental_car_widget.dart';
@@ -35,7 +36,7 @@ class _RentalCarViewState
       appBar: AppBar(
         leading: IconButton(
           icon: SvgPicture.asset(
-            'assets/icons/ic_arrow_back.svg',
+            AssetUtils.icBack,
           ),
           onPressed: () => Navigator.pop(context),
         ),

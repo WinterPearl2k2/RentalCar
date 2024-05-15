@@ -12,8 +12,8 @@ _$TopCarDTOImpl _$$TopCarDTOImplFromJson(Map<String, dynamic> json) =>
       imagesCar: json['imagesCar'] as String? ?? '',
       nameCar: json['nameCar'] as String? ?? '',
       priceCar: (json['priceCar'] as num?)?.toDouble() ?? 0,
-      starCar: (json['starCar'] as num?)?.toDouble() ?? 0,
-      countReviewCar: (json['countReviewCar'] as num?)?.toInt() ?? 0,
+      averageRating: (json['averageRating'] as num?)?.toDouble() ?? 0,
+      reviewCount: (json['reviewCount'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$$TopCarDTOImplToJson(_$TopCarDTOImpl instance) =>
@@ -22,6 +22,6 @@ Map<String, dynamic> _$$TopCarDTOImplToJson(_$TopCarDTOImpl instance) =>
       'imagesCar': instance.imagesCar,
       'nameCar': instance.nameCar,
       'priceCar': instance.priceCar,
-      'starCar': instance.starCar,
-      'countReviewCar': instance.countReviewCar,
+      'averageRating': instance.averageRating,
+      'reviewCount': instance.reviewCount,
     };

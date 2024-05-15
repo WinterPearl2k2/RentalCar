@@ -2,6 +2,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 
+import '../../../common/enum/status.dart';
+
 part 'manager_car_state.freezed.dart';
 
 @freezed
@@ -23,10 +25,6 @@ class ManagerCarState with _$ManagerCarState {
     @Default(false) bool isEditButton,
     @Default(true) bool isContinueButtonEnabled,
   }) = _ManagerCarState;
-}
-enum Status {
-  loading,
-  success,
 }
 
 enum AddCarStep {step1, step2, step3, step4, success }

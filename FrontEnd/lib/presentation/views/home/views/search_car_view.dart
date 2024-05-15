@@ -9,9 +9,9 @@ import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/common/widgets/search_form_field.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
-import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:rental_car/presentation/views/home/widgets/item_car.dart';
 import 'package:rental_car/presentation/views/home/widgets/search_car_empty_widget.dart';
 import 'package:rental_car/presentation/views/home/widgets/search_car_init_widget.dart';
@@ -107,6 +107,8 @@ class _SearchCarViewState
                                       imagesCar: listSearchCar[index].imagesCar,
                                       nameCar: listSearchCar[index].nameCar,
                                       priceCar: listSearchCar[index].priceCar,
+                                      averageRating: listSearchCar[index].averageRating,
+                                      reviewCount:  listSearchCar[index].reviewCount,
                                     ),
                                   ),
                                 )

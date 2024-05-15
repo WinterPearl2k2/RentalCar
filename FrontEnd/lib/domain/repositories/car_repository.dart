@@ -1,5 +1,6 @@
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
+import 'package:rental_car/data/dtos/car_review_dto.dart';
 import 'package:rental_car/data/dtos/date_time_dto.dart';
 import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
@@ -20,4 +21,5 @@ abstract class ICarRepository{
   Future<List<UserCarRentalDto>> getRentalCars();
   Future<List<DateTimeDto>> getDateTimeCar({required String idCar});
   Future<List<AllCarDTO>> getSearchCar({required String nameCar});
+  Future<void> createCarReview({required CarReviewDTO carReviewDTO});
 }

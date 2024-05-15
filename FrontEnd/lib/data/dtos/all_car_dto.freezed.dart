@@ -27,8 +27,8 @@ mixin _$AllCarDTO {
   double get latCar => throw _privateConstructorUsedError;
   double get longCar => throw _privateConstructorUsedError;
   double get distanceCar => throw _privateConstructorUsedError;
-  double get starCar => throw _privateConstructorUsedError;
-  int get countReviewCar => throw _privateConstructorUsedError;
+  double get averageRating => throw _privateConstructorUsedError;
+  int get reviewCount => throw _privateConstructorUsedError;
   DateTime get createAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -50,8 +50,8 @@ abstract class $AllCarDTOCopyWith<$Res> {
       double latCar,
       double longCar,
       double distanceCar,
-      double starCar,
-      int countReviewCar,
+      double averageRating,
+      int reviewCount,
       DateTime createAt});
 }
 
@@ -75,8 +75,8 @@ class _$AllCarDTOCopyWithImpl<$Res, $Val extends AllCarDTO>
     Object? latCar = null,
     Object? longCar = null,
     Object? distanceCar = null,
-    Object? starCar = null,
-    Object? countReviewCar = null,
+    Object? averageRating = null,
+    Object? reviewCount = null,
     Object? createAt = null,
   }) {
     return _then(_value.copyWith(
@@ -108,13 +108,13 @@ class _$AllCarDTOCopyWithImpl<$Res, $Val extends AllCarDTO>
           ? _value.distanceCar
           : distanceCar // ignore: cast_nullable_to_non_nullable
               as double,
-      starCar: null == starCar
-          ? _value.starCar
-          : starCar // ignore: cast_nullable_to_non_nullable
+      averageRating: null == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
               as double,
-      countReviewCar: null == countReviewCar
-          ? _value.countReviewCar
-          : countReviewCar // ignore: cast_nullable_to_non_nullable
+      reviewCount: null == reviewCount
+          ? _value.reviewCount
+          : reviewCount // ignore: cast_nullable_to_non_nullable
               as int,
       createAt: null == createAt
           ? _value.createAt
@@ -140,8 +140,8 @@ abstract class _$$AllCarDTOImplCopyWith<$Res>
       double latCar,
       double longCar,
       double distanceCar,
-      double starCar,
-      int countReviewCar,
+      double averageRating,
+      int reviewCount,
       DateTime createAt});
 }
 
@@ -163,8 +163,8 @@ class __$$AllCarDTOImplCopyWithImpl<$Res>
     Object? latCar = null,
     Object? longCar = null,
     Object? distanceCar = null,
-    Object? starCar = null,
-    Object? countReviewCar = null,
+    Object? averageRating = null,
+    Object? reviewCount = null,
     Object? createAt = null,
   }) {
     return _then(_$AllCarDTOImpl(
@@ -196,13 +196,13 @@ class __$$AllCarDTOImplCopyWithImpl<$Res>
           ? _value.distanceCar
           : distanceCar // ignore: cast_nullable_to_non_nullable
               as double,
-      starCar: null == starCar
-          ? _value.starCar
-          : starCar // ignore: cast_nullable_to_non_nullable
+      averageRating: null == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
               as double,
-      countReviewCar: null == countReviewCar
-          ? _value.countReviewCar
-          : countReviewCar // ignore: cast_nullable_to_non_nullable
+      reviewCount: null == reviewCount
+          ? _value.reviewCount
+          : reviewCount // ignore: cast_nullable_to_non_nullable
               as int,
       createAt: null == createAt
           ? _value.createAt
@@ -223,8 +223,8 @@ class _$AllCarDTOImpl implements _AllCarDTO {
       this.latCar = 0,
       this.longCar = 0,
       this.distanceCar = 0,
-      this.starCar = 0,
-      this.countReviewCar = 0,
+      this.averageRating = 0,
+      this.reviewCount = 0,
       this.createAt = const ConstDateTime(2024)});
 
   factory _$AllCarDTOImpl.fromJson(Map<String, dynamic> json) =>
@@ -253,17 +253,17 @@ class _$AllCarDTOImpl implements _AllCarDTO {
   final double distanceCar;
   @override
   @JsonKey()
-  final double starCar;
+  final double averageRating;
   @override
   @JsonKey()
-  final int countReviewCar;
+  final int reviewCount;
   @override
   @JsonKey()
   final DateTime createAt;
 
   @override
   String toString() {
-    return 'AllCarDTO(idCar: $idCar, imagesCar: $imagesCar, nameCar: $nameCar, priceCar: $priceCar, latCar: $latCar, longCar: $longCar, distanceCar: $distanceCar, starCar: $starCar, countReviewCar: $countReviewCar, createAt: $createAt)';
+    return 'AllCarDTO(idCar: $idCar, imagesCar: $imagesCar, nameCar: $nameCar, priceCar: $priceCar, latCar: $latCar, longCar: $longCar, distanceCar: $distanceCar, averageRating: $averageRating, reviewCount: $reviewCount, createAt: $createAt)';
   }
 
   @override
@@ -281,9 +281,10 @@ class _$AllCarDTOImpl implements _AllCarDTO {
             (identical(other.longCar, longCar) || other.longCar == longCar) &&
             (identical(other.distanceCar, distanceCar) ||
                 other.distanceCar == distanceCar) &&
-            (identical(other.starCar, starCar) || other.starCar == starCar) &&
-            (identical(other.countReviewCar, countReviewCar) ||
-                other.countReviewCar == countReviewCar) &&
+            (identical(other.averageRating, averageRating) ||
+                other.averageRating == averageRating) &&
+            (identical(other.reviewCount, reviewCount) ||
+                other.reviewCount == reviewCount) &&
             (identical(other.createAt, createAt) ||
                 other.createAt == createAt));
   }
@@ -299,8 +300,8 @@ class _$AllCarDTOImpl implements _AllCarDTO {
       latCar,
       longCar,
       distanceCar,
-      starCar,
-      countReviewCar,
+      averageRating,
+      reviewCount,
       createAt);
 
   @JsonKey(ignore: true)
@@ -326,8 +327,8 @@ abstract class _AllCarDTO implements AllCarDTO {
       final double latCar,
       final double longCar,
       final double distanceCar,
-      final double starCar,
-      final int countReviewCar,
+      final double averageRating,
+      final int reviewCount,
       final DateTime createAt}) = _$AllCarDTOImpl;
 
   factory _AllCarDTO.fromJson(Map<String, dynamic> json) =
@@ -348,9 +349,9 @@ abstract class _AllCarDTO implements AllCarDTO {
   @override
   double get distanceCar;
   @override
-  double get starCar;
+  double get averageRating;
   @override
-  int get countReviewCar;
+  int get reviewCount;
   @override
   DateTime get createAt;
   @override

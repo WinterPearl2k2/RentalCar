@@ -6,9 +6,10 @@ import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
-import 'package:rental_car/presentation/views/manager_car/state/manager_car_state.dart';
 import 'package:rental_car/presentation/views/manager_car/widgets/list_manager_car_widget.dart';
 import 'package:rental_car/presentation/views/manager_car/widgets/no_car_widget.dart';
+
+import '../../common/enum/status.dart';
 
 class ManagerCarView extends ConsumerStatefulWidget {
   const ManagerCarView({super.key});
@@ -30,66 +31,66 @@ class _HomeViewState
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5.0.w, vertical: 10.0.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                "Manager Car",
-                style: TextStyle(
-                  color: ColorUtils.primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.sp,
-                ),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Expanded(
-                child: EasyRefresh(
-                  onRefresh: () async {
-                    await notifier.getListCarByIdUser();
-                  },
-                  onLoad: () async {
-                    await notifier.getListCarByIdUser();
-                  },
-                  child: Consumer(
-                    builder: (_, ref, __) {
-                      final listCarUser = ref.watch(
-                        managerCarNotifierProvider
-                            .select((value) => value.listCarUser),
-                      );
-                      final status = ref.watch(
-                        managerCarNotifierProvider
-                            .select((value) => value.status),
-                      );
-                      switch (status) {
-                        case Status.loading:
-                          return Center(
-                            child: SingleChildScrollView(
-                              child: JumpingDots(
-                                  color: ColorUtils.primaryColor,
-                              ),
-                            ),
-                          );
-                        case Status.success:
-                          return listCarUser.isNotEmpty
-                              ? ListManagerCarWidget(
-                                notifier: notifier,
-                                listCarUser: listCarUser,
-                              )
-                              : const NoCarWidget();
-                      }
-                    },
-                  ),
-                ),
-              )
-            ],
+    return Scaffold(
+      backgroundColor: ColorUtils.primaryBackgroundColor,
+      appBar: AppBar(
+        backgroundColor: ColorUtils.primaryBackgroundColor,
+        title: Text(
+          'Manager Car',
+          style: TextStyle(
+            color: ColorUtils.primaryColor,
+            fontSize: 24.sp,
+            fontWeight: FontWeight.bold,
           ),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5.0.w,),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+
+            Expanded(
+              child: EasyRefresh(
+                onRefresh: () async {
+                  await notifier.getListCarByIdUser();
+                },
+                onLoad: () async {
+                  await notifier.getListCarByIdUser();
+                },
+                child: Consumer(
+                  builder: (_, ref, __) {
+                    final listCarUser = ref.watch(
+                      managerCarNotifierProvider
+                          .select((value) => value.listCarUser),
+                    );
+                    final status = ref.watch(
+                      managerCarNotifierProvider
+                          .select((value) => value.status),
+                    );
+                    switch (status) {
+                      case Status.loading:
+                        return Center(
+                          child: SingleChildScrollView(
+                            child: JumpingDots(
+                                color: ColorUtils.primaryColor,
+                            ),
+                          ),
+                        );
+                      case Status.success:
+                        return listCarUser.isNotEmpty
+                            ? ListManagerCarWidget(
+                              notifier: notifier,
+                              listCarUser: listCarUser,
+                            )
+                            : const NoCarWidget();
+                    }
+                  },
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
