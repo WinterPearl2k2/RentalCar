@@ -56,6 +56,7 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           margin:
               const EdgeInsets.only(top: 40, left: 30, right: 30, bottom: 20).r,
@@ -249,12 +250,16 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                       statusCar: StatusCar.available.name,
                     );
                     return TextButtonWidget(
-                        label: "Back to homepage",
-                        onPressed: () {
-                          Routes.goToPreviousView(context);
-                          notifier.changeForwardView();
-                          notifier.clearImage();
-                        });
+                      label: "Back to homepage",
+                      onPressed: () {
+                        Routes.goToPreviousView(context);
+                        notifier.changeForwardView();
+                        notifier.clearImage();
+                        notifier.isContinueButtonEnabled(
+                          isContinue: true,
+                        );
+                      },
+                    );
                   }
                   return TextButtonWidget(
                     blockButton: isContinueButtonEnabled,

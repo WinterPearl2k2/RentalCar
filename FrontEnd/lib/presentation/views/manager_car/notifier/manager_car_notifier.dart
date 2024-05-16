@@ -36,6 +36,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       LogUtils.i("getList oke");
     } catch (e) {
       LogUtils.i(e.toString());
+      state = state.copyWith(status: Status.error);
     }
   }
 
@@ -47,9 +48,11 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       getListCarByIdUser();
       Fluttertoast.showToast(msg: "Deleted successfully");
       LogUtils.i("delete oke");
+      state = state.copyWith(status: Status.success);
     } catch (e) {
       Fluttertoast.showToast(msg: "Delete failed, Car is rented");
       LogUtils.i(e.toString());
+      state = state.copyWith(status: Status.error);
     }
   }
 
@@ -116,12 +119,14 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
               statusCar: statusCar,
             ),
           );
+      state = state.copyWith(status: Status.success);
       getListCarByIdUser();
       Fluttertoast.showToast(msg: "Edited successfully");
       LogUtils.i("edit oke");
     } catch (e) {
       Fluttertoast.showToast(msg: "Edited failed");
       LogUtils.i(e.toString());
+      state = state.copyWith(status: Status.error);
     }
   }
 
@@ -199,9 +204,11 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       await injection.getIt<ICarService>().createCar(carDTO: carDTO);
       Fluttertoast.showToast(msg: "Create a successful car");
       getListCarByIdUser();
+      state = state.copyWith(status: Status.success);
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
+      state = state.copyWith(status: Status.error);
     }
   }
 

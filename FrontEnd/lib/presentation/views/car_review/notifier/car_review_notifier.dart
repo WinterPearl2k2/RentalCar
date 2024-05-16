@@ -25,7 +25,7 @@ class CarReviewNotifier extends _$CarReviewNotifier {
       state = state.copyWith(status: Status.success);
     } catch (e) {
       LogUtils.i("review fail $e");
-      state = state.copyWith(status: Status.success);
+      state = state.copyWith(status: Status.error);
     }
   }
 
@@ -37,12 +37,11 @@ class CarReviewNotifier extends _$CarReviewNotifier {
       state = state.copyWith(status: Status.loading);
       final carReview =
           await injection.getIt<ICarService>().getReviewCar(idCar: idCar);
-      state = state.copyWith(carReview: carReview);
-      LogUtils.i("review oke");
-      state = state.copyWith(status: Status.success);
+      state = state.copyWith(carReview: carReview, status: Status.success);
+      LogUtils.i("get review oke");
     } catch (e) {
-      LogUtils.i("review fail $e");
-      state = state.copyWith(status: Status.success);
+      LogUtils.i("get review fail $e");
+      state = state.copyWith(status: Status.error);
     }
   }
 }

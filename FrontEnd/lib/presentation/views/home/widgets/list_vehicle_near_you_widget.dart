@@ -1,13 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/routes/routes.dart';
-import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
+import 'package:rental_car/presentation/common/widgets/error_custom_widget.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
+import 'package:rental_car/presentation/views/home/widgets/item_vehicle_loading_widget.dart';
 import 'package:rental_car/presentation/views/home/widgets/item_vehicle_widget.dart';
 
 class ListVehicleNearYouWidget extends StatelessWidget {
@@ -20,16 +19,25 @@ class ListVehicleNearYouWidget extends StatelessWidget {
     return Consumer(
       builder: (_, ref, __) {
         final status = ref.watch(
-          homeNotifierProvider.select((value) => value.status),
+          homeNotifierProvider.select((value) => value.statusNearCar),
         );
         final listAllCar = ref.watch(
           homeNotifierProvider.select((value) => value.listAllCar),
         );
         switch (status) {
           case Status.loading:
-            return Center(
-              child: JumpingDots(
-                color: ColorUtils.primaryColor,
+            return GridView.builder(
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 15.0.h,
+                childAspectRatio: 188.w / 220.h,
+              ),
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 7.0.w),
+              itemCount: listAllCar.length,
+              itemBuilder: (context, index) => ItemVehicleLoadingWidget(
+                width: 155.w,
               ),
             );
           case Status.success:
@@ -67,10 +75,11 @@ class ListVehicleNearYouWidget extends StatelessWidget {
               );
             } else {
               return const Center(
-                child: Text(
-                    "There are no vehicles in the top category of vehicles"),
+                child: Text("There are no vehicles near you"),
               );
             }
+          case Status.error:
+            return const ErrorCustomWidget();
         }
       },
     );
