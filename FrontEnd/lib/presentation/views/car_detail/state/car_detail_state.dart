@@ -9,5 +9,6 @@ class CarDetailState with _$CarDetailState {
   const factory CarDetailState({
     @Default(CarDetailDTO()) CarDetailDTO carDetail,
     @Default(Status.loading) Status status,
+    @Default(false) bool isLoadingMore,
   }) = _CarDetailState;
 }

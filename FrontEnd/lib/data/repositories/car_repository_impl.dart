@@ -54,9 +54,9 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<CarDetailDTO> getCarById({required String idCar}) {
+  Future<CarDetailDTO> getCarById({required String idCar,required int page, required int pageSize}) {
     return get<CarDetailDTO>(
-      url:"${EndPoint.restUrlGetCarById}/$idCar",
+      url:"${EndPoint.restUrlGetCarById}/$idCar?page=$page&pageSize=$pageSize",
       mapper: (response) {
         return CarDetailDTO.fromJson(response.data);
       },
@@ -90,9 +90,9 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<List<AllCarDTO>> getAllCar() {
+  Future<List<AllCarDTO>> getAllCar({required int page, required int pageSize}) {
     return get<List<AllCarDTO>>(
-      url: '${EndPoint.restUrlGetAllCar}?userID=${PreferenceService.getUUID()}',
+      url: '${EndPoint.restUrlGetAllCar}?userID=${PreferenceService.getUUID()}&page=$page&pageSize=$pageSize',
       mapper: (response) {
         return (response.data as List)
             .map(
@@ -102,6 +102,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
       },
     );
   }
+
 
   @override
   Future<List<TopCarDTO>> getTopCar() {

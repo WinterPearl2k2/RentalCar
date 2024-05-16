@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
@@ -8,14 +9,17 @@ import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/date_time_format_untils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
+import 'package:rental_car/presentation/views/car_detail/notifier/car_detail_notifier.dart';
 
 class BodyDetailWidget extends StatelessWidget {
   const BodyDetailWidget({
     super.key,
     required this.carDetail,
+    required this.notifier,
   });
 
   final CarDetailDTO carDetail;
+  final CarDetailNotifier notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -146,8 +150,26 @@ class BodyDetailWidget extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: carDetail.comments.length,
-
                 itemBuilder: (_, index) => itemComment(index: index),
+              ),
+              Consumer(
+                builder: (_, ref, __) {
+                  return !(carDetail.reviewCount == carDetail.comments.length)
+                      ? Center(
+                          child: GestureDetector(
+                            onTap: () =>
+                                notifier.getCarById(idCar: carDetail.idCar),
+                            child: Text(
+                              "See more review",
+                              style: TextStyle(
+                                color: ColorUtils.primaryColor,
+                                fontSize: 13.sp,
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox();
+                },
               )
             ],
           ),
@@ -158,7 +180,7 @@ class BodyDetailWidget extends StatelessWidget {
 
   Padding itemComment({required int index}) {
     return Padding(
-      padding:  EdgeInsets.only(bottom: 15.h),
+      padding: EdgeInsets.only(bottom: 15.h),
       child: Row(
         children: [
           ClipRRect(

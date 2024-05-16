@@ -43,13 +43,13 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
             Expanded(
               child: EasyRefresh(
                 clipBehavior: Clip.antiAlias,
-                onRefresh: () {
-                  notifier.getListTopCars();
-                  notifier.getListAllCars();
+                onRefresh: () async {
+                  await notifier.getListTopCars();
+                  await notifier.getListAllCars();
                 },
-                onLoad: (){
-                  notifier.getListTopCars();
-                  notifier.getListAllCars();
+                onLoad: () async {
+                  await notifier.getListTopCars();
+                  await notifier.getListAllCars();
                 },
                 child: SingleChildScrollView(
                   child: Column(

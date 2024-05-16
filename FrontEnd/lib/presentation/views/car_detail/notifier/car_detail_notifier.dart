@@ -15,17 +15,41 @@ part 'car_detail_notifier.g.dart';
 class CarDetailNotifier extends _$CarDetailNotifier {
   @override
   CarDetailState build() => const CarDetailState();
+  int currentPage = 1;
+  final int pageSize = 1;
 
   Future<void> getCarById({required String idCar}) async {
     try {
-      final carDetail =
-          await injection.getIt<ICarService>().getCarById(idCar: idCar);
-      state = state.copyWith(carDetail: carDetail, status: Status.success);
+      if (state.isLoadingMore) return;
+      await Future.delayed(
+        const Duration(milliseconds: 1),
+      );
+      state = state.copyWith(isLoadingMore: true);
+
+      final carDetail = await injection
+          .getIt<ICarService>()
+          .getCarById(idCar: idCar, page: currentPage, pageSize: pageSize);
+
+      if (currentPage == 1) {
+        state = state.copyWith(carDetail: carDetail, status: Status.success);
+      } else {
+        final updatedComments = [
+          ...state.carDetail.comments,
+          ...carDetail.comments
+        ];
+        final updatedCarDetail = carDetail.copyWith(comments: updatedComments);
+
+        state =
+            state.copyWith(carDetail: updatedCarDetail, status: Status.success);
+      }
+
       LogUtils.i("get Car oke");
+      currentPage++;
+      state = state.copyWith(isLoadingMore: false);
     } catch (e) {
+      state = state.copyWith(isLoadingMore: false);
       LogUtils.i(e.toString());
-      state = state.copyWith(
-          carDetail: const CarDetailDTO(), status: Status.success);
+      state = state.copyWith(carDetail: const CarDetailDTO());
     }
   }
 

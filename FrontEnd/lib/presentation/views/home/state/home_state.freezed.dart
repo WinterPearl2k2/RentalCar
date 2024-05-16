@@ -20,6 +20,9 @@ mixin _$HomeState {
   List<AllCarDTO> get listAllCar => throw _privateConstructorUsedError;
   List<AllCarDTO> get listSearchCar => throw _privateConstructorUsedError;
   double get instanceCar => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
+  int get pageSize => throw _privateConstructorUsedError;
+  bool get isLoadingMore => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
   Status get statusSearch => throw _privateConstructorUsedError;
   bool get isCheckSearch => throw _privateConstructorUsedError;
@@ -41,6 +44,9 @@ abstract class $HomeStateCopyWith<$Res> {
       List<AllCarDTO> listAllCar,
       List<AllCarDTO> listSearchCar,
       double instanceCar,
+      int currentPage,
+      int pageSize,
+      bool isLoadingMore,
       Status status,
       Status statusSearch,
       bool isCheckSearch,
@@ -65,6 +71,9 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? listAllCar = null,
     Object? listSearchCar = null,
     Object? instanceCar = null,
+    Object? currentPage = null,
+    Object? pageSize = null,
+    Object? isLoadingMore = null,
     Object? status = null,
     Object? statusSearch = null,
     Object? isCheckSearch = null,
@@ -88,6 +97,18 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.instanceCar
           : instanceCar // ignore: cast_nullable_to_non_nullable
               as double,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      pageSize: null == pageSize
+          ? _value.pageSize
+          : pageSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -125,6 +146,9 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       List<AllCarDTO> listAllCar,
       List<AllCarDTO> listSearchCar,
       double instanceCar,
+      int currentPage,
+      int pageSize,
+      bool isLoadingMore,
       Status status,
       Status statusSearch,
       bool isCheckSearch,
@@ -147,6 +171,9 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? listAllCar = null,
     Object? listSearchCar = null,
     Object? instanceCar = null,
+    Object? currentPage = null,
+    Object? pageSize = null,
+    Object? isLoadingMore = null,
     Object? status = null,
     Object? statusSearch = null,
     Object? isCheckSearch = null,
@@ -170,6 +197,18 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.instanceCar
           : instanceCar // ignore: cast_nullable_to_non_nullable
               as double,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      pageSize: null == pageSize
+          ? _value.pageSize
+          : pageSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -202,6 +241,9 @@ class _$HomeStateImpl implements _HomeState {
       final List<AllCarDTO> listAllCar = const [],
       final List<AllCarDTO> listSearchCar = const [],
       this.instanceCar = 0,
+      this.currentPage = 0,
+      this.pageSize = 2,
+      this.isLoadingMore = false,
       this.status = Status.loading,
       this.statusSearch = Status.loading,
       this.isCheckSearch = false,
@@ -254,6 +296,15 @@ class _$HomeStateImpl implements _HomeState {
   final double instanceCar;
   @override
   @JsonKey()
+  final int currentPage;
+  @override
+  @JsonKey()
+  final int pageSize;
+  @override
+  @JsonKey()
+  final bool isLoadingMore;
+  @override
+  @JsonKey()
   final Status status;
   @override
   @JsonKey()
@@ -276,7 +327,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, status: $status, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, position: $position)';
+    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, isLoadingMore: $isLoadingMore, status: $status, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, position: $position)';
   }
 
   @override
@@ -292,6 +343,12 @@ class _$HomeStateImpl implements _HomeState {
                 .equals(other._listSearchCar, _listSearchCar) &&
             (identical(other.instanceCar, instanceCar) ||
                 other.instanceCar == instanceCar) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            (identical(other.pageSize, pageSize) ||
+                other.pageSize == pageSize) &&
+            (identical(other.isLoadingMore, isLoadingMore) ||
+                other.isLoadingMore == isLoadingMore) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.statusSearch, statusSearch) ||
                 other.statusSearch == statusSearch) &&
@@ -310,6 +367,9 @@ class _$HomeStateImpl implements _HomeState {
       const DeepCollectionEquality().hash(_listAllCar),
       const DeepCollectionEquality().hash(_listSearchCar),
       instanceCar,
+      currentPage,
+      pageSize,
+      isLoadingMore,
       status,
       statusSearch,
       isCheckSearch,
@@ -329,6 +389,9 @@ abstract class _HomeState implements HomeState {
       final List<AllCarDTO> listAllCar,
       final List<AllCarDTO> listSearchCar,
       final double instanceCar,
+      final int currentPage,
+      final int pageSize,
+      final bool isLoadingMore,
       final Status status,
       final Status statusSearch,
       final bool isCheckSearch,
@@ -343,6 +406,12 @@ abstract class _HomeState implements HomeState {
   List<AllCarDTO> get listSearchCar;
   @override
   double get instanceCar;
+  @override
+  int get currentPage;
+  @override
+  int get pageSize;
+  @override
+  bool get isLoadingMore;
   @override
   Status get status;
   @override

@@ -3,12 +3,12 @@ package car
 import (
 	"errors"
 	"net/http"
+	"strconv"
 
 	CarRepository "rent-car/repositories/car"
 	UserRepository "rent-car/repositories/users"
 
 	"github.com/gin-gonic/gin"
-
 	"gorm.io/gorm"
 )
 
@@ -61,9 +61,31 @@ func GetCarById(context *gin.Context) {
 		averageRating = float64(totalRating) / float64(reviewCount)
 	}
 
-	// Tạo danh sách bình luận và thông tin người bình luận
+	// Lấy tham số phân trang
+	pageStr := context.DefaultQuery("page", "1")
+	pageSizeStr := context.DefaultQuery("pageSize", "2")
+	page, err := strconv.Atoi(pageStr)
+	if err != nil || page < 1 {
+		page = 1
+	}
+	pageSize, err := strconv.Atoi(pageSizeStr)
+	if err != nil || pageSize < 1 {
+		pageSize = 10
+	}
+
+	// Tính toán phạm vi bình luận cần lấy
+	startIndex := (page - 1) * pageSize
+	endIndex := startIndex + pageSize
+	if startIndex > len(reviews) {
+		startIndex = len(reviews)
+	}
+	if endIndex > len(reviews) {
+		endIndex = len(reviews)
+	}
+
+	// Tạo danh sách bình luận và thông tin người bình luận với phân trang
 	var comments []gin.H
-	for _, review := range reviews {
+	for _, review := range reviews[startIndex:endIndex] {
 		if review.CommentReview != "" { // Kiểm tra nếu bình luận không rỗng
 			user, err := UserRepository.GetUserById(review.UserId.String())
 			if err != nil {
@@ -103,5 +125,8 @@ func GetCarById(context *gin.Context) {
 		"reviewCount":     commentCount,
 		"averageRating":   averageRating,
 		"comments":        comments,
+		"page":            page,
+		"pageSize":        pageSize,
+		"totalComments":   commentCount,
 	})
 }

@@ -86,7 +86,6 @@ class CarAddressTextFormFieldWidget extends StatelessWidget {
                 locationPinIconColor: Colors.redAccent,
                 buttonText: 'Set Current Location',
                 onPicked: (pickedData) {
-                  Navigator.pop(context);
                   addressController.text = pickedData.addressName;
                   latController.text = pickedData.latLong.latitude.toString();
                   longController.text = pickedData.latLong.longitude.toString();

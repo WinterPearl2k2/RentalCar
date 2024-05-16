@@ -72,6 +72,7 @@ class _CarDetailView
                         ),
                         BodyDetailWidget(
                           carDetail: carDetail,
+                          notifier: notifier,
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
