@@ -18,7 +18,7 @@ class RoutesName {
   //account profile
   static const accountProfile = '/account_profile';
   //account profile
-  static const notification = '/notification';
+  static const carRentalManagement = '/car_rental_management';
   //detail contract
   static const detailContract = '/detail_contract';
 

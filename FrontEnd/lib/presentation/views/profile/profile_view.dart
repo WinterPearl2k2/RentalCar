@@ -143,8 +143,8 @@ class _ProfileViewState extends BaseStateDelegate<ProfileView, ProfileNotifier>
                             icon: SvgPicture.asset(
                               'assets/icons/ic_notification.svg',
                             ),
-                            title: 'Notifications',
-                            onPressed: () => Routes.goToNotificationView(
+                            title: 'Car Rental Management',
+                            onPressed: () => Routes.goToCarRentalManagementView(
                               context,
                             ),
                           ),

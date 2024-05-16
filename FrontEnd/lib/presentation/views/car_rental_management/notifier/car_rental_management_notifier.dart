@@ -6,14 +6,14 @@ import 'package:rental_car/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../application/utils/log_utils.dart';
-import '../state/notification_state.dart';
+import '../state/car_rental_management_state.dart';
 
-part 'notification_notifier.g.dart';
+part 'car_rental_management_notifier.g.dart';
 
 @riverpod
-class NotificationNotifier extends _$NotificationNotifier {
+class CarRentalManagementNotifier extends _$CarRentalManagementNotifier {
   @override
-  NotificationState build() => const NotificationState();
+  CarRentalManagementState build() => const CarRentalManagementState();
 
   Future<void> getRentalCar() async {
     try {

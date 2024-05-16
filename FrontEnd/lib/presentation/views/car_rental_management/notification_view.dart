@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,29 +8,42 @@ import 'package:rental_car/application/utils/date_time_format_untils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
-import 'package:rental_car/presentation/views/notification/notifier/notification_notifier.dart';
-import 'package:rental_car/presentation/views/notification/widgets/icon_button_notification_widget.dart';
-import 'package:rental_car/presentation/views/notification/widgets/text_button_notification_widget.dart';
+import 'package:rental_car/presentation/views/car_rental_management/widgets/btn_view_sign_widget.dart';
+import 'package:rental_car/presentation/views/car_rental_management/widgets/icon_button_notification_widget.dart';
+import 'package:rental_car/presentation/views/car_rental_management/widgets/status_widget.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../application/utils/colors_utils.dart';
 import '../../common/widgets/loading_widget.dart';
+import 'notifier/car_rental_management_notifier.dart';
 
-class NotificationView extends ConsumerStatefulWidget {
-  const NotificationView({super.key});
+class CarRentalManagementView extends ConsumerStatefulWidget {
+  const CarRentalManagementView({super.key});
 
   @override
-  BaseStateDelegate<NotificationView, NotificationNotifier> createState() =>
-      _NotificationViewState();
+  BaseStateDelegate<CarRentalManagementView, CarRentalManagementNotifier>
+      createState() => _NotificationViewState();
 }
 
-class _NotificationViewState
-    extends BaseStateDelegate<NotificationView, NotificationNotifier>
-    with SingleTickerProviderStateMixin {
+class _NotificationViewState extends BaseStateDelegate<CarRentalManagementView,
+    CarRentalManagementNotifier> with SingleTickerProviderStateMixin {
   @override
   void initNotifier() {
-    notifier = ref.read(notificationNotifierProvider.notifier);
+    notifier = ref.read(carRentalManagementNotifierProvider.notifier);
     notifier.getRentalCar();
   }
+
+  final statusStr = [
+    'Processing',
+    'Active',
+    'Canceled',
+    'Expired',
+  ];
+  final statusColors = [
+    ColorUtils.yellowColor,
+    ColorUtils.greenColor,
+    ColorUtils.redColor,
+    ColorUtils.blueColor,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +74,7 @@ class _NotificationViewState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Car Rental Notification',
+                    'Car Rental Management',
                     style: TextStyle(
                       color: ColorUtils.primaryColor,
                       fontSize: 26.sp,
@@ -74,7 +88,7 @@ class _NotificationViewState
                     child: Consumer(
                       builder: (_, ref, __) {
                         List<UserCarRentalDto> user = ref.watch(
-                          notificationNotifierProvider.select(
+                          carRentalManagementNotifierProvider.select(
                             (value) => value.user,
                           ),
                         );
@@ -121,20 +135,23 @@ class _NotificationViewState
                                           'assets/images/avatar_empty.svg',
                                         ),
                                       ),
-                                      IconButtonNotificationWidget(
-                                        onPressed: () {
-                                          launchUrlString(
-                                            "tel://${user[index].phoneUser}",
-                                          );
-                                        },
-                                        icon: SvgPicture.asset(
-                                          'assets/icons/ic_phone.svg',
-                                          colorFilter: ColorFilter.mode(
-                                            ColorUtils.primaryColor,
-                                            BlendMode.srcIn,
+                                      Visibility(
+                                        visible: user[index].statusCar == 0,
+                                        child: IconButtonNotificationWidget(
+                                          onPressed: () {
+                                            launchUrlString(
+                                              "tel://${user[index].phoneUser}",
+                                            );
+                                          },
+                                          icon: SvgPicture.asset(
+                                            'assets/icons/ic_phone.svg',
+                                            colorFilter: ColorFilter.mode(
+                                              ColorUtils.primaryColor,
+                                              BlendMode.srcIn,
+                                            ),
+                                            height: 15.h,
+                                            width: 15.h,
                                           ),
-                                          height: 15.h,
-                                          width: 15.h,
                                         ),
                                       ),
                                     ],
@@ -202,6 +219,7 @@ class _NotificationViewState
                                   ),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         DateTimeFormatUtils.convertDateFormat(
@@ -216,31 +234,20 @@ class _NotificationViewState
                                       const SizedBox(
                                         height: 5,
                                       ),
-                                      TextButtonNotificationWidget(
-                                        label: 'Sign contract',
-                                        onPressed: () => notifier.signContract(
-                                          idTransaction:
-                                              user[index].transaction,
-                                        ),
-                                        backgroundColor:
-                                            ColorUtils.primaryColor,
-                                        textColor: ColorUtils.whiteColor,
-                                      ),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      TextButtonNotificationWidget(
-                                        label: 'Cancel',
-                                        onPressed: () =>
-                                            notifier.cancelRentalCar(
-                                          idTransaction:
-                                              user[index].transaction,
-                                        ),
-                                        backgroundColor: Colors.redAccent,
-                                        textColor: ColorUtils.whiteColor,
-                                      ),
+                                      user[index].statusCar == 0
+                                          ? BtnViewSignWidget(
+                                              notifier: notifier,
+                                              user: user,
+                                              index: index,
+                                            )
+                                          : StatusWidget(
+                                              statusStr: statusStr,
+                                              user: user,
+                                              statusColors: statusColors,
+                                              index: index,
+                                            ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             );
@@ -255,7 +262,7 @@ class _NotificationViewState
             Consumer(
               builder: (context, ref, child) {
                 final isWaiting = ref.watch(
-                  notificationNotifierProvider.select(
+                  carRentalManagementNotifierProvider.select(
                     (value) => value.wait,
                   ),
                 );

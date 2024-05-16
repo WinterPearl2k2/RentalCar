@@ -20,5 +20,6 @@ func main() {
 		&models.Verification{},
 		&models.CarRentail{},
 		&models.DeviceToken{},
+		&models.NotificationUser{},
 	)
 }

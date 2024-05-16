@@ -26,7 +26,7 @@ class FirebaseService {
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
     LogUtils.i(notifierDto.toString());
     injection.getIt<NavigationService>().navigateReplaceTo(RoutesName.bottomNavigation);
-    injection.getIt<NavigationService>().navigateTo(RoutesName.notification);
+    injection.getIt<NavigationService>().navigateTo(RoutesName.carRentalManagement);
   }
 
   static Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
@@ -36,7 +36,7 @@ class FirebaseService {
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
     LogUtils.i(notifierDto.toString());
     injection.getIt<NavigationService>().navigateReplaceTo(RoutesName.bottomNavigation);
-    injection.getIt<NavigationService>().navigateTo(RoutesName.notification);
+    injection.getIt<NavigationService>().navigateTo(RoutesName.carRentalManagement);
   }
 
   Future<void> _handleMessage(RemoteMessage msg) async {
@@ -45,7 +45,7 @@ class FirebaseService {
     LocalNotificationService().showNotification(
       title: msg.notification?.title.toString(),
       body: msg.notification?.body.toString(),
-      payLoad: RoutesName.notification,
+      payLoad: RoutesName.carRentalManagement,
     );
   }
 

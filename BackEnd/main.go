@@ -65,11 +65,11 @@ func main() {
 func scheduleUpdateStatusCar() {
 	for {
 		now := time.Now()
-		// next := now.AddDate(0, 0, 1)
+		next := now.AddDate(0, 0, 1)
 
-		// duration := time.Until(time.Date(next.Year(), next.Month(), next.Day(), 0, 0, 0, 0, next.Location()))
+		duration := time.Until(time.Date(next.Year(), next.Month(), next.Day(), 0, 0, 0, 0, next.Location()))
 
-		// time.Sleep(duration)
+		time.Sleep(duration)
 
 		if err := initializers.DB.
 			Model(&models.CarRentail{}).
@@ -80,7 +80,7 @@ func scheduleUpdateStatusCar() {
 		}
 		if err := initializers.DB.
 			Model(&models.CarRentail{}).
-			Where("end_date < ? AND status_car!=?", now, 1).
+			Where("end_date < ? AND status_car!=?", now, 0).
 			Update("status_car", 3).
 			Error; err != nil {
 			log.Fatalf("Error updating statusCar: %v", err)
