@@ -67,6 +67,7 @@ class _ContractWidgetState extends State<ContractWidget>
                             statusStr: statusStr,
                             statusColors: statusColors,
                             index: index,
+                            isRentalContract: true,
                           );
                         },
                       )

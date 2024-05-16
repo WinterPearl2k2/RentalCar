@@ -43,7 +43,6 @@ func SearchCarByName(context *gin.Context) {
 			"idCar":           car.IdCar,
 			"idUser":          car.UserId,
 			"userName":        user.NameUser,
-			"idReview":        car.ReviewId,
 			"nameCar":         car.NameCar,
 			"priceCar":        car.PriceCar,
 			"fuelTypeCar":     car.FuelTypeCar,

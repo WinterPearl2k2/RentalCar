@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:const_date_time/const_date_time.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 
 part 'home_state.freezed.dart';
 
@@ -14,6 +15,9 @@ class HomeState with _$HomeState {
     @Default([]) List<AllCarDTO> listAllCar,
     @Default([]) List<AllCarDTO> listSearchCar,
     @Default(0) double instanceCar,
+    @Default(0) int currentPage,
+    @Default(2) int pageSize,
+    @Default(false) bool isLoadingMore,
     @Default(Status.loading) Status status,
     @Default(Status.loading) Status statusSearch,
     @Default(false) bool isCheckSearch,
@@ -36,7 +40,3 @@ class HomeState with _$HomeState {
   }) = _HomeState;
 }
 
-enum Status {
-  loading,
-  success,
-}

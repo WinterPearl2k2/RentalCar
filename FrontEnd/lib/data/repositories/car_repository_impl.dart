@@ -5,6 +5,7 @@ import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
+import 'package:rental_car/data/dtos/car_review_dto.dart';
 import 'package:rental_car/data/dtos/date_time_dto.dart';
 import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
@@ -53,9 +54,9 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<CarDetailDTO> getCarById({required String idCar}) {
+  Future<CarDetailDTO> getCarById({required String idCar,required int page, required int pageSize}) {
     return get<CarDetailDTO>(
-      url:"${EndPoint.restUrlGetCarById}/$idCar",
+      url:"${EndPoint.restUrlGetCarById}/$idCar?page=$page&pageSize=$pageSize",
       mapper: (response) {
         return CarDetailDTO.fromJson(response.data);
       },
@@ -89,9 +90,9 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<List<AllCarDTO>> getAllCar() {
+  Future<List<AllCarDTO>> getAllCar({required int page, required int pageSize}) {
     return get<List<AllCarDTO>>(
-      url: '${EndPoint.restUrlGetAllCar}?userID=${PreferenceService.getUUID()}',
+      url: '${EndPoint.restUrlGetAllCar}?userID=${PreferenceService.getUUID()}&page=$page&pageSize=$pageSize',
       mapper: (response) {
         return (response.data as List)
             .map(
@@ -101,6 +102,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
       },
     );
   }
+
 
   @override
   Future<List<TopCarDTO>> getTopCar() {
@@ -144,6 +146,23 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
         )
             .toList();
       },
+    );
+  }
+
+  @override
+  Future<void> createCarReview({required CarReviewDTO carReviewDTO}) {
+    return post<void>(
+      url: EndPoint.restUrlCreateCarReview,
+      data: carReviewDTO.toJson(),
+      mapper: (response) => CarReviewDTO.fromJson(response.data),
+    );
+  }
+
+  @override
+  Future<CarReviewDTO> getReviewCar({required String idCar}) {
+    return get<CarReviewDTO>(
+      url: '${EndPoint.restUrlGetCarReview}/$idCar',
+      mapper: (response) => CarReviewDTO.fromJson(response.data),
     );
   }
 }

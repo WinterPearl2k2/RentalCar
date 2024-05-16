@@ -40,7 +40,7 @@ class _ChangePasswordViewState
         appBar: AppBar(
           leading: IconButton(
             icon: SvgPicture.asset(
-              'assets/icons/ic_arrow_back.svg',
+              AssetUtils.icBack,
             ),
             onPressed: () => Navigator.pop(context),
           ),

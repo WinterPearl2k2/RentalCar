@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CarDetailState {
   CarDetailDTO get carDetail => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
+  bool get isLoadingMore => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CarDetailStateCopyWith<CarDetailState> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $CarDetailStateCopyWith<$Res> {
           CarDetailState value, $Res Function(CarDetailState) then) =
       _$CarDetailStateCopyWithImpl<$Res, CarDetailState>;
   @useResult
-  $Res call({CarDetailDTO carDetail, Status status});
+  $Res call({CarDetailDTO carDetail, Status status, bool isLoadingMore});
 
   $CarDetailDTOCopyWith<$Res> get carDetail;
 }
@@ -50,6 +51,7 @@ class _$CarDetailStateCopyWithImpl<$Res, $Val extends CarDetailState>
   $Res call({
     Object? carDetail = null,
     Object? status = null,
+    Object? isLoadingMore = null,
   }) {
     return _then(_value.copyWith(
       carDetail: null == carDetail
@@ -60,6 +62,10 @@ class _$CarDetailStateCopyWithImpl<$Res, $Val extends CarDetailState>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -80,7 +86,7 @@ abstract class _$$CarDetailStateImplCopyWith<$Res>
       __$$CarDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({CarDetailDTO carDetail, Status status});
+  $Res call({CarDetailDTO carDetail, Status status, bool isLoadingMore});
 
   @override
   $CarDetailDTOCopyWith<$Res> get carDetail;
@@ -99,6 +105,7 @@ class __$$CarDetailStateImplCopyWithImpl<$Res>
   $Res call({
     Object? carDetail = null,
     Object? status = null,
+    Object? isLoadingMore = null,
   }) {
     return _then(_$CarDetailStateImpl(
       carDetail: null == carDetail
@@ -109,6 +116,10 @@ class __$$CarDetailStateImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      isLoadingMore: null == isLoadingMore
+          ? _value.isLoadingMore
+          : isLoadingMore // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -117,7 +128,9 @@ class __$$CarDetailStateImplCopyWithImpl<$Res>
 
 class _$CarDetailStateImpl implements _CarDetailState {
   const _$CarDetailStateImpl(
-      {this.carDetail = const CarDetailDTO(), this.status = Status.loading});
+      {this.carDetail = const CarDetailDTO(),
+      this.status = Status.loading,
+      this.isLoadingMore = false});
 
   @override
   @JsonKey()
@@ -125,10 +138,13 @@ class _$CarDetailStateImpl implements _CarDetailState {
   @override
   @JsonKey()
   final Status status;
+  @override
+  @JsonKey()
+  final bool isLoadingMore;
 
   @override
   String toString() {
-    return 'CarDetailState(carDetail: $carDetail, status: $status)';
+    return 'CarDetailState(carDetail: $carDetail, status: $status, isLoadingMore: $isLoadingMore)';
   }
 
   @override
@@ -138,11 +154,14 @@ class _$CarDetailStateImpl implements _CarDetailState {
             other is _$CarDetailStateImpl &&
             (identical(other.carDetail, carDetail) ||
                 other.carDetail == carDetail) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.isLoadingMore, isLoadingMore) ||
+                other.isLoadingMore == isLoadingMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, carDetail, status);
+  int get hashCode =>
+      Object.hash(runtimeType, carDetail, status, isLoadingMore);
 
   @JsonKey(ignore: true)
   @override
@@ -155,12 +174,15 @@ class _$CarDetailStateImpl implements _CarDetailState {
 abstract class _CarDetailState implements CarDetailState {
   const factory _CarDetailState(
       {final CarDetailDTO carDetail,
-      final Status status}) = _$CarDetailStateImpl;
+      final Status status,
+      final bool isLoadingMore}) = _$CarDetailStateImpl;
 
   @override
   CarDetailDTO get carDetail;
   @override
   Status get status;
+  @override
+  bool get isLoadingMore;
   @override
   @JsonKey(ignore: true)
   _$$CarDetailStateImplCopyWith<_$CarDetailStateImpl> get copyWith =>

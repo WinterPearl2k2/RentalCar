@@ -6,6 +6,7 @@ import 'package:rental_car/presentation/views/account_profile/account_profile_vi
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
+import 'package:rental_car/presentation/views/car_review/car_review_view.dart';
 import 'package:rental_car/presentation/views/detail_contract/detail_contract_view.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 import 'package:rental_car/presentation/views/home/views/search_car_view.dart';
@@ -87,9 +88,17 @@ class Routes {
             notifier: args['notifier'] ?? HomeNotifier(),
           ),
         );
-        case RoutesName.searchCar:
+      case RoutesName.searchCar:
         return MaterialPageRoute(
-          builder: (context) => const SearchCarView(
+          builder: (context) => const SearchCarView(),
+        );
+      case RoutesName.reviewCar:
+        final args = settings.arguments as Map<String, String>;
+        return MaterialPageRoute(
+          builder: (context) => CarReviewView(
+            idCar: args['idCar'] ?? '',
+            nameCar: args['nameCar'] ?? '',
+            imgCar: args['imgCar'] ?? '',
           ),
         );
       default:
@@ -192,9 +201,9 @@ class Routes {
   }
 
   static Future<Object?> goToDetailContractView(
-      BuildContext context,
-      RentalContractDto rentalContractDto,
-      ) {
+    BuildContext context,
+    RentalContractDto rentalContractDto,
+  ) {
     return Navigator.pushNamed(
       context,
       RoutesName.detailContract,
@@ -222,13 +231,22 @@ class Routes {
     );
   }
 
-  static void goToSeeAllCarView(BuildContext context, HomeNotifier notifier) {
+  static void goToSeeAllCarView(
+      BuildContext context, HomeNotifier notifier) {
     Navigator.of(context)
         .pushNamed(RoutesName.seeAllCar, arguments: {'notifier': notifier});
   }
 
   static void goToSearchCarView(BuildContext context) {
-    Navigator.of(context)
-        .pushNamed(RoutesName.searchCar);
+    Navigator.of(context).pushNamed(RoutesName.searchCar);
+  }
+
+  static void goToCarReviewView(BuildContext context,
+      {required String idCar, required String imgCar, required String nameCar}) {
+    Navigator.of(context).pushNamed(RoutesName.reviewCar, arguments: {
+      'idCar' : idCar,
+      'nameCar' : nameCar,
+      'imgCar' : imgCar,
+    });
   }
 }

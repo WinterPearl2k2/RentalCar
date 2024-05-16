@@ -20,6 +20,8 @@ class Car with _$Car {
     @Default('') String addressCar,
     @Default(0) double latCar,
     @Default(0) double longCar,
+    @Default(0) double averageRating,
+    @Default(0) int reviewCount,
     @Default("") String imagesCar,
     @Default('') String statusCar,
     @Default('') String createAt,

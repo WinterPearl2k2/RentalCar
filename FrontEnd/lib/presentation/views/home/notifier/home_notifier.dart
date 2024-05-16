@@ -5,6 +5,7 @@ import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/main.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:geocoding/geocoding.dart';
@@ -79,12 +80,20 @@ class HomeNotifier extends _$HomeNotifier {
     }
   }
 
+  int currentPage = 1;
+  final int pageSize = 2;
+  bool isLoadingMore = false;
+
   Future<void> getListAllCars() async {
     try {
-      final listAllCar = await injection.getIt<ICarService>().getAllCar();
-      if (listAllCar.isEmpty) {
-        state = state.copyWith(status: Status.success, listTopCar: []);
-      } else {
+      if (isLoadingMore) return;
+      isLoadingMore = true;
+
+      final listAllCar = await injection.getIt<ICarService>().getAllCar(
+            page: currentPage,
+            pageSize: pageSize,
+          );
+      if (listAllCar.isNotEmpty) {
         double currentLatitude = PreferenceService.getLocation().latitude;
         double currentLongitude = PreferenceService.getLocation().longitude;
 
@@ -108,17 +117,22 @@ class HomeNotifier extends _$HomeNotifier {
             return distanceA.compareTo(distanceB);
           }
         });
+
         state = state.copyWith(
           status: Status.success,
-          listAllCar: updatedListAllCar,
+          listAllCar: [...state.listAllCar, ...updatedListAllCar],
         );
+
+        currentPage++;
       }
+
+      isLoadingMore = false;
       LogUtils.i("get list car near you oke");
     } catch (e) {
+      isLoadingMore = false;
       LogUtils.i(e.toString());
     }
   }
-
 
   Future<void> getLocationUser() async {
     PermissionStatus permission = await Permission.location.request();

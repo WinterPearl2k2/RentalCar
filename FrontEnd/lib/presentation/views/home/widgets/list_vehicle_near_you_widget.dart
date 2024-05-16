@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
-import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:rental_car/presentation/views/home/widgets/item_vehicle_widget.dart';
 
 class ListVehicleNearYouWidget extends StatelessWidget {
@@ -58,8 +58,8 @@ class ListVehicleNearYouWidget extends StatelessWidget {
                     imageFile: const Base64Decoder()
                         .convert(listAllCar[index].imagesCar),
                     title: listAllCar[index].nameCar,
-                    star: listAllCar[index].starCar,
-                    countReview: listAllCar[index].countReviewCar,
+                    star: listAllCar[index].averageRating,
+                    countReview: listAllCar[index].reviewCount,
                     priceCar: listAllCar[index].priceCar,
                     distance: listAllCar[index].distanceCar,
                   ),

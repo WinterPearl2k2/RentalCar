@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rental_car/presentation/common/widgets/text_button_outline_widget.dart';
+import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 
 import '../../../../application/routes/routes.dart';
 import '../../../../application/utils/colors_utils.dart';
@@ -16,12 +18,14 @@ class ContractItemWidget extends StatelessWidget {
     required this.statusStr,
     required this.statusColors,
     required this.index,
+    this.isRentalContract,
   });
 
   final List<RentalContractDto> rentalContracts;
   final List<String> statusStr;
   final List<Color> statusColors;
   final int index;
+  final bool? isRentalContract;
 
   @override
   Widget build(BuildContext context) {
@@ -45,82 +49,119 @@ class ContractItemWidget extends StatelessWidget {
             width: 1,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: CachedMemoryImage(
-                uniqueKey: rentalContracts[index].transaction,
-                bytes: const Base64Decoder()
-                    .convert(rentalContracts[index].imgCar),
-                fit: BoxFit.cover,
-                height: 50.h,
-                width: 50.w,
-              ),
-            ),
-            SizedBox(
-              width: 5.w,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    rentalContracts[index].nameCar,
-                    style: TextStyle(
-                      color: ColorUtils.primaryColor,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    'From: ${DateTimeFormatUtils.convertDateFormat(
-                      format: 'dd/MM/yyyy',
-                      inputDate: rentalContracts[index].startDate,
-                    )}',
-                    style: TextStyle(
-                      color: ColorUtils.primaryColor,
-                      fontSize: 12.sp,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    'To: ${DateTimeFormatUtils.convertDateFormat(
-                      format: 'dd/MM/yyyy',
-                      inputDate: rentalContracts[index].endDate,
-                    )}',
-                    style: TextStyle(
-                      color: ColorUtils.primaryColor,
-                      fontSize: 12.sp,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  'Status: ${statusStr[rentalContracts[index].statusCar]}',
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 12.sp,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedMemoryImage(
+                    uniqueKey: rentalContracts[index].imgCar,
+                    bytes: const Base64Decoder()
+                        .convert(rentalContracts[index].imgCar),
+                    fit: BoxFit.cover,
+                    height: 50.h,
+                    width: 50.w,
                   ),
-                  overflow: TextOverflow.ellipsis,
                 ),
-                Container(
-                  width: 10.w,
-                  height: 10.w,
-                  margin: EdgeInsets.only(left: 5.w),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: statusColors[rentalContracts[index].statusCar],
+                SizedBox(
+                  width: 5.w,
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        rentalContracts[index].nameCar,
+                        style: TextStyle(
+                          color: ColorUtils.primaryColor,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        'From: ${DateTimeFormatUtils.convertDateFormat(
+                          format: 'dd/MM/yyyy',
+                          inputDate: rentalContracts[index].startDate,
+                        )}',
+                        style: TextStyle(
+                          color: ColorUtils.primaryColor,
+                          fontSize: 12.sp,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        'To: ${DateTimeFormatUtils.convertDateFormat(
+                          format: 'dd/MM/yyyy',
+                          inputDate: rentalContracts[index].endDate,
+                        )}',
+                        style: TextStyle(
+                          color: ColorUtils.primaryColor,
+                          fontSize: 12.sp,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'Status: ${statusStr[rentalContracts[index].statusCar]}',
+                      style: TextStyle(
+                        color: ColorUtils.primaryColor,
+                        fontSize: 12.sp,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Container(
+                      width: 10.w,
+                      height: 10.w,
+                      margin: EdgeInsets.only(left: 5.w),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: statusColors[rentalContracts[index].statusCar],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
+            if (rentalContracts[index].statusCar == 3 && (isRentalContract ?? false)) ...[
+              SizedBox(
+                height: 10.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: 40.h,
+                    width: 130.w,
+                    child: TextButtonWidget(
+                      onPressed: () => Routes.goToCarReviewView(
+                        context,
+                        idCar: rentalContracts[index].idCar,
+                        imgCar: rentalContracts[index].imgCar,
+                        nameCar: rentalContracts[index].nameCar,
+                      ),
+                      label: 'Write review',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 40.h,
+                    width: 130.w,
+                    child: const TextButtonOutlineWidget(
+                      label: 'Booking again',
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+            ]
           ],
         ),
       ),

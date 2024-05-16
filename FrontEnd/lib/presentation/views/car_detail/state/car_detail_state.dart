@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 
 part 'car_detail_state.freezed.dart';
 
@@ -8,9 +9,6 @@ class CarDetailState with _$CarDetailState {
   const factory CarDetailState({
     @Default(CarDetailDTO()) CarDetailDTO carDetail,
     @Default(Status.loading) Status status,
+    @Default(false) bool isLoadingMore,
   }) = _CarDetailState;
-}
-enum Status {
-  loading,
-  success,
 }

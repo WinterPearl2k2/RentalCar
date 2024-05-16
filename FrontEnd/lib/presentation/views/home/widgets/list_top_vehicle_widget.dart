@@ -6,8 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
-import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:rental_car/presentation/views/home/widgets/item_vehicle_widget.dart';
 
 class ListTopVehicleWidget extends StatelessWidget {
@@ -48,8 +48,8 @@ class ListTopVehicleWidget extends StatelessWidget {
                           listCar[index].imagesCar,
                         ),
                         title: listCar[index].nameCar,
-                        star: listCar[index].starCar,
-                        countReview: listCar[index].countReviewCar,
+                        star: listCar[index].averageRating,
+                        countReview: listCar[index].reviewCount,
                         priceCar: listCar[index].priceCar,
                       ),
                     ),

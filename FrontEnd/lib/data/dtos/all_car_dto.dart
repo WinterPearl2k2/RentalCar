@@ -14,8 +14,8 @@ class AllCarDTO with _$AllCarDTO {
     @Default(0) double latCar,
     @Default(0) double longCar,
     @Default(0) double distanceCar,
-    @Default(0) double starCar,
-    @Default(0) int countReviewCar,
+    @Default(0) double averageRating,
+    @Default(0) int reviewCount,
     @Default(ConstDateTime(2024)) DateTime createAt,
   }) = _AllCarDTO;
 

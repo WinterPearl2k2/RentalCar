@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/date_time_format_untils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
@@ -36,7 +37,7 @@ class _NotificationViewState
       appBar: AppBar(
         leading: IconButton(
           icon: SvgPicture.asset(
-            'assets/icons/ic_arrow_back.svg',
+            AssetUtils.icBack,
           ),
           onPressed: () => Navigator.pop(context),
         ),

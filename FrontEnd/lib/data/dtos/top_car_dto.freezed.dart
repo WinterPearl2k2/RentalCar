@@ -24,8 +24,8 @@ mixin _$TopCarDTO {
   String get imagesCar => throw _privateConstructorUsedError;
   String get nameCar => throw _privateConstructorUsedError;
   double get priceCar => throw _privateConstructorUsedError;
-  double get starCar => throw _privateConstructorUsedError;
-  int get countReviewCar => throw _privateConstructorUsedError;
+  double get averageRating => throw _privateConstructorUsedError;
+  int get reviewCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,8 +43,8 @@ abstract class $TopCarDTOCopyWith<$Res> {
       String imagesCar,
       String nameCar,
       double priceCar,
-      double starCar,
-      int countReviewCar});
+      double averageRating,
+      int reviewCount});
 }
 
 /// @nodoc
@@ -64,8 +64,8 @@ class _$TopCarDTOCopyWithImpl<$Res, $Val extends TopCarDTO>
     Object? imagesCar = null,
     Object? nameCar = null,
     Object? priceCar = null,
-    Object? starCar = null,
-    Object? countReviewCar = null,
+    Object? averageRating = null,
+    Object? reviewCount = null,
   }) {
     return _then(_value.copyWith(
       idCar: null == idCar
@@ -84,13 +84,13 @@ class _$TopCarDTOCopyWithImpl<$Res, $Val extends TopCarDTO>
           ? _value.priceCar
           : priceCar // ignore: cast_nullable_to_non_nullable
               as double,
-      starCar: null == starCar
-          ? _value.starCar
-          : starCar // ignore: cast_nullable_to_non_nullable
+      averageRating: null == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
               as double,
-      countReviewCar: null == countReviewCar
-          ? _value.countReviewCar
-          : countReviewCar // ignore: cast_nullable_to_non_nullable
+      reviewCount: null == reviewCount
+          ? _value.reviewCount
+          : reviewCount // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -109,8 +109,8 @@ abstract class _$$TopCarDTOImplCopyWith<$Res>
       String imagesCar,
       String nameCar,
       double priceCar,
-      double starCar,
-      int countReviewCar});
+      double averageRating,
+      int reviewCount});
 }
 
 /// @nodoc
@@ -128,8 +128,8 @@ class __$$TopCarDTOImplCopyWithImpl<$Res>
     Object? imagesCar = null,
     Object? nameCar = null,
     Object? priceCar = null,
-    Object? starCar = null,
-    Object? countReviewCar = null,
+    Object? averageRating = null,
+    Object? reviewCount = null,
   }) {
     return _then(_$TopCarDTOImpl(
       idCar: null == idCar
@@ -148,13 +148,13 @@ class __$$TopCarDTOImplCopyWithImpl<$Res>
           ? _value.priceCar
           : priceCar // ignore: cast_nullable_to_non_nullable
               as double,
-      starCar: null == starCar
-          ? _value.starCar
-          : starCar // ignore: cast_nullable_to_non_nullable
+      averageRating: null == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
               as double,
-      countReviewCar: null == countReviewCar
-          ? _value.countReviewCar
-          : countReviewCar // ignore: cast_nullable_to_non_nullable
+      reviewCount: null == reviewCount
+          ? _value.reviewCount
+          : reviewCount // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -168,8 +168,8 @@ class _$TopCarDTOImpl implements _TopCarDTO {
       this.imagesCar = '',
       this.nameCar = '',
       this.priceCar = 0,
-      this.starCar = 0,
-      this.countReviewCar = 0});
+      this.averageRating = 0,
+      this.reviewCount = 0});
 
   factory _$TopCarDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$TopCarDTOImplFromJson(json);
@@ -188,14 +188,14 @@ class _$TopCarDTOImpl implements _TopCarDTO {
   final double priceCar;
   @override
   @JsonKey()
-  final double starCar;
+  final double averageRating;
   @override
   @JsonKey()
-  final int countReviewCar;
+  final int reviewCount;
 
   @override
   String toString() {
-    return 'TopCarDTO(idCar: $idCar, imagesCar: $imagesCar, nameCar: $nameCar, priceCar: $priceCar, starCar: $starCar, countReviewCar: $countReviewCar)';
+    return 'TopCarDTO(idCar: $idCar, imagesCar: $imagesCar, nameCar: $nameCar, priceCar: $priceCar, averageRating: $averageRating, reviewCount: $reviewCount)';
   }
 
   @override
@@ -209,15 +209,16 @@ class _$TopCarDTOImpl implements _TopCarDTO {
             (identical(other.nameCar, nameCar) || other.nameCar == nameCar) &&
             (identical(other.priceCar, priceCar) ||
                 other.priceCar == priceCar) &&
-            (identical(other.starCar, starCar) || other.starCar == starCar) &&
-            (identical(other.countReviewCar, countReviewCar) ||
-                other.countReviewCar == countReviewCar));
+            (identical(other.averageRating, averageRating) ||
+                other.averageRating == averageRating) &&
+            (identical(other.reviewCount, reviewCount) ||
+                other.reviewCount == reviewCount));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, idCar, imagesCar, nameCar,
-      priceCar, starCar, countReviewCar);
+      priceCar, averageRating, reviewCount);
 
   @JsonKey(ignore: true)
   @override
@@ -239,8 +240,8 @@ abstract class _TopCarDTO implements TopCarDTO {
       final String imagesCar,
       final String nameCar,
       final double priceCar,
-      final double starCar,
-      final int countReviewCar}) = _$TopCarDTOImpl;
+      final double averageRating,
+      final int reviewCount}) = _$TopCarDTOImpl;
 
   factory _TopCarDTO.fromJson(Map<String, dynamic> json) =
       _$TopCarDTOImpl.fromJson;
@@ -254,9 +255,9 @@ abstract class _TopCarDTO implements TopCarDTO {
   @override
   double get priceCar;
   @override
-  double get starCar;
+  double get averageRating;
   @override
-  int get countReviewCar;
+  int get reviewCount;
   @override
   @JsonKey(ignore: true)
   _$$TopCarDTOImplCopyWith<_$TopCarDTOImpl> get copyWith =>

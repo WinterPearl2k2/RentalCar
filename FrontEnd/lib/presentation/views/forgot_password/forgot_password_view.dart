@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/presentation/views/forgot_password/state/forgot_password_state.dart';
 import 'package:rental_car/presentation/views/forgot_password/widgets/forgot_password_widget.dart';
 import 'package:rental_car/presentation/views/forgot_password/widgets/reset_password_widget.dart';
@@ -34,7 +35,7 @@ class _ForgotPasswordViewState
         appBar: AppBar(
           leading: IconButton(
             icon: SvgPicture.asset(
-              'assets/icons/ic_arrow_back.svg',
+              AssetUtils.icBack,
             ),
             onPressed: () => Navigator.pop(context),
           ),

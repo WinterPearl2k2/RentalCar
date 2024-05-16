@@ -61,7 +61,6 @@ func CreateCar(context *gin.Context) {
 	context.JSON(http.StatusCreated, gin.H{
 		"idCar":           car.IdCar,
 		"idUser":          car.UserId,
-		"idReview":        car.ReviewId,
 		"nameCar":         car.NameCar,
 		"priceCar":        car.PriceCar,
 		"fuelTypeCar":     car.FuelTypeCar,

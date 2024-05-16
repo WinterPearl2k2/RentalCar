@@ -25,9 +25,7 @@ type Car struct {
 	CreatedAt       time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	UpdatedAt       time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	UserId          uuid.UUID `gorm:"type:uuid;notNull;foreignKey:UserId"`
-	ReviewId        uuid.UUID `gorm:"type:uuid;"`
 
 	User        *User
-	CarReviews  []CarReview
 	CarRentails []CarRentail
 }
