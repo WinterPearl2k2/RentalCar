@@ -34,11 +34,12 @@ class CarReviewView extends ConsumerStatefulWidget {
 class _SearchCarViewState
     extends BaseStateDelegate<CarReviewView, CarReviewNotifier> {
   final TextEditingController commentController = TextEditingController();
-  final TextEditingController rateController = TextEditingController(text: '3');
+  final TextEditingController rateController = TextEditingController();
 
   @override
   void initNotifier() {
     notifier = ref.read(carReviewNotifierProvider.notifier);
+    notifier.getCarReview(idCar: widget.idCar);
   }
 
   @override
@@ -96,33 +97,45 @@ class _SearchCarViewState
                 SizedBox(
                   height: 15.h,
                 ),
-                RatingBar.builder(
-                  initialRating: double.parse(rateController.text),
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: false,
-                  itemCount: 5,
-                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => SvgPicture.asset(
-                    colorFilter: ColorFilter.mode(
-                      ColorUtils.yellowColor,
-                      BlendMode.srcIn,
-                    ),
-                    AssetUtils.icStar,
-                  ),
-                  onRatingUpdate: (double rating) {
-                    rateController.text = rating.toString();
+                Consumer(
+                  builder: (__, ref, _) {
+                    rateController.text =
+                        ref.watch(carReviewNotifierProvider).carReview.rateReview.toString();
+                    return RatingBar.builder(
+                      initialRating: double.parse(rateController.text),
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: false,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => SvgPicture.asset(
+                        colorFilter: ColorFilter.mode(
+                          ColorUtils.yellowColor,
+                          BlendMode.srcIn,
+                        ),
+                        AssetUtils.icStar,
+                      ),
+                      onRatingUpdate: (double rating) {
+                        rateController.text = rating.toString();
+                      },
+                    );
                   },
                 ),
                 SizedBox(
                   height: 15.h,
                 ),
-                TextFormFieldCustomWidget(
-                  hint: 'Tell us about the service',
-                  label: "Write review (optional)",
-                  maxLines: 8,
-                  inputAction: TextInputAction.next,
-                  controller: commentController,
+                Consumer(
+                  builder: (_, __, ___) {
+                    commentController.text =
+                        ref.watch(carReviewNotifierProvider).carReview.commentReview;
+                    return TextFormFieldCustomWidget(
+                      hint: 'Tell us about the service',
+                      label: "Write review (optional)",
+                      maxLines: 8,
+                      inputAction: TextInputAction.next,
+                      controller: commentController,
+                    );
+                  },
                 ),
               ],
             ),
@@ -137,7 +150,7 @@ class _SearchCarViewState
                   ),
                 );
                 Routes.goToPreviousView(context);
-              } ,
+              },
               label: 'Send',
             ),
             SizedBox(

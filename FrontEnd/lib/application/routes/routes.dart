@@ -6,7 +6,7 @@ import 'package:rental_car/presentation/views/account_profile/account_profile_vi
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
-import 'package:rental_car/presentation/views/car_review/car_review.dart';
+import 'package:rental_car/presentation/views/car_review/car_review_view.dart';
 import 'package:rental_car/presentation/views/detail_contract/detail_contract_view.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 import 'package:rental_car/presentation/views/home/views/search_car_view.dart';

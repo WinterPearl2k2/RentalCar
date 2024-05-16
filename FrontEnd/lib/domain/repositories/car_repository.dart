@@ -22,4 +22,5 @@ abstract class ICarRepository{
   Future<List<DateTimeDto>> getDateTimeCar({required String idCar});
   Future<List<AllCarDTO>> getSearchCar({required String nameCar});
   Future<void> createCarReview({required CarReviewDTO carReviewDTO});
+  Future<CarReviewDTO> getReviewCar({required String idCar});
 }

@@ -34,5 +34,6 @@ class EndPoint {
   static const restUrlGetDateTimeCar = '/getDateTimeCar';
   static const restUrlGetSearchCar = '/getSearchCar/?name=';
   static const restUrlCreateCarReview = '/createCarReview';
+  static const restUrlGetCarReview = '/getCarReview';
 
 }

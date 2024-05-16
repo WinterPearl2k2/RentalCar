@@ -18,12 +18,14 @@ class ContractItemWidget extends StatelessWidget {
     required this.statusStr,
     required this.statusColors,
     required this.index,
+    this.isRentalContract,
   });
 
   final List<RentalContractDto> rentalContracts;
   final List<String> statusStr;
   final List<Color> statusColors;
   final int index;
+  final bool? isRentalContract;
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +129,7 @@ class ContractItemWidget extends StatelessWidget {
                 ),
               ],
             ),
-            if (rentalContracts[index].statusCar == 3) ...[
+            if (rentalContracts[index].statusCar == 3 && (isRentalContract ?? false)) ...[
               SizedBox(
                 height: 10.h,
               ),

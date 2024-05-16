@@ -157,4 +157,12 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
       mapper: (response) => CarReviewDTO.fromJson(response.data),
     );
   }
+
+  @override
+  Future<CarReviewDTO> getReviewCar({required String idCar}) {
+    return get<CarReviewDTO>(
+      url: '${EndPoint.restUrlGetCarReview}/$idCar',
+      mapper: (response) => CarReviewDTO.fromJson(response.data),
+    );
+  }
 }

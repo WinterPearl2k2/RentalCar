@@ -44,6 +44,8 @@ abstract class ICarService {
   Future<List<AllCarDTO>> getSearchCar({required String nameCar});
 
   Future<void> createCarReview({required CarReviewDTO carReviewDTO});
+
+  Future<CarReviewDTO> getReviewCar({required String idCar});
 }
 
 class CarServiceImpl implements ICarService {
@@ -117,5 +119,10 @@ class CarServiceImpl implements ICarService {
   @override
   Future<void> createCarReview({required CarReviewDTO carReviewDTO}) {
     return _carRepository.createCarReview(carReviewDTO: carReviewDTO);
+  }
+
+  @override
+  Future<CarReviewDTO> getReviewCar({required String idCar}) {
+    return _carRepository.getReviewCar(idCar: idCar);
   }
 }

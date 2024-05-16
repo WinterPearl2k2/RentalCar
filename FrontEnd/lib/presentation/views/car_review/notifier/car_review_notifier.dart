@@ -28,4 +28,21 @@ class CarReviewNotifier extends _$CarReviewNotifier {
       state = state.copyWith(status: Status.success);
     }
   }
+
+  Future<void> getCarReview({required String idCar}) async {
+    try {
+      await Future.delayed(
+        const Duration(milliseconds: 1),
+      );
+      state = state.copyWith(status: Status.loading);
+      final carReview =
+          await injection.getIt<ICarService>().getReviewCar(idCar: idCar);
+      state = state.copyWith(carReview: carReview);
+      LogUtils.i("review oke");
+      state = state.copyWith(status: Status.success);
+    } catch (e) {
+      LogUtils.i("review fail $e");
+      state = state.copyWith(status: Status.success);
+    }
+  }
 }
