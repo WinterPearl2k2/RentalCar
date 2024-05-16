@@ -41,4 +41,6 @@ abstract class IUserRepository {
   Future<void> changePassword({
     required PasswordDto passwordDto,
   });
+
+  Future<void> logout({required String deviceToken});
 }

@@ -9,13 +9,18 @@ import 'package:rental_car/data/repositories/user_repository_impl.dart';
 import 'package:rental_car/domain/repositories/car_repository.dart';
 import 'package:rental_car/domain/repositories/contract_repository.dart';
 import 'package:rental_car/domain/repositories/user_repository.dart';
+import 'package:rental_car/main.dart';
 
-
+import '../services/firebase_service.dart';
+import '../services/navigation_service.dart';
 
 class Injection {
   GetIt getIt = GetIt.instance;
 
   void configDependencies() {
+    getIt.registerLazySingleton(
+      () => NavigationService(navigatorKey: navigatorKey),
+    );
     //SharePreference
     getIt.registerSingletonAsync(
       () => PreferenceService.init(),
@@ -42,13 +47,21 @@ class Injection {
     );
     //ICarRepository
     getIt.registerLazySingleton<IContractRepository>(
-          () => ContractRepositoryImpl(),
+      () => ContractRepositoryImpl(),
     );
     //ICarService
     getIt.registerLazySingleton<IContractService>(
-          () => ContractServiceImpl(
+      () => ContractServiceImpl(
         getIt<IContractRepository>(),
       ),
+    );
+
+    getIt.registerSingletonAsync<FirebaseService>(
+      () async {
+        final firebaseService = FirebaseService();
+        await firebaseService.initNotifications();
+        return firebaseService;
+      },
     );
   }
 }

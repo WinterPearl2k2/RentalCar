@@ -96,4 +96,12 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
       mapper: (_) {},
     );
   }
+
+  @override
+  Future<void> logout({required String deviceToken}) {
+    return put<void>(
+      url: '${EndPoint.restUrlLogout}/$deviceToken',
+      mapper: (_) {},
+    );
+  }
 }

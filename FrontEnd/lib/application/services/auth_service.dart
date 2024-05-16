@@ -32,6 +32,7 @@ abstract class IAuthService {
   });
 
   Future<UserProfileDTO> getUser();
+  Future<void> logout({required String deviceToken});
 
   Future<UserProfileDTO> updateUser({
     required UserProfileDTO userDTO,
@@ -127,5 +128,10 @@ class AuthServiceImpl implements IAuthService {
     return _userRepository.changePassword(
       passwordDto: passwordDto,
     );
+  }
+
+  @override
+  Future<void> logout({required String deviceToken}) {
+    return _userRepository.logout(deviceToken: deviceToken);
   }
 }

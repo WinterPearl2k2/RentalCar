@@ -34,17 +34,25 @@ func SignContract(context *gin.Context) {
 
 		return
 	}
-	now := time.Now()
-	if rentalCar.StartDate.Before(now) {
+
+	now := time.Now().AddDate(0, 0, -1)
+	log.Print(now)
+	if now.After(rentalCar.StartDate) {
 		log.Print("39")
 		context.JSON(http.StatusBadRequest, gin.H{
 			"message": "The contract has passed the current date and cannot be signed.",
 		})
+		return
 	}
 	var count int64
 	errorFind := initializers.DB.
 		Model(rentalCar).
-		Where("start_date <= ? AND end_date >= ? AND transaction != ?", rentalCar.StartDate, rentalCar.EndDate, rentalCar.Transaction).
+		Where("(start_date <= ? AND end_date >= ?) AND (start_date <= ? AND end_date >= ?) AND transaction != ? AND status_car = ?",
+			rentalCar.StartDate,
+			rentalCar.StartDate,
+			rentalCar.EndDate,
+			rentalCar.EndDate,
+			rentalCar.Transaction, 1).
 		Count(&count).Error
 	log.Print(count)
 	if errorFind != nil || count > 0 {
