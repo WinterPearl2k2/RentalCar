@@ -16,7 +16,7 @@ class LocalNotificationService {
       FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
-    // Initialize native android notification
+    // Initialize native android car_rental_management
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 

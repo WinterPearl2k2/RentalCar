@@ -11,6 +11,7 @@ type CarRentail struct {
 	StatusCar   int       `gorm:"type:int"`
 	RentalPrice float64   `gorm:"type:float8;notNull"`
 	RentalDays  int       `gorm:"type:int"`
+	IsReaded    bool      `gorm:"type:bool;default:true"`
 	CreatedAt   time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	StartDate   time.Time `gorm:"notNull"`
 	EndDate     time.Time `gorm:"notNull"`

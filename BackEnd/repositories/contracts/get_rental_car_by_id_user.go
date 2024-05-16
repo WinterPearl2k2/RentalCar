@@ -18,6 +18,7 @@ type UserRentalDto struct {
 	PhoneUser   string    `gorm:"type:varchar(255);notNull"`
 	StartDate   time.Time `gorm:"type:varchar(255);notNull"`
 	EndDate     time.Time `gorm:"type:varchar(255);notNull"`
+	StatusCar   int       `gorm:"type:varchar(255);notNull"`
 }
 
 func GetRentalCarByIdUser(uuid uuid.UUID) ([]UserRentalDto, error) {
@@ -26,6 +27,29 @@ func GetRentalCarByIdUser(uuid uuid.UUID) ([]UserRentalDto, error) {
 	var cars []models.Car
 	if err := initializers.DB.Where("user_id = ?", uuid).Find(&cars).Error; err != nil {
 		return userDtos, err
+	}
+
+	var carRentails []models.CarRentail
+	var user models.User
+	initializers.DB.First(&user, uuid)
+	if err := initializers.DB.Where("user_id = ?", uuid).Find(&carRentails).Error; err != nil {
+		return userDtos, err
+	}
+
+	for _, carRentail := range carRentails {
+		if carRentail.StatusCar == 1 || carRentail.StatusCar == 2 {
+			userDtos = append(userDtos, UserRentalDto{
+				RentalPrice: carRentail.RentalPrice,
+				RentalDays:  carRentail.RentalDays,
+				CreatedAt:   carRentail.CreatedAt,
+				NameUser:    user.NameUser,
+				PhoneUser:   user.PhoneUser,
+				StartDate:   carRentail.StartDate,
+				EndDate:     carRentail.EndDate,
+				StatusCar:   carRentail.StatusCar,
+				Transaction: carRentail.Transaction.String(),
+			})
+		}
 	}
 
 	for _, car := range cars {
@@ -47,6 +71,7 @@ func GetRentalCarByIdUser(uuid uuid.UUID) ([]UserRentalDto, error) {
 				PhoneUser:   user.PhoneUser,
 				StartDate:   carRentail.StartDate,
 				EndDate:     carRentail.EndDate,
+				StatusCar:   carRentail.StatusCar,
 				Transaction: carRentail.Transaction.String(),
 			})
 		}

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'notification_state.dart';
+part of 'car_rental_management_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,28 +15,29 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$NotificationState {
+mixin _$CarRentalManagementState {
   List<UserCarRentalDto> get user => throw _privateConstructorUsedError;
   bool get wait => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $NotificationStateCopyWith<NotificationState> get copyWith =>
+  $CarRentalManagementStateCopyWith<CarRentalManagementState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $NotificationStateCopyWith<$Res> {
-  factory $NotificationStateCopyWith(
-          NotificationState value, $Res Function(NotificationState) then) =
-      _$NotificationStateCopyWithImpl<$Res, NotificationState>;
+abstract class $CarRentalManagementStateCopyWith<$Res> {
+  factory $CarRentalManagementStateCopyWith(CarRentalManagementState value,
+          $Res Function(CarRentalManagementState) then) =
+      _$CarRentalManagementStateCopyWithImpl<$Res, CarRentalManagementState>;
   @useResult
   $Res call({List<UserCarRentalDto> user, bool wait});
 }
 
 /// @nodoc
-class _$NotificationStateCopyWithImpl<$Res, $Val extends NotificationState>
-    implements $NotificationStateCopyWith<$Res> {
-  _$NotificationStateCopyWithImpl(this._value, this._then);
+class _$CarRentalManagementStateCopyWithImpl<$Res,
+        $Val extends CarRentalManagementState>
+    implements $CarRentalManagementStateCopyWith<$Res> {
+  _$CarRentalManagementStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -63,22 +64,25 @@ class _$NotificationStateCopyWithImpl<$Res, $Val extends NotificationState>
 }
 
 /// @nodoc
-abstract class _$$NotificationStateImplCopyWith<$Res>
-    implements $NotificationStateCopyWith<$Res> {
-  factory _$$NotificationStateImplCopyWith(_$NotificationStateImpl value,
-          $Res Function(_$NotificationStateImpl) then) =
-      __$$NotificationStateImplCopyWithImpl<$Res>;
+abstract class _$$CarRentalManagementStateImplCopyWith<$Res>
+    implements $CarRentalManagementStateCopyWith<$Res> {
+  factory _$$CarRentalManagementStateImplCopyWith(
+          _$CarRentalManagementStateImpl value,
+          $Res Function(_$CarRentalManagementStateImpl) then) =
+      __$$CarRentalManagementStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<UserCarRentalDto> user, bool wait});
 }
 
 /// @nodoc
-class __$$NotificationStateImplCopyWithImpl<$Res>
-    extends _$NotificationStateCopyWithImpl<$Res, _$NotificationStateImpl>
-    implements _$$NotificationStateImplCopyWith<$Res> {
-  __$$NotificationStateImplCopyWithImpl(_$NotificationStateImpl _value,
-      $Res Function(_$NotificationStateImpl) _then)
+class __$$CarRentalManagementStateImplCopyWithImpl<$Res>
+    extends _$CarRentalManagementStateCopyWithImpl<$Res,
+        _$CarRentalManagementStateImpl>
+    implements _$$CarRentalManagementStateImplCopyWith<$Res> {
+  __$$CarRentalManagementStateImplCopyWithImpl(
+      _$CarRentalManagementStateImpl _value,
+      $Res Function(_$CarRentalManagementStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +91,7 @@ class __$$NotificationStateImplCopyWithImpl<$Res>
     Object? user = null,
     Object? wait = null,
   }) {
-    return _then(_$NotificationStateImpl(
+    return _then(_$CarRentalManagementStateImpl(
       user: null == user
           ? _value._user
           : user // ignore: cast_nullable_to_non_nullable
@@ -102,8 +106,8 @@ class __$$NotificationStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$NotificationStateImpl implements _NotificationState {
-  const _$NotificationStateImpl(
+class _$CarRentalManagementStateImpl implements _CarRentalManagementState {
+  const _$CarRentalManagementStateImpl(
       {final List<UserCarRentalDto> user = const [], this.wait = false})
       : _user = user;
 
@@ -122,14 +126,14 @@ class _$NotificationStateImpl implements _NotificationState {
 
   @override
   String toString() {
-    return 'NotificationState(user: $user, wait: $wait)';
+    return 'CarRentalManagementState(user: $user, wait: $wait)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$NotificationStateImpl &&
+            other is _$CarRentalManagementStateImpl &&
             const DeepCollectionEquality().equals(other._user, _user) &&
             (identical(other.wait, wait) || other.wait == wait));
   }
@@ -141,15 +145,15 @@ class _$NotificationStateImpl implements _NotificationState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$NotificationStateImplCopyWith<_$NotificationStateImpl> get copyWith =>
-      __$$NotificationStateImplCopyWithImpl<_$NotificationStateImpl>(
-          this, _$identity);
+  _$$CarRentalManagementStateImplCopyWith<_$CarRentalManagementStateImpl>
+      get copyWith => __$$CarRentalManagementStateImplCopyWithImpl<
+          _$CarRentalManagementStateImpl>(this, _$identity);
 }
 
-abstract class _NotificationState implements NotificationState {
-  const factory _NotificationState(
+abstract class _CarRentalManagementState implements CarRentalManagementState {
+  const factory _CarRentalManagementState(
       {final List<UserCarRentalDto> user,
-      final bool wait}) = _$NotificationStateImpl;
+      final bool wait}) = _$CarRentalManagementStateImpl;
 
   @override
   List<UserCarRentalDto> get user;
@@ -157,6 +161,6 @@ abstract class _NotificationState implements NotificationState {
   bool get wait;
   @override
   @JsonKey(ignore: true)
-  _$$NotificationStateImplCopyWith<_$NotificationStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CarRentalManagementStateImplCopyWith<_$CarRentalManagementStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

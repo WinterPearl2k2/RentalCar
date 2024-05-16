@@ -19,9 +19,7 @@ import '../../../application/utils/date_time_format_untils.dart';
 import '../../../application/utils/format_utils.dart';
 
 class DetailContractView extends ConsumerStatefulWidget {
-  final RentalContractDto data;
-
-  const DetailContractView({super.key, required this.data});
+  const DetailContractView({super.key});
 
   @override
   BaseStateDelegate<DetailContractView, DetailContractNotifier> createState() =>
@@ -52,6 +50,8 @@ class _DetailContractViewState
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments as Map<String, RentalContractDto>;
+    final data =  args['rental'] ?? const RentalContractDto();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -72,7 +72,7 @@ class _DetailContractViewState
           IconButton(
             onPressed: () => Routes.goToCarDetailView(
               context,
-              widget.data.idCar,
+              data.idCar,
             ),
             icon: SvgPicture.asset(
               'assets/icons/ic_foot.svg',
@@ -99,8 +99,8 @@ class _DetailContractViewState
                   topRight: Radius.circular(20),
                 ),
                 child: CachedMemoryImage(
-                  uniqueKey: widget.data.transaction,
-                  bytes: const Base64Decoder().convert(widget.data.imgCar),
+                  uniqueKey: data.transaction,
+                  bytes: const Base64Decoder().convert(data.imgCar),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -109,11 +109,11 @@ class _DetailContractViewState
                 title: GestureDetector(
                   onLongPress: () => Clipboard.setData(
                     ClipboardData(
-                      text: widget.data.transaction,
+                      text: data.transaction,
                     ),
                   ),
                   child: Text(
-                    widget.data.transaction,
+                    data.transaction,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: ColorUtils.blueColor,
@@ -126,7 +126,7 @@ class _DetailContractViewState
               TagNameWidget(
                 label: "Owner:",
                 title: Text(
-                  widget.data.nameOwner,
+                  data.nameOwner,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: ColorUtils.primaryColor,
@@ -139,11 +139,11 @@ class _DetailContractViewState
                 title: GestureDetector(
                   onTap: () {
                     launchUrlString(
-                      "tel://${widget.data.phone}",
+                      "tel://${data.phone}",
                     );
                   },
                   child: Text(
-                    widget.data.phone,
+                    data.phone,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: ColorUtils.blueColor,
@@ -157,7 +157,7 @@ class _DetailContractViewState
               TagNameWidget(
                 label: "Email:",
                 title: Text(
-                  widget.data.email,
+                  data.email,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: ColorUtils.primaryColor,
@@ -168,7 +168,7 @@ class _DetailContractViewState
               TagNameWidget(
                 label: "Car name:",
                 title: Text(
-                  widget.data.nameCar,
+                  data.nameCar,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: ColorUtils.primaryColor,
@@ -181,7 +181,7 @@ class _DetailContractViewState
                 title: Text(
                   DateTimeFormatUtils.convertDateFormat(
                     format: 'dd/MM/yyyy',
-                    inputDate: widget.data.startDate,
+                    inputDate: data.startDate,
                   ),
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -195,7 +195,7 @@ class _DetailContractViewState
                 title: Text(
                   DateTimeFormatUtils.convertDateFormat(
                     format: 'dd/MM/yyyy',
-                    inputDate: widget.data.endDate,
+                    inputDate: data.endDate,
                   ),
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -207,7 +207,7 @@ class _DetailContractViewState
               TagNameWidget(
                 label: "Rental days:",
                 title: Text(
-                  widget.data.rentalDays.toString(),
+                  data.rentalDays.toString(),
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: ColorUtils.primaryColor,
@@ -218,7 +218,7 @@ class _DetailContractViewState
               TagNameWidget(
                 label: "Price:",
                 title: Text(
-                  '${FormatUtils.formatNumber(widget.data.rentalPrice)} VND',
+                  '${FormatUtils.formatNumber(data.rentalPrice)} USD',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: ColorUtils.primaryColor,
@@ -231,7 +231,7 @@ class _DetailContractViewState
                 title: Row(
                   children: [
                     Text(
-                      statusStr[widget.data.statusCar],
+                      statusStr[data.statusCar],
                       style: TextStyle(
                         color: ColorUtils.primaryColor,
                         fontSize: 14.sp,
@@ -244,7 +244,7 @@ class _DetailContractViewState
                       margin: EdgeInsets.only(left: 5.w),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: statusColors[widget.data.statusCar],
+                        color: statusColors[data.statusCar],
                       ),
                     ),
                   ],

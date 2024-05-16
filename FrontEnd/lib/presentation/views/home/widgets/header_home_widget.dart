@@ -84,7 +84,7 @@ class HeaderHomeWidget extends StatelessWidget {
             width: 10.w,
           ),
           GestureDetector(
-            onTap: () => Routes.goToNotificationView(context),
+            onTap: () => Routes.goToCarRentalManagementView(context),
             child: SvgPicture.asset(
               AssetUtils.icNotification,
               width: 22.w,

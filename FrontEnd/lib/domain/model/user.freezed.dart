@@ -21,15 +21,12 @@ User _$UserFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$User {
   String get idUser => throw _privateConstructorUsedError;
-  List<String> get idContract => throw _privateConstructorUsedError;
   String get emailUser => throw _privateConstructorUsedError;
   String get phoneUser => throw _privateConstructorUsedError;
   String get nameUser => throw _privateConstructorUsedError;
-  String get birthUser => throw _privateConstructorUsedError;
   String get passwordUser => throw _privateConstructorUsedError;
   String get createAt => throw _privateConstructorUsedError;
   String get updateAt => throw _privateConstructorUsedError;
-  Map<String, double> get locationUser => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,15 +40,12 @@ abstract class $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String idUser,
-      List<String> idContract,
       String emailUser,
       String phoneUser,
       String nameUser,
-      String birthUser,
       String passwordUser,
       String createAt,
-      String updateAt,
-      Map<String, double> locationUser});
+      String updateAt});
 }
 
 /// @nodoc
@@ -68,25 +62,18 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @override
   $Res call({
     Object? idUser = null,
-    Object? idContract = null,
     Object? emailUser = null,
     Object? phoneUser = null,
     Object? nameUser = null,
-    Object? birthUser = null,
     Object? passwordUser = null,
     Object? createAt = null,
     Object? updateAt = null,
-    Object? locationUser = null,
   }) {
     return _then(_value.copyWith(
       idUser: null == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
               as String,
-      idContract: null == idContract
-          ? _value.idContract
-          : idContract // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       emailUser: null == emailUser
           ? _value.emailUser
           : emailUser // ignore: cast_nullable_to_non_nullable
@@ -98,10 +85,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       nameUser: null == nameUser
           ? _value.nameUser
           : nameUser // ignore: cast_nullable_to_non_nullable
-              as String,
-      birthUser: null == birthUser
-          ? _value.birthUser
-          : birthUser // ignore: cast_nullable_to_non_nullable
               as String,
       passwordUser: null == passwordUser
           ? _value.passwordUser
@@ -115,10 +98,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.updateAt
           : updateAt // ignore: cast_nullable_to_non_nullable
               as String,
-      locationUser: null == locationUser
-          ? _value.locationUser
-          : locationUser // ignore: cast_nullable_to_non_nullable
-              as Map<String, double>,
     ) as $Val);
   }
 }
@@ -132,15 +111,12 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @useResult
   $Res call(
       {String idUser,
-      List<String> idContract,
       String emailUser,
       String phoneUser,
       String nameUser,
-      String birthUser,
       String passwordUser,
       String createAt,
-      String updateAt,
-      Map<String, double> locationUser});
+      String updateAt});
 }
 
 /// @nodoc
@@ -154,25 +130,18 @@ class __$$UserImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? idUser = null,
-    Object? idContract = null,
     Object? emailUser = null,
     Object? phoneUser = null,
     Object? nameUser = null,
-    Object? birthUser = null,
     Object? passwordUser = null,
     Object? createAt = null,
     Object? updateAt = null,
-    Object? locationUser = null,
   }) {
     return _then(_$UserImpl(
       idUser: null == idUser
           ? _value.idUser
           : idUser // ignore: cast_nullable_to_non_nullable
               as String,
-      idContract: null == idContract
-          ? _value._idContract
-          : idContract // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       emailUser: null == emailUser
           ? _value.emailUser
           : emailUser // ignore: cast_nullable_to_non_nullable
@@ -184,10 +153,6 @@ class __$$UserImplCopyWithImpl<$Res>
       nameUser: null == nameUser
           ? _value.nameUser
           : nameUser // ignore: cast_nullable_to_non_nullable
-              as String,
-      birthUser: null == birthUser
-          ? _value.birthUser
-          : birthUser // ignore: cast_nullable_to_non_nullable
               as String,
       passwordUser: null == passwordUser
           ? _value.passwordUser
@@ -201,10 +166,6 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.updateAt
           : updateAt // ignore: cast_nullable_to_non_nullable
               as String,
-      locationUser: null == locationUser
-          ? _value._locationUser
-          : locationUser // ignore: cast_nullable_to_non_nullable
-              as Map<String, double>,
     ));
   }
 }
@@ -214,17 +175,12 @@ class __$$UserImplCopyWithImpl<$Res>
 class _$UserImpl implements _User {
   const _$UserImpl(
       {this.idUser = '',
-      final List<String> idContract = const [],
       this.emailUser = '',
       this.phoneUser = '',
       this.nameUser = '',
-      this.birthUser = '',
       this.passwordUser = '',
       this.createAt = '',
-      this.updateAt = '',
-      final Map<String, double> locationUser = const {}})
-      : _idContract = idContract,
-        _locationUser = locationUser;
+      this.updateAt = ''});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -232,15 +188,6 @@ class _$UserImpl implements _User {
   @override
   @JsonKey()
   final String idUser;
-  final List<String> _idContract;
-  @override
-  @JsonKey()
-  List<String> get idContract {
-    if (_idContract is EqualUnmodifiableListView) return _idContract;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_idContract);
-  }
-
   @override
   @JsonKey()
   final String emailUser;
@@ -252,9 +199,6 @@ class _$UserImpl implements _User {
   final String nameUser;
   @override
   @JsonKey()
-  final String birthUser;
-  @override
-  @JsonKey()
   final String passwordUser;
   @override
   @JsonKey()
@@ -262,18 +206,10 @@ class _$UserImpl implements _User {
   @override
   @JsonKey()
   final String updateAt;
-  final Map<String, double> _locationUser;
-  @override
-  @JsonKey()
-  Map<String, double> get locationUser {
-    if (_locationUser is EqualUnmodifiableMapView) return _locationUser;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_locationUser);
-  }
 
   @override
   String toString() {
-    return 'User(idUser: $idUser, idContract: $idContract, emailUser: $emailUser, phoneUser: $phoneUser, nameUser: $nameUser, birthUser: $birthUser, passwordUser: $passwordUser, createAt: $createAt, updateAt: $updateAt, locationUser: $locationUser)';
+    return 'User(idUser: $idUser, emailUser: $emailUser, phoneUser: $phoneUser, nameUser: $nameUser, passwordUser: $passwordUser, createAt: $createAt, updateAt: $updateAt)';
   }
 
   @override
@@ -282,40 +218,24 @@ class _$UserImpl implements _User {
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
             (identical(other.idUser, idUser) || other.idUser == idUser) &&
-            const DeepCollectionEquality()
-                .equals(other._idContract, _idContract) &&
             (identical(other.emailUser, emailUser) ||
                 other.emailUser == emailUser) &&
             (identical(other.phoneUser, phoneUser) ||
                 other.phoneUser == phoneUser) &&
             (identical(other.nameUser, nameUser) ||
                 other.nameUser == nameUser) &&
-            (identical(other.birthUser, birthUser) ||
-                other.birthUser == birthUser) &&
             (identical(other.passwordUser, passwordUser) ||
                 other.passwordUser == passwordUser) &&
             (identical(other.createAt, createAt) ||
                 other.createAt == createAt) &&
             (identical(other.updateAt, updateAt) ||
-                other.updateAt == updateAt) &&
-            const DeepCollectionEquality()
-                .equals(other._locationUser, _locationUser));
+                other.updateAt == updateAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      idUser,
-      const DeepCollectionEquality().hash(_idContract),
-      emailUser,
-      phoneUser,
-      nameUser,
-      birthUser,
-      passwordUser,
-      createAt,
-      updateAt,
-      const DeepCollectionEquality().hash(_locationUser));
+  int get hashCode => Object.hash(runtimeType, idUser, emailUser, phoneUser,
+      nameUser, passwordUser, createAt, updateAt);
 
   @JsonKey(ignore: true)
   @override
@@ -334,22 +254,17 @@ class _$UserImpl implements _User {
 abstract class _User implements User {
   const factory _User(
       {final String idUser,
-      final List<String> idContract,
       final String emailUser,
       final String phoneUser,
       final String nameUser,
-      final String birthUser,
       final String passwordUser,
       final String createAt,
-      final String updateAt,
-      final Map<String, double> locationUser}) = _$UserImpl;
+      final String updateAt}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
   @override
   String get idUser;
-  @override
-  List<String> get idContract;
   @override
   String get emailUser;
   @override
@@ -357,15 +272,11 @@ abstract class _User implements User {
   @override
   String get nameUser;
   @override
-  String get birthUser;
-  @override
   String get passwordUser;
   @override
   String get createAt;
   @override
   String get updateAt;
-  @override
-  Map<String, double> get locationUser;
   @override
   @JsonKey(ignore: true)
   _$$UserImplCopyWith<_$UserImpl> get copyWith =>

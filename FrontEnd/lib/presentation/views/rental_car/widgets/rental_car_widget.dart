@@ -139,7 +139,7 @@ class RentalCarWidget extends StatelessWidget {
                       ),
                     );
                     return Text(
-                      'Total price: ${FormatUtils.formatNumber(price)} VND',
+                      'Total price: ${FormatUtils.formatNumber(price)} USD',
                       style: TextStyle(
                         color: ColorUtils.blueMiddleColor,
                         fontSize: 14.sp,
