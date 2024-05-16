@@ -70,6 +70,8 @@ dependencies:
   firebase_core_platform_interface: ^5.0.0
   flutter_local_notifications: ^17.1.2
   local_notifier: ^0.1.6
+  map_launcher: ^3.3.0
+  jumping_dot: ^0.0.6
 
 dev_dependencies:
   flutter_test:

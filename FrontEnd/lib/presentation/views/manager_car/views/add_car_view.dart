@@ -199,22 +199,31 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                     managerCarNotifierProvider
                         .select((value) => value.imageFile),
                   );
-                  bool isContinueButtonEnabled = true;
+                  final isContinueButtonEnabled = ref.watch(
+                    managerCarNotifierProvider
+                        .select((value) => value.isContinueButtonEnabled),
+                  );
 
                   switch (stateView) {
                     case AddCarStep.step1:
-                      isContinueButtonEnabled =
-                          !(isCheckNameCar && isCheckColorCar);
+                      notifier.isContinueButtonEnabled(
+                        isContinue: !(isCheckNameCar && isCheckColorCar),
+                      );
+                      break;
                     case AddCarStep.step2:
-                      isContinueButtonEnabled =
-                          !(isCheckKilometers && isCheckSeatsCar);
+                      notifier.isContinueButtonEnabled(
+                        isContinue: !(isCheckKilometers && isCheckSeatsCar),
+                      );
                       break;
                     case AddCarStep.step3:
-                      isContinueButtonEnabled =
-                          !(isCheckPriceCar && isCheckAddressCar);
+                      notifier.isContinueButtonEnabled(
+                        isContinue: !(isCheckPriceCar && isCheckAddressCar),
+                      );
                       break;
                     case AddCarStep.step4:
-                      isContinueButtonEnabled = isCheckImageFile.isEmpty;
+                      notifier.isContinueButtonEnabled(
+                        isContinue: isCheckImageFile.isEmpty,
+                      );
                       break;
                     default:
                       break;

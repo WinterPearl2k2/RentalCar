@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 
 import '../../main.dart';
-import '../routes/routes_name.dart';
 import 'navigation_service.dart';
 
 class LocalNotificationService {

@@ -4,10 +4,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 
-class NoCarWidget extends StatelessWidget {
-  const NoCarWidget({
+class SearchCarEmptyWidget extends StatelessWidget {
+  const SearchCarEmptyWidget({
     super.key,
+    required this.typingInput,
   });
+
+  final String typingInput;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +26,11 @@ class NoCarWidget extends StatelessWidget {
           SvgPicture.asset(
             AssetUtils.imgEmpty,
           ),
+          SizedBox(
+            height: 10.h,
+          ),
           Text(
-            "Currently, you don't have any cars!",
+            'Sorry we can\'t find "$typingInput"',
             textAlign: TextAlign.center,
             style: TextStyle(
               color: ColorUtils.primaryColor,
@@ -36,7 +42,7 @@ class NoCarWidget extends StatelessWidget {
             height: 10.h,
           ),
           Text(
-            "You can add more cars below.",
+            "Please recheck about your typing and try to search again",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: ColorUtils.textColor,

@@ -12,9 +12,12 @@ class HomeState with _$HomeState {
   const factory HomeState({
     @Default([]) List<TopCarDTO> listTopCar,
     @Default([]) List<AllCarDTO> listAllCar,
+    @Default([]) List<AllCarDTO> listSearchCar,
     @Default(0) double instanceCar,
     @Default(Status.loading) Status status,
-    @Default([]) List<Placemark> placemarks,
+    @Default(Status.loading) Status statusSearch,
+    @Default(false) bool isCheckSearch,
+    @Default([]) List<Placemark> placeMarks,
     @Default(
       Position(
           longitude: 0.0,

@@ -43,10 +43,10 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
             idCar: idCar,
           );
       getListCarByIdUser();
-      Fluttertoast.showToast(msg: "Xóa thành công");
+      Fluttertoast.showToast(msg: "Deleted successfully");
       LogUtils.i("delete oke");
     } catch (e) {
-      Fluttertoast.showToast(msg: "Xóa thất bại");
+      Fluttertoast.showToast(msg: "Delete failed, Car is rented");
       LogUtils.i(e.toString());
     }
   }
@@ -116,7 +116,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           );
       getListCarByIdUser();
       Fluttertoast.showToast(msg: "Edited successfully");
-      LogUtils.i("sửa oke");
+      LogUtils.i("edit oke");
     } catch (e) {
       Fluttertoast.showToast(msg: "Edited failed");
       LogUtils.i(e.toString());
@@ -350,6 +350,12 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       state = state.copyWith(isEditButton: false);
     }
   }
+  Future<void> isContinueButtonEnabled({required bool isContinue}) async {
+    await Future.delayed(
+      const Duration(milliseconds: 1),
+    );
+      state = state.copyWith(isContinueButtonEnabled: isContinue);
+  }
 
   Future<String> convertImageToBase64(File imageFile) async {
     List<int> imageBytes = await imageFile.readAsBytes();
@@ -412,4 +418,5 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       return false;
     }
   }
+
 }

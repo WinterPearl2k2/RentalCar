@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,13 +38,13 @@ class HeaderHomeWidget extends StatelessWidget {
                   SizedBox(
                     width: 5.w,
                   ),
-                  SvgPicture.asset(
-                    colorFilter: ColorFilter.mode(
-                      ColorUtils.textColor,
-                      BlendMode.srcIn,
-                    ),
-                    AssetUtils.icArrowDown,
-                  ),
+                  // SvgPicture.asset(
+                  //   colorFilter: ColorFilter.mode(
+                  //     ColorUtils.textColor,
+                  //     BlendMode.srcIn,
+                  //   ),
+                  //   AssetUtils.icArrowDown,
+                  // ),
                 ],
               ),
               SizedBox(
@@ -51,7 +52,7 @@ class HeaderHomeWidget extends StatelessWidget {
               ),
               Consumer(builder: (_, ref, __) {
                 final placeMarks = ref.watch(
-                  homeNotifierProvider.select((value) => value.placemarks),
+                  homeNotifierProvider.select((value) => value.placeMarks),
                 );
                 return SizedBox(
                   width: 250.w,
@@ -72,9 +73,12 @@ class HeaderHomeWidget extends StatelessWidget {
             ],
           ),
           const Spacer(),
-          SvgPicture.asset(
-            AssetUtils.icSearch,
-            width: 22.w,
+          GestureDetector(
+            onTap: () => Routes.goToSearchCarView(context),
+            child: SvgPicture.asset(
+              AssetUtils.icSearch,
+              width: 22.w,
+            ),
           ),
           SizedBox(
             width: 10.w,

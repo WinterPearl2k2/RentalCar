@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/routes/routes.dart';
+import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:rental_car/presentation/views/home/widgets/item_vehicle_widget.dart';
@@ -25,8 +27,10 @@ class ListVehicleNearYouWidget extends StatelessWidget {
         );
         switch (status) {
           case Status.loading:
-            return const Center(
-              child: CircularProgressIndicator(),
+            return Center(
+              child: JumpingDots(
+                color: ColorUtils.primaryColor,
+              ),
             );
           case Status.success:
             if (listAllCar.isNotEmpty) {

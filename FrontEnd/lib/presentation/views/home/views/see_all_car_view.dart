@@ -14,8 +14,7 @@ class SeeAllCarView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding:
-            const EdgeInsets.only(top: 40, left: 30, right: 30 ).r,
+        padding: const EdgeInsets.only(top: 40, left: 10, right: 10).r,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -34,10 +33,13 @@ class SeeAllCarView extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 2),
                     itemCount: listTopCar.length,
                     itemBuilder: (context, index) => Padding(
-                      padding:  EdgeInsets.only(bottom: 15.0.h),
+                      padding: EdgeInsets.only(bottom: 15.0.h),
                       child: ItemCarWidget(
-                        topCarDTO: listTopCar[index],
                         notifier: notifier,
+                        idCar: listTopCar[index].idCar,
+                        imagesCar: listTopCar[index].imagesCar,
+                        nameCar: listTopCar[index].nameCar,
+                        priceCar: listTopCar[index].priceCar,
                       ),
                     ),
                   );

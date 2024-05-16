@@ -30,6 +30,7 @@ mixin _$ManagerCarState {
   bool get isCheckImageCar => throw _privateConstructorUsedError;
   String get imageFile => throw _privateConstructorUsedError;
   bool get isEditButton => throw _privateConstructorUsedError;
+  bool get isContinueButtonEnabled => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ManagerCarStateCopyWith<ManagerCarState> get copyWith =>
@@ -56,7 +57,8 @@ abstract class $ManagerCarStateCopyWith<$Res> {
       bool isCheckAddressCar,
       bool isCheckImageCar,
       String imageFile,
-      bool isEditButton});
+      bool isEditButton,
+      bool isContinueButtonEnabled});
 
   $CarDTOCopyWith<$Res> get carDTO;
 }
@@ -88,6 +90,7 @@ class _$ManagerCarStateCopyWithImpl<$Res, $Val extends ManagerCarState>
     Object? isCheckImageCar = null,
     Object? imageFile = null,
     Object? isEditButton = null,
+    Object? isContinueButtonEnabled = null,
   }) {
     return _then(_value.copyWith(
       listCarUser: null == listCarUser
@@ -146,6 +149,10 @@ class _$ManagerCarStateCopyWithImpl<$Res, $Val extends ManagerCarState>
           ? _value.isEditButton
           : isEditButton // ignore: cast_nullable_to_non_nullable
               as bool,
+      isContinueButtonEnabled: null == isContinueButtonEnabled
+          ? _value.isContinueButtonEnabled
+          : isContinueButtonEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -180,7 +187,8 @@ abstract class _$$ManagerCarStateImplCopyWith<$Res>
       bool isCheckAddressCar,
       bool isCheckImageCar,
       String imageFile,
-      bool isEditButton});
+      bool isEditButton,
+      bool isContinueButtonEnabled});
 
   @override
   $CarDTOCopyWith<$Res> get carDTO;
@@ -211,6 +219,7 @@ class __$$ManagerCarStateImplCopyWithImpl<$Res>
     Object? isCheckImageCar = null,
     Object? imageFile = null,
     Object? isEditButton = null,
+    Object? isContinueButtonEnabled = null,
   }) {
     return _then(_$ManagerCarStateImpl(
       listCarUser: null == listCarUser
@@ -269,6 +278,10 @@ class __$$ManagerCarStateImplCopyWithImpl<$Res>
           ? _value.isEditButton
           : isEditButton // ignore: cast_nullable_to_non_nullable
               as bool,
+      isContinueButtonEnabled: null == isContinueButtonEnabled
+          ? _value.isContinueButtonEnabled
+          : isContinueButtonEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -290,7 +303,8 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
       this.isCheckAddressCar = false,
       this.isCheckImageCar = false,
       this.imageFile = '',
-      this.isEditButton = false})
+      this.isEditButton = false,
+      this.isContinueButtonEnabled = true})
       : _listCarUser = listCarUser;
 
   final List<Car> _listCarUser;
@@ -341,10 +355,13 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
   @override
   @JsonKey()
   final bool isEditButton;
+  @override
+  @JsonKey()
+  final bool isContinueButtonEnabled;
 
   @override
   String toString() {
-    return 'ManagerCarState(listCarUser: $listCarUser, carDTO: $carDTO, status: $status, addCarStep: $addCarStep, isCheckNameCar: $isCheckNameCar, isCheckColorCar: $isCheckColorCar, isCheckDescriptionCar: $isCheckDescriptionCar, isCheckKilometers: $isCheckKilometers, isCheckSeatsCar: $isCheckSeatsCar, isCheckPriceCar: $isCheckPriceCar, isCheckAddressCar: $isCheckAddressCar, isCheckImageCar: $isCheckImageCar, imageFile: $imageFile, isEditButton: $isEditButton)';
+    return 'ManagerCarState(listCarUser: $listCarUser, carDTO: $carDTO, status: $status, addCarStep: $addCarStep, isCheckNameCar: $isCheckNameCar, isCheckColorCar: $isCheckColorCar, isCheckDescriptionCar: $isCheckDescriptionCar, isCheckKilometers: $isCheckKilometers, isCheckSeatsCar: $isCheckSeatsCar, isCheckPriceCar: $isCheckPriceCar, isCheckAddressCar: $isCheckAddressCar, isCheckImageCar: $isCheckImageCar, imageFile: $imageFile, isEditButton: $isEditButton, isContinueButtonEnabled: $isContinueButtonEnabled)';
   }
 
   @override
@@ -377,7 +394,10 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
             (identical(other.imageFile, imageFile) ||
                 other.imageFile == imageFile) &&
             (identical(other.isEditButton, isEditButton) ||
-                other.isEditButton == isEditButton));
+                other.isEditButton == isEditButton) &&
+            (identical(
+                    other.isContinueButtonEnabled, isContinueButtonEnabled) ||
+                other.isContinueButtonEnabled == isContinueButtonEnabled));
   }
 
   @override
@@ -396,7 +416,8 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
       isCheckAddressCar,
       isCheckImageCar,
       imageFile,
-      isEditButton);
+      isEditButton,
+      isContinueButtonEnabled);
 
   @JsonKey(ignore: true)
   @override
@@ -421,7 +442,8 @@ abstract class _ManagerCarState implements ManagerCarState {
       final bool isCheckAddressCar,
       final bool isCheckImageCar,
       final String imageFile,
-      final bool isEditButton}) = _$ManagerCarStateImpl;
+      final bool isEditButton,
+      final bool isContinueButtonEnabled}) = _$ManagerCarStateImpl;
 
   @override
   List<Car> get listCarUser;
@@ -451,6 +473,8 @@ abstract class _ManagerCarState implements ManagerCarState {
   String get imageFile;
   @override
   bool get isEditButton;
+  @override
+  bool get isContinueButtonEnabled;
   @override
   @JsonKey(ignore: true)
   _$$ManagerCarStateImplCopyWith<_$ManagerCarStateImpl> get copyWith =>

@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 
 import '../../data/dtos/notification_message_dto.dart';
