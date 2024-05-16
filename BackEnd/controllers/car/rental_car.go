@@ -9,6 +9,7 @@ import (
 
 	Notification "rent-car/controllers/notification"
 	"rent-car/initializers"
+	Middleware "rent-car/middleware"
 	"rent-car/models"
 	CarRepository "rent-car/repositories/car"
 	TokenDeviceRepository "rent-car/repositories/device_token"
@@ -27,14 +28,14 @@ func RentalCar(context *gin.Context) {
 		})
 		return
 	}
-	// uuid, err := Middleware.RequireAuth(context)
-	// if err != nil {
-	// 	context.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-	// 	return
-	// }
-	uuid := "417511f4-6546-40cf-8528-35fda4f43591"
+	uuid, err := Middleware.RequireAuth(context)
+	if err != nil {
+		context.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+	// uuid := "417511f4-6546-40cf-8528-35fda4f43591"
 
-	user, err := UserRepository.GetUserById(uuid)
+	user, err := UserRepository.GetUserById(uuid.String())
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			context.JSON(http.StatusBadRequest, gin.H{

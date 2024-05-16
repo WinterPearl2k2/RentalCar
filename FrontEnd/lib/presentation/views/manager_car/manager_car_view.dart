@@ -2,10 +2,12 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
+import 'package:rental_car/presentation/common/widgets/error_custom_widget.dart';
+import 'package:rental_car/presentation/common/widgets/loading_widget.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
+import 'package:rental_car/presentation/views/manager_car/widgets/item_manager_car_loading_widget.dart';
 import 'package:rental_car/presentation/views/manager_car/widgets/list_manager_car_widget.dart';
 import 'package:rental_car/presentation/views/manager_car/widgets/no_car_widget.dart';
 
@@ -45,12 +47,13 @@ class _HomeViewState
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 5.0.w,),
+        padding: EdgeInsets.symmetric(
+          horizontal: 5.0.w,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.max,
           children: [
-
             Expanded(
               child: EasyRefresh(
                 onRefresh: () async {
@@ -71,20 +74,25 @@ class _HomeViewState
                     );
                     switch (status) {
                       case Status.loading:
-                        return Center(
-                          child: SingleChildScrollView(
-                            child: JumpingDots(
-                                color: ColorUtils.primaryColor,
+                        return Stack(children: [
+                          ListView.builder(
+                            itemCount: 2,
+                            itemBuilder: (context, index) => Padding(
+                              padding: EdgeInsets.only(bottom: 20.h),
+                              child: const ItemManagerCarLoadingWidget(),
                             ),
                           ),
-                        );
+                          const LoadingWidget(),
+                        ]);
                       case Status.success:
                         return listCarUser.isNotEmpty
                             ? ListManagerCarWidget(
-                              notifier: notifier,
-                              listCarUser: listCarUser,
-                            )
+                                notifier: notifier,
+                                listCarUser: listCarUser,
+                              )
                             : const NoCarWidget();
+                      case Status.error:
+                        return const ErrorCustomWidget();
                     }
                   },
                 ),

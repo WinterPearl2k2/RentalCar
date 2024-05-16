@@ -23,7 +23,10 @@ func GetCarReview(context *gin.Context) {
 	var carReview models.CarReview
 	result := initializers.DB.Where("user_id = ? AND car_id = ?", userId, carID).First(&carReview)
 	if result.RowsAffected == 0 {
-		context.JSON(http.StatusNotFound, gin.H{"error": "Car review not found"})
+		context.JSON(http.StatusOK, gin.H{
+			"idCar":         "",
+			"rateReview":    3,
+			"commentReview": ""})
 		return
 	}
 

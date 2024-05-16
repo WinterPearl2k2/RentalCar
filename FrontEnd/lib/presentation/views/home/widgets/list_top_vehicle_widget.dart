@@ -1,13 +1,12 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jumping_dot/jumping_dot.dart';
 import 'package:rental_car/application/routes/routes.dart';
-import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
+import 'package:rental_car/presentation/common/widgets/error_custom_widget.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
+import 'package:rental_car/presentation/views/home/widgets/item_vehicle_loading_widget.dart';
 import 'package:rental_car/presentation/views/home/widgets/item_vehicle_widget.dart';
 
 class ListTopVehicleWidget extends StatelessWidget {
@@ -20,17 +19,20 @@ class ListTopVehicleWidget extends StatelessWidget {
     return Consumer(
       builder: (_, ref, __) {
         final status = ref.watch(
-          homeNotifierProvider.select((value) => value.status),
+          homeNotifierProvider.select((value) => value.statusTopCar),
         );
         final listCar = ref.watch(
           homeNotifierProvider.select((value) => value.listTopCar),
         );
         switch (status) {
           case Status.loading:
-            return Center(
-              child: JumpingDots(
-                color: ColorUtils.primaryColor,
-              ),
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(horizontal: 7.0.w),
+              scrollDirection: Axis.horizontal,
+              itemCount: 2,
+              itemBuilder: (context, index) =>
+                  const ItemVehicleLoadingWidget(),
             );
           case Status.success:
             return listCar.isNotEmpty
@@ -58,6 +60,8 @@ class ListTopVehicleWidget extends StatelessWidget {
                     child: Text(
                         "There are no vehicles in the top category of vehicles"),
                   );
+          case Status.error:
+            return const ErrorCustomWidget();
         }
       },
     );

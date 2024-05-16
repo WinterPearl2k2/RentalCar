@@ -49,7 +49,7 @@ class CarDetailNotifier extends _$CarDetailNotifier {
     } catch (e) {
       state = state.copyWith(isLoadingMore: false);
       LogUtils.i(e.toString());
-      state = state.copyWith(carDetail: const CarDetailDTO());
+      state = state.copyWith(carDetail: const CarDetailDTO(), status: Status.error);
     }
   }
 
