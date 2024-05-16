@@ -8,8 +8,9 @@ type RegisterBody struct {
 }
 
 type LoginBody struct {
-	Email    string `binding:"required"`
-	Password string `binding:"required"`
+	Email       string `binding:"required"`
+	Password    string `binding:"required"`
+	DeviceToken string `binding:"required"`
 }
 
 type RefreshToken struct {

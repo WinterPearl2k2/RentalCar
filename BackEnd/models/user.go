@@ -17,6 +17,7 @@ type User struct {
 	CreatedAt     time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	UpdatedAt     time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 
-	Cars        []Car
-	CarRentails []CarRentail
+	DeviceTokens []DeviceToken
+	Cars         []Car
+	CarRentails  []CarRentail
 }

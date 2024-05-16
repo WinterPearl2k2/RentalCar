@@ -10,11 +10,27 @@ class PreferenceService {
   static const String _token = 'token';
   static const String _uuid = 'uuid';
   static const String _location = 'location';
+  static const String _deviceToken = 'device_token';
 
   static late final SharedPreferences _prefs;
 
   static Future<SharedPreferences> init() async =>
       _prefs = await SharedPreferences.getInstance();
+
+  static void setDeviceToken(String token) {
+    _prefs.setString(
+      _deviceToken,
+      token,
+    );
+  }
+
+  static String getDeviceToken() {
+    final data = _prefs.getString(_deviceToken);
+    if (data != null) {
+      return data;
+    }
+    return '';
+  }
 
   static void setUUID(String uuid) {
     _prefs.setString(_uuid, uuid);
@@ -60,10 +76,10 @@ class PreferenceService {
     required double latCar,
     required double longCar,
   }) {
-    String locationString = jsonEncode(Location(latitude: latCar, longitude: longCar));
+    String locationString =
+        jsonEncode(Location(latitude: latCar, longitude: longCar));
     _prefs.setString(_location, locationString);
   }
-
 
   static Location getLocation() {
     final data = _prefs.getString(_location);

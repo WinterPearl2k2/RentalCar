@@ -1,18 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/di/injection.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
+import 'application/services/local_notification_service.dart';
+import 'firebase_options.dart';
 
 import 'application/routes/routes.dart';
 import 'application/routes/routes_name.dart';
-import 'application/routes/routes_test.dart';
+import 'application/routes/routes_navigator.dart';
 
-Injection injection = Injection();
+final injection = Injection();
+final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   injection.configDependencies();
+  await LocalNotificationService().init();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -36,9 +44,10 @@ class MyApp extends StatelessWidget {
           fontFamily: 'OpenSans',
           useMaterial3: true,
         ),
+        navigatorKey: navigatorKey,
         initialRoute: RoutesName.auth,
         onGenerateRoute: Routes.routeBuilder,
-        routes: RoutesTest.routes(),
+        routes: RoutesNavigator.routes(),
       ),
     );
   }
