@@ -22,43 +22,44 @@ class HomeNotifier extends _$HomeNotifier {
       final listTopCar = await injection.getIt<ICarService>().getTopCar();
       if (listTopCar.isEmpty) {
         state = state.copyWith(
-          status: Status.success,
           listTopCar: [],
+          statusTopCar: Status.success,
         );
       } else {
         state = state.copyWith(
-          status: Status.success,
           listTopCar: listTopCar,
+          statusTopCar: Status.success,
         );
       }
       LogUtils.i("getList oke");
     } catch (e) {
       LogUtils.i(e.toString());
+      state = state.copyWith(statusTopCar: Status.error);
     }
   }
 
   Future<void> getListSearchCars({required String nameCar}) async {
     try {
       state = state.copyWith(
-        statusSearch: Status.loading,
         listSearchCar: [],
       );
       final listSearchCar =
           await injection.getIt<ICarService>().getSearchCar(nameCar: nameCar);
       if (listSearchCar.isEmpty) {
         state = state.copyWith(
-          statusSearch: Status.success,
           listSearchCar: [],
+          statusSearch: Status.success,
         );
       } else {
         state = state.copyWith(
-          statusSearch: Status.success,
           listSearchCar: listSearchCar,
+          statusSearch: Status.success,
         );
       }
       LogUtils.i("getList oke");
     } catch (e) {
       LogUtils.i(e.toString());
+      state = state.copyWith(statusSearch: Status.error);
     }
   }
 
@@ -88,7 +89,6 @@ class HomeNotifier extends _$HomeNotifier {
     try {
       if (isLoadingMore) return;
       isLoadingMore = true;
-
       final listAllCar = await injection.getIt<ICarService>().getAllCar(
             page: currentPage,
             pageSize: pageSize,
@@ -119,18 +119,17 @@ class HomeNotifier extends _$HomeNotifier {
         });
 
         state = state.copyWith(
-          status: Status.success,
           listAllCar: [...state.listAllCar, ...updatedListAllCar],
+          statusNearCar: Status.success,
         );
-
         currentPage++;
       }
-
       isLoadingMore = false;
       LogUtils.i("get list car near you oke");
     } catch (e) {
       isLoadingMore = false;
       LogUtils.i(e.toString());
+      state = state.copyWith(statusNearCar: Status.error);
     }
   }
 

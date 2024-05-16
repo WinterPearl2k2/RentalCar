@@ -23,7 +23,8 @@ mixin _$HomeState {
   int get currentPage => throw _privateConstructorUsedError;
   int get pageSize => throw _privateConstructorUsedError;
   bool get isLoadingMore => throw _privateConstructorUsedError;
-  Status get status => throw _privateConstructorUsedError;
+  Status get statusTopCar => throw _privateConstructorUsedError;
+  Status get statusNearCar => throw _privateConstructorUsedError;
   Status get statusSearch => throw _privateConstructorUsedError;
   bool get isCheckSearch => throw _privateConstructorUsedError;
   List<Placemark> get placeMarks => throw _privateConstructorUsedError;
@@ -47,7 +48,8 @@ abstract class $HomeStateCopyWith<$Res> {
       int currentPage,
       int pageSize,
       bool isLoadingMore,
-      Status status,
+      Status statusTopCar,
+      Status statusNearCar,
       Status statusSearch,
       bool isCheckSearch,
       List<Placemark> placeMarks,
@@ -74,7 +76,8 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? currentPage = null,
     Object? pageSize = null,
     Object? isLoadingMore = null,
-    Object? status = null,
+    Object? statusTopCar = null,
+    Object? statusNearCar = null,
     Object? statusSearch = null,
     Object? isCheckSearch = null,
     Object? placeMarks = null,
@@ -109,9 +112,13 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.isLoadingMore
           : isLoadingMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      statusTopCar: null == statusTopCar
+          ? _value.statusTopCar
+          : statusTopCar // ignore: cast_nullable_to_non_nullable
+              as Status,
+      statusNearCar: null == statusNearCar
+          ? _value.statusNearCar
+          : statusNearCar // ignore: cast_nullable_to_non_nullable
               as Status,
       statusSearch: null == statusSearch
           ? _value.statusSearch
@@ -149,7 +156,8 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       int currentPage,
       int pageSize,
       bool isLoadingMore,
-      Status status,
+      Status statusTopCar,
+      Status statusNearCar,
       Status statusSearch,
       bool isCheckSearch,
       List<Placemark> placeMarks,
@@ -174,7 +182,8 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? currentPage = null,
     Object? pageSize = null,
     Object? isLoadingMore = null,
-    Object? status = null,
+    Object? statusTopCar = null,
+    Object? statusNearCar = null,
     Object? statusSearch = null,
     Object? isCheckSearch = null,
     Object? placeMarks = null,
@@ -209,9 +218,13 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.isLoadingMore
           : isLoadingMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      statusTopCar: null == statusTopCar
+          ? _value.statusTopCar
+          : statusTopCar // ignore: cast_nullable_to_non_nullable
+              as Status,
+      statusNearCar: null == statusNearCar
+          ? _value.statusNearCar
+          : statusNearCar // ignore: cast_nullable_to_non_nullable
               as Status,
       statusSearch: null == statusSearch
           ? _value.statusSearch
@@ -244,7 +257,8 @@ class _$HomeStateImpl implements _HomeState {
       this.currentPage = 0,
       this.pageSize = 2,
       this.isLoadingMore = false,
-      this.status = Status.loading,
+      this.statusTopCar = Status.loading,
+      this.statusNearCar = Status.loading,
       this.statusSearch = Status.loading,
       this.isCheckSearch = false,
       final List<Placemark> placeMarks = const [],
@@ -305,7 +319,10 @@ class _$HomeStateImpl implements _HomeState {
   final bool isLoadingMore;
   @override
   @JsonKey()
-  final Status status;
+  final Status statusTopCar;
+  @override
+  @JsonKey()
+  final Status statusNearCar;
   @override
   @JsonKey()
   final Status statusSearch;
@@ -327,7 +344,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, isLoadingMore: $isLoadingMore, status: $status, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, position: $position)';
+    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, isLoadingMore: $isLoadingMore, statusTopCar: $statusTopCar, statusNearCar: $statusNearCar, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, position: $position)';
   }
 
   @override
@@ -349,7 +366,10 @@ class _$HomeStateImpl implements _HomeState {
                 other.pageSize == pageSize) &&
             (identical(other.isLoadingMore, isLoadingMore) ||
                 other.isLoadingMore == isLoadingMore) &&
-            (identical(other.status, status) || other.status == status) &&
+            (identical(other.statusTopCar, statusTopCar) ||
+                other.statusTopCar == statusTopCar) &&
+            (identical(other.statusNearCar, statusNearCar) ||
+                other.statusNearCar == statusNearCar) &&
             (identical(other.statusSearch, statusSearch) ||
                 other.statusSearch == statusSearch) &&
             (identical(other.isCheckSearch, isCheckSearch) ||
@@ -370,7 +390,8 @@ class _$HomeStateImpl implements _HomeState {
       currentPage,
       pageSize,
       isLoadingMore,
-      status,
+      statusTopCar,
+      statusNearCar,
       statusSearch,
       isCheckSearch,
       const DeepCollectionEquality().hash(_placeMarks),
@@ -392,7 +413,8 @@ abstract class _HomeState implements HomeState {
       final int currentPage,
       final int pageSize,
       final bool isLoadingMore,
-      final Status status,
+      final Status statusTopCar,
+      final Status statusNearCar,
       final Status statusSearch,
       final bool isCheckSearch,
       final List<Placemark> placeMarks,
@@ -413,7 +435,9 @@ abstract class _HomeState implements HomeState {
   @override
   bool get isLoadingMore;
   @override
-  Status get status;
+  Status get statusTopCar;
+  @override
+  Status get statusNearCar;
   @override
   Status get statusSearch;
   @override

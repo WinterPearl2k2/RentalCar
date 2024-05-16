@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 
-class AddCarStepSuccessWidget extends StatelessWidget {
-  const AddCarStepSuccessWidget({
+class ErrorCustomWidget extends StatelessWidget {
+  const ErrorCustomWidget({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: [
           SizedBox(
-            height: 20.h,
+            height: 100.h,
           ),
-          Image.asset(
-            AssetUtils.imgLoading,
-            height: 120.h,
-            width: 500.w,
-            fit: BoxFit.cover,
-          ),
+          // Image.asset(
+          //   AssetUtils.imgError,
+          // ),
           Text(
-            "You add car document has \nbeen submitted!",
+            "There are currently some unknown errors",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: ColorUtils.primaryColor,
@@ -33,15 +31,18 @@ class AddCarStepSuccessWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20.h,
+            height: 10.h,
           ),
           Text(
-            "We'll review your car and get back to you as soon as possible. Stay tune for it!",
+            "Please try again later",
             textAlign: TextAlign.center,
             style: TextStyle(
               color: ColorUtils.textColor,
               fontSize: 14.sp,
             ),
+          ),
+          SizedBox(
+            height: 100.h,
           ),
         ],
       ),
