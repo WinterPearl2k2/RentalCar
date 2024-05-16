@@ -36,7 +36,7 @@ class InfoCarDetailWidget extends StatelessWidget {
               height: 5.h,
             ),
             Text(
-              '${FormatUtils.formatNumber(car.priceCar)} VND / day',
+              '${FormatUtils.formatNumber(car.priceCar)} USD / day',
               style: TextStyle(
                 color: ColorUtils.blueMiddleColor,
                 fontSize: 14.sp,

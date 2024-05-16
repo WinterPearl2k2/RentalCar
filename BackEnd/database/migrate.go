@@ -15,11 +15,8 @@ func main() {
 		&models.User{},
 		&models.Car{},
 		&models.CarReview{},
-		&models.Contract{},
-		&models.RentHistory{},
 		&models.Verification{},
 		&models.CarRentail{},
 		&models.DeviceToken{},
-		&models.NotificationUser{},
 	)
 }

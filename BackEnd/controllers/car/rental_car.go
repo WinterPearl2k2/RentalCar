@@ -111,13 +111,6 @@ func RentalCar(context *gin.Context) {
 		})
 		return
 	}
-	notification := models.NotificationUser{
-		CarRentail:  &rentalCar,
-		UserId:      user.IdUser,
-		Transaction: rentalCar.Transaction,
-		User:        &user,
-	}
-	initializers.DB.Create(&notification)
 
 	ownerUser, _ := UserRepository.GetUserById(car.UserId.String())
 	deviceTokens, _ := TokenDeviceRepository.FindDeviceTokenByUserID(ownerUser.IdUser)

@@ -218,7 +218,7 @@ class _DetailContractViewState
               TagNameWidget(
                 label: "Price:",
                 title: Text(
-                  '${FormatUtils.formatNumber(data.rentalPrice)} VND',
+                  '${FormatUtils.formatNumber(data.rentalPrice)} USD',
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: ColorUtils.primaryColor,
