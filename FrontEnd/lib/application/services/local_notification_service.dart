@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 
 import '../../main.dart';
+import '../routes/routes_name.dart';
 import 'navigation_service.dart';
 
 class LocalNotificationService {
@@ -36,14 +38,26 @@ class LocalNotificationService {
         NotificationResponse notificationResponse,
       ) {
         LogUtils.i('payload: ${notificationResponse.payload}');
-        switch (notificationResponse.notificationResponseType) {
-          case NotificationResponseType.selectedNotification:
-            injection
-                .getIt<NavigationService>()
-                .navigateTo(notificationResponse.payload.toString());
-            break;
-          case NotificationResponseType.selectedNotificationAction:
-            break;
+        if (notificationResponse.payload != null) {
+          switch (notificationResponse.notificationResponseType) {
+            case NotificationResponseType.selectedNotification:
+              final String payload = notificationResponse.payload.toString();
+              String? currentPath;
+              injection.getIt<NavigationService>().navigatorKey.currentState?.popUntil(
+                (route) {
+                  currentPath = route.settings.name;
+                  LogUtils.i('currentPath $currentPath');
+                  return currentPath != null ||currentPath == payload;
+                },
+              );
+              if(currentPath == payload) break;
+              injection.getIt<NavigationService>().navigateTo(
+                    payload,
+                  );
+              break;
+            case NotificationResponseType.selectedNotificationAction:
+              break;
+          }
         }
       },
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground,

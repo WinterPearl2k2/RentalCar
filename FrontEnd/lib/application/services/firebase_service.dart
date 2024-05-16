@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:rental_car/application/routes/routes_name.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:rental_car/application/services/preference_service.dart';
-import 'package:rental_car/application/utils/log_utils.dart';
-import 'package:rental_car/data/dtos/notification_message_dto.dart';
 
+import '../../data/dtos/notification_message_dto.dart';
+import '../../firebase_options.dart';
 import '../../main.dart';
+import '../routes/routes_name.dart';
+import '../utils/log_utils.dart';
 import 'local_notification_service.dart';
 import 'navigation_service.dart';
 
@@ -18,29 +21,23 @@ class FirebaseService {
   static final FirebaseMessaging _message = FirebaseMessaging.instance;
 
   static Future<void> _handleBackgroundMessage(RemoteMessage msg) async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
     LogUtils.i(notifierDto.toString());
-    injection
-        .getIt<NavigationService>()
-        .navigateReplaceTo(RoutesName.bottomNavigation)
-        .whenComplete(
-          () => injection
-          .getIt<NavigationService>()
-          .navigateTo(RoutesName.notification),
-    );
+    injection.getIt<NavigationService>().navigateReplaceTo(RoutesName.bottomNavigation);
+    injection.getIt<NavigationService>().navigateTo(RoutesName.notification);
   }
 
   static Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
     LogUtils.i(notifierDto.toString());
-    injection
-        .getIt<NavigationService>()
-        .navigateReplaceTo(RoutesName.bottomNavigation)
-        .whenComplete(
-          () => injection
-              .getIt<NavigationService>()
-              .navigateTo(RoutesName.notification),
-        );
+    injection.getIt<NavigationService>().navigateReplaceTo(RoutesName.bottomNavigation);
+    injection.getIt<NavigationService>().navigateTo(RoutesName.notification);
   }
 
   Future<void> _handleMessage(RemoteMessage msg) async {
@@ -56,11 +53,11 @@ class FirebaseService {
   Future<void> initNotifications() async {
     await _message.requestPermission(
       alert: true,
-      announcement: false,
+      announcement: true,
       badge: true,
       carPlay: false,
       criticalAlert: true,
-      provisional: false,
+      provisional: true,
       sound: true,
     );
     final fcmToken = await _message.getToken();

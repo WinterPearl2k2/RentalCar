@@ -9,7 +9,7 @@ import 'firebase_options.dart';
 
 import 'application/routes/routes.dart';
 import 'application/routes/routes_name.dart';
-import 'application/routes/routes_test.dart';
+import 'application/routes/routes_navigator.dart';
 
 final injection = Injection();
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         initialRoute: RoutesName.auth,
         onGenerateRoute: Routes.routeBuilder,
-        routes: RoutesTest.routes(),
+        routes: RoutesNavigator.routes(),
       ),
     );
   }

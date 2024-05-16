@@ -12,6 +12,18 @@ import (
 	"google.golang.org/api/option"
 )
 
+func removeDuplicates(tokens []string) []string {
+	uniqueTokens := make(map[string]bool)
+	var result []string
+	for _, token := range tokens {
+		if _, exists := uniqueTokens[token]; !exists {
+			uniqueTokens[token] = true
+			result = append(result, token)
+		}
+	}
+	return result
+}
+
 func SendNotification(deviceToken []string, user models.User, notification NotificationData) {
 	opt := option.WithCredentialsFile("serviceAccountKey.json")
 	config := &firebase.Config{ProjectID: "rentalcar-e3d6b"}
@@ -25,7 +37,8 @@ func SendNotification(deviceToken []string, user models.User, notification Notif
 		log.Fatalf("error getting Messaging client: %v\n", err)
 	}
 
-	registrationToken := deviceToken
+	deviceToken = removeDuplicates(deviceToken)
+	log.Print(deviceToken)
 
 	message := &messaging.MulticastMessage{
 		Notification: &messaging.Notification{
@@ -42,7 +55,7 @@ func SendNotification(deviceToken []string, user models.User, notification Notif
 			"typeMessage": strconv.Itoa(notification.TypeMessage),
 			"carId":       notification.CarId,
 		},
-		Tokens: registrationToken,
+		Tokens: deviceToken,
 	}
 
 	response, err := client.SendMulticast(ctx, message)
