@@ -86,7 +86,7 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   int currentPage = 1;
-  final int pageSize = 2;
+  final int pageSize = 10;
   bool isLoadingMore = false;
 
   Future<void> getListAllCars() async {
@@ -112,13 +112,11 @@ class HomeNotifier extends _$HomeNotifier {
         }).toList();
 
         updatedListAllCar.sort((a, b) {
-          int dateComparison = b.createAt.compareTo(a.createAt);
-          if (dateComparison != 0) {
-            return dateComparison;
+          int distanceComparison = a.distanceCar.compareTo(b.distanceCar);
+          if (distanceComparison != 0) {
+            return distanceComparison;
           } else {
-            double distanceA = a.distanceCar;
-            double distanceB = b.distanceCar;
-            return distanceA.compareTo(distanceB);
+            return b.createAt.compareTo(a.createAt);
           }
         });
 

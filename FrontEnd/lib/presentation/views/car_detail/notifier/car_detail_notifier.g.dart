@@ -6,7 +6,7 @@ part of 'car_detail_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$carDetailNotifierHash() => r'aea4401973741b0254e27e5e5dfd10025a8a3779';
+String _$carDetailNotifierHash() => r'1ba5c845b6dcbd10b284c02069835b6b748d0695';
 
 /// See also [CarDetailNotifier].
 @ProviderFor(CarDetailNotifier)

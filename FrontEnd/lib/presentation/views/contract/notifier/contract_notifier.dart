@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rental_car/application/services/contract_service.dart';
 import 'package:rental_car/main.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../application/services/firebase_service.dart';
@@ -17,7 +18,9 @@ class ContractNotifier extends _$ContractNotifier {
   ContractState build() => const ContractState();
 
   Future<void> setUpData() async {
-    await Future.delayed(const Duration(milliseconds: 1),);
+    await Future.delayed(
+      const Duration(milliseconds: 1),
+    );
     state = state.copyWith(
       rentalFilter: -1,
       leaseFilter: -1,
@@ -27,16 +30,16 @@ class ContractNotifier extends _$ContractNotifier {
   Future<void> getRentalContract() async {
     try {
       final contracts =
-      await injection.getIt<IContractService>().getRentalContract(
-        offset: 0,
-        filter: state.rentalFilter,
-      );
-      state = state.copyWith(
-        rentalContracts: contracts,
-      );
+          await injection.getIt<IContractService>().getRentalContract(
+                offset: 0,
+                filter: state.rentalFilter,
+              );
+      state =
+          state.copyWith(rentalContracts: contracts, status: Status.success,);
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
+      state = state.copyWith(status: Status.error);
     }
   }
 
@@ -92,16 +95,17 @@ class ContractNotifier extends _$ContractNotifier {
   Future<void> getLeaseContract() async {
     try {
       final contracts =
-      await injection.getIt<IContractService>().getLeaseContract(
-        offset: 0,
-        filter: state.leaseFilter,
-      );
+          await injection.getIt<IContractService>().getLeaseContract(
+                offset: 0,
+                filter: state.leaseFilter,
+              );
       state = state.copyWith(
         leaseContracts: contracts,
       );
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
+      state = state.copyWith(status: Status.error);
     }
   }
 

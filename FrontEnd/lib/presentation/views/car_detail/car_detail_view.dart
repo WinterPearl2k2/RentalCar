@@ -111,8 +111,8 @@ class _CarDetailView
                               child: Row(
                                 children: [
                                   _priceWidget(
-                                    price: carDetail.nameCar,
-                                    nameCar: FormatUtils.formatNumber(
+                                    nameCar: carDetail.nameCar,
+                                    price: FormatUtils.formatNumber(
                                         carDetail.priceCar),
                                   ),
                                   const Spacer(),

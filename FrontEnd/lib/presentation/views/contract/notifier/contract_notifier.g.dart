@@ -6,7 +6,7 @@ part of 'contract_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$contractNotifierHash() => r'6e8b3fe31468feb7e79999a549b58e6a147feaa8';
+String _$contractNotifierHash() => r'755bcdb1613189838e45a77f3ed4a11159c7a8a1';
 
 /// See also [ContractNotifier].
 @ProviderFor(ContractNotifier)
