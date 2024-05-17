@@ -98,7 +98,6 @@ class LoginWidget extends StatelessWidget {
             onPressed: () => notifier.loginUser(
               email: emailController,
               password: passwordController,
-              context: context,
             ),
           ),
           SizedBox(

@@ -56,4 +56,17 @@ class ContractRepositoryImpl extends NetworkApi implements IContractRepository {
       },
     );
   }
+
+  @override
+  Future<int> getNotification() {
+    return get<int>(
+      url: EndPoint.restUrlGetNotification,
+      mapper: (response) {
+        if (response.data == null) {
+          return 0;
+        }
+        return response.data['count'];
+      },
+    );
+  }
 }

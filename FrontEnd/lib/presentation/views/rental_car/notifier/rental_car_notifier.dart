@@ -25,9 +25,39 @@ class RentalCarNotifier extends _$RentalCarNotifier {
       final dateTimeDto = await injection.getIt<ICarService>().getDateTimeCar(
             idCar: carData.idCar,
           );
-      final dateTime = DateTime.now();
+      DateTime dateTime = DateTimeFormatUtils.stringToDateFormat(
+        date: DateTimeFormatUtils.dateToFormat(
+          date: DateTime.now(),
+          format: 'dd/MM/yyyy',
+        ),
+        format: 'dd/MM/yyyy',
+      );
       final days = dateTime.difference(dateTime).inDays + 1;
       final total = carData.priceCar * days;
+      for (var date in dateTimeDto) {
+        while (true) {
+          final isInsideRange = dateTime.isAfter(
+                DateTime.parse(date.startDate).add(
+                  const Duration(days: -1),
+                ),
+              ) &&
+              dateTime.isBefore(
+                DateTime.parse(date.endDate),
+              );
+          print(dateTime.isAfter(DateTime.parse(date.startDate)));
+          print(dateTime.isAfter(DateTime.parse(date.endDate)));
+          print(dateTime);
+          print(DateTime.parse(date.startDate));
+          print(DateTime.parse(date.endDate));
+          if (isInsideRange) {
+            dateTime = dateTime.add(const Duration(days: 1));
+            print(dateTime);
+          } else {
+            break;
+          }
+        }
+      }
+      print(dateTime);
       state = state.copyWith(
         user: user,
         car: carData,
@@ -114,7 +144,8 @@ class RentalCarNotifier extends _$RentalCarNotifier {
     for (var dateTimeDto in state.dates) {
       final startDate = DateTime.parse(dateTimeDto.startDate);
       final endDate = DateTime.parse(dateTimeDto.endDate);
-      if (selectedStartDate.isBefore(startDate) && selectedEndDate.isAfter(endDate)) {
+      if (selectedStartDate.isBefore(startDate) &&
+          selectedEndDate.isAfter(endDate)) {
         isSelectRental = false;
         break;
       }

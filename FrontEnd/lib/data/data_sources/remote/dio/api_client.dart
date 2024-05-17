@@ -13,7 +13,7 @@ class ApiClient {
   //http://192.168.1.9:8080
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: "https://1vp996ng-4000.asse.devtunnels.ms",
+      baseUrl: "http://172.16.0.2:4000",
       contentType: 'application/json',
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),

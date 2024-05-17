@@ -50,20 +50,41 @@ class AuthNotifier extends _$AuthNotifier {
   Future<void> loginUser({
     required email,
     required password,
-    required context,
   }) async {
+    await login(email.text.trim(), password.text.trim());
+  }
+
+  Future<void> loginBegin({
+    required TextEditingController emailController,
+    required TextEditingController passwordController,
+  }) async {
+    final user = PreferenceService.getUser();
+    if (user.emailUser.isEmpty || user.passwordUser.isEmpty) return;
+    await Future.delayed(
+      const Duration(milliseconds: 1),
+    );
+    emailController.text = user.emailUser;
+    passwordController.text = user.passwordUser;
+    await login(user.emailUser, user.passwordUser);
+  }
+
+  Future<void> login(email, password) async {
     state = state.copyWith(wait: true);
     try {
       final loginDTO = LoginDTO(
-        email: email.text.trim(),
-        password: password.text.trim(),
+        email: email,
+        password: password,
         deviceToken: PreferenceService.getDeviceToken(),
       );
       await injection.getIt<IAuthService>().loginUser(
             loginDTO: loginDTO,
           );
+      PreferenceService.setUser(
+        email,
+        password,
+      );
       LogUtils.i(PreferenceService.getToken().toString());
-      Routes.goToNavigationView(context);
+      Routes.goToNavigationView(navigatorKey.currentState);
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
@@ -106,7 +127,8 @@ class AuthNotifier extends _$AuthNotifier {
         builder: (context) {
           return const AlertDialog(
             content: SuccessNotifyWidget(
-              title: 'Congratulations, you have successfully completed registration!',
+              title:
+                  'Congratulations, you have successfully completed registration!',
               label: 'Registration successful',
             ),
           );

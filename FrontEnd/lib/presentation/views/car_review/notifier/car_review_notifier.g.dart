@@ -6,7 +6,7 @@ part of 'car_review_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$carReviewNotifierHash() => r'108adca274572033aae2b937cc58b7315c19d3a3';
+String _$carReviewNotifierHash() => r'fa8a57b34a59c360c6e0a2e6da3e445b8bc16d8f';
 
 /// See also [CarReviewNotifier].
 @ProviderFor(CarReviewNotifier)

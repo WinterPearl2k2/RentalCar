@@ -49,6 +49,11 @@ class FirebaseService {
     );
   }
 
+  void handleMessage({required onChangedMessage, required onMessageOpenApp}) {
+    FirebaseMessaging.onMessage.listen(onChangedMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen(onChangedMessage);
+  }
+
   Future<void> initNotifications() async {
     await _message.requestPermission(
       alert: true,

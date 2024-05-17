@@ -17,6 +17,7 @@ class HomeState with _$HomeState {
     @Default(0) double instanceCar,
     @Default(0) int currentPage,
     @Default(2) int pageSize,
+    @Default(0) int numberNewNotification,
     @Default(false) bool isLoadingMore,
     @Default(Status.loading) Status statusTopCar,
     @Default(Status.loading) Status statusNearCar,

@@ -84,10 +84,47 @@ class HeaderHomeWidget extends StatelessWidget {
             width: 10.w,
           ),
           GestureDetector(
-            onTap: () => Routes.goToCarRentalManagementView(context),
-            child: SvgPicture.asset(
-              AssetUtils.icNotification,
-              width: 22.w,
+            onTap: () => {
+              Routes.goToCarRentalManagementView(context),
+              notifier.resetNumberNotification(),
+            },
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                SvgPicture.asset(
+                  AssetUtils.icNotification,
+                  width: 22.w,
+                ),
+                Positioned(
+                  left: 9.w,
+                  top: 3.h,
+                  child: Consumer(
+                    builder: (_, ref, __) {
+                      final count = ref.watch(
+                        homeNotifierProvider.select(
+                          (value) => value.numberNewNotification,
+                        ),
+                      );
+                      return Visibility(
+                        visible: count != 0,
+                        child: Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            color: ColorUtils.redColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            count.toString(),
+                            style: TextStyle(
+                              color: ColorUtils.whiteColor,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(

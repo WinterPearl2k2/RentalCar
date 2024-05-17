@@ -6,6 +6,7 @@ part 'rental_contract_dto.freezed.dart';
 class RentalContractDto with _$RentalContractDto {
   const factory RentalContractDto({
     @Default('') String nameOwner,
+    @Default('') String nameCustomer,
     @Default('') String phone,
     @Default('') String email,
     @Default('') String transaction,
@@ -22,6 +23,7 @@ class RentalContractDto with _$RentalContractDto {
   factory RentalContractDto.fromJson(Map<String, dynamic> json) {
     return RentalContractDto(
       nameOwner: json['NameOwner'] ?? '',
+      nameCustomer: json['NameUser'] ?? '',
       nameCar: json['NameCar'] ?? '',
       phone: json['Phone'] ?? '',
       email: json['Email'] ?? '',

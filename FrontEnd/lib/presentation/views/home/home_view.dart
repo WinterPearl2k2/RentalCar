@@ -27,6 +27,8 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
     notifier.getListTopCars();
     notifier.getLocationUser();
     notifier.getListAllCars();
+    notifier.getNumberNotification();
+    notifier.setListenMessage();
   }
 
   @override

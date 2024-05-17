@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	CarRepository "rent-car/repositories/car"
+	"sort"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -34,5 +35,9 @@ func GetDateTimeCar(context *gin.Context) {
 			EndDate:   rentalCar.EndDate,
 		})
 	}
+
+	sort.Slice(dates, func(i, j int) bool {
+		return dates[i].StartDate.Before(dates[j].StartDate)
+	})
 	context.JSON(http.StatusOK, dates)
 }

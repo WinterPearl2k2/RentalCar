@@ -38,8 +38,15 @@ func GetLeaseContractByIdUser(uuid uuid.UUID, offset int, filter int) ([]RentalC
 				First(&user).Error; err != nil {
 				return contracts, err
 			}
+			userOwner := models.User{}
+			if err := initializers.DB.
+				Where("id_user = ?", car.UserId).
+				First(&userOwner).Error; err != nil {
+				return contracts, err
+			}
 			contracts = append(contracts, RentalContractDto{
-				NameOwner:   user.NameUser,
+				NameOwner:   userOwner.NameUser,
+				NameUser:    user.NameUser,
 				Phone:       user.PhoneUser,
 				Email:       user.EmailUser,
 				Transaction: carRentail.Transaction,

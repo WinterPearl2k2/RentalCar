@@ -11,6 +11,8 @@ abstract class IContractService {
     required int filter,
   });
 
+  Future<int> getNotification();
+
   Future<List<RentalContractDto>> getLeaseContract({
     required int offset,
     required int filter,
@@ -56,5 +58,10 @@ class ContractServiceImpl implements IContractService {
       offset: offset,
       filter: filter,
     );
+  }
+
+  @override
+  Future<int> getNotification() {
+    return _contractRepository.getNotification();
   }
 }

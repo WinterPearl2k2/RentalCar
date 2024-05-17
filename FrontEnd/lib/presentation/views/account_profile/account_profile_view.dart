@@ -188,6 +188,7 @@ class _AccountProfileViewState
                                 hint: 'Your phone number',
                                 label: "Phone number",
                                 inputAction: TextInputAction.done,
+                                textInputType: TextInputType.number,
                                 controller: _phoneController,
                                 error: err
                                     ? const Text(

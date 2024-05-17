@@ -109,8 +109,8 @@ class Routes {
         RoutesName.auth, (Route<dynamic> route) => false);
   }
 
-  static void goToNavigationView(BuildContext context) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
+  static void goToNavigationView(NavigatorState? navigator) {
+    navigator?.pushNamedAndRemoveUntil(
       RoutesName.bottomNavigation,
       (Route<dynamic> route) => false,
     );

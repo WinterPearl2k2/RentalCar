@@ -15,7 +15,6 @@ type CarRentail struct {
 	CreatedAt   time.Time `gorm:"notNull;default:CURRENT_TIMESTAMP"`
 	StartDate   time.Time `gorm:"notNull"`
 	EndDate     time.Time `gorm:"notNull"`
-	IsRead      bool      `gorm:"type:boolean;default:false"`
 	UserId      uuid.UUID `gorm:"type:uuid;notNull"`
 	CarId       uuid.UUID `gorm:"type:uuid;notNull"`
 	Car         *Car      `gorm:"foreignKey:CarId"`

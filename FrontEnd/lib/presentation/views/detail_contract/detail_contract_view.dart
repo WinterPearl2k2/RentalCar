@@ -135,6 +135,17 @@ class _DetailContractViewState
                 ),
               ),
               TagNameWidget(
+                label: "Customer:",
+                title: Text(
+                  data.nameCustomer,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: ColorUtils.primaryColor,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              ),
+              TagNameWidget(
                 label: "Phone:",
                 title: GestureDetector(
                   onTap: () {

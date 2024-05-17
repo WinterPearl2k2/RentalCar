@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RentalContractDto {
   String get nameOwner => throw _privateConstructorUsedError;
+  String get nameCustomer => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get transaction => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $RentalContractDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {String nameOwner,
+      String nameCustomer,
       String phone,
       String email,
       String transaction,
@@ -69,6 +71,7 @@ class _$RentalContractDtoCopyWithImpl<$Res, $Val extends RentalContractDto>
   @override
   $Res call({
     Object? nameOwner = null,
+    Object? nameCustomer = null,
     Object? phone = null,
     Object? email = null,
     Object? transaction = null,
@@ -85,6 +88,10 @@ class _$RentalContractDtoCopyWithImpl<$Res, $Val extends RentalContractDto>
       nameOwner: null == nameOwner
           ? _value.nameOwner
           : nameOwner // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameCustomer: null == nameCustomer
+          ? _value.nameCustomer
+          : nameCustomer // ignore: cast_nullable_to_non_nullable
               as String,
       phone: null == phone
           ? _value.phone
@@ -144,6 +151,7 @@ abstract class _$$RentalContractDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {String nameOwner,
+      String nameCustomer,
       String phone,
       String email,
       String transaction,
@@ -169,6 +177,7 @@ class __$$RentalContractDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? nameOwner = null,
+    Object? nameCustomer = null,
     Object? phone = null,
     Object? email = null,
     Object? transaction = null,
@@ -185,6 +194,10 @@ class __$$RentalContractDtoImplCopyWithImpl<$Res>
       nameOwner: null == nameOwner
           ? _value.nameOwner
           : nameOwner // ignore: cast_nullable_to_non_nullable
+              as String,
+      nameCustomer: null == nameCustomer
+          ? _value.nameCustomer
+          : nameCustomer // ignore: cast_nullable_to_non_nullable
               as String,
       phone: null == phone
           ? _value.phone
@@ -239,6 +252,7 @@ class __$$RentalContractDtoImplCopyWithImpl<$Res>
 class _$RentalContractDtoImpl implements _RentalContractDto {
   const _$RentalContractDtoImpl(
       {this.nameOwner = '',
+      this.nameCustomer = '',
       this.phone = '',
       this.email = '',
       this.transaction = '',
@@ -254,6 +268,9 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
   @override
   @JsonKey()
   final String nameOwner;
+  @override
+  @JsonKey()
+  final String nameCustomer;
   @override
   @JsonKey()
   final String phone;
@@ -290,7 +307,7 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
 
   @override
   String toString() {
-    return 'RentalContractDto(nameOwner: $nameOwner, phone: $phone, email: $email, transaction: $transaction, statusCar: $statusCar, rentalPrice: $rentalPrice, rentalDays: $rentalDays, startDate: $startDate, endDate: $endDate, imgCar: $imgCar, nameCar: $nameCar, idCar: $idCar)';
+    return 'RentalContractDto(nameOwner: $nameOwner, nameCustomer: $nameCustomer, phone: $phone, email: $email, transaction: $transaction, statusCar: $statusCar, rentalPrice: $rentalPrice, rentalDays: $rentalDays, startDate: $startDate, endDate: $endDate, imgCar: $imgCar, nameCar: $nameCar, idCar: $idCar)';
   }
 
   @override
@@ -300,6 +317,8 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
             other is _$RentalContractDtoImpl &&
             (identical(other.nameOwner, nameOwner) ||
                 other.nameOwner == nameOwner) &&
+            (identical(other.nameCustomer, nameCustomer) ||
+                other.nameCustomer == nameCustomer) &&
             (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.transaction, transaction) ||
@@ -322,6 +341,7 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
   int get hashCode => Object.hash(
       runtimeType,
       nameOwner,
+      nameCustomer,
       phone,
       email,
       transaction,
@@ -345,6 +365,7 @@ class _$RentalContractDtoImpl implements _RentalContractDto {
 abstract class _RentalContractDto implements RentalContractDto {
   const factory _RentalContractDto(
       {final String nameOwner,
+      final String nameCustomer,
       final String phone,
       final String email,
       final String transaction,
@@ -359,6 +380,8 @@ abstract class _RentalContractDto implements RentalContractDto {
 
   @override
   String get nameOwner;
+  @override
+  String get nameCustomer;
   @override
   String get phone;
   @override

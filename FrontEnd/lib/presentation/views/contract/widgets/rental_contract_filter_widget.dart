@@ -12,7 +12,7 @@ class RentalContractFilterWidget extends StatelessWidget {
     required this.widget,
   });
 
-  final ContractWidget widget;
+  final RentalContractWidget widget;
 
   @override
   Widget build(BuildContext context) {

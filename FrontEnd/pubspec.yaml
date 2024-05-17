@@ -90,13 +90,13 @@ dev_dependencies:
   json_serializable: ^6.7.1
 
 flutter_native_splash:
-  image: "assets/images/img_loading.gif"
+  image: "assets/images/DongQuanLogo.png"
   android: true
   ios: true
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/img_loading.gif"
+  image_path: "assets/images/DongQuanLogo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   icon_size: 100
 

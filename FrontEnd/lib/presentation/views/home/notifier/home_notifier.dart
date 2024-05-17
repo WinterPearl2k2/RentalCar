@@ -1,8 +1,12 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rental_car/application/services/car_service.dart';
+import 'package:rental_car/application/services/contract_service.dart';
+import 'package:rental_car/application/services/firebase_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
+import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
@@ -143,5 +147,33 @@ class HomeNotifier extends _$HomeNotifier {
       PreferenceService.setLocation(
           latCar: position.latitude, longCar: position.longitude);
     }
+  }
+
+  Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
+    await getNumberNotification();
+  }
+
+  Future<void> getNumberNotification() async {
+    try {
+      final count = await injection.getIt<IContractService>().getNotification();
+      state = state.copyWith(numberNewNotification: count);
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+    }
+  }
+
+  Future<void> _handleMessage(RemoteMessage msg) async {
+    await getNumberNotification();
+  }
+
+  Future<void> setListenMessage() async {
+    injection.getIt<FirebaseService>().handleMessage(
+          onChangedMessage: _handleMessage,
+          onMessageOpenApp: _handleOpenAppMessage,
+        );
+  }
+
+  void resetNumberNotification() {
+    state = state.copyWith(numberNewNotification: 0);
   }
 }

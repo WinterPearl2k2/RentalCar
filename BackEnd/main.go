@@ -5,6 +5,7 @@ import (
 	AuthController "rent-car/controllers/auth"
 	CarController "rent-car/controllers/car"
 	ContractController "rent-car/controllers/contract"
+	NotificationController "rent-car/controllers/notification"
 	UserController "rent-car/controllers/profile"
 	"rent-car/initializers"
 	"rent-car/models"
@@ -43,6 +44,9 @@ func main() {
 	router.GET("/getRentalContract/:offset/:filter", ContractController.GetRentalContract)
 	router.PUT("/signContract/:id", ContractController.SignContract)
 	router.GET("/getLeaseContract/:offset/:filter", ContractController.GetLeaseContract)
+
+	//Notification
+	router.GET("/getNotification", NotificationController.GetNewNotification)
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)

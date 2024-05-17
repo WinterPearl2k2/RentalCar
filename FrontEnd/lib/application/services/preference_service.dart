@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:rental_car/domain/model/location.dart';
 import 'package:rental_car/domain/model/token.dart';
+import 'package:rental_car/domain/model/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceService {
@@ -9,6 +10,7 @@ class PreferenceService {
 
   static const String _token = 'token';
   static const String _uuid = 'uuid';
+  static const String _user = 'user';
   static const String _location = 'location';
   static const String _deviceToken = 'device_token';
 
@@ -48,6 +50,26 @@ class PreferenceService {
     );
   }
 
+  static void setUser(String email, String password) {
+    _prefs.setString(
+      _user,
+      jsonEncode(
+        User(
+          emailUser: email,
+          passwordUser: password,
+        ),
+      ),
+    );
+  }
+
+  static User getUser() {
+    final data = _prefs.getString(_user);
+    if (data != null) {
+      return User.fromJson(jsonDecode(data));
+    }
+    return const User();
+  }
+
   static Token getToken() {
     final data = _prefs.getString(_token);
     if (data != null) {
@@ -70,6 +92,10 @@ class PreferenceService {
 
   static clearUUID() {
     _prefs.remove(_uuid);
+  }
+
+  static clearUser() {
+    _prefs.remove(_user);
   }
 
   static void setLocation({
