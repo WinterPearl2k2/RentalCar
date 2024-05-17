@@ -1,5 +1,4 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
@@ -132,16 +131,10 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   Future<void> getLocationUser() async {
-    PermissionStatus permission = await Permission.location.request();
-    if (permission.isGranted) {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-      state = state.copyWith(position: position);
-      List<Placemark> placeMarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
-      state = state.copyWith(placeMarks: placeMarks);
-      PreferenceService.setLocation(
-          latCar: position.latitude, longCar: position.longitude);
-    }
+    double currentLatitude = PreferenceService.getLocation().latitude;
+    double currentLongitude = PreferenceService.getLocation().longitude;
+    List<Placemark> placeMarks =
+        await placemarkFromCoordinates(currentLatitude, currentLongitude);
+    state = state.copyWith(placeMarks: placeMarks);
   }
 }

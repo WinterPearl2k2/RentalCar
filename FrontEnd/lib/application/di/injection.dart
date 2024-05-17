@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:rental_car/application/services/auth_service.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/contract_service.dart';
+import 'package:rental_car/application/services/location_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/repositories/car_repository_impl.dart';
 import 'package:rental_car/data/repositories/contract_repository_impl.dart';
@@ -24,6 +25,9 @@ class Injection {
     //SharePreference
     getIt.registerSingletonAsync(
       () => PreferenceService.init(),
+    );
+    getIt.registerLazySingleton<LocationService>(
+      () => LocationService(),
     );
     //IUserRepository
     getIt.registerLazySingleton<IUserRepository>(
