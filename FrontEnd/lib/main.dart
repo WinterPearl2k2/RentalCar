@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/di/injection.dart';
+import 'package:rental_car/application/services/location_service.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'application/services/local_notification_service.dart';
 import 'firebase_options.dart';
@@ -21,6 +22,7 @@ void main() async {
   );
   injection.configDependencies();
   await LocalNotificationService().init();
+  await LocationService().init();
   runApp(const ProviderScope(child: MyApp()));
 }
 
