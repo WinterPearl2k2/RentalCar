@@ -8,7 +8,6 @@ import 'package:rental_car/presentation/views/auth/notifier/auth_notifier.dart';
 import '../../../../application/utils/colors_utils.dart';
 import '../../../common/widgets/text_button_widget.dart';
 import '../../../common/widgets/text_form_field.dart';
-import 'icon_button_widget.dart';
 
 class RegisterWidget extends StatelessWidget {
   const RegisterWidget({

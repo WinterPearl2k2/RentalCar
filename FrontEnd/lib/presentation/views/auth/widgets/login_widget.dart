@@ -9,7 +9,6 @@ import '../../../../application/utils/assets_utils.dart';
 import '../../../../application/utils/colors_utils.dart';
 import '../../../common/widgets/text_button_widget.dart';
 import '../../../common/widgets/text_form_field.dart';
-import 'icon_button_widget.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({
@@ -31,7 +30,7 @@ class LoginWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Welcome to, RentalCar',
+            'Welcome to, CarRental',
             style: TextStyle(
                 color: ColorUtils.primaryColor,
                 fontSize: 20.sp,

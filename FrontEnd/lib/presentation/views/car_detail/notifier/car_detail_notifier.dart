@@ -16,7 +16,7 @@ class CarDetailNotifier extends _$CarDetailNotifier {
   @override
   CarDetailState build() => const CarDetailState();
   int currentPage = 1;
-  final int pageSize = 1;
+  final int pageSize = 2;
 
   Future<void> getCarById({required String idCar}) async {
     try {
