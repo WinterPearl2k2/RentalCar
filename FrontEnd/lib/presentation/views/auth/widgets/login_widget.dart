@@ -35,7 +35,7 @@ class LoginWidget extends StatelessWidget {
             style: TextStyle(
                 color: ColorUtils.primaryColor,
                 fontSize: 20.sp,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.bold,),
           ),
           Text(
             'Enter your account to continue',
@@ -44,11 +44,11 @@ class LoginWidget extends StatelessWidget {
               fontSize: 14.sp,
             ),
           ),
-          SizedBox(
-            height: 10.h,
-          ),
-          SizedBox(
-            height: 20.h,
+          Image.asset(
+            AssetUtils.imgLoading,
+            height: 120.h,
+            width: 500.w,
+            fit: BoxFit.cover,
           ),
           TextFormFieldCustomWidget(
             hint: 'Your email address',
@@ -119,55 +119,40 @@ class LoginWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20.h,
+            height: 10.h,
           ),
           Row(
             children: [
-              Expanded(
-                child: Divider(
-                  color: ColorUtils.textColor,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Text(
-                  "Or login with",
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14,
-                  ),
-                ),
+              SizedBox(
+                width: 20.w,
               ),
               Expanded(
                 child: Divider(
                   color: ColorUtils.textColor,
                 ),
               ),
-            ],
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButtonWidget(
-                icon: Image.asset(
-                  'assets/icons/ic_google.png',
-                  width: 30.w,
-                  height: 30.h,
+              SizedBox(
+                width: 10.w,
+              ),
+              SvgPicture.asset(
+                AssetUtils.icFoot,
+                colorFilter: ColorFilter.mode(
+                  ColorUtils.textColor,
+                  BlendMode.srcIn,
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Expanded(
+                child: Divider(
+                  color: ColorUtils.textColor,
                 ),
               ),
               SizedBox(
                 width: 20.w,
               ),
-              IconButtonWidget(
-                icon: Image.asset(
-                  'assets/icons/ic_facebook.png',
-                  width: 30.w,
-                  height: 30.h,
-                ),
-              ),
+              //
             ],
           ),
           SizedBox(

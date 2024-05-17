@@ -189,59 +189,45 @@ class RegisterWidget extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 10.h,
+            height: 20.h,
           ),
           Row(
             children: [
-              Expanded(
-                child: Divider(
-                  color: ColorUtils.textColor,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 10.w),
-                child: Text(
-                  "Or register with",
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14,
-                  ),
-                ),
+              SizedBox(
+                width: 20.w,
               ),
               Expanded(
                 child: Divider(
                   color: ColorUtils.textColor,
                 ),
               ),
-            ],
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButtonWidget(
-                icon: Image.asset(
-                  'assets/icons/ic_google.png',
-                  width: 30.w,
-                  height: 30.h,
+              SizedBox(
+                width: 10.w,
+              ),
+              SvgPicture.asset(
+                AssetUtils.icFoot,
+                colorFilter: ColorFilter.mode(
+                  ColorUtils.textColor,
+                  BlendMode.srcIn,
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Expanded(
+                child: Divider(
+                  color: ColorUtils.textColor,
                 ),
               ),
               SizedBox(
                 width: 20.w,
               ),
-              IconButtonWidget(
-                icon: Image.asset(
-                  'assets/icons/ic_facebook.png',
-                  width: 30.w,
-                  height: 30.h,
-                ),
-              ),
+              //
             ],
           ),
+
           SizedBox(
-            height: 10.h,
+            height: 20.h,
           ),
           Align(
             alignment: Alignment.centerRight,

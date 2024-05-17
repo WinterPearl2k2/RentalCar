@@ -20,6 +20,7 @@ class AssetUtils {
   static const icGallery = 'assets/icons/ic_gallery.svg';
   static const icDirect = 'assets/icons/ic_direct.svg';
   static const icBack = 'assets/icons/ic_arrow_back.svg';
+  static const icFoot = 'assets/icons/ic_foot.svg';
 
   //images
   static const imgHondaBrV = 'assets/images/img_honda_br_v.jpg';
