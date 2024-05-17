@@ -10,16 +10,16 @@ import 'package:rental_car/presentation/views/contract/widgets/contract_item_wid
 import 'package:rental_car/presentation/views/contract/widgets/rental_contract_filter_widget.dart';
 import '../../../../application/utils/colors_utils.dart';
 
-class ContractWidget extends StatefulWidget {
+class RentalContractWidget extends StatefulWidget {
   final ContractNotifier notifier;
 
-  const ContractWidget({super.key, required this.notifier});
+  const RentalContractWidget({super.key, required this.notifier});
 
   @override
-  State<ContractWidget> createState() => _ContractWidgetState();
+  State<RentalContractWidget> createState() => _RentalContractWidgetState();
 }
 
-class _ContractWidgetState extends State<ContractWidget>
+class _RentalContractWidgetState extends State<RentalContractWidget>
     with AutomaticKeepAliveClientMixin {
   @override
   void initState() {

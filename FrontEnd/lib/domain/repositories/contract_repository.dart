@@ -18,4 +18,6 @@ abstract class IContractRepository {
     required int offset,
     required int filter,
   });
+
+  Future<int> getNotification();
 }

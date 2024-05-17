@@ -10,6 +10,7 @@ import (
 
 type RentalContractDto struct {
 	NameOwner   string    `binding:"required"`
+	NameUser    string    `binding:"required"`
 	NameCar     string    `binding:"required"`
 	Phone       string    `binding:"required"`
 	Email       string    `binding:"required"`
@@ -48,8 +49,15 @@ func GetRentalContractById(uuid uuid.UUID, offset int, filter int) ([]RentalCont
 			First(&user).Error; err != nil {
 			return contracts, err
 		}
+		userOwner := models.User{}
+		if err := initializers.DB.
+			Where("id_user = ?", car.UserId).
+			First(&userOwner).Error; err != nil {
+			return contracts, err
+		}
 		contracts = append(contracts, RentalContractDto{
-			NameOwner:   user.NameUser,
+			NameOwner:   userOwner.NameUser,
+			NameUser:    user.NameUser,
 			Phone:       user.PhoneUser,
 			Email:       user.EmailUser,
 			Transaction: carRentail.Transaction,

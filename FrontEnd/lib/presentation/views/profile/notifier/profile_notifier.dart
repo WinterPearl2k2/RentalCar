@@ -26,6 +26,7 @@ class ProfileNotifier extends _$ProfileNotifier {
           );
       PreferenceService.clearUUID();
       PreferenceService.clearToken();
+      PreferenceService.clearUser();
       Routes.goToAuthScreen(context);
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());

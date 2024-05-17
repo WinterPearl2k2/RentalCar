@@ -50,6 +50,7 @@ func GetRentalCarByIdUser(uuid uuid.UUID) ([]UserRentalDto, error) {
 				Transaction: carRentail.Transaction.String(),
 			})
 		}
+		initializers.DB.Model(&carRentails).Update("is_readed", false)
 	}
 
 	for _, car := range cars {
@@ -74,6 +75,7 @@ func GetRentalCarByIdUser(uuid uuid.UUID) ([]UserRentalDto, error) {
 				StatusCar:   carRentail.StatusCar,
 				Transaction: carRentail.Transaction.String(),
 			})
+			initializers.DB.Model(&carRentails).Update("is_readed", false)
 		}
 	}
 

@@ -22,6 +22,7 @@ mixin _$HomeState {
   double get instanceCar => throw _privateConstructorUsedError;
   int get currentPage => throw _privateConstructorUsedError;
   int get pageSize => throw _privateConstructorUsedError;
+  int get numberNewNotification => throw _privateConstructorUsedError;
   bool get isLoadingMore => throw _privateConstructorUsedError;
   Status get statusTopCar => throw _privateConstructorUsedError;
   Status get statusNearCar => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $HomeStateCopyWith<$Res> {
       double instanceCar,
       int currentPage,
       int pageSize,
+      int numberNewNotification,
       bool isLoadingMore,
       Status statusTopCar,
       Status statusNearCar,
@@ -75,6 +77,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? instanceCar = null,
     Object? currentPage = null,
     Object? pageSize = null,
+    Object? numberNewNotification = null,
     Object? isLoadingMore = null,
     Object? statusTopCar = null,
     Object? statusNearCar = null,
@@ -107,6 +110,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
       pageSize: null == pageSize
           ? _value.pageSize
           : pageSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      numberNewNotification: null == numberNewNotification
+          ? _value.numberNewNotification
+          : numberNewNotification // ignore: cast_nullable_to_non_nullable
               as int,
       isLoadingMore: null == isLoadingMore
           ? _value.isLoadingMore
@@ -155,6 +162,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       double instanceCar,
       int currentPage,
       int pageSize,
+      int numberNewNotification,
       bool isLoadingMore,
       Status statusTopCar,
       Status statusNearCar,
@@ -181,6 +189,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? instanceCar = null,
     Object? currentPage = null,
     Object? pageSize = null,
+    Object? numberNewNotification = null,
     Object? isLoadingMore = null,
     Object? statusTopCar = null,
     Object? statusNearCar = null,
@@ -213,6 +222,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
       pageSize: null == pageSize
           ? _value.pageSize
           : pageSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      numberNewNotification: null == numberNewNotification
+          ? _value.numberNewNotification
+          : numberNewNotification // ignore: cast_nullable_to_non_nullable
               as int,
       isLoadingMore: null == isLoadingMore
           ? _value.isLoadingMore
@@ -256,6 +269,7 @@ class _$HomeStateImpl implements _HomeState {
       this.instanceCar = 0,
       this.currentPage = 0,
       this.pageSize = 2,
+      this.numberNewNotification = 0,
       this.isLoadingMore = false,
       this.statusTopCar = Status.loading,
       this.statusNearCar = Status.loading,
@@ -316,6 +330,9 @@ class _$HomeStateImpl implements _HomeState {
   final int pageSize;
   @override
   @JsonKey()
+  final int numberNewNotification;
+  @override
+  @JsonKey()
   final bool isLoadingMore;
   @override
   @JsonKey()
@@ -344,7 +361,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, isLoadingMore: $isLoadingMore, statusTopCar: $statusTopCar, statusNearCar: $statusNearCar, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, position: $position)';
+    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, numberNewNotification: $numberNewNotification, isLoadingMore: $isLoadingMore, statusTopCar: $statusTopCar, statusNearCar: $statusNearCar, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, position: $position)';
   }
 
   @override
@@ -364,6 +381,8 @@ class _$HomeStateImpl implements _HomeState {
                 other.currentPage == currentPage) &&
             (identical(other.pageSize, pageSize) ||
                 other.pageSize == pageSize) &&
+            (identical(other.numberNewNotification, numberNewNotification) ||
+                other.numberNewNotification == numberNewNotification) &&
             (identical(other.isLoadingMore, isLoadingMore) ||
                 other.isLoadingMore == isLoadingMore) &&
             (identical(other.statusTopCar, statusTopCar) ||
@@ -389,6 +408,7 @@ class _$HomeStateImpl implements _HomeState {
       instanceCar,
       currentPage,
       pageSize,
+      numberNewNotification,
       isLoadingMore,
       statusTopCar,
       statusNearCar,
@@ -412,6 +432,7 @@ abstract class _HomeState implements HomeState {
       final double instanceCar,
       final int currentPage,
       final int pageSize,
+      final int numberNewNotification,
       final bool isLoadingMore,
       final Status statusTopCar,
       final Status statusNearCar,
@@ -432,6 +453,8 @@ abstract class _HomeState implements HomeState {
   int get currentPage;
   @override
   int get pageSize;
+  @override
+  int get numberNewNotification;
   @override
   bool get isLoadingMore;
   @override

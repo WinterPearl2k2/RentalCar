@@ -39,6 +39,7 @@ func CancelRentalCar(context *gin.Context) {
 	}
 	rentalCar.StatusCar = 2
 	rentalCar.CreatedAt = time.Now()
+	rentalCar.IsReaded = true
 
 	errUpdate := initializers.DB.Where("transaction=?", id).Updates(rentalCar).Error
 	if errUpdate != nil {

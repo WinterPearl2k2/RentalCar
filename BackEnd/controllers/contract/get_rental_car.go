@@ -19,7 +19,6 @@ func GetRentalCar(context *gin.Context) {
 	}
 
 	car_rentails, err := ContractRepository.GetRentalCarByIdUser(uuid)
-
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			context.JSON(http.StatusNotFound, gin.H{

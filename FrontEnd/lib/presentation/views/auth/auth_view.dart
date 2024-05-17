@@ -25,6 +25,10 @@ class _AuthViewState extends BaseStateDelegate<AuthView, AuthNotifier> {
   @override
   void initNotifier() {
     notifier = ref.read(authNotifierProvider.notifier);
+    notifier.loginBegin(
+      emailController: emailController,
+      passwordController: passwordController,
+    );
   }
 
   @override

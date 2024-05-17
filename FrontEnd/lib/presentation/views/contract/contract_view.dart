@@ -25,6 +25,7 @@ class _ContractViewState
   void initNotifier() {
     notifier = ref.read(contractNotifierProvider.notifier);
     notifier.setUpData();
+    notifier.setListenMessage();
     _controller = TabController(length: 2, vsync: this);
   }
 
@@ -65,7 +66,7 @@ class _ContractViewState
               controller: _controller,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                ContractWidget(notifier: notifier),
+                RentalContractWidget(notifier: notifier),
                 LeaseContractWidget(notifier: notifier)
               ],
             ),

@@ -1,8 +1,10 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rental_car/application/services/contract_service.dart';
 import 'package:rental_car/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../application/services/firebase_service.dart';
 import '../../../../application/utils/log_utils.dart';
 import '../../../../data/data_sources/remote/dio/api_exception.dart';
 import '../state/contract_state.dart';
@@ -25,10 +27,10 @@ class ContractNotifier extends _$ContractNotifier {
   Future<void> getRentalContract() async {
     try {
       final contracts =
-          await injection.getIt<IContractService>().getRentalContract(
-                offset: 0,
-                filter: state.rentalFilter,
-              );
+      await injection.getIt<IContractService>().getRentalContract(
+        offset: 0,
+        filter: state.rentalFilter,
+      );
       state = state.copyWith(
         rentalContracts: contracts,
       );
@@ -73,10 +75,10 @@ class ContractNotifier extends _$ContractNotifier {
   Future<void> getMoreRentalContract() async {
     try {
       final contracts =
-          await injection.getIt<IContractService>().getRentalContract(
-                offset: state.rentalContracts.length,
-                filter: state.rentalFilter,
-              );
+      await injection.getIt<IContractService>().getRentalContract(
+        offset: state.rentalContracts.length,
+        filter: state.rentalFilter,
+      );
       if (contracts.isEmpty) return;
       state = state.copyWith(
         rentalContracts: [...state.rentalContracts, ...contracts],
@@ -90,10 +92,10 @@ class ContractNotifier extends _$ContractNotifier {
   Future<void> getLeaseContract() async {
     try {
       final contracts =
-          await injection.getIt<IContractService>().getLeaseContract(
-                offset: 0,
-                filter: state.leaseFilter,
-              );
+      await injection.getIt<IContractService>().getLeaseContract(
+        offset: 0,
+        filter: state.leaseFilter,
+      );
       state = state.copyWith(
         leaseContracts: contracts,
       );
@@ -106,10 +108,10 @@ class ContractNotifier extends _$ContractNotifier {
   Future<void> getMoreLeaseContract() async {
     try {
       final contracts =
-          await injection.getIt<IContractService>().getLeaseContract(
-                offset: state.leaseContracts.length,
-                filter: state.leaseFilter,
-              );
+      await injection.getIt<IContractService>().getLeaseContract(
+        offset: state.leaseContracts.length,
+        filter: state.leaseFilter,
+      );
       if (contracts.isEmpty) return;
       state = state.copyWith(
         leaseContracts: [...state.leaseContracts, ...contracts],
@@ -118,5 +120,22 @@ class ContractNotifier extends _$ContractNotifier {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
     }
+  }
+
+  Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
+    await getRentalContract();
+    await getLeaseContract();
+  }
+
+  Future<void> _handleMessage(RemoteMessage msg) async {
+    await getRentalContract();
+    await getLeaseContract();
+  }
+
+  Future<void> setListenMessage() async {
+    injection.getIt<FirebaseService>().handleMessage(
+      onChangedMessage: _handleMessage,
+      onMessageOpenApp: _handleOpenAppMessage,
+    );
   }
 }
