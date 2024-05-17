@@ -94,13 +94,9 @@ class Routes {
           ),
         );
       default:
-        return MaterialPageRoute(builder: (_) {
-          return const Scaffold(
-            body: Center(
-              child: Text('No route defined'),
-            ),
-          );
-        });
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const AuthView(),
+        );
     }
   }
 

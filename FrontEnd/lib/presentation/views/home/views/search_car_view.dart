@@ -59,12 +59,12 @@ class _SearchCarViewState
               ),
               onChanged: (_) {
                 notifier.isCheckSearch(
-                  searchController: searchController.text.trim(),
+                  searchController: searchController.text.toUpperCase().trim(),
                 );
                 if (_debounce?.isActive ?? false) _debounce?.cancel();
-                _debounce = Timer(const Duration(milliseconds: 800), () {
+                _debounce = Timer(const Duration(milliseconds: 1000), () {
                   notifier.getListSearchCars(
-                    nameCar: searchController.text.trim(),
+                    nameCar: searchController.text.toUpperCase().trim(),
                   );
                 });
               },
