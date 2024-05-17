@@ -8,7 +8,7 @@ import (
 func GetCarsByName(name string) ([]models.Car, error) {
 	var cars []models.Car
 
-	err := initializers.DB.Where("name_car LIKE ?", "%"+name+"%").Find(&cars).Error
+	err := initializers.DB.Where("LOWER(name_car) LIKE LOWER(?)", "%"+name+"%").Find(&cars).Error
 	if err != nil {
 		return nil, err
 	}
