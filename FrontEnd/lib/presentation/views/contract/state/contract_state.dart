@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rental_car/presentation/common/enum/status.dart';
 
 import '../../../../data/dtos/rental_contract_dto.dart';
 
@@ -12,5 +13,6 @@ class ContractState with _$ContractState {
     @Default(-1) int rentalFilter,
     @Default(-1) int leaseFilter,
     @Default(false) bool wait,
+    @Default(Status.loading) Status status,
   }) = _ContractState;
 }
