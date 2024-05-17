@@ -51,7 +51,7 @@ class HeaderCarDetailWidget extends StatelessWidget {
         ),
         latCar != 0.0
             ? Positioned(
-                top: 33,
+                top: 40,
                 right: 10,
                 child: GestureDetector(
                   onTap: () async => await carDetailNotifier.launchMap(
