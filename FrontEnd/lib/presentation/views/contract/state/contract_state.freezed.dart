@@ -23,6 +23,7 @@ mixin _$ContractState {
   int get rentalFilter => throw _privateConstructorUsedError;
   int get leaseFilter => throw _privateConstructorUsedError;
   bool get wait => throw _privateConstructorUsedError;
+  Status get status => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ContractStateCopyWith<ContractState> get copyWith =>
@@ -40,7 +41,8 @@ abstract class $ContractStateCopyWith<$Res> {
       List<RentalContractDto> leaseContracts,
       int rentalFilter,
       int leaseFilter,
-      bool wait});
+      bool wait,
+      Status status});
 }
 
 /// @nodoc
@@ -61,6 +63,7 @@ class _$ContractStateCopyWithImpl<$Res, $Val extends ContractState>
     Object? rentalFilter = null,
     Object? leaseFilter = null,
     Object? wait = null,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
       rentalContracts: null == rentalContracts
@@ -83,6 +86,10 @@ class _$ContractStateCopyWithImpl<$Res, $Val extends ContractState>
           ? _value.wait
           : wait // ignore: cast_nullable_to_non_nullable
               as bool,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
     ) as $Val);
   }
 }
@@ -100,7 +107,8 @@ abstract class _$$ContractStateImplCopyWith<$Res>
       List<RentalContractDto> leaseContracts,
       int rentalFilter,
       int leaseFilter,
-      bool wait});
+      bool wait,
+      Status status});
 }
 
 /// @nodoc
@@ -119,6 +127,7 @@ class __$$ContractStateImplCopyWithImpl<$Res>
     Object? rentalFilter = null,
     Object? leaseFilter = null,
     Object? wait = null,
+    Object? status = null,
   }) {
     return _then(_$ContractStateImpl(
       rentalContracts: null == rentalContracts
@@ -141,6 +150,10 @@ class __$$ContractStateImplCopyWithImpl<$Res>
           ? _value.wait
           : wait // ignore: cast_nullable_to_non_nullable
               as bool,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status,
     ));
   }
 }
@@ -153,7 +166,8 @@ class _$ContractStateImpl implements _ContractState {
       final List<RentalContractDto> leaseContracts = const [],
       this.rentalFilter = -1,
       this.leaseFilter = -1,
-      this.wait = false})
+      this.wait = false,
+      this.status = Status.loading})
       : _rentalContracts = rentalContracts,
         _leaseContracts = leaseContracts;
 
@@ -184,10 +198,13 @@ class _$ContractStateImpl implements _ContractState {
   @override
   @JsonKey()
   final bool wait;
+  @override
+  @JsonKey()
+  final Status status;
 
   @override
   String toString() {
-    return 'ContractState(rentalContracts: $rentalContracts, leaseContracts: $leaseContracts, rentalFilter: $rentalFilter, leaseFilter: $leaseFilter, wait: $wait)';
+    return 'ContractState(rentalContracts: $rentalContracts, leaseContracts: $leaseContracts, rentalFilter: $rentalFilter, leaseFilter: $leaseFilter, wait: $wait, status: $status)';
   }
 
   @override
@@ -203,7 +220,8 @@ class _$ContractStateImpl implements _ContractState {
                 other.rentalFilter == rentalFilter) &&
             (identical(other.leaseFilter, leaseFilter) ||
                 other.leaseFilter == leaseFilter) &&
-            (identical(other.wait, wait) || other.wait == wait));
+            (identical(other.wait, wait) || other.wait == wait) &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
@@ -213,7 +231,8 @@ class _$ContractStateImpl implements _ContractState {
       const DeepCollectionEquality().hash(_leaseContracts),
       rentalFilter,
       leaseFilter,
-      wait);
+      wait,
+      status);
 
   @JsonKey(ignore: true)
   @override
@@ -228,7 +247,8 @@ abstract class _ContractState implements ContractState {
       final List<RentalContractDto> leaseContracts,
       final int rentalFilter,
       final int leaseFilter,
-      final bool wait}) = _$ContractStateImpl;
+      final bool wait,
+      final Status status}) = _$ContractStateImpl;
 
   @override
   List<RentalContractDto> get rentalContracts;
@@ -240,6 +260,8 @@ abstract class _ContractState implements ContractState {
   int get leaseFilter;
   @override
   bool get wait;
+  @override
+  Status get status;
   @override
   @JsonKey(ignore: true)
   _$$ContractStateImplCopyWith<_$ContractStateImpl> get copyWith =>

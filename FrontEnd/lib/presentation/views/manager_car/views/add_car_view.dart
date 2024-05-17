@@ -56,7 +56,6 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         body: Container(
           margin:
               const EdgeInsets.only(top: 40, left: 30, right: 30, bottom: 20).r,
@@ -100,6 +99,7 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
               SizedBox(
                 height: 10.h,
               ),
+
               Consumer(
                 builder: (_, WidgetRef ref, __) {
                   final stateView = ref.watch(
@@ -169,7 +169,7 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                 builder: (_, WidgetRef ref, __) {
                   final stateView = ref.watch(
                     managerCarNotifierProvider.select(
-                      (value) => value.addCarStep,
+                          (value) => value.addCarStep,
                     ),
                   );
                   final isCheckNameCar = ref.watch(
@@ -267,7 +267,8 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                     onPressed: () => notifier.changeForwardView(),
                   );
                 },
-              ),
+              )
+
             ],
           ),
         ),
