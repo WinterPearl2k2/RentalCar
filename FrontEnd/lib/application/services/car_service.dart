@@ -27,10 +27,7 @@ abstract class ICarService {
 
   Future<List<TopCarDTO>> getTopCar();
 
-  Future<List<AllCarDTO>> getAllCar({
-    required int page,
-    required int pageSize,
-  });
+  Future<List<AllCarDTO>> getAllCar();
 
   Future<CarDetailDTO> getCarById({
     required String idCar,
@@ -106,9 +103,8 @@ class CarServiceImpl implements ICarService {
   }
 
   @override
-  Future<List<AllCarDTO>> getAllCar(
-      {required int page, required int pageSize}) {
-    return _carRepository.getAllCar(page: page, pageSize: pageSize);
+  Future<List<AllCarDTO>> getAllCar() {
+    return _carRepository.getAllCar();
   }
 
   @override

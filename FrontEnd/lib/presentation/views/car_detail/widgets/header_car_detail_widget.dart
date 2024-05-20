@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/routes/routes.dart';
@@ -43,10 +45,9 @@ class HeaderCarDetailWidget extends StatelessWidget {
               ),
           errorWidget: (_, __, error) => const Icon(Icons.error),
         ),
-        SafeArea(
-          child: Positioned(
-            top: 30,
-            left: 15,
+        Positioned(
+          left: 10,
+          child: SafeArea(
             child: IconButton(
               onPressed: () => Routes.goToPreviousView(context),
               icon: Icon(
@@ -58,37 +59,38 @@ class HeaderCarDetailWidget extends StatelessWidget {
         ),
         latCar != 0.0
             ? Positioned(
-                top: 40,
-                right: 10,
+              right: 10,
+              child: SafeArea(
                 child: GestureDetector(
-                  onTap: () async => await carDetailNotifier.launchMap(
-                      latCar: latCar ?? 10.0, longCar: longCar ?? 10.0),
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
-                    decoration: BoxDecoration(
-                      color: ColorUtils.whiteColor,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(15),
+                    onTap: () async => await carDetailNotifier.launchMap(
+                        latCar: latCar ?? 10.0, longCar: longCar ?? 10.0),
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
+                      decoration: BoxDecoration(
+                        color: ColorUtils.whiteColor,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            FormatUtils.formatDistance(distance ?? 0),
+                          ),
+                          SvgPicture.asset(
+                            AssetUtils.icDirect,
+                            colorFilter: ColorFilter.mode(
+                              ColorUtils.primaryColor,
+                              BlendMode.srcIn,
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    child: Column(
-                      children: [
-                        Text(
-                          FormatUtils.formatDistance(distance ?? 0),
-                        ),
-                        SvgPicture.asset(
-                          AssetUtils.icDirect,
-                          colorFilter: ColorFilter.mode(
-                            ColorUtils.primaryColor,
-                            BlendMode.srcIn,
-                          ),
-                        )
-                      ],
-                    ),
                   ),
-                ),
-              )
+              ),
+            )
             : const SizedBox()
       ],
     );

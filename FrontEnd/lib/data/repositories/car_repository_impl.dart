@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
@@ -95,12 +93,10 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<List<AllCarDTO>> getAllCar(
-      {required int page, required int pageSize}) {
+  Future<List<AllCarDTO>> getAllCar() {
     return get<List<AllCarDTO>>(
       url: '${EndPoint.restUrlGetAllCar}'
           '?userID=${PreferenceService.getUUID()}'
-          '&page=$page&pageSize=$pageSize'
           '&latitude=${PreferenceService.getLocation().latitude}'
           '&longitude=${PreferenceService.getLocation().longitude}',
       mapper: (response) {

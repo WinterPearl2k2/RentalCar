@@ -82,50 +82,16 @@ class HomeNotifier extends _$HomeNotifier {
     }
   }
 
-  int currentPage = 1;
-  final int pageSize = 10;
-  bool isLoadingMore = false;
-
   Future<void> getListAllCars() async {
     try {
-      if (isLoadingMore) return;
-      isLoadingMore = true;
-      final listAllCar = await injection.getIt<ICarService>().getAllCar(
-            page: currentPage,
-            pageSize: pageSize,
-          );
-      if (listAllCar.isNotEmpty) {
-        state = state.copyWith(
-          listAllCar: [...state.listAllCar, ...listAllCar],
-          statusNearCar: Status.success,
-        );
-        currentPage++;
-      }
-      isLoadingMore = false;
-      LogUtils.i("get list car near you oke");
-    } catch (e) {
-      isLoadingMore = false;
-      LogUtils.i(e.toString());
-      state = state.copyWith(statusNearCar: Status.error);
-    }
-  }
-
-  Future<void> getListCarNewAddress() async {
-    try {
-      final listAllCar = await injection.getIt<ICarService>().getAllCar(
-            page: 1,
-            pageSize: pageSize,
-          );
-      if (listAllCar.isNotEmpty) {
+      final listAllCar = await injection.getIt<ICarService>().getAllCar();
         state = state.copyWith(
           listAllCar: listAllCar,
           statusNearCar: Status.success,
         );
-        currentPage = 2;
-      }
+
       LogUtils.i("get list car near you oke");
     } catch (e) {
-      isLoadingMore = false;
       LogUtils.i(e.toString());
       state = state.copyWith(statusNearCar: Status.error);
     }

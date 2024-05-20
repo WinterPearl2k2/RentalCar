@@ -36,11 +36,11 @@ class BodyCarReviewWidget extends StatelessWidget {
             fit: BoxFit.cover,
             imageUrl: widget.imgCar,
             progressIndicatorBuilder: (_, __, downloadProgress) =>
-                SizedBox(
-                  height: 10.h,
-                  width: 10.h,
-                  child: CircularProgressIndicator(
-                      value: downloadProgress.progress),
+                Image.asset(
+                  AssetUtils.imgLoading,
+                  width: 360.w,
+                  height: 200.h,
+                  fit: BoxFit.cover,
                 ),
             errorWidget: (_, __, error) => const Icon(Icons.error),
           ),

@@ -43,11 +43,11 @@ class ItemVehicleWidget extends StatelessWidget {
                 fit: BoxFit.cover,
                 imageUrl: imageFile,
                 progressIndicatorBuilder: (_, __, downloadProgress) =>
-                    SizedBox(
-                      height: 10.h,
-                      width: 10.h,
-                      child: CircularProgressIndicator(
-                          value: downloadProgress.progress),
+                    Image.asset(
+                      AssetUtils.imgLoading,
+                      width: width ?? 200.w,
+                      height: 120.h,
+                      fit: BoxFit.cover,
                     ),
                 errorWidget: (_, __, error) => const Icon(Icons.error),
               ),

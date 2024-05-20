@@ -21,6 +21,8 @@ class HomeView extends ConsumerStatefulWidget {
 
 class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
     with AutomaticKeepAliveClientMixin {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initNotifier() {
     notifier = ref.read(homeNotifierProvider.notifier);
@@ -50,7 +52,6 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
                 },
                 child: EasyRefresh(
                   onLoad: () async {
-                    await notifier.getListTopCars();
                     await notifier.getListAllCars();
                   },
                   child: SingleChildScrollView(
@@ -109,6 +110,7 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
                         ),
                         ListVehicleNearYouWidget(
                           notifier: notifier,
+                          scrollController: _scrollController,
                         )
                       ],
                     ),

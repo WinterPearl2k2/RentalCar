@@ -17,7 +17,7 @@ abstract class ICarRepository{
   Future<void> updateCar({required String idCar, required CarDTO carDTO});
   Future<void> deleteCar({required String idCar});
   Future<List<TopCarDTO>> getTopCar();
-  Future<List<AllCarDTO>> getAllCar({required int page, required int pageSize});
+  Future<List<AllCarDTO>> getAllCar();
   Future<CarDetailDTO> getCarById({required String idCar,required int page, required int pageSize});
   Future<List<Car>> getAllCarByIdUser({required String idUser});
   Future<void> rentalCar({required CarRentalDto carRentalDto});

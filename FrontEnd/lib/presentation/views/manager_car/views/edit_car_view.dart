@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/routes/routes.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/application/utils/popup_utils.dart';
@@ -266,13 +267,13 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                                 .select((value) => value.imageFile),
                           );
                           return GestureDetector(
-                            onTap: () =>
+                            onTap: () async =>
                                 PopupUtils.showBottomSheetAddImageDialog(
                               context: context,
                               onSelectPressedCamera:
-                                  notifier.pickImageFromCamera,
+                              notifier.pickImageFromCamera,
                               onSelectPressedGallery:
-                                  notifier.pickImageFromGallery,
+                              notifier.pickImageFromGallery,
                             ),
                             child: Container(
                               height: 100.h,
@@ -291,12 +292,12 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                                       child:  CachedNetworkImage(
                                         fit: BoxFit.cover,
                                         imageUrl: imageFile,
-                                        progressIndicatorBuilder: (_, __, downloadProgress) =>
-                                            SizedBox(
-                                              height: 10.h,
-                                              width: 10.h,
-                                              child: CircularProgressIndicator(
-                                                  value: downloadProgress.progress),
+                                        progressIndicatorBuilder: (_, __, ___) =>
+                                            Image.asset(
+                                              AssetUtils.imgLoading,
+                                              height: 120.h,
+                                              width: 200.w,
+                                              fit: BoxFit.cover,
                                             ),
                                         errorWidget: (_, __, error) => const Icon(Icons.error),
                                       ),

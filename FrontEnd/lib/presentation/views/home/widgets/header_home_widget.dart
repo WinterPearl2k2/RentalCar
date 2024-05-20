@@ -48,12 +48,13 @@ class HeaderHomeWidget extends StatelessWidget {
                         buttonColor: ColorUtils.primaryColor,
                         locationPinIconColor: Colors.redAccent,
                         buttonText: 'Set Current Location',
-                        onPicked: (pickedData) {
+                        onPicked: (pickedData) async {
                           PreferenceService.setLocation(
                               latCar: pickedData.latLong.latitude,
                               longCar: pickedData.latLong.longitude);
-                          notifier.getListCarNewAddress();
-                          notifier.setNameLocation(nameLocation: pickedData.addressName);
+                          await notifier.getListAllCars();
+                          notifier.setNameLocation(
+                              nameLocation: pickedData.addressName);
                         },
                       ),
                     ),

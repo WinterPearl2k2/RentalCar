@@ -118,32 +118,33 @@ func GetAllCar(context *gin.Context) {
 		// Debugging prints
 		//fmt.Printf("Car: %s, Coordinates: lat=%f, lon=%f, Distance: %f\n", car.NameCar, car.LatCar, car.LongCar, distance)
 
-		carData := gin.H{
-			"idCar":           car.IdCar,
-			"idUser":          car.UserId,
-			"userName":        user.NameUser,
-			"nameCar":         car.NameCar,
-			"priceCar":        car.PriceCar,
-			"fuelTypeCar":     car.FuelTypeCar,
-			"brandCar":        car.BrandCar,
-			"colorCar":        car.ColorCar,
-			"descriptionCar":  car.DescriptionCar,
-			"kilometersCar":   car.KilometersCar,
-			"seatsCar":        car.SeatsCar,
-			"transmissionCar": car.TransmissionCar,
-			"addressCar":      car.AddressCar,
-			"latCar":          car.LatCar,
-			"longCar":         car.LongCar,
-			"imagesCar":       car.ImagesCar,
-			"statusCar":       car.StatusCar,
-			"createAt":        car.CreatedAt,
-			"reviewCount":     commentCount,
-			"averageRating":   averageRating,
-			"distanceCar":     distance,
+		if distance <= 20000 {
+			carData := gin.H{
+				"idCar":           car.IdCar,
+				"idUser":          car.UserId,
+				"userName":        user.NameUser,
+				"nameCar":         car.NameCar,
+				"priceCar":        car.PriceCar,
+				"fuelTypeCar":     car.FuelTypeCar,
+				"brandCar":        car.BrandCar,
+				"colorCar":        car.ColorCar,
+				"descriptionCar":  car.DescriptionCar,
+				"kilometersCar":   car.KilometersCar,
+				"seatsCar":        car.SeatsCar,
+				"transmissionCar": car.TransmissionCar,
+				"addressCar":      car.AddressCar,
+				"latCar":          car.LatCar,
+				"longCar":         car.LongCar,
+				"imagesCar":       car.ImagesCar,
+				"statusCar":       car.StatusCar,
+				"createAt":        car.CreatedAt,
+				"reviewCount":     commentCount,
+				"averageRating":   averageRating,
+				"distanceCar":     distance,
+			}
+			carsData = append(carsData, carData)
 		}
-		carsData = append(carsData, carData)
 	}
-
 	// Sort cars by distance
 	sort.SliceStable(carsData, func(i, j int) bool {
 		return carsData[i]["distanceCar"].(float64) < carsData[j]["distanceCar"].(float64)
