@@ -8,7 +8,6 @@ class HeaderCarDetailLoadingWidget extends StatelessWidget {
     super.key,
   });
 
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -20,11 +19,15 @@ class HeaderCarDetailLoadingWidget extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         Positioned(
-          top: 30,
-          left: 15,
-          child: Icon(
-              Icons.arrow_back_ios_new_outlined,
+          left: 10,
+          child: SafeArea(
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.arrow_back_ios_new_outlined,
+              ),
               color: ColorUtils.primaryColor,
+            ),
           ),
         ),
       ],

@@ -1,12 +1,10 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/contract_service.dart';
 import 'package:rental_car/application/services/firebase_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
-import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
@@ -84,51 +82,16 @@ class HomeNotifier extends _$HomeNotifier {
     }
   }
 
-  int currentPage = 1;
-  final int pageSize = 10;
-  bool isLoadingMore = false;
-
   Future<void> getListAllCars() async {
     try {
-      if (isLoadingMore) return;
-      isLoadingMore = true;
-      final listAllCar = await injection.getIt<ICarService>().getAllCar(
-            page: currentPage,
-            pageSize: pageSize,
-          );
-      if (listAllCar.isNotEmpty) {
-        double currentLatitude = PreferenceService.getLocation().latitude;
-        double currentLongitude = PreferenceService.getLocation().longitude;
-
-        List<AllCarDTO> updatedListAllCar = listAllCar.map((car) {
-          double distance = Geolocator.distanceBetween(
-            currentLatitude,
-            currentLongitude,
-            car.latCar,
-            car.longCar,
-          );
-          return car.copyWith(distanceCar: distance);
-        }).toList();
-
-        updatedListAllCar.sort((a, b) {
-          int distanceComparison = a.distanceCar.compareTo(b.distanceCar);
-          if (distanceComparison != 0) {
-            return distanceComparison;
-          } else {
-            return b.createAt.compareTo(a.createAt);
-          }
-        });
-
+      final listAllCar = await injection.getIt<ICarService>().getAllCar();
         state = state.copyWith(
-          listAllCar: [...state.listAllCar, ...updatedListAllCar],
+          listAllCar: listAllCar,
           statusNearCar: Status.success,
         );
-        currentPage++;
-      }
-      isLoadingMore = false;
+
       LogUtils.i("get list car near you oke");
     } catch (e) {
-      isLoadingMore = false;
       LogUtils.i(e.toString());
       state = state.copyWith(statusNearCar: Status.error);
     }
@@ -140,6 +103,10 @@ class HomeNotifier extends _$HomeNotifier {
     List<Placemark> placeMarks =
         await placemarkFromCoordinates(currentLatitude, currentLongitude);
     state = state.copyWith(placeMarks: placeMarks);
+    setNameLocation(
+        nameLocation: placeMarks.isNotEmpty
+            ? "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}"
+            : "Loading...");
   }
 
   Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
@@ -169,4 +136,7 @@ class HomeNotifier extends _$HomeNotifier {
   void resetNumberNotification() {
     state = state.copyWith(numberNewNotification: 0);
   }
+
+  void setNameLocation({required String nameLocation}) =>
+      state = state.copyWith(nameLocation: nameLocation);
 }

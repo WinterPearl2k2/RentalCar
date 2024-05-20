@@ -61,6 +61,7 @@ func main() {
 	router.GET("/getSearchCar", CarController.SearchCarByName)
 	router.POST("/createCarReview", CarController.CreateCarReview)
 	router.GET("/getCarReview/:idCar", CarController.GetCarReview)
+	router.POST("/uploadImage", CarController.UploadImage)
 
 	router.Run()
 }

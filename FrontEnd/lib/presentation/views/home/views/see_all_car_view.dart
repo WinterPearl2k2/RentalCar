@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
-import 'package:rental_car/presentation/views/home/widgets/item_car.dart';
+import 'package:rental_car/presentation/views/home/widgets/item_car_widget.dart';
 
 class SeeAllCarView extends StatelessWidget {
   const SeeAllCarView({super.key, required this.notifier});

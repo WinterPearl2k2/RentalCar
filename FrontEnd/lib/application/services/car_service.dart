@@ -1,9 +1,12 @@
+
+import 'package:dio/dio.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
 import 'package:rental_car/data/dtos/car_review_dto.dart';
 import 'package:rental_car/data/dtos/date_time_dto.dart';
+import 'package:rental_car/data/dtos/image_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 
@@ -24,10 +27,7 @@ abstract class ICarService {
 
   Future<List<TopCarDTO>> getTopCar();
 
-  Future<List<AllCarDTO>> getAllCar({
-    required int page,
-    required int pageSize,
-  });
+  Future<List<AllCarDTO>> getAllCar();
 
   Future<CarDetailDTO> getCarById({
     required String idCar,
@@ -46,6 +46,8 @@ abstract class ICarService {
   Future<void> createCarReview({required CarReviewDTO carReviewDTO});
 
   Future<CarReviewDTO> getReviewCar({required String idCar});
+
+  Future<ImageDTO> uploadImage({required MultipartFile imageFile});
 }
 
 class CarServiceImpl implements ICarService {
@@ -101,9 +103,8 @@ class CarServiceImpl implements ICarService {
   }
 
   @override
-  Future<List<AllCarDTO>> getAllCar(
-      {required int page, required int pageSize}) {
-    return _carRepository.getAllCar(page: page, pageSize: pageSize);
+  Future<List<AllCarDTO>> getAllCar() {
+    return _carRepository.getAllCar();
   }
 
   @override
@@ -124,5 +125,10 @@ class CarServiceImpl implements ICarService {
   @override
   Future<CarReviewDTO> getReviewCar({required String idCar}) {
     return _carRepository.getReviewCar(idCar: idCar);
+  }
+
+  @override
+  Future<ImageDTO> uploadImage({required MultipartFile  imageFile}) {
+    return _carRepository.uploadImage(imageFile: imageFile);
   }
 }

@@ -29,6 +29,7 @@ mixin _$HomeState {
   Status get statusSearch => throw _privateConstructorUsedError;
   bool get isCheckSearch => throw _privateConstructorUsedError;
   List<Placemark> get placeMarks => throw _privateConstructorUsedError;
+  String get nameLocation => throw _privateConstructorUsedError;
   Position get position => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -55,6 +56,7 @@ abstract class $HomeStateCopyWith<$Res> {
       Status statusSearch,
       bool isCheckSearch,
       List<Placemark> placeMarks,
+      String nameLocation,
       Position position});
 }
 
@@ -84,6 +86,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? statusSearch = null,
     Object? isCheckSearch = null,
     Object? placeMarks = null,
+    Object? nameLocation = null,
     Object? position = null,
   }) {
     return _then(_value.copyWith(
@@ -139,6 +142,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.placeMarks
           : placeMarks // ignore: cast_nullable_to_non_nullable
               as List<Placemark>,
+      nameLocation: null == nameLocation
+          ? _value.nameLocation
+          : nameLocation // ignore: cast_nullable_to_non_nullable
+              as String,
       position: null == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -169,6 +176,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       Status statusSearch,
       bool isCheckSearch,
       List<Placemark> placeMarks,
+      String nameLocation,
       Position position});
 }
 
@@ -196,6 +204,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? statusSearch = null,
     Object? isCheckSearch = null,
     Object? placeMarks = null,
+    Object? nameLocation = null,
     Object? position = null,
   }) {
     return _then(_$HomeStateImpl(
@@ -251,6 +260,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value._placeMarks
           : placeMarks // ignore: cast_nullable_to_non_nullable
               as List<Placemark>,
+      nameLocation: null == nameLocation
+          ? _value.nameLocation
+          : nameLocation // ignore: cast_nullable_to_non_nullable
+              as String,
       position: null == position
           ? _value.position
           : position // ignore: cast_nullable_to_non_nullable
@@ -276,6 +289,7 @@ class _$HomeStateImpl implements _HomeState {
       this.statusSearch = Status.loading,
       this.isCheckSearch = false,
       final List<Placemark> placeMarks = const [],
+      this.nameLocation = '',
       this.position = const Position(
           longitude: 0.0,
           latitude: 0.0,
@@ -357,11 +371,14 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   @JsonKey()
+  final String nameLocation;
+  @override
+  @JsonKey()
   final Position position;
 
   @override
   String toString() {
-    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, numberNewNotification: $numberNewNotification, isLoadingMore: $isLoadingMore, statusTopCar: $statusTopCar, statusNearCar: $statusNearCar, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, position: $position)';
+    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, numberNewNotification: $numberNewNotification, isLoadingMore: $isLoadingMore, statusTopCar: $statusTopCar, statusNearCar: $statusNearCar, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, nameLocation: $nameLocation, position: $position)';
   }
 
   @override
@@ -395,6 +412,8 @@ class _$HomeStateImpl implements _HomeState {
                 other.isCheckSearch == isCheckSearch) &&
             const DeepCollectionEquality()
                 .equals(other._placeMarks, _placeMarks) &&
+            (identical(other.nameLocation, nameLocation) ||
+                other.nameLocation == nameLocation) &&
             (identical(other.position, position) ||
                 other.position == position));
   }
@@ -415,6 +434,7 @@ class _$HomeStateImpl implements _HomeState {
       statusSearch,
       isCheckSearch,
       const DeepCollectionEquality().hash(_placeMarks),
+      nameLocation,
       position);
 
   @JsonKey(ignore: true)
@@ -439,6 +459,7 @@ abstract class _HomeState implements HomeState {
       final Status statusSearch,
       final bool isCheckSearch,
       final List<Placemark> placeMarks,
+      final String nameLocation,
       final Position position}) = _$HomeStateImpl;
 
   @override
@@ -467,6 +488,8 @@ abstract class _HomeState implements HomeState {
   bool get isCheckSearch;
   @override
   List<Placemark> get placeMarks;
+  @override
+  String get nameLocation;
   @override
   Position get position;
   @override

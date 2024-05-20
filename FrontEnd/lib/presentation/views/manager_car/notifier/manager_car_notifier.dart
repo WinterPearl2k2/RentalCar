@@ -1,5 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -111,11 +112,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
               latCar: latCar,
               longCar: longCar,
               transmissionCar: transmissionCar,
-              imagesCar: isFileExtension(imageFile: state.imageFile)
-                  ? await convertImageToBase64(
-                      File(state.imageFile),
-                    )
-                  : state.carDTO.imagesCar,
+              imagesCar: state.imageFile,
               statusCar: statusCar,
             ),
           );
@@ -197,7 +194,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       latCar: latCar,
       longCar: longCar,
       transmissionCar: transmissionCar,
-      imagesCar: await convertImageToBase64(File(state.imageFile)),
+      imagesCar: state.imageFile,
       statusCar: statusCar,
     );
     try {
@@ -359,17 +356,18 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       state = state.copyWith(isEditButton: false);
     }
   }
+
   Future<void> isContinueButtonEnabled({required bool isContinue}) async {
     await Future.delayed(
       const Duration(milliseconds: 1),
     );
-      state = state.copyWith(isContinueButtonEnabled: isContinue);
+    state = state.copyWith(isContinueButtonEnabled: isContinue);
   }
 
-  Future<String> convertImageToBase64(File imageFile) async {
-    List<int> imageBytes = await imageFile.readAsBytes();
-    String base64Image = base64Encode(imageBytes);
-    return base64Image;
+  Future<ByteData> convertImageToBase64(File imageFile) async {
+    ByteData bytes = await rootBundle.load(imageFile.path);
+
+    return bytes;
   }
 
   Future<void> pickImageFromGallery() async {
@@ -380,8 +378,11 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           .onError((error, stackTrace) {
         return null;
       });
+      final image = await MultipartFile.fromFile(pickedFile?.path ?? "");
+      final imageFile = await injection.getIt<ICarService>().uploadImage(
+          imageFile: image);
       state = state.copyWith(
-        imageFile: pickedFile?.path ?? "",
+        imageFile: imageFile.url,
         isEditButton: true,
       );
     } else if (permission.isDenied) {
@@ -397,8 +398,11 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           .onError((error, stackTrace) {
         return null;
       });
+      final image = await MultipartFile.fromFile(pickedFile?.path ?? "");
+       final imageFile = await injection.getIt<ICarService>().uploadImage(
+          imageFile: image);
       state = state.copyWith(
-        imageFile: pickedFile?.path ?? "",
+        imageFile: imageFile.url,
         isEditButton: true,
       );
     } else if (permission.isDenied) {
@@ -427,5 +431,4 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       return false;
     }
   }
-
 }

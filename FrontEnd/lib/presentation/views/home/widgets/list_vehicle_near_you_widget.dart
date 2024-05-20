@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,9 +9,10 @@ import 'package:rental_car/presentation/views/home/widgets/item_vehicle_loading_
 import 'package:rental_car/presentation/views/home/widgets/item_vehicle_widget.dart';
 
 class ListVehicleNearYouWidget extends StatelessWidget {
-  const ListVehicleNearYouWidget({super.key, required this.notifier});
+  const ListVehicleNearYouWidget({super.key, required this.notifier, required this.scrollController});
 
   final HomeNotifier notifier;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +27,7 @@ class ListVehicleNearYouWidget extends StatelessWidget {
         switch (status) {
           case Status.loading:
             return GridView.builder(
+              controller: scrollController,
               shrinkWrap: true,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -63,8 +64,7 @@ class ListVehicleNearYouWidget extends StatelessWidget {
                   child: ItemVehicleWidget(
                     width: 155.w,
                     idCar: listAllCar[index].imagesCar,
-                    imageFile: const Base64Decoder()
-                        .convert(listAllCar[index].imagesCar),
+                    imageFile: listAllCar[index].imagesCar,
                     title: listAllCar[index].nameCar,
                     star: listAllCar[index].averageRating,
                     countReview: listAllCar[index].reviewCount,

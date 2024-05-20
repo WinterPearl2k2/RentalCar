@@ -37,5 +37,6 @@ class EndPoint {
   static const restUrlGetSearchCar = '/getSearchCar/?name=';
   static const restUrlCreateCarReview = '/createCarReview';
   static const restUrlGetCarReview = '/getCarReview';
+  static const restUrlUploadImage = '/uploadImage';
 
 }

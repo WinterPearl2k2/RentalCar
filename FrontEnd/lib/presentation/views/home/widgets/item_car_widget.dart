@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -53,14 +52,19 @@ class ItemCarWidget extends StatelessWidget {
                 topRight: Radius.circular(10.r),
                 topLeft: Radius.circular(10.r),
               ),
-              child: CachedMemoryImage(
-                height: 200.h,
+              child: CachedNetworkImage(
                 width: 360.w,
-                uniqueKey: imagesCar,
-                bytes: const Base64Decoder().convert(
-                  imagesCar,
-                ),
+                height: 200.h,
                 fit: BoxFit.cover,
+                imageUrl: imagesCar,
+                progressIndicatorBuilder: (_, __, downloadProgress) =>
+                    Image.asset(
+                      AssetUtils.imgLoading,
+                      width: 360.w,
+                      height: 200.h,
+                      fit: BoxFit.cover,
+                    ),
+                errorWidget: (_, __, error) => const Icon(Icons.error),
               ),
             ),
             Padding(
