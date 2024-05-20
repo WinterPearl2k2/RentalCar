@@ -24,6 +24,7 @@ class HomeState with _$HomeState {
     @Default(Status.loading) Status statusSearch,
     @Default(false) bool isCheckSearch,
     @Default([]) List<Placemark> placeMarks,
+    @Default('') String nameLocation,
     @Default(
       Position(
           longitude: 0.0,

@@ -43,72 +43,75 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
               notifier: notifier,
             ),
             Expanded(
-              child: EasyRefresh(
-                clipBehavior: Clip.antiAlias,
+              child: RefreshIndicator(
                 onRefresh: () async {
                   await notifier.getListTopCars();
                   await notifier.getListAllCars();
                 },
-                onLoad: () async {
-                  await notifier.getListTopCars();
-                  await notifier.getListAllCars();
-                },
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SlideBannerHomeWidget(),
-                      const DividerWidget(),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 14.0.w,
-                          vertical: 10.0.h,
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Top vehicle",
-                              style: TextStyle(
-                                color: ColorUtils.primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 17.sp,
-                              ),
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: () =>
-                                  Routes.goToSeeAllCarView(context, notifier),
-                              child: Text(
-                                "See all",
+                child: EasyRefresh(
+                  onLoad: () async {
+                    await notifier.getListTopCars();
+                    await notifier.getListAllCars();
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SlideBannerHomeWidget(),
+                        const DividerWidget(),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.0.w,
+                            vertical: 10.0.h,
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Top vehicle",
                                 style: TextStyle(
-                                  color: ColorUtils.textColor,
-                                  fontSize: 14.sp,
+                                  color: ColorUtils.primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17.sp,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 200.h,
-                        child: ListTopVehicleWidget(notifier: notifier),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 14.0.w,
-                          vertical: 10.0.h,
-                        ),
-                        child: Text(
-                          "Vehicle near you",
-                          style: TextStyle(
-                            color: ColorUtils.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 17.sp,
+                              const Spacer(),
+                              GestureDetector(
+                                onTap: () =>
+                                    Routes.goToSeeAllCarView(context, notifier),
+                                child: Text(
+                                  "See all",
+                                  style: TextStyle(
+                                    color: ColorUtils.textColor,
+                                    fontSize: 14.sp,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      ListVehicleNearYouWidget(notifier: notifier,)
-                    ],
+                        SizedBox(
+                          height: 200.h,
+                          child: ListTopVehicleWidget(notifier: notifier),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 14.0.w,
+                            vertical: 10.0.h,
+                          ),
+                          child: Text(
+                            "Vehicle near you",
+                            style: TextStyle(
+                              color: ColorUtils.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 17.sp,
+                            ),
+                          ),
+                        ),
+                        ListVehicleNearYouWidget(
+                          notifier: notifier,
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

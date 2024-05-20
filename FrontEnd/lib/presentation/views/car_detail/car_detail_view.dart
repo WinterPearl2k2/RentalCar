@@ -7,7 +7,6 @@ import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/common/widgets/error_custom_widget.dart';
-import 'package:rental_car/presentation/common/widgets/loading_widget.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 import 'package:rental_car/presentation/views/car_detail/notifier/car_detail_notifier.dart';
 import 'package:rental_car/presentation/views/car_detail/widgets/body_detail_loading_widget.dart';
@@ -56,90 +55,81 @@ class _CarDetailView
           );
           switch (status) {
             case Status.loading:
-              return Stack(
+              return Column(
                 children: [
-                  Column(
+                  const HeaderCarDetailLoadingWidget(),
+                  const BodyDetailLoadingWidget(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Row(
+                      children: [
+                        _priceWidget(
+                          price: "Loading...",
+                          nameCar: "Loading...",
+                        ),
+                        const Spacer(),
+                        SizedBox(
+                          width: 150.w,
+                          child: const TextButtonWidget(
+                            label: "Rental Car",
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                ],
+              );
+            case Status.success:
+              return carDetail.idCar.isNotEmpty
+                  ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const HeaderCarDetailLoadingWidget(),
-                      const BodyDetailLoadingWidget(),
+                      HeaderCarDetailWidget(
+                        carDetail: carDetail,
+                        distance: widget.distance,
+                        carDetailNotifier: notifier,
+                        latCar: widget.latCar,
+                        longCar: widget.longCar,
+                      ),
+                      BodyDetailWidget(
+                        carDetail: carDetail,
+                        notifier: notifier,
+                      ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20.w),
                         child: Row(
                           children: [
                             _priceWidget(
-                              price: "Loading...",
-                              nameCar: "Loading...",
+                              nameCar: carDetail.nameCar,
+                              price: FormatUtils.formatNumber(
+                                  carDetail.priceCar),
                             ),
                             const Spacer(),
                             SizedBox(
                               width: 150.w,
-                              child: const TextButtonWidget(
-                                label: "Rental Car",
-                              ),
+                              child: PreferenceService.getUUID() ==
+                                      carDetail.idUser
+                                  ? const SizedBox()
+                                  : SizedBox(
+                                      width: 150.w,
+                                      child: TextButtonWidget(
+                                        label: "Rental Car",
+                                        onPressed: () =>
+                                            notifier.rentingCar(context),
+                                      ),
+                                    ),
                             ),
                           ],
                         ),
                       ),
                       SizedBox(
                         height: 10.h,
-                      ),
+                      )
                     ],
-                  ),
-                  const LoadingWidget(),
-                ],
-              );
-            case Status.success:
-              return carDetail.idCar.isNotEmpty
-                  ? Stack(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            HeaderCarDetailWidget(
-                              carDetail: carDetail,
-                              distance: widget.distance,
-                              carDetailNotifier: notifier,
-                              latCar: widget.latCar,
-                              longCar: widget.longCar,
-                            ),
-                            BodyDetailWidget(
-                              carDetail: carDetail,
-                              notifier: notifier,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 20.w),
-                              child: Row(
-                                children: [
-                                  _priceWidget(
-                                    nameCar: carDetail.nameCar,
-                                    price: FormatUtils.formatNumber(
-                                        carDetail.priceCar),
-                                  ),
-                                  const Spacer(),
-                                  SizedBox(
-                                    width: 150.w,
-                                    child: PreferenceService.getUUID() ==
-                                            carDetail.idUser
-                                        ? const SizedBox()
-                                        : SizedBox(
-                                            width: 150.w,
-                                            child: TextButtonWidget(
-                                              label: "Rental Car",
-                                              onPressed: () =>
-                                                  notifier.rentingCar(context),
-                                            ),
-                                          ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            )
-                          ],
-                        ),
-                      ],
-                    )
+                  )
                   : const NotFoundCarWidget();
             case Status.error:
               return const ErrorCustomWidget();

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -38,14 +39,16 @@ class HeaderCarDetailWidget extends StatelessWidget {
           fit: BoxFit.cover,
           bytes: const Base64Decoder().convert(carDetail.imagesCar),
         ),
-        Positioned(
-          top: 30,
-          left: 15,
-          child: IconButton(
-            onPressed: () => Routes.goToPreviousView(context),
-            icon: Icon(
-              Icons.arrow_back_ios_new_outlined,
-              color: ColorUtils.whiteColor,
+        SafeArea(
+          child: Positioned(
+            top: 30,
+            left: 15,
+            child: IconButton(
+              onPressed: () => Routes.goToPreviousView(context),
+              icon: Icon(
+                Icons.arrow_back_ios_new_outlined,
+                color: ColorUtils.whiteColor,
+              ),
             ),
           ),
         ),
