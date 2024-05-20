@@ -13,7 +13,7 @@ import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/common/widgets/error_custom_widget.dart';
 import 'package:rental_car/presentation/common/widgets/search_form_field.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
-import 'package:rental_car/presentation/views/home/widgets/item_car.dart';
+import 'package:rental_car/presentation/views/home/widgets/item_car_widget.dart';
 import 'package:rental_car/presentation/views/home/widgets/search_car_empty_widget.dart';
 import 'package:rental_car/presentation/views/home/widgets/search_car_init_widget.dart';
 

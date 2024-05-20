@@ -1,5 +1,5 @@
-import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -70,9 +70,17 @@ class CarImageTextFormFieldWidget extends StatelessWidget {
                     borderRadius: const BorderRadius.all(
                       Radius.circular(10),
                     ),
-                    child: Image.file(
-                      File(imageFile),
+                    child: CachedNetworkImage(
                       fit: BoxFit.cover,
+                      imageUrl: imageFile,
+                      progressIndicatorBuilder: (_, __, downloadProgress) =>
+                          SizedBox(
+                        height: 10.h,
+                        width: 10.h,
+                        child: CircularProgressIndicator(
+                            value: downloadProgress.progress),
+                      ),
+                      errorWidget: (_, __, error) => const Icon(Icons.error),
                     ),
                   )
                 : const Icon(Icons.add),

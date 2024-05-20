@@ -1,3 +1,6 @@
+
+
+import 'package:dio/dio.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
@@ -7,6 +10,7 @@ import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
 import 'package:rental_car/data/dtos/car_review_dto.dart';
 import 'package:rental_car/data/dtos/date_time_dto.dart';
+import 'package:rental_car/data/dtos/image_dto.dart';
 import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
@@ -169,6 +173,17 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
     return get<CarReviewDTO>(
       url: '${EndPoint.restUrlGetCarReview}/$idCar',
       mapper: (response) => CarReviewDTO.fromJson(response.data),
+    );
+  }
+
+  @override
+  Future<ImageDTO> uploadImage({required MultipartFile imageFile}) {
+    return post<ImageDTO>(
+      url: EndPoint.restUrlUploadImage,
+      data: FormData.fromMap({
+        "file": imageFile,
+      }),
+      mapper: (response) => ImageDTO.fromJson(response.data),
     );
   }
 }

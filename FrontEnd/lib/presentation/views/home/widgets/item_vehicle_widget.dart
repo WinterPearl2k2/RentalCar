@@ -1,6 +1,4 @@
-import 'dart:typed_data';
-
-import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,7 +20,7 @@ class ItemVehicleWidget extends StatelessWidget {
   });
 
   final String idCar;
-  final Uint8List imageFile;
+  final String imageFile;
   final String title;
   final double star;
   final int countReview;
@@ -39,12 +37,19 @@ class ItemVehicleWidget extends StatelessWidget {
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(14.r),
-              child: CachedMemoryImage(
-                uniqueKey: idCar,
-                bytes: imageFile,
-                height: 120.h,
+              child:  CachedNetworkImage(
                 width: width ?? 200.w,
+                height: 120.h,
                 fit: BoxFit.cover,
+                imageUrl: imageFile,
+                progressIndicatorBuilder: (_, __, downloadProgress) =>
+                    SizedBox(
+                      height: 10.h,
+                      width: 10.h,
+                      child: CircularProgressIndicator(
+                          value: downloadProgress.progress),
+                    ),
+                errorWidget: (_, __, error) => const Icon(Icons.error),
               ),
             ),
             SizedBox(

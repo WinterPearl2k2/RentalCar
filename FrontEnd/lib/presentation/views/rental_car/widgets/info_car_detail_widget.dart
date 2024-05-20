@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -57,12 +55,18 @@ class InfoCarDetailWidget extends StatelessWidget {
         ),
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: CachedMemoryImage(
-            uniqueKey: car.idCar,
-            bytes: const Base64Decoder().convert(car.imagesCar),
-            fit: BoxFit.cover,
+          child: CachedNetworkImage(
             height: 80.h,
             width: 80.w,
+            fit: BoxFit.cover,
+            imageUrl: car.imagesCar,
+            progressIndicatorBuilder: (_, __, downloadProgress) => SizedBox(
+              height: 10.h,
+              width: 10.h,
+              child:
+                  CircularProgressIndicator(value: downloadProgress.progress),
+            ),
+            errorWidget: (_, __, error) => const Icon(Icons.error),
           ),
         ),
       ],

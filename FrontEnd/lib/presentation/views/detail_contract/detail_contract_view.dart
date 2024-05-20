@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -98,10 +96,17 @@ class _DetailContractViewState
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                 ),
-                child: CachedMemoryImage(
-                  uniqueKey: data.transaction,
-                  bytes: const Base64Decoder().convert(data.imgCar),
+                child:  CachedNetworkImage(
                   fit: BoxFit.cover,
+                  imageUrl: data.imgCar,
+                  progressIndicatorBuilder: (_, __, downloadProgress) =>
+                      SizedBox(
+                        height: 10.h,
+                        width: 10.h,
+                        child: CircularProgressIndicator(
+                            value: downloadProgress.progress),
+                      ),
+                  errorWidget: (_, __, error) => const Icon(Icons.error),
                 ),
               ),
               TagNameWidget(

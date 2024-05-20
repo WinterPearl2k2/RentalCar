@@ -16,8 +16,8 @@ class ApiClient {
     BaseOptions(
       baseUrl: "http://10.20.23.243:8080",
       contentType: 'application/json',
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
     ),
   )..interceptors.add(DioInterceptor());
 }

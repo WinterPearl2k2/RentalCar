@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,8 +62,7 @@ class ListVehicleNearYouWidget extends StatelessWidget {
                   child: ItemVehicleWidget(
                     width: 155.w,
                     idCar: listAllCar[index].imagesCar,
-                    imageFile: const Base64Decoder()
-                        .convert(listAllCar[index].imagesCar),
+                    imageFile: listAllCar[index].imagesCar,
                     title: listAllCar[index].nameCar,
                     star: listAllCar[index].averageRating,
                     countReview: listAllCar[index].reviewCount,

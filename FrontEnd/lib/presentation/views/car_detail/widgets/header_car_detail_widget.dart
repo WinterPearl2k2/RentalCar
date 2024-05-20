@@ -1,7 +1,4 @@
-import 'dart:convert';
-
-import 'package:cached_memory_image/cached_memory_image.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,12 +29,19 @@ class HeaderCarDetailWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CachedMemoryImage(
+        CachedNetworkImage(
           width: 360.w,
           height: 200.h,
-          uniqueKey: carDetail.imagesCar,
           fit: BoxFit.cover,
-          bytes: const Base64Decoder().convert(carDetail.imagesCar),
+          imageUrl: carDetail.imagesCar,
+          progressIndicatorBuilder: (_, __, downloadProgress) =>
+              SizedBox(
+                height: 10.h,
+                width: 10.h,
+                child: CircularProgressIndicator(
+                    value: downloadProgress.progress),
+              ),
+          errorWidget: (_, __, error) => const Icon(Icons.error),
         ),
         SafeArea(
           child: Positioned(

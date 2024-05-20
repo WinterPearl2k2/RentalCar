@@ -1,7 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -291,20 +288,18 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
                                       borderRadius: const BorderRadius.all(
                                         Radius.circular(10),
                                       ),
-                                      child: notifier.isFileExtension(
-                                              imageFile: imageFile)
-                                          ? Image.file(
-                                              File(imageFile),
-                                              fit: BoxFit.cover,
-                                            )
-                                          : CachedMemoryImage(
-                                              uniqueKey: widget.car.imagesCar,
-                                              bytes:
-                                                  const Base64Decoder().convert(
-                                                imageFile,
-                                              ),
-                                              fit: BoxFit.cover,
+                                      child:  CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: imageFile,
+                                        progressIndicatorBuilder: (_, __, downloadProgress) =>
+                                            SizedBox(
+                                              height: 10.h,
+                                              width: 10.h,
+                                              child: CircularProgressIndicator(
+                                                  value: downloadProgress.progress),
                                             ),
+                                        errorWidget: (_, __, error) => const Icon(Icons.error),
+                                      ),
                                     )
                                   : const Icon(Icons.add),
                             ),

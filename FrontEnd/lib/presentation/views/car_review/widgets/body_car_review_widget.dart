@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,12 +30,19 @@ class BodyCarReviewWidget extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: CachedMemoryImage(
-            uniqueKey: widget.imgCar,
-            bytes: const Base64Decoder().convert(widget.imgCar),
+          child:  CachedNetworkImage(
+            width: 360.w,
+            height: 200.h,
             fit: BoxFit.cover,
-            height: 100.h,
-            width: 100.w,
+            imageUrl: widget.imgCar,
+            progressIndicatorBuilder: (_, __, downloadProgress) =>
+                SizedBox(
+                  height: 10.h,
+                  width: 10.h,
+                  child: CircularProgressIndicator(
+                      value: downloadProgress.progress),
+                ),
+            errorWidget: (_, __, error) => const Icon(Icons.error),
           ),
         ),
         SizedBox(
