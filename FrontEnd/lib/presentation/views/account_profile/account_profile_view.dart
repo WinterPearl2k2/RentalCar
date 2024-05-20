@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
+import 'package:rental_car/presentation/camera/camera.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 import 'package:rental_car/presentation/views/account_profile/notifier/account_profile_notifier.dart';
@@ -102,7 +103,12 @@ class _AccountProfileViewState
                                   ),
                                 ),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Camera(),
+                                    ),
+                                  ),
                                   child: Text(
                                     'Change profile picture',
                                     style: TextStyle(

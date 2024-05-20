@@ -73,6 +73,8 @@ dependencies:
   map_launcher: ^3.3.0
   jumping_dot: ^0.0.6
   flutter_rating_bar: ^4.0.1
+  camera_camera: ^3.0.0
+  google_mlkit_text_recognition: ^0.13.0
 
 
 dev_dependencies:
