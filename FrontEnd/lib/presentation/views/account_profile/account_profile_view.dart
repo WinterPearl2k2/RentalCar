@@ -5,13 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
-import 'package:rental_car/presentation/camera/camera.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 import 'package:rental_car/presentation/views/account_profile/notifier/account_profile_notifier.dart';
 
 import '../../common/widgets/loading_widget.dart';
 import '../../common/widgets/text_form_field.dart';
+import '../../verify_id/verify_id_view.dart';
 
 class AccountProfileView extends ConsumerStatefulWidget {
   const AccountProfileView({super.key, required this.user});
@@ -106,7 +106,7 @@ class _AccountProfileViewState
                                   onPressed: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const Camera(),
+                                      builder: (context) => const VerifyIdView(),
                                     ),
                                   ),
                                   child: Text(

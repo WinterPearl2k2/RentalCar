@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
@@ -7,6 +8,7 @@ import 'package:rental_car/data/dtos/car_dto.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
 import 'package:rental_car/data/dtos/car_review_dto.dart';
 import 'package:rental_car/data/dtos/date_time_dto.dart';
+import 'package:rental_car/data/dtos/image_dto.dart';
 import 'package:rental_car/data/dtos/user_car_rental_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
@@ -33,7 +35,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   @override
   Future<void> updateCar({required String idCar, required CarDTO carDTO}) {
     return put<CarDTO>(
-      url:  "${EndPoint.restUrlUpdateCar}/$idCar",
+      url: "${EndPoint.restUrlUpdateCar}/$idCar",
       data: carDTO.toJson(),
       mapper: (response) => CarDTO.fromJson(response.data),
     );
@@ -54,9 +56,10 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<CarDetailDTO> getCarById({required String idCar,required int page, required int pageSize}) {
+  Future<CarDetailDTO> getCarById(
+      {required String idCar, required int page, required int pageSize}) {
     return get<CarDetailDTO>(
-      url:"${EndPoint.restUrlGetCarById}/$idCar?page=$page&pageSize=$pageSize",
+      url: "${EndPoint.restUrlGetCarById}/$idCar?page=$page&pageSize=$pageSize",
       mapper: (response) {
         return CarDetailDTO.fromJson(response.data);
       },
@@ -77,7 +80,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
     return get(
       url: EndPoint.restUrlGetRentalCars,
       mapper: (response) {
-        if(response.data ==  null) {
+        if (response.data == null) {
           return [];
         }
         return (response.data as List)
@@ -90,19 +93,21 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<List<AllCarDTO>> getAllCar({required int page, required int pageSize}) {
+  Future<List<AllCarDTO>> getAllCar() {
     return get<List<AllCarDTO>>(
-      url: '${EndPoint.restUrlGetAllCar}?userID=${PreferenceService.getUUID()}&page=$page&pageSize=$pageSize',
+      url: '${EndPoint.restUrlGetAllCar}'
+          '?userID=${PreferenceService.getUUID()}'
+          '&latitude=${PreferenceService.getLocation().latitude}'
+          '&longitude=${PreferenceService.getLocation().longitude}',
       mapper: (response) {
         return (response.data as List)
             .map(
               (json) => AllCarDTO.fromJson(json),
-        )
+            )
             .toList();
       },
     );
   }
-
 
   @override
   Future<List<TopCarDTO>> getTopCar() {
@@ -112,7 +117,7 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
         return (response.data as List)
             .map(
               (json) => TopCarDTO.fromJson(json),
-        )
+            )
             .toList();
       },
     );
@@ -123,13 +128,13 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
     return get(
       url: '${EndPoint.restUrlGetDateTimeCar}/$idCar',
       mapper: (response) {
-        if(response.data == null) {
+        if (response.data == null) {
           return [];
         }
         return (response.data as List)
             .map(
               (json) => DateTimeDto.fromJson(json),
-        )
+            )
             .toList();
       },
     );
@@ -138,12 +143,13 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   @override
   Future<List<AllCarDTO>> getSearchCar({required String nameCar}) {
     return get<List<AllCarDTO>>(
-      url: '${EndPoint.restUrlGetSearchCar}$nameCar&userID=${PreferenceService.getUUID()}',
+      url:
+          '${EndPoint.restUrlGetSearchCar}$nameCar&userID=${PreferenceService.getUUID()}',
       mapper: (response) {
         return (response.data as List)
             .map(
               (json) => AllCarDTO.fromJson(json),
-        )
+            )
             .toList();
       },
     );
@@ -163,6 +169,17 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
     return get<CarReviewDTO>(
       url: '${EndPoint.restUrlGetCarReview}/$idCar',
       mapper: (response) => CarReviewDTO.fromJson(response.data),
+    );
+  }
+
+  @override
+  Future<ImageDTO> uploadImage({required MultipartFile imageFile}) {
+    return post<ImageDTO>(
+      url: EndPoint.restUrlUploadImage,
+      data: FormData.fromMap({
+        "file": imageFile,
+      }),
+      mapper: (response) => ImageDTO.fromJson(response.data),
     );
   }
 }

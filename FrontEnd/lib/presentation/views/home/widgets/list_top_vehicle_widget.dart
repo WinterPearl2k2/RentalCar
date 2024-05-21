@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,8 +30,7 @@ class ListTopVehicleWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 7.0.w),
               scrollDirection: Axis.horizontal,
               itemCount: 2,
-              itemBuilder: (context, index) =>
-                  const ItemVehicleLoadingWidget(),
+              itemBuilder: (context, index) => const ItemVehicleLoadingWidget(),
             );
           case Status.success:
             return listCar.isNotEmpty
@@ -46,9 +44,7 @@ class ListTopVehicleWidget extends StatelessWidget {
                           context, listCar[index].idCar),
                       child: ItemVehicleWidget(
                         idCar: listCar[index].imagesCar,
-                        imageFile: const Base64Decoder().convert(
-                          listCar[index].imagesCar,
-                        ),
+                        imageFile: listCar[index].imagesCar,
                         title: listCar[index].nameCar,
                         star: listCar[index].averageRating,
                         countReview: listCar[index].reviewCount,

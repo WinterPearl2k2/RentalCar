@@ -1,8 +1,9 @@
-import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/popup_utils.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
@@ -51,7 +52,7 @@ class CarImageTextFormFieldWidget extends StatelessWidget {
           managerCarNotifierProvider.select((value) => value.imageFile),
         );
         return GestureDetector(
-          onTap: () => PopupUtils.showBottomSheetAddImageDialog(
+          onTap: () async => PopupUtils.showBottomSheetAddImageDialog(
             context: context,
             onSelectPressedCamera: notifier.pickImageFromCamera,
             onSelectPressedGallery: notifier.pickImageFromGallery,
@@ -70,9 +71,15 @@ class CarImageTextFormFieldWidget extends StatelessWidget {
                     borderRadius: const BorderRadius.all(
                       Radius.circular(10),
                     ),
-                    child: Image.file(
-                      File(imageFile),
+                    child: CachedNetworkImage(
                       fit: BoxFit.cover,
+                      imageUrl: imageFile,
+                      progressIndicatorBuilder: (_, __, downloadProgress) =>
+                          Image.asset(
+                            AssetUtils.imgLoading,
+                            fit: BoxFit.cover,
+                          ),
+                      errorWidget: (_, __, error) => const Icon(Icons.error),
                     ),
                   )
                 : const Icon(Icons.add),

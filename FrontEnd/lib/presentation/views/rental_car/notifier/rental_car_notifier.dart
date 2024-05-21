@@ -44,20 +44,15 @@ class RentalCarNotifier extends _$RentalCarNotifier {
               dateTime.isBefore(
                 DateTime.parse(date.endDate),
               );
-          print(dateTime.isAfter(DateTime.parse(date.startDate)));
-          print(dateTime.isAfter(DateTime.parse(date.endDate)));
-          print(dateTime);
-          print(DateTime.parse(date.startDate));
-          print(DateTime.parse(date.endDate));
           if (isInsideRange) {
-            dateTime = dateTime.add(const Duration(days: 1));
-            print(dateTime);
+            dateTime = dateTime.add(
+              const Duration(days: 1),
+            );
           } else {
             break;
           }
         }
       }
-      print(dateTime);
       state = state.copyWith(
         user: user,
         car: carData,

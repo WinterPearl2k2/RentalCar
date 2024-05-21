@@ -290,6 +290,9 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
     addressController.dispose();
     latController.dispose();
     longController.dispose();
+    notifier.isContinueButtonEnabled(
+      isContinue: true,
+    );
     super.dispose();
   }
 }

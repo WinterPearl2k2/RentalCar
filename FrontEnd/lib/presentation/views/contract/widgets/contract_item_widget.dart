@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:cached_memory_image/cached_memory_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_outline_widget.dart';
@@ -56,13 +54,19 @@ class ContractItemWidget extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: CachedMemoryImage(
-                    uniqueKey: rentalContracts[index].imgCar,
-                    bytes: const Base64Decoder()
-                        .convert(rentalContracts[index].imgCar),
+                  child:  CachedNetworkImage(
+                    width: 360.w,
+                    height: 200.h,
                     fit: BoxFit.cover,
-                    height: 50.h,
-                    width: 50.w,
+                    imageUrl: rentalContracts[index].imgCar,
+                    progressIndicatorBuilder: (_, __, downloadProgress) =>
+                        SizedBox(
+                          height: 10.h,
+                          width: 10.h,
+                          child: CircularProgressIndicator(
+                              value: downloadProgress.progress),
+                        ),
+                    errorWidget: (_, __, error) => const Icon(Icons.error),
                   ),
                 ),
                 SizedBox(
