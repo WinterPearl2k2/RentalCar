@@ -38,6 +38,7 @@ dependencies {
     // For example, add the dependencies for Firebase Authentication and Cloud Firestore
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
+    implementation platform("org.jetbrains.kotlin:kotlin-bom:1.8.0")
 }
 android {
     namespace "com.example.rental_car"

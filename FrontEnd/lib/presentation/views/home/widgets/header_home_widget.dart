@@ -1,22 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart' as mapbox;
 import 'package:rental_car/application/routes/routes.dart';
-import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/popup_utils.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 
-class HeaderHomeWidget extends StatelessWidget {
+class HeaderHomeWidget extends StatefulWidget {
   const HeaderHomeWidget({
     super.key,
     required this.notifier,
   });
 
   final HomeNotifier notifier;
+
+  @override
+  State<HeaderHomeWidget> createState() => _HeaderHomeWidgetState();
+}
+
+class _HeaderHomeWidgetState extends State<HeaderHomeWidget> {
+  mapbox.MapboxMap? mapboxMap;
+
+  void _onMapCreated(mapbox.MapboxMap mapboxMap) {
+    this.mapboxMap = mapboxMap;
+
+    mapboxMap.annotations
+        .createPointAnnotationManager()
+        .then((pointAnnotationManager) async {
+      final ByteData bytes = await rootBundle.load('assets/icons/ic_foot.svg');
+      final Uint8List list = bytes.buffer.asUint8List();
+
+      pointAnnotationManager.create(mapbox.PointAnnotationOptions(
+        geometry: mapbox.Point(coordinates: mapbox.Position(-80.1263, 35.7845))
+            .toJson(),
+        image: list,
+      ));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,20 +66,16 @@ class HeaderHomeWidget extends StatelessWidget {
                   GestureDetector(
                     onTap: () => PopupUtils.showBottomSheetDialog(
                       context: context,
-                      dialog: OpenStreetMapSearchAndPick(
-                        buttonTextStyle: const TextStyle(
-                            fontSize: 18, fontStyle: FontStyle.normal),
-                        buttonColor: ColorUtils.primaryColor,
-                        locationPinIconColor: Colors.redAccent,
-                        buttonText: 'Set Current Location',
-                        onPicked: (pickedData) async {
-                          PreferenceService.setLocation(
-                              latCar: pickedData.latLong.latitude,
-                              longCar: pickedData.latLong.longitude);
-                          await notifier.getListAllCars();
-                          notifier.setNameLocation(
-                              nameLocation: pickedData.addressName);
-                        },
+                      dialog: mapbox.MapWidget(
+                        key: const ValueKey("mapWidget"),
+                        onMapCreated: _onMapCreated,
+                        cameraOptions: mapbox.CameraOptions(
+                            center: mapbox.Point(
+                                    coordinates:
+                                        mapbox.Position(-80.1263, 35.7845))
+                                .toJson(),
+                            zoom: 12.0),
+                        styleUri: mapbox.MapboxStyles.MAPBOX_STREETS,
                       ),
                     ),
                     child: SvgPicture.asset(
@@ -105,7 +125,7 @@ class HeaderHomeWidget extends StatelessWidget {
           GestureDetector(
             onTap: () => {
               Routes.goToCarRentalManagementView(context),
-              notifier.resetNumberNotification(),
+              widget.notifier.resetNumberNotification(),
             },
             child: Stack(
               alignment: Alignment.center,
