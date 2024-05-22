@@ -6,6 +6,11 @@ abstract class Api {
     required T Function(dynamic) mapper,
   });
 
+  Future<T> getMapbox<T>({
+    required String url,
+    required T Function(dynamic) mapper,
+  });
+
   Future<T> delete<T>({
     required String url,
     required T Function(dynamic) mapper,
@@ -75,5 +80,15 @@ class NetworkApi extends Api {
         .then(
           (value) => mapper.call(value),
         );
+  }
+
+  @override
+  Future<T> getMapbox<T>({
+    required String url,
+    required T Function(dynamic response) mapper,
+  }) {
+    return ApiClient.instance.dioMapbox.get(url).then(
+          (value) => mapper.call(value),
+    );
   }
 }

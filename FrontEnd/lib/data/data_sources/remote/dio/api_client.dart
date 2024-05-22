@@ -20,4 +20,12 @@ class ApiClient {
       receiveTimeout: const Duration(seconds: 15),
     ),
   )..interceptors.add(DioInterceptor());
+
+  final Dio dioMapbox = Dio(
+    BaseOptions(
+      contentType: 'application/json',
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
+    ),
+  )..interceptors.add(DioInterceptor());
 }

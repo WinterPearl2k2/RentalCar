@@ -1,5 +1,6 @@
 class EndPoint {
   const EndPoint._();
+
   static const restUrlEmpty = '';
 
   //Auth
@@ -39,4 +40,7 @@ class EndPoint {
   static const restUrlGetCarReview = '/getCarReview';
   static const restUrlUploadImage = '/uploadImage';
 
+  //mapbox
+  static const restUrlMapbox =
+      'https://api.mapbox.com/geocoding/v5/mapbox.places';
 }

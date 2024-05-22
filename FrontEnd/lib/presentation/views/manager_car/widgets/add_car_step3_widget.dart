@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
+// import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/popup_utils.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
@@ -75,28 +75,28 @@ class CarAddressTextFormFieldWidget extends StatelessWidget {
           readOnly: true,
           controller: addressController,
           inputAction: TextInputAction.next,
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.location_on_rounded),
-            onPressed: () => PopupUtils.showBottomSheetDialog(
-              context: context,
-              dialog: OpenStreetMapSearchAndPick(
-                buttonTextStyle:
-                    const TextStyle(fontSize: 18, fontStyle: FontStyle.normal),
-                buttonColor: ColorUtils.primaryColor,
-                locationPinIconColor: Colors.redAccent,
-                buttonText: 'Set Current Location',
-                onPicked: (pickedData) {
-                  addressController.text = pickedData.addressName;
-                  latController.text = pickedData.latLong.latitude.toString();
-                  longController.text = pickedData.latLong.longitude.toString();
-                  notifier.isCheckAddressCarEmpty(
-                      addressCar: addressController.text);
-                  notifier.isCheckAddressImageChange(
-                      imageCar: addressController.text);
-                },
-              ),
-            ),
-          ),
+          // suffixIcon: IconButton(
+          //   icon: const Icon(Icons.location_on_rounded),
+          //   onPressed: () => PopupUtils.showBottomSheetDialog(
+          //     context: context,
+          //     dialog: OpenStreetMapSearchAndPick(
+          //       buttonTextStyle:
+          //           const TextStyle(fontSize: 18, fontStyle: FontStyle.normal),
+          //       buttonColor: ColorUtils.primaryColor,
+          //       locationPinIconColor: Colors.redAccent,
+          //       buttonText: 'Set Current Location',
+          //       onPicked: (pickedData) {
+          //         addressController.text = pickedData.addressName;
+          //         latController.text = pickedData.latLong.latitude.toString();
+          //         longController.text = pickedData.latLong.longitude.toString();
+          //         notifier.isCheckAddressCarEmpty(
+          //             addressCar: addressController.text);
+          //         notifier.isCheckAddressImageChange(
+          //             imageCar: addressController.text);
+          //       },
+          //     ),
+          //   ),
+          // ),
         );
       },
     );
