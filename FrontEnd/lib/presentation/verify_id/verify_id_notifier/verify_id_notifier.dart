@@ -36,6 +36,9 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     state = state.copyWith(wait: true);
     try {
       await injection.getIt<IAuthService>().getUser();
+      state = state.copyWith(
+        stateView: VerifyStateView.verifyFace,
+      );
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());

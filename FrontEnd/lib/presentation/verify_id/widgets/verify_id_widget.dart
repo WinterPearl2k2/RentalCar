@@ -92,9 +92,7 @@ class VerifyIdWidget extends StatelessWidget {
                   return TextButtonWidget(
                     label: 'Continue',
                     blockButton: pathFront.isEmpty || pathBack.isEmpty,
-                    onPressed: () => notifier.changeStateView(
-                      VerifyStateView.verifyFace,
-                    ),
+                    onPressed: () => notifier.checkExistId,
                   );
                 },
               ),
