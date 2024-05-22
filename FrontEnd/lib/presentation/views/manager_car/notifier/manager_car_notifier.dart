@@ -28,15 +28,13 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           await injection.getIt<ICarService>().getAllCarByIdUser(
                 idUser: PreferenceService.getUUID(),
               );
-      state = state.copyWith(status: Status.success);
-      if (listCarUser.isNotEmpty) {
-        state = state.copyWith(listCarUser: listCarUser);
-      } else {
-        state = state.copyWith(listCarUser: []);
-      }
-      LogUtils.i("getList oke");
+      state = state.copyWith(
+        listCarUser: listCarUser,
+        status: Status.success,
+      );
+      LogUtils.i("get list car successfully");
     } catch (e) {
-      LogUtils.i(e.toString());
+      LogUtils.e("get list car fail $e");
       state = state.copyWith(status: Status.error);
     }
   }
@@ -48,11 +46,11 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           );
       getListCarByIdUser();
       Fluttertoast.showToast(msg: "Deleted successfully");
-      LogUtils.i("delete oke");
+      LogUtils.i("delete successfully");
       state = state.copyWith(status: Status.success);
     } catch (e) {
       Fluttertoast.showToast(msg: "Delete failed, Car is rented");
-      LogUtils.i(e.toString());
+      LogUtils.e("Delete failed $e");
       state = state.copyWith(status: Status.error);
     }
   }
@@ -119,10 +117,10 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       state = state.copyWith(status: Status.success);
       getListCarByIdUser();
       Fluttertoast.showToast(msg: "Edited successfully");
-      LogUtils.i("edit oke");
+      LogUtils.i("Edited successfully");
     } catch (e) {
       Fluttertoast.showToast(msg: "Edited failed");
-      LogUtils.i(e.toString());
+      LogUtils.e("Edited failed $e");
       state = state.copyWith(status: Status.error);
     }
   }
@@ -202,6 +200,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       Fluttertoast.showToast(msg: "Create a successful car");
       getListCarByIdUser();
       state = state.copyWith(status: Status.success);
+      LogUtils.i("Create a successful car");
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
@@ -210,151 +209,121 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   }
 
   void isCheckNameCarEmpty({required String nameCar}) {
-    if (nameCar.isEmpty) {
-      state = state.copyWith(isCheckNameCar: false);
-    } else {
-      state = state.copyWith(isCheckNameCar: true);
-    }
+    final isCheckNameCar = nameCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckNameCar: isCheckNameCar);
   }
 
   void isCheckDescriptionCarEmpty({required String descriptionCar}) {
-    if (descriptionCar.isEmpty) {
-      state = state.copyWith(isCheckDescriptionCar: false);
-    } else {
-      state = state.copyWith(isCheckDescriptionCar: true);
-    }
+    final isCheckDescriptionCar = descriptionCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckDescriptionCar: isCheckDescriptionCar);
   }
 
   void isCheckColorCarEmpty({required String colorCar}) {
-    if (colorCar.isEmpty) {
-      state = state.copyWith(isCheckColorCar: false);
-    } else {
-      state = state.copyWith(isCheckColorCar: true);
-    }
+    final isCheckColorCar = colorCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckColorCar: isCheckColorCar);
   }
 
   void isCheckKilometersEmpty({required String kilometers}) {
-    if (kilometers.isEmpty) {
-      state = state.copyWith(isCheckKilometers: false);
-    } else {
-      state = state.copyWith(isCheckKilometers: true);
-    }
+    final isCheckKilometers = kilometers.isEmpty ? false : true;
+    state = state.copyWith(isCheckKilometers: isCheckKilometers);
   }
 
   void isCheckSeatsCarEmpty({required String seatsCar}) {
-    if (seatsCar.isEmpty) {
-      state = state.copyWith(isCheckSeatsCar: false);
-    } else {
-      state = state.copyWith(isCheckSeatsCar: true);
-    }
+    final isCheckSeatsCar = seatsCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckSeatsCar: isCheckSeatsCar);
   }
 
   void isCheckAddressCarEmpty({required String addressCar}) {
-    if (addressCar.isEmpty) {
-      state = state.copyWith(isCheckAddressCar: false);
-    } else {
-      state = state.copyWith(isCheckAddressCar: true);
-    }
+    final isCheckAddressCar = addressCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckAddressCar: isCheckAddressCar);
   }
 
   void isCheckPriceCarEmpty({required String priceCar}) {
-    if (priceCar.isEmpty) {
-      state = state.copyWith(isCheckPriceCar: false);
-    } else {
-      state = state.copyWith(isCheckPriceCar: true);
-    }
+    final isCheckPriceCar = priceCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckPriceCar: isCheckPriceCar);
   }
 
   void isCheckNameCarChange({required String nameCar}) {
-    if (nameCar != state.carDTO.nameCar && nameCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        nameCar != state.carDTO.nameCar && nameCar.isNotEmpty ? true : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckBrandCarChange({required String brandCar}) {
-    if (brandCar != state.carDTO.brandCar && brandCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        brandCar != state.carDTO.brandCar && brandCar.isNotEmpty ? true : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckDescriptionCarChange({required String descriptionCar}) {
-    if (descriptionCar != state.carDTO.descriptionCar &&
-        descriptionCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton = descriptionCar != state.carDTO.descriptionCar &&
+            descriptionCar.isNotEmpty
+        ? true
+        : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckColorCarChange({required String colorCar}) {
-    if (colorCar != state.carDTO.colorCar && colorCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        colorCar != state.carDTO.colorCar && colorCar.isNotEmpty ? true : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckFuelTypeCarChange({required String fuelTypeCar}) {
-    if (fuelTypeCar != state.carDTO.fuelTypeCar && fuelTypeCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        fuelTypeCar != state.carDTO.fuelTypeCar && fuelTypeCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckKilometersCarChange({required String kilometersCar}) {
-    if (kilometersCar != state.carDTO.kilometersCar.toString() &&
-        kilometersCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        kilometersCar != state.carDTO.kilometersCar.toString() &&
+                kilometersCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckSeatsCarChange({required String seatsCar}) {
-    if (seatsCar != state.carDTO.seatsCar.toString() && seatsCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        seatsCar != state.carDTO.seatsCar.toString() && seatsCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckTransmissionCarChange({required String transmissionCar}) {
-    if (transmissionCar != state.carDTO.transmissionCar &&
-        transmissionCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton = transmissionCar != state.carDTO.transmissionCar &&
+            transmissionCar.isNotEmpty
+        ? true
+        : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckPriceCarChange({required String priceCar}) {
-    if (priceCar != state.carDTO.priceCar.toString() && priceCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        priceCar != state.carDTO.priceCar.toString() && priceCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckAddressCarChange({required String addressCar}) {
-    if (addressCar != state.carDTO.addressCar &&
-        addressCar.toString().isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        addressCar != state.carDTO.addressCar && addressCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckAddressImageChange({required String imageCar}) {
-    if (imageCar != state.carDTO.imagesCar && imageCar.toString().isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        imageCar != state.carDTO.imagesCar && imageCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   Future<void> isContinueButtonEnabled({required bool isContinue}) async {
@@ -379,8 +348,8 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
         return null;
       });
       final image = await MultipartFile.fromFile(pickedFile?.path ?? "");
-      final imageFile = await injection.getIt<ICarService>().uploadImage(
-          imageFile: image);
+      final imageFile =
+          await injection.getIt<ICarService>().uploadImage(imageFile: image);
       state = state.copyWith(
         imageFile: imageFile.url,
         isEditButton: true,
@@ -399,8 +368,8 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
         return null;
       });
       final image = await MultipartFile.fromFile(pickedFile?.path ?? "");
-       final imageFile = await injection.getIt<ICarService>().uploadImage(
-          imageFile: image);
+      final imageFile =
+          await injection.getIt<ICarService>().uploadImage(imageFile: image);
       state = state.copyWith(
         imageFile: imageFile.url,
         isEditButton: true,
@@ -414,21 +383,5 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     state = state.copyWith(
       imageFile: "",
     );
-  }
-
-  bool isFileExtension({required String imageFile}) {
-    String fileExtension = imageFile.split('.').last.toLowerCase();
-    if (fileExtension == 'jpg' ||
-        fileExtension == 'jpeg' ||
-        fileExtension == 'png' ||
-        fileExtension == 'gif' ||
-        fileExtension == 'bmp' ||
-        fileExtension == 'webp' ||
-        fileExtension == 'tif' ||
-        fileExtension == 'tiff') {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

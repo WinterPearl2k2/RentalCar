@@ -21,20 +21,13 @@ class HomeNotifier extends _$HomeNotifier {
   Future<void> getListTopCars() async {
     try {
       final listTopCar = await injection.getIt<ICarService>().getTopCar();
-      if (listTopCar.isEmpty) {
-        state = state.copyWith(
-          listTopCar: [],
-          statusTopCar: Status.success,
-        );
-      } else {
-        state = state.copyWith(
-          listTopCar: listTopCar,
-          statusTopCar: Status.success,
-        );
-      }
-      LogUtils.i("getList oke");
+      state = state.copyWith(
+        listTopCar: listTopCar,
+        statusTopCar: Status.success,
+      );
+      LogUtils.i("get list top car successfully");
     } catch (e) {
-      LogUtils.i(e.toString());
+      LogUtils.e("get list top car fail $e");
       state = state.copyWith(statusTopCar: Status.error);
     }
   }
@@ -46,20 +39,13 @@ class HomeNotifier extends _$HomeNotifier {
       );
       final listSearchCar =
           await injection.getIt<ICarService>().getSearchCar(nameCar: nameCar);
-      if (listSearchCar.isEmpty) {
-        state = state.copyWith(
-          listSearchCar: [],
-          statusSearch: Status.success,
-        );
-      } else {
-        state = state.copyWith(
-          listSearchCar: listSearchCar,
-          statusSearch: Status.success,
-        );
-      }
-      LogUtils.i("getList oke");
+      state = state.copyWith(
+        listSearchCar: listSearchCar,
+        statusSearch: Status.success,
+      );
+      LogUtils.i("get list search car successfully");
     } catch (e) {
-      LogUtils.i(e.toString());
+      LogUtils.e("get list search car fail $e");
       state = state.copyWith(statusSearch: Status.error);
     }
   }
@@ -75,24 +61,23 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   void isCheckSearch({required String searchController}) {
-    if (searchController.isEmpty) {
-      state = state.copyWith(isCheckSearch: false);
-    } else {
-      state = state.copyWith(isCheckSearch: true, statusSearch: Status.loading);
-    }
+    final isCheckSearch = searchController.isEmpty ? false : true;
+    state = state.copyWith(
+      isCheckSearch: isCheckSearch,
+      statusSearch: Status.loading,
+    );
   }
 
   Future<void> getListAllCars() async {
     try {
       final listAllCar = await injection.getIt<ICarService>().getAllCar();
-        state = state.copyWith(
-          listAllCar: listAllCar,
-          statusNearCar: Status.success,
-        );
-
-      LogUtils.i("get list car near you oke");
+      state = state.copyWith(
+        listAllCar: listAllCar,
+        statusNearCar: Status.success,
+      );
+      LogUtils.i("get list car near you successfully");
     } catch (e) {
-      LogUtils.i(e.toString());
+      LogUtils.e("get list car near you fail $e");
       state = state.copyWith(statusNearCar: Status.error);
     }
   }
@@ -102,7 +87,6 @@ class HomeNotifier extends _$HomeNotifier {
     double currentLongitude = PreferenceService.getLocation().longitude;
     List<Placemark> placeMarks =
         await placemarkFromCoordinates(currentLatitude, currentLongitude);
-    state = state.copyWith(placeMarks: placeMarks);
     setNameLocation(
         nameLocation: placeMarks.isNotEmpty
             ? "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}"

@@ -74,6 +74,13 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   cached_network_image: ^3.3.1
   mapbox_maps_flutter: ^1.1.0
+  flutter_typeahead: 3.2.0
+  google_maps_webservice:
+    git:
+      url: https://github.com/shkvoretz/google_maps_webservice.git
+      ref: master
+  tuple: ^2.0.0
+  http: ^1.0.0
 
 
 dev_dependencies:
