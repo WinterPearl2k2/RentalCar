@@ -19,6 +19,7 @@ mixin _$VerifyIdState {
   String get imgFileFront => throw _privateConstructorUsedError;
   String get imgFileBack => throw _privateConstructorUsedError;
   List<dynamic> get dataFaceIdCard => throw _privateConstructorUsedError;
+  List<int> get test => throw _privateConstructorUsedError;
   VerifyStateView get stateView => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,6 +37,7 @@ abstract class $VerifyIdStateCopyWith<$Res> {
       {String imgFileFront,
       String imgFileBack,
       List<dynamic> dataFaceIdCard,
+      List<int> test,
       VerifyStateView stateView});
 }
 
@@ -55,6 +57,7 @@ class _$VerifyIdStateCopyWithImpl<$Res, $Val extends VerifyIdState>
     Object? imgFileFront = null,
     Object? imgFileBack = null,
     Object? dataFaceIdCard = null,
+    Object? test = null,
     Object? stateView = null,
   }) {
     return _then(_value.copyWith(
@@ -70,6 +73,10 @@ class _$VerifyIdStateCopyWithImpl<$Res, $Val extends VerifyIdState>
           ? _value.dataFaceIdCard
           : dataFaceIdCard // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      test: null == test
+          ? _value.test
+          : test // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       stateView: null == stateView
           ? _value.stateView
           : stateView // ignore: cast_nullable_to_non_nullable
@@ -90,6 +97,7 @@ abstract class _$$VerifyIdStateImplCopyWith<$Res>
       {String imgFileFront,
       String imgFileBack,
       List<dynamic> dataFaceIdCard,
+      List<int> test,
       VerifyStateView stateView});
 }
 
@@ -107,6 +115,7 @@ class __$$VerifyIdStateImplCopyWithImpl<$Res>
     Object? imgFileFront = null,
     Object? imgFileBack = null,
     Object? dataFaceIdCard = null,
+    Object? test = null,
     Object? stateView = null,
   }) {
     return _then(_$VerifyIdStateImpl(
@@ -122,6 +131,10 @@ class __$$VerifyIdStateImplCopyWithImpl<$Res>
           ? _value._dataFaceIdCard
           : dataFaceIdCard // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      test: null == test
+          ? _value._test
+          : test // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       stateView: null == stateView
           ? _value.stateView
           : stateView // ignore: cast_nullable_to_non_nullable
@@ -137,8 +150,10 @@ class _$VerifyIdStateImpl implements _VerifyIdState {
       {this.imgFileFront = '',
       this.imgFileBack = '',
       final List<dynamic> dataFaceIdCard = const [],
+      final List<int> test = const [],
       this.stateView = VerifyStateView.verifyId})
-      : _dataFaceIdCard = dataFaceIdCard;
+      : _dataFaceIdCard = dataFaceIdCard,
+        _test = test;
 
   @override
   @JsonKey()
@@ -155,13 +170,22 @@ class _$VerifyIdStateImpl implements _VerifyIdState {
     return EqualUnmodifiableListView(_dataFaceIdCard);
   }
 
+  final List<int> _test;
+  @override
+  @JsonKey()
+  List<int> get test {
+    if (_test is EqualUnmodifiableListView) return _test;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_test);
+  }
+
   @override
   @JsonKey()
   final VerifyStateView stateView;
 
   @override
   String toString() {
-    return 'VerifyIdState(imgFileFront: $imgFileFront, imgFileBack: $imgFileBack, dataFaceIdCard: $dataFaceIdCard, stateView: $stateView)';
+    return 'VerifyIdState(imgFileFront: $imgFileFront, imgFileBack: $imgFileBack, dataFaceIdCard: $dataFaceIdCard, test: $test, stateView: $stateView)';
   }
 
   @override
@@ -175,13 +199,19 @@ class _$VerifyIdStateImpl implements _VerifyIdState {
                 other.imgFileBack == imgFileBack) &&
             const DeepCollectionEquality()
                 .equals(other._dataFaceIdCard, _dataFaceIdCard) &&
+            const DeepCollectionEquality().equals(other._test, _test) &&
             (identical(other.stateView, stateView) ||
                 other.stateView == stateView));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, imgFileFront, imgFileBack,
-      const DeepCollectionEquality().hash(_dataFaceIdCard), stateView);
+  int get hashCode => Object.hash(
+      runtimeType,
+      imgFileFront,
+      imgFileBack,
+      const DeepCollectionEquality().hash(_dataFaceIdCard),
+      const DeepCollectionEquality().hash(_test),
+      stateView);
 
   @JsonKey(ignore: true)
   @override
@@ -195,6 +225,7 @@ abstract class _VerifyIdState implements VerifyIdState {
       {final String imgFileFront,
       final String imgFileBack,
       final List<dynamic> dataFaceIdCard,
+      final List<int> test,
       final VerifyStateView stateView}) = _$VerifyIdStateImpl;
 
   @override
@@ -203,6 +234,8 @@ abstract class _VerifyIdState implements VerifyIdState {
   String get imgFileBack;
   @override
   List<dynamic> get dataFaceIdCard;
+  @override
+  List<int> get test;
   @override
   VerifyStateView get stateView;
   @override

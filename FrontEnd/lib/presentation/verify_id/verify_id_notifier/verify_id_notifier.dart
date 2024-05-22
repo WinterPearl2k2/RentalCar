@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -33,8 +34,8 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     final file = File(xFile.path);
     InputImage inputImage = InputImage.fromFile(file);
     final output = await _handleDataFace(inputImage, file);
-    final isValid = _compareDataFace(output, state.dataFaceIdCard);
-    LogUtils.i(isValid.toString());
+    final isValid = await _compareDataFace(output, state.dataFaceIdCard);
+    LogUtils.i('valid $isValid');
   }
 
   void openCamera({
@@ -45,7 +46,7 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
       context,
       MaterialPageRoute(
         builder: (_) => CameraCamera(
-          resolutionPreset: ResolutionPreset.ultraHigh,
+          resolutionPreset: ResolutionPreset.max,
           cameraSide: CameraSide.front,
           enableZoom: true,
           onFile: (file) async {
@@ -94,13 +95,13 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     String text = recognizedText.text;
     Map<String, String> extractedInfo = extractInfo(text);
     LogUtils.i(extractedInfo.toString());
-    // if (extractedInfo.length != 5) {
-    //   Fluttertoast.showToast(
-    //     msg:
-    //         'The provided image is blurred or unclear, please provide the information again.',
-    //   );
-    //   return;
-    // }
+    if (extractedInfo.length != 5) {
+      Fluttertoast.showToast(
+        msg:
+            'The provided image is blurred or unclear, please provide the information again.',
+      );
+      return;
+    }
     final output = await _handleDataFace(inputImage, file);
     if (output.isEmpty) return;
     state = state.copyWith(
@@ -110,7 +111,9 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
   }
 
   Future<List<dynamic>> _handleDataFace(
-      InputImage inputImage, File file) async {
+    InputImage inputImage,
+    File file,
+  ) async {
     final options = FaceDetectorOptions();
     final faceDetector = FaceDetector(options: options);
     final faces = await faceDetector.processImage(inputImage);
@@ -152,7 +155,12 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
       112,
       3,
     ]);
-
+    final imgU8List = Uint8List.fromList(img.encodeJpg(imgFace));
+    final imageEncoded = base64.encode(imgU8List);
+    List<int> list = imgU8List.toList();
+    state = state.copyWith(test: list);
+    LogUtils.i(imageEncoded);
+    debugPrint(imageEncoded);
     List output = List.filled(1 * 192, null, growable: false).reshape(
       [1, 192],
     );
@@ -165,7 +173,11 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
   }
 
   Float32List imageToByteListFloat32(
-      img.Image imgFace, int inputSize, int mean, int std) {
+    img.Image imgFace,
+    int inputSize,
+    int mean,
+    int std,
+  ) {
     // Cấp phát một đối tượng Float32List mới để lưu trữ các giá trị pixel đã chuyển đổi.
     var convertedBytes = Float32List(1 * inputSize * inputSize * 3);
     // Đối tượng Float32List dưới dạng một bộ đệm
@@ -191,7 +203,7 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
         RegExp(r'Full name:\s*([A-ZÀ-Ỹ ]+)', caseSensitive: false);
     final dobRegExp =
         RegExp(r'Date of birth:\s*([\d/]+)', caseSensitive: false);
-    final sexRegExp = RegExp(r'Sex:\s*([^\s]+)', caseSensitive: false);
+    final sexRegExp = RegExp(r'Sex:\s*(\S+)', caseSensitive: false);
     final nationalityRegExp =
         RegExp(r'Nationality:\s*([^\n]+)', caseSensitive: false);
     final originRegExp =
@@ -234,17 +246,23 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     return info;
   }
 
-  Future<bool> _compareDataFace(List<dynamic> output, List<dynamic> dataFaceIdCard) async {
+  Future<bool> _compareDataFace(
+    List<dynamic> output,
+    List<dynamic> dataFaceIdCard,
+  ) async {
     const minDist = 999;
     double currDist = 0.0;
     double sum = 0;
     final dataFace = List.from(output);
     final dataFaceId = List.from(dataFaceIdCard);
-    for(int i = 0; i < output.length; i++) {
-      sum += pow((dataFace[i] - dataFaceId[i]), 2);
+    LogUtils.w('dataface$dataFace');
+    LogUtils.w('datafaceId$dataFaceId');
+    for (int i = 0; i < output.length; i++) {
+      sum += pow((dataFaceId[i] - dataFace[i]), 2);
     }
     currDist = sqrt(sum);
-    if(currDist <= 0.8 && currDist < minDist) {
+    LogUtils.e('currDist: $currDist');
+    if (currDist <= 0.7 && currDist < minDist) {
       return true;
     }
     return false;

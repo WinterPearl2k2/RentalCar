@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,6 +57,15 @@ class VerifyIdWidget extends StatelessWidget {
                 height: 20.h,
               ),
               Consumer(
+                builder: (context, ref, child) {
+                  final listData = ref.watch(
+                    verifyIdNotifierProvider.select((value) => value.test),
+                  );
+                  Uint8List uInt8List = Uint8List.fromList(listData);
+                  return Image.memory(uInt8List);
+                },
+              ),
+              Consumer(
                 builder: (_, ref, __) {
                   final path = ref.watch(
                     verifyIdNotifierProvider.select(
@@ -91,7 +102,7 @@ class VerifyIdWidget extends StatelessWidget {
                   );
                   return TextButtonWidget(
                     label: 'Continue',
-                    blockButton: pathFront.isEmpty && pathBack.isEmpty,
+                    blockButton: pathFront.isEmpty || pathBack.isEmpty,
                     onPressed: () => notifier.changeStateView(
                       VerifyStateView.verifyFace,
                     ),

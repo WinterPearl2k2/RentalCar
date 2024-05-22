@@ -8,6 +8,7 @@ class VerifyIdState with _$VerifyIdState {
     @Default('') String imgFileFront,
     @Default('') String imgFileBack,
     @Default([]) List<dynamic> dataFaceIdCard,
+    @Default([]) List<int> test,
     @Default(VerifyStateView.verifyId) VerifyStateView stateView,
   }) = _VerifyIdState;
 }

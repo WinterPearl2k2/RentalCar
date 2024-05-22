@@ -26,7 +26,7 @@ class VerifyFaceWidget extends StatefulWidget {
 
 class _VerifyFaceWidgetState extends State<VerifyFaceWidget> {
   late final CameraController _controller = CameraController(
-    widget.camera[0],
+    widget.camera[1],
     ResolutionPreset.max,
   );
 
