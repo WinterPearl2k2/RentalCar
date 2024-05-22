@@ -11,6 +11,7 @@ import 'package:rental_car/presentation/views/account_profile/notifier/account_p
 
 import '../../common/widgets/loading_widget.dart';
 import '../../common/widgets/text_form_field.dart';
+import '../../verify_id/verify_id_view.dart';
 
 class AccountProfileView extends ConsumerStatefulWidget {
   const AccountProfileView({super.key, required this.user});
@@ -102,7 +103,12 @@ class _AccountProfileViewState
                                   ),
                                 ),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const VerifyIdView(),
+                                    ),
+                                  ),
                                   child: Text(
                                     'Change profile picture',
                                     style: TextStyle(

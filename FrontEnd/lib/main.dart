@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,7 @@ import 'application/routes/routes_navigator.dart';
 
 final injection = Injection();
 final navigatorKey = GlobalKey<NavigatorState>();
+late List<CameraDescription> cameras;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,7 @@ void main() async {
   injection.configDependencies();
   await LocalNotificationService().init();
   await LocationService().init();
+  cameras = await availableCameras();
   runApp(const ProviderScope(child: MyApp()));
 }
 

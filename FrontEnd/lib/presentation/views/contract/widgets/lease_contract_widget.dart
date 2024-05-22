@@ -81,11 +81,14 @@ class _ContractWidgetState extends State<LeaseContractWidget>
                 return Expanded(
                   child: EasyRefresh(
                     onRefresh: () => widget.notifier.getLeaseContract(),
-                    onLoad: () => widget.notifier.getMoreLeaseContract(),
+                    // onLoad: () => widget.notifier.getMoreLeaseContract(),
                     child: rentalContracts.isNotEmpty
                         ? ListView.builder(
                             itemCount: rentalContracts.length,
                             itemBuilder: (context, index) {
+                              if((index == rentalContracts.length - 10)) {
+                                widget.notifier.getMoreLeaseContract();
+                              }
                               return ContractItemWidget(
                                 rentalContracts: rentalContracts,
                                 statusStr: statusStr,

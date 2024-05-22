@@ -35,7 +35,7 @@ class DioInterceptor extends QueuedInterceptorsWrapper {
     ErrorInterceptorHandler handler,
   ) async {
     final requestOptions = err.requestOptions;
-    final msgError = err.response?.data['message'] ?? err.message;
+    final msgError = err.response?.data['message'].toString() ?? err.message;
     if (err.type == DioExceptionType.connectionTimeout ||
         err.type == DioExceptionType.receiveTimeout ||
         err.type == DioExceptionType.sendTimeout) {
