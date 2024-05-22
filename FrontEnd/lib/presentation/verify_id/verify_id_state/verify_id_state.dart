@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:rental_car/domain/model/citizen.dart';
 
 part 'verify_id_state.freezed.dart';
 
@@ -8,8 +9,11 @@ class VerifyIdState with _$VerifyIdState {
     @Default('') String imgFileFront,
     @Default('') String imgFileBack,
     @Default([]) List<dynamic> dataFaceIdCard,
-    @Default([]) List<int> test,
+    @Default(0) int count,
+    @Default([]) List<int> faceMemory,
+    @Default(Citizen()) Citizen citizen,
     @Default(VerifyStateView.verifyId) VerifyStateView stateView,
+    @Default(false) wait,
   }) = _VerifyIdState;
 }
 

@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -55,15 +53,6 @@ class VerifyIdWidget extends StatelessWidget {
               ),
               SizedBox(
                 height: 20.h,
-              ),
-              Consumer(
-                builder: (context, ref, child) {
-                  final listData = ref.watch(
-                    verifyIdNotifierProvider.select((value) => value.test),
-                  );
-                  Uint8List uInt8List = Uint8List.fromList(listData);
-                  return Image.memory(uInt8List);
-                },
               ),
               Consumer(
                 builder: (_, ref, __) {

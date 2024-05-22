@@ -9,6 +9,7 @@ class UserProfileDTO with _$UserProfileDTO {
     @Default('') String name,
     @Default('') String email,
     @Default('') String phone,
+    @Default(false) bool authentication,
   }) = _UserProfileDTO;
 
   factory UserProfileDTO.fromJson(Map<String, dynamic> json) => _$UserProfileDTOFromJson(json);

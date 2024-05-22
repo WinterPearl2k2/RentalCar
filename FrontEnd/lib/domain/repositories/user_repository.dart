@@ -33,6 +33,7 @@ abstract class IUserRepository {
   });
 
   Future<UserProfileDTO> getUser();
+  Future<void> checkAuthentication();
 
   Future<UserProfileDTO> updateUser({
     required UserProfileDTO userDTO,

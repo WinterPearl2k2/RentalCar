@@ -4,10 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/verify_id/verify_id_notifier/verify_id_notifier.dart';
 import 'package:rental_car/presentation/verify_id/verify_id_state/verify_id_state.dart';
+import 'package:rental_car/presentation/verify_id/widgets/success_verify_widget.dart';
 import 'package:rental_car/presentation/verify_id/widgets/verify_face_widget.dart';
 import 'package:rental_car/presentation/verify_id/widgets/verify_id_widget.dart';
 
 import '../../main.dart';
+import '../common/widgets/loading_widget.dart';
 
 class VerifyIdView extends ConsumerStatefulWidget {
   const VerifyIdView({super.key});
@@ -32,31 +34,46 @@ class _CameraState extends BaseStateDelegate<VerifyIdView, VerifyIdNotifier> {
       appBar: AppBar(
         title: const Text('Verification'),
       ),
-      body: Consumer(
-        builder: (_, ref, __) {
-          final stateView = ref.watch(
-            verifyIdNotifierProvider.select(
-              (value) => value.stateView,
-            ),
-          );
-          switch(stateView) {
-            case VerifyStateView.verifyId:
-              return VerifyIdWidget(
-                notifier: notifier,
-                camera: cameras,
+      body: Stack(
+        children: [
+          Consumer(
+            builder: (_, ref, __) {
+              final stateView = ref.watch(
+                verifyIdNotifierProvider.select(
+                  (value) => value.stateView,
+                ),
               );
-            case VerifyStateView.verifyFace:
-              return VerifyFaceWidget(
-                notifier: notifier,
-                camera: cameras,
+              switch (stateView) {
+                case VerifyStateView.verifyId:
+                  return VerifyIdWidget(
+                    notifier: notifier,
+                    camera: cameras,
+                  );
+                case VerifyStateView.verifyFace:
+                  return VerifyFaceWidget(
+                    notifier: notifier,
+                    camera: cameras,
+                  );
+                case VerifyStateView.verifySuccess:
+                  return VerifySuccessWidget(
+                    notifier: notifier,
+                  );
+              }
+            },
+          ),
+          Consumer(
+            builder: (_, ref, __) {
+              final isWaiting = ref.watch(
+                verifyIdNotifierProvider.select(
+                      (value) => value.wait,
+                ),
               );
-            case VerifyStateView.verifySuccess:
-              return VerifyFaceWidget(
-                notifier: notifier,
-                camera: cameras,
-              );
-          }
-        },
+              return isWaiting
+                  ? const LoadingWidget()
+                  : const SizedBox();
+            },
+          ),
+        ],
       ),
     );
   }

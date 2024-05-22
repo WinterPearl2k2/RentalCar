@@ -106,16 +106,57 @@ class _AccountProfileViewState
                                   onPressed: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const VerifyIdView(),
+                                      builder: (context) =>
+                                          const VerifyIdView(),
                                     ),
                                   ),
-                                  child: Text(
-                                    'Change profile picture',
-                                    style: TextStyle(
-                                      color: ColorUtils.primaryColor,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  child: Consumer(
+                                    builder: (BuildContext context,
+                                        WidgetRef ref, Widget? child) {
+                                      final isAuthentication = ref.watch(
+                                        accountProfileNotifierProvider.select(
+                                          (value) => value
+                                              .user.authentication,
+                                        ),
+                                      );
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            user.authentication
+                                                ? 'User authenticated'
+                                                : 'User not authenticated',
+                                            style: TextStyle(
+                                              color: ColorUtils.primaryColor,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              color: isAuthentication
+                                                  ? ColorUtils.greenColor
+                                                  : ColorUtils.redColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: SvgPicture.asset(
+                                              'assets/icons/ic_security.svg',
+                                              width: 15.w,
+                                              height: 15.w,
+                                              colorFilter: ColorFilter.mode(
+                                                ColorUtils.whiteColor,
+                                                BlendMode.srcIn,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
                                   ),
                                 ),
                               ],

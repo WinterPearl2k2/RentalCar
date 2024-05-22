@@ -104,4 +104,12 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
       mapper: (_) {},
     );
   }
+
+  @override
+  Future<void> checkAuthentication() {
+    return get<void>(
+      url: EndPoint.restUrlCheckAuthentication,
+      mapper: (_) {},
+    );
+  }
 }

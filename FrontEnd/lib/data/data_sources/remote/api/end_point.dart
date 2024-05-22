@@ -11,6 +11,7 @@ class EndPoint {
   static const restUrlResetPassword = '/auth/resetPassword';
   static const restUrlChangePassword = '/auth/changePassword';
   static const restUrlLogout = '/auth/logout';
+  static const restUrlCheckAuthentication = '/auth/checkAuthentication';
 
   //Contract
   static const restUrlGetRentalCars = '/getRentalCar';
