@@ -15,6 +15,7 @@ import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:rental_car/domain/model/location.dart' as location;
 
 part 'home_notifier.g.dart';
 
@@ -96,7 +97,8 @@ class HomeNotifier extends _$HomeNotifier {
     double currentLongitude = PreferenceService.getLocation().longitude;
     List<Placemark> placeMarks =
         await placemarkFromCoordinates(currentLatitude, currentLongitude);
-    PreferenceService.setNameLocationCurrent("${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}");
+    PreferenceService.setNameLocationCurrent(
+        "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}");
     setNameLocation(
         nameLocation: placeMarks.isNotEmpty
             ? "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}"
@@ -151,6 +153,24 @@ class HomeNotifier extends _$HomeNotifier {
     }
   }
 
+  Future<void> getAddressLocationTemp({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final addressLocation =
+          await injection.getIt<IMapboxService>().getAddressLocation(
+                latitude: latitude,
+                longitude: longitude,
+              );
+      state =
+          state.copyWith(nameLocationTemp: addressLocation.formattedAddress);
+      LogUtils.i("get address location successfully");
+    } catch (e) {
+      LogUtils.e("get address location fail $e");
+    }
+  }
+
   Future<List<MapboxLocation>> getListAddressPredict({
     required String location,
   }) async {
@@ -166,6 +186,21 @@ class HomeNotifier extends _$HomeNotifier {
     } catch (e) {
       LogUtils.e("get list address predict fail $e");
       return [];
+    }
+  }
+
+  Future<location.Location> getLatLongAddress({
+    required String placeId,
+  }) async {
+    try {
+      final latLong = await injection
+          .getIt<IMapboxService>()
+          .getLatLongLocation(placeId: placeId);
+      LogUtils.i("get latLong successfully");
+      return latLong;
+    } catch (e) {
+      LogUtils.e("get list address predict fail $e");
+      return const location.Location(latitude: 0, longitude: 0);
     }
   }
 
@@ -205,6 +240,8 @@ class HomeNotifier extends _$HomeNotifier {
       ),
     );
     currentMarker = await pointAnnotationManager?.create(options);
+    setLocation(latitude: latitude, longitude: longitude);
+    state = state.copyWith(nameLocationTemp: state.nameLocation);
   }
 
   Future<void> marker({
@@ -235,6 +272,16 @@ class HomeNotifier extends _$HomeNotifier {
       ),
     );
     currentMarker = await pointAnnotationManager?.create(options);
+    getAddressLocationTemp(
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
+
+  void setLocation({
+    required double latitude,
+    required double longitude,
+  }) {
     getAddressLocation(
       latitude: latitude,
       longitude: longitude,
@@ -243,24 +290,24 @@ class HomeNotifier extends _$HomeNotifier {
       latCar: latitude,
       longCar: longitude,
     );
+    getListAllCars();
   }
 
-  void moveToCurrentLocation() async {
-    final location = PreferenceService.getLocationCurrent();
+  void moveToCurrentLocation({required double longitude,required double latitude}) async {
     mapboxMap?.setCamera(
       CameraOptions(
         center: Point(
           coordinates: Position(
-            location.longitude,
-            location.latitude,
+            longitude,
+            latitude,
           ),
         ).toJson(),
         zoom: 14.0,
       ),
     );
     marker(
-      latitude: location.latitude,
-      longitude: location.longitude,
+      latitude: latitude,
+      longitude: longitude,
     );
   }
 }

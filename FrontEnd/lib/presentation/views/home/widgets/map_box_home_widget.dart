@@ -5,9 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:rental_car/application/routes/routes.dart';
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
+import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/presentation/common/widgets/search_form_field.dart';
+import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 
 class BoxMapHomeWidget extends StatelessWidget {
@@ -54,7 +57,31 @@ class BoxMapHomeWidget extends StatelessWidget {
           right: 10,
           child: IconButton(
             icon: const Icon(Icons.my_location),
-            onPressed: notifier.moveToCurrentLocation,
+            onPressed: () {
+              final location = PreferenceService.getLocationCurrent();
+              notifier.moveToCurrentLocation(
+                longitude: location.longitude,
+                latitude: location.latitude,
+              );
+              latController.text = location.latitude.toString();
+              longController.text = location.longitude.toString();
+            },
+          ),
+        ),
+        Positioned(
+          bottom: 20,
+          right: 70,
+          left: 70,
+          child: SizedBox(
+            height: 50,
+            child: TextButtonWidget(
+              colorButton: ColorUtils.blueColor,
+              label: 'Set Location',
+              onPressed: () => notifier.setLocation(
+                latitude: double.parse(latController.text),
+                longitude: double.parse(longController.text),
+              ),
+            ),
           ),
         ),
         Positioned(
@@ -64,10 +91,11 @@ class BoxMapHomeWidget extends StatelessWidget {
           child: SafeArea(
             child: Consumer(
               builder: (context, ref, _) {
-                final nameLocation = ref.watch(
-                  homeNotifierProvider.select((value) => value.nameLocation),
+                final nameLocationTemp = ref.watch(
+                  homeNotifierProvider
+                      .select((value) => value.nameLocationTemp),
                 );
-                addressController.text = nameLocation;
+                addressController.text = nameLocationTemp;
                 return TypeAheadField<MapboxLocation>(
                   controller: addressController,
                   builder: (context, controller, focusNode) {
@@ -83,8 +111,7 @@ class BoxMapHomeWidget extends StatelessWidget {
                           fit: BoxFit.scaleDown,
                         ),
                       ),
-                      suffixIcon:
-                      InkWell(
+                      suffixIcon: InkWell(
                         onTap: () => addressController.clear(),
                         child: SvgPicture.asset(
                           AssetUtils.icClear,
@@ -129,12 +156,15 @@ class BoxMapHomeWidget extends StatelessWidget {
                     );
                   },
                   suggestionsCallback: (String place) async {
-                    return await notifier.getListAddressPredict(location: place);
+                    return await notifier.getListAddressPredict(
+                        location: place);
                   },
-                  onSelected: (MapboxLocation mapboxLocation) {
+                  onSelected: (MapboxLocation mapboxLocation) async {
                     addressController.text = mapboxLocation.descriptionLocation;
-                    // latController.text = mapboxLocation.center.last.toString();
-                    // longController.text = mapboxLocation.center.first.toString();
+                    final location = await notifier.getLatLongAddress(
+                        placeId: mapboxLocation.placeId);
+                    latController.text = location.latitude.toString();
+                    longController.text = location.longitude.toString();
                     notifier.marker(
                       latitude: double.parse(latController.text),
                       longitude: double.parse(longController.text),

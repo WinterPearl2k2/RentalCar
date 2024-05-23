@@ -11,7 +11,8 @@ class MapboxRepositoryImpl extends NetworkApi implements IMapboxRepository {
   Future<MapboxLocation> getAddressLocation(
       {required double latitude, required double longitude}) {
     return getMapbox<MapboxLocation>(
-      url: '${EndPoint.restUrlGoong}/Geocode?latlng=$latitude,$longitude&api_key==$apikey',
+      url:
+          '${EndPoint.restUrlGoong}/Geocode?latlng=$latitude,$longitude&api_key=$apikey',
       mapper: (response) =>
           MapboxLocation.fromJson(response.data['results'][0]),
     );
@@ -21,7 +22,8 @@ class MapboxRepositoryImpl extends NetworkApi implements IMapboxRepository {
   Future<List<MapboxLocation>> getListAddressPredict(
       {required String location}) {
     return getMapbox<List<MapboxLocation>>(
-      url: '${EndPoint.restUrlGoong}/Place/AutoComplete?api_key=$apikey&input=$location',
+      url:
+          '${EndPoint.restUrlGoong}/Place/AutoComplete?api_key=$apikey&input=$location',
       mapper: (response) {
         return (response.data['predictions'] as List)
             .map(
@@ -31,13 +33,14 @@ class MapboxRepositoryImpl extends NetworkApi implements IMapboxRepository {
       },
     );
   }
+
   @override
-  Future<Location> getLatLongLocation(
-      {required String placeId}) {
+  Future<Location> getLatLongLocation({required String placeId}) {
     return getMapbox<Location>(
-      url: '${EndPoint.restUrlGoong}/Place/Detail?place_id=$placeId&api_key=$apikey"',
+      url:
+          '${EndPoint.restUrlGoong}/Place/Detail?place_id=$placeId&api_key=$apikey',
       mapper: (response) =>
-          Location.fromJson(response.data['results']['geometry']['location']),
+          Location.fromJson(response.data['result']['geometry']['location']),
     );
   }
 }

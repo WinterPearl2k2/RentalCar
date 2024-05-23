@@ -22,6 +22,7 @@ class HomeState with _$HomeState {
     @Default(Status.loading) Status statusSearch,
     @Default(false) bool isCheckSearch,
     @Default('') String nameLocation,
+    @Default('') String nameLocationTemp,
     @Default([]) List<MapboxLocation> listAddressPredict,
   }) = _HomeState;
 }
