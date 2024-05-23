@@ -104,6 +104,7 @@ class PopupUtils {
       backgroundColor: ColorUtils.whiteColor,
       context: context,
       isScrollControlled: true,
+      enableDrag: false,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.r),

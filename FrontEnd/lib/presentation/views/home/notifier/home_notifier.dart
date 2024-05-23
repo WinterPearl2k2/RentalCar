@@ -191,6 +191,17 @@ class HomeNotifier extends _$HomeNotifier {
       ).toJson(),
       image: list,
     );
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
     currentMarker = await pointAnnotationManager?.create(options);
   }
 

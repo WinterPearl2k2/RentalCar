@@ -53,21 +53,7 @@ class BoxMapManagerWidget extends StatelessWidget {
             ).toJson(),
             zoom: 14.0,
           ),
-          resourceOptions: ResourceOptions(
-              accessToken:
-                  'sk.eyJ1IjoicXVhbnRhdHRzIiwiYSI6ImNsd2cxd2NzdTAwN3QycXJtM21qY3U2Y2IifQ.ztbU0y2xI-sDhHUO0z6xwQ'),
         ),
-        // Positioned(
-        //   bottom: 20,
-        //   right: 10,
-        //   child: IconButton(
-        //     icon: const Icon(Icons.my_location),
-        //     onPressed: () {
-        //       notifier.moveToCurrentLocation();
-        //       onPress?.call();
-        //     },
-        //   ),
-        // ),
         Positioned(
           top: 30,
           right: 10,
@@ -145,6 +131,7 @@ class BoxMapManagerWidget extends StatelessWidget {
                       latitude: double.parse(latController.text),
                       longitude: double.parse(longController.text),
                     );
+                    onPress?.call();
                   },
                 );
               },
