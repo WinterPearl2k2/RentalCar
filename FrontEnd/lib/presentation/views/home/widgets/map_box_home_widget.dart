@@ -159,6 +159,7 @@ class BoxMapHomeWidget extends StatelessWidget {
                     return await notifier.getListAddressPredict(
                         location: place);
                   },
+                  emptyBuilder: (context) => const SizedBox.shrink(),
                   onSelected: (MapboxLocation mapboxLocation) async {
                     addressController.text = mapboxLocation.descriptionLocation;
                     final location = await notifier.getLatLongAddress(

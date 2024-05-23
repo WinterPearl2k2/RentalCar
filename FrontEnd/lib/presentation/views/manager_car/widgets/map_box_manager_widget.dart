@@ -5,9 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:rental_car/application/routes/routes.dart';
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
+import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/presentation/common/widgets/search_form_field.dart';
+import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
 import 'package:rental_car/presentation/views/manager_car/notifier/manager_car_notifier.dart';
 
 class BoxMapManagerWidget extends StatelessWidget {
@@ -60,9 +63,33 @@ class BoxMapManagerWidget extends StatelessWidget {
           child: IconButton(
             icon: const Icon(Icons.my_location),
             onPressed: () {
-              notifier.moveToCurrentLocation();
+              final location = PreferenceService.getLocationCurrent();
+              notifier.moveToCurrentLocation(
+                longitude: location.longitude,
+                latitude: location.latitude,
+              );
+              latController.text = location.latitude.toString();
+              longController.text = location.longitude.toString();
               onPress?.call();
             },
+          ),
+        ),
+        Positioned(
+          bottom: 20,
+          right: 70,
+          left: 70,
+          child: SizedBox(
+            height: 50,
+            child: TextButtonWidget(
+                colorButton: ColorUtils.blueColor,
+                label: 'Set Location',
+                onPressed: () {
+                  notifier.setLocation(
+                    latitude: double.parse(latController.text),
+                    longitude: double.parse(longController.text),
+                  );
+                  onPress?.call();
+                }),
           ),
         ),
         Positioned(
@@ -131,13 +158,17 @@ class BoxMapManagerWidget extends StatelessWidget {
                       ),
                     );
                   },
+                  emptyBuilder: (context) => const SizedBox.shrink(),
                   suggestionsCallback: (String place) async {
-                    return await notifier.getListAddressPredict(location: place);
+                    return await notifier.getListAddressPredict(
+                        location: place);
                   },
-                  onSelected: (MapboxLocation mapboxLocation) {
+                  onSelected: (MapboxLocation mapboxLocation) async {
                     addressController.text = mapboxLocation.descriptionLocation;
-                    // latController.text = mapboxLocation.center.last.toString();
-                    // longController.text = mapboxLocation.center.first.toString();
+                    final location = await notifier.getLatLongAddress(
+                        placeId: mapboxLocation.placeId);
+                    latController.text = location.latitude.toString();
+                    longController.text = location.longitude.toString();
                     notifier.marker(
                       latitude: double.parse(latController.text),
                       longitude: double.parse(longController.text),

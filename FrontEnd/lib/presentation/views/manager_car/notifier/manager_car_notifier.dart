@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart' as geolocator;
 import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
@@ -13,6 +12,7 @@ import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
+import 'package:rental_car/domain/model/location.dart' as location;
 import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/views/manager_car/state/manager_car_state.dart';
@@ -411,6 +411,23 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     }
   }
 
+  Future<void> getAddressLocationTemp({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final addressLocation =
+          await injection.getIt<IMapboxService>().getAddressLocation(
+                latitude: latitude,
+                longitude: longitude,
+              );
+
+      LogUtils.i("get address location successfully");
+    } catch (e) {
+      LogUtils.e("get address location fail $e");
+    }
+  }
+
   Future<List<MapboxLocation>> getListAddressPredict({
     required String location,
   }) async {
@@ -423,6 +440,21 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     } catch (e) {
       LogUtils.e("get list address predict fail $e");
       return [];
+    }
+  }
+
+  Future<location.Location> getLatLongAddress({
+    required String placeId,
+  }) async {
+    try {
+      final latLong = await injection
+          .getIt<IMapboxService>()
+          .getLatLongLocation(placeId: placeId);
+      LogUtils.i("get latLong successfully");
+      return latLong;
+    } catch (e) {
+      LogUtils.e("get list address predict fail $e");
+      return const location.Location(latitude: 0, longitude: 0);
     }
   }
 
@@ -462,6 +494,8 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       ),
     );
     currentMarker = await pointAnnotationManager?.create(options);
+    setLocation(latitude: latitude, longitude: longitude);
+    
   }
 
   Future<void> marker({
@@ -492,6 +526,16 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       ),
     );
     currentMarker = await pointAnnotationManager?.create(options);
+    getAddressLocationTemp(
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
+
+  void setLocation({
+    required double latitude,
+    required double longitude,
+  }) {
     getAddressLocation(
       latitude: latitude,
       longitude: longitude,
@@ -502,22 +546,22 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     );
   }
 
-  void moveToCurrentLocation() async {
-    final location = PreferenceService.getLocationCurrent();
+  void moveToCurrentLocation(
+      {required double longitude, required double latitude}) async {
     mapboxMap?.setCamera(
       CameraOptions(
         center: Point(
           coordinates: Position(
-            location.longitude,
-            location.latitude,
+            longitude,
+            latitude,
           ),
         ).toJson(),
         zoom: 14.0,
       ),
     );
     marker(
-      latitude: location.latitude,
-      longitude: location.longitude,
+      latitude: latitude,
+      longitude: longitude,
     );
   }
 }

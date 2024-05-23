@@ -293,7 +293,8 @@ class HomeNotifier extends _$HomeNotifier {
     getListAllCars();
   }
 
-  void moveToCurrentLocation({required double longitude,required double latitude}) async {
+  void moveToCurrentLocation(
+      {required double longitude, required double latitude}) async {
     mapboxMap?.setCamera(
       CameraOptions(
         center: Point(

@@ -68,33 +68,32 @@ class CarAddressTextFormFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (_, ref, __) {
-        return GestureDetector(
-          onTap: () => PopupUtils.showBottomSheetDialog(
-            context: context,
-            dialog: BoxMapManagerWidget(
-              latController: latController,
-              longController: longController,
-              addressController: addressController,
-              notifier: notifier,
-              onPress: () {
-                addressController.text = addressController.text;
-                latController.text = latController.text;
-                longController.text = longController.text;
-                notifier.isCheckAddressCarEmpty(
-                    addressCar: addressController.text);
-                notifier.isCheckAddressCarChange(
-                    addressCar: addressController.text);
-              },
+        return TextFormFieldCustomWidget(
+          hint: 'Choose car Address',
+          label: "Your car address",
+          readOnly: true,
+          controller: addressController,
+          inputAction: TextInputAction.next,
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.location_on_rounded),
+            onPressed: () => PopupUtils.showBottomSheetDialog(
+              context: context,
+              dialog: BoxMapManagerWidget(
+                latController: latController,
+                longController: longController,
+                addressController: addressController,
+                notifier: notifier,
+                onPress: () {
+                  addressController.text = addressController.text;
+                  latController.text = latController.text;
+                  longController.text = longController.text;
+                  notifier.isCheckAddressCarEmpty(
+                      addressCar: addressController.text);
+                  notifier.isCheckAddressCarChange(
+                      addressCar: addressController.text);
+                },
+              ),
             ),
-          ),
-          child: TextFormFieldCustomWidget(
-            hint: 'Choose car Address',
-            label: "Your car address",
-            readOnly: true,
-            controller: addressController,
-            inputAction: TextInputAction.next,
-            suffixIcon: IconButton(
-                icon: const Icon(Icons.location_on_rounded), onPressed: () {}),
           ),
         );
       },

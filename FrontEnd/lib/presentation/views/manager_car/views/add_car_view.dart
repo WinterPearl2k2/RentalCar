@@ -225,7 +225,7 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                       break;
                     case AddCarStep.step3:
                       notifier.isContinueButtonEnabled(
-                        isContinue: !(isCheckPriceCar && isCheckAddressCar),
+                        isContinue: !(isCheckPriceCar),
                       );
                       break;
                     case AddCarStep.step4:
