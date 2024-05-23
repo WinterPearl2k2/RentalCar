@@ -55,6 +55,17 @@ class BoxMapManagerWidget extends StatelessWidget {
           ),
         ),
         Positioned(
+          bottom: 20,
+          right: 10,
+          child: IconButton(
+            icon: const Icon(Icons.my_location),
+            onPressed: () {
+              notifier.moveToCurrentLocation();
+              onPress?.call();
+            },
+          ),
+        ),
+        Positioned(
           top: 30,
           right: 10,
           left: 10,
@@ -103,7 +114,7 @@ class BoxMapManagerWidget extends StatelessWidget {
                           SizedBox(
                             width: 250.w,
                             child: Text(
-                              listAddressPredict.placeName,
+                              listAddressPredict.descriptionLocation,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
@@ -124,9 +135,9 @@ class BoxMapManagerWidget extends StatelessWidget {
                     return await notifier.getListAddressPredict(location: place);
                   },
                   onSelected: (MapboxLocation mapboxLocation) {
-                    addressController.text = mapboxLocation.placeName;
-                    latController.text = mapboxLocation.center.last.toString();
-                    longController.text = mapboxLocation.center.first.toString();
+                    addressController.text = mapboxLocation.descriptionLocation;
+                    // latController.text = mapboxLocation.center.last.toString();
+                    // longController.text = mapboxLocation.center.first.toString();
                     notifier.marker(
                       latitude: double.parse(latController.text),
                       longitude: double.parse(longController.text),

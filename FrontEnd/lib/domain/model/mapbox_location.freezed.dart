@@ -20,9 +20,12 @@ MapboxLocation _$MapboxLocationFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MapboxLocation {
-  @JsonKey(name: 'place_name')
-  String get placeName => throw _privateConstructorUsedError;
-  List<double> get center => throw _privateConstructorUsedError;
+  @JsonKey(name: 'place_id')
+  String get placeId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'description')
+  String get descriptionLocation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'formatted_address')
+  String get formattedAddress => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +40,9 @@ abstract class $MapboxLocationCopyWith<$Res> {
       _$MapboxLocationCopyWithImpl<$Res, MapboxLocation>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'place_name') String placeName, List<double> center});
+      {@JsonKey(name: 'place_id') String placeId,
+      @JsonKey(name: 'description') String descriptionLocation,
+      @JsonKey(name: 'formatted_address') String formattedAddress});
 }
 
 /// @nodoc
@@ -53,18 +58,23 @@ class _$MapboxLocationCopyWithImpl<$Res, $Val extends MapboxLocation>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? placeName = null,
-    Object? center = null,
+    Object? placeId = null,
+    Object? descriptionLocation = null,
+    Object? formattedAddress = null,
   }) {
     return _then(_value.copyWith(
-      placeName: null == placeName
-          ? _value.placeName
-          : placeName // ignore: cast_nullable_to_non_nullable
+      placeId: null == placeId
+          ? _value.placeId
+          : placeId // ignore: cast_nullable_to_non_nullable
               as String,
-      center: null == center
-          ? _value.center
-          : center // ignore: cast_nullable_to_non_nullable
-              as List<double>,
+      descriptionLocation: null == descriptionLocation
+          ? _value.descriptionLocation
+          : descriptionLocation // ignore: cast_nullable_to_non_nullable
+              as String,
+      formattedAddress: null == formattedAddress
+          ? _value.formattedAddress
+          : formattedAddress // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -78,7 +88,9 @@ abstract class _$$MapboxLocationImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'place_name') String placeName, List<double> center});
+      {@JsonKey(name: 'place_id') String placeId,
+      @JsonKey(name: 'description') String descriptionLocation,
+      @JsonKey(name: 'formatted_address') String formattedAddress});
 }
 
 /// @nodoc
@@ -92,18 +104,23 @@ class __$$MapboxLocationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? placeName = null,
-    Object? center = null,
+    Object? placeId = null,
+    Object? descriptionLocation = null,
+    Object? formattedAddress = null,
   }) {
     return _then(_$MapboxLocationImpl(
-      placeName: null == placeName
-          ? _value.placeName
-          : placeName // ignore: cast_nullable_to_non_nullable
+      placeId: null == placeId
+          ? _value.placeId
+          : placeId // ignore: cast_nullable_to_non_nullable
               as String,
-      center: null == center
-          ? _value._center
-          : center // ignore: cast_nullable_to_non_nullable
-              as List<double>,
+      descriptionLocation: null == descriptionLocation
+          ? _value.descriptionLocation
+          : descriptionLocation // ignore: cast_nullable_to_non_nullable
+              as String,
+      formattedAddress: null == formattedAddress
+          ? _value.formattedAddress
+          : formattedAddress // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -112,28 +129,26 @@ class __$$MapboxLocationImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$MapboxLocationImpl implements _MapboxLocation {
   const _$MapboxLocationImpl(
-      {@JsonKey(name: 'place_name') this.placeName = '',
-      final List<double> center = const []})
-      : _center = center;
+      {@JsonKey(name: 'place_id') this.placeId = '',
+      @JsonKey(name: 'description') this.descriptionLocation = '',
+      @JsonKey(name: 'formatted_address') this.formattedAddress = ''});
 
   factory _$MapboxLocationImpl.fromJson(Map<String, dynamic> json) =>
       _$$MapboxLocationImplFromJson(json);
 
   @override
-  @JsonKey(name: 'place_name')
-  final String placeName;
-  final List<double> _center;
+  @JsonKey(name: 'place_id')
+  final String placeId;
   @override
-  @JsonKey()
-  List<double> get center {
-    if (_center is EqualUnmodifiableListView) return _center;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_center);
-  }
+  @JsonKey(name: 'description')
+  final String descriptionLocation;
+  @override
+  @JsonKey(name: 'formatted_address')
+  final String formattedAddress;
 
   @override
   String toString() {
-    return 'MapboxLocation(placeName: $placeName, center: $center)';
+    return 'MapboxLocation(placeId: $placeId, descriptionLocation: $descriptionLocation, formattedAddress: $formattedAddress)';
   }
 
   @override
@@ -141,15 +156,17 @@ class _$MapboxLocationImpl implements _MapboxLocation {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MapboxLocationImpl &&
-            (identical(other.placeName, placeName) ||
-                other.placeName == placeName) &&
-            const DeepCollectionEquality().equals(other._center, _center));
+            (identical(other.placeId, placeId) || other.placeId == placeId) &&
+            (identical(other.descriptionLocation, descriptionLocation) ||
+                other.descriptionLocation == descriptionLocation) &&
+            (identical(other.formattedAddress, formattedAddress) ||
+                other.formattedAddress == formattedAddress));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, placeName, const DeepCollectionEquality().hash(_center));
+  int get hashCode =>
+      Object.hash(runtimeType, placeId, descriptionLocation, formattedAddress);
 
   @JsonKey(ignore: true)
   @override
@@ -168,17 +185,23 @@ class _$MapboxLocationImpl implements _MapboxLocation {
 
 abstract class _MapboxLocation implements MapboxLocation {
   const factory _MapboxLocation(
-      {@JsonKey(name: 'place_name') final String placeName,
-      final List<double> center}) = _$MapboxLocationImpl;
+          {@JsonKey(name: 'place_id') final String placeId,
+          @JsonKey(name: 'description') final String descriptionLocation,
+          @JsonKey(name: 'formatted_address') final String formattedAddress}) =
+      _$MapboxLocationImpl;
 
   factory _MapboxLocation.fromJson(Map<String, dynamic> json) =
       _$MapboxLocationImpl.fromJson;
 
   @override
-  @JsonKey(name: 'place_name')
-  String get placeName;
+  @JsonKey(name: 'place_id')
+  String get placeId;
   @override
-  List<double> get center;
+  @JsonKey(name: 'description')
+  String get descriptionLocation;
+  @override
+  @JsonKey(name: 'formatted_address')
+  String get formattedAddress;
   @override
   @JsonKey(ignore: true)
   _$$MapboxLocationImplCopyWith<_$MapboxLocationImpl> get copyWith =>

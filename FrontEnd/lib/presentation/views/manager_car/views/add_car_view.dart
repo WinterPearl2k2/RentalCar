@@ -43,11 +43,15 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
       TextEditingController(text: Transmission.automatic.transmissionName);
 
   final TextEditingController carPriceController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final TextEditingController addressController = TextEditingController(
+    text: PreferenceService.getNameLocationCurrent().toString(),
+  );
   final TextEditingController latController = TextEditingController(
-      text: PreferenceService.getLocation().latitude.toString());
+    text: PreferenceService.getLocationCurrent().latitude.toString(),
+  );
   final TextEditingController longController = TextEditingController(
-      text: PreferenceService.getLocation().longitude.toString());
+    text: PreferenceService.getLocationCurrent().longitude.toString(),
+  );
 
   @override
   void initNotifier() {

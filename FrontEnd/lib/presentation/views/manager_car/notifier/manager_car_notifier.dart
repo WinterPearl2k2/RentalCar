@@ -404,7 +404,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
                 longitude: longitude,
               );
       LogUtils.i("get address location successfully");
-      return addressLocation.placeName;
+      return addressLocation.formattedAddress;
     } catch (e) {
       LogUtils.e("get address location fail $e");
       return '';
@@ -503,25 +503,21 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   }
 
   void moveToCurrentLocation() async {
-    geolocator.Position position =
-        await geolocator.Geolocator.getCurrentPosition(
-            desiredAccuracy: geolocator.LocationAccuracy.high);
-    PreferenceService.setLocation(
-        latCar: position.latitude, longCar: position.longitude);
+    final location = PreferenceService.getLocationCurrent();
     mapboxMap?.setCamera(
       CameraOptions(
         center: Point(
           coordinates: Position(
-            position.longitude,
-            position.latitude,
+            location.longitude,
+            location.latitude,
           ),
         ).toJson(),
         zoom: 14.0,
       ),
     );
     marker(
-      latitude: position.latitude,
-      longitude: position.longitude,
+      latitude: location.latitude,
+      longitude: location.longitude,
     );
   }
 }

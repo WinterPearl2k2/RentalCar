@@ -8,12 +8,12 @@ part of 'location.dart';
 
 _$LocationImpl _$$LocationImplFromJson(Map<String, dynamic> json) =>
     _$LocationImpl(
-      latitude: (json['latitude'] as num?)?.toDouble() ?? 0,
-      longitude: (json['longitude'] as num?)?.toDouble() ?? 0,
+      latitude: (json['lat'] as num?)?.toDouble() ?? 0,
+      longitude: (json['lng'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$$LocationImplToJson(_$LocationImpl instance) =>
     <String, dynamic>{
-      'latitude': instance.latitude,
-      'longitude': instance.longitude,
+      'lat': instance.latitude,
+      'lng': instance.longitude,
     };

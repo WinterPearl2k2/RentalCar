@@ -40,7 +40,7 @@ class EndPoint {
   static const restUrlGetCarReview = '/getCarReview';
   static const restUrlUploadImage = '/uploadImage';
 
-  //mapbox
-  static const restUrlMapbox =
-      'https://api.mapbox.com/geocoding/v5/mapbox.places';
+  //goong io
+  static const restUrlGoong =
+      'https://rsapi.goong.io';
 }

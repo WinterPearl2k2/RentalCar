@@ -1,3 +1,4 @@
+import 'package:rental_car/domain/model/location.dart';
 import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/domain/repositories/mapbox_repository.dart';
 
@@ -9,6 +10,10 @@ abstract class IMapboxService {
 
   Future<List<MapboxLocation>> getListAddressPredict({
     required String location,
+  });
+
+  Future<Location> getLatLongLocation({
+    required String placeId,
   });
 }
 
@@ -36,4 +41,11 @@ class MapboxServiceImpl implements IMapboxService {
       location: location,
     );
   }
+
+  @override
+  Future<Location> getLatLongLocation({required String placeId}) {
+   return _mapboxRepository.getLatLongLocation(placeId: placeId);
+  }
+
+
 }

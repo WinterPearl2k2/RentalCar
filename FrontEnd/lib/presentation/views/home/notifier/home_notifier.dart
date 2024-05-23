@@ -1,6 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
-import 'package:geolocator/geolocator.dart' as geolocator;
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/contract_service.dart';
@@ -97,6 +96,7 @@ class HomeNotifier extends _$HomeNotifier {
     double currentLongitude = PreferenceService.getLocation().longitude;
     List<Placemark> placeMarks =
         await placemarkFromCoordinates(currentLatitude, currentLongitude);
+    PreferenceService.setNameLocationCurrent("${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}");
     setNameLocation(
         nameLocation: placeMarks.isNotEmpty
             ? "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}"
@@ -144,7 +144,7 @@ class HomeNotifier extends _$HomeNotifier {
                 latitude: latitude,
                 longitude: longitude,
               );
-      setNameLocation(nameLocation: addressLocation.placeName);
+      setNameLocation(nameLocation: addressLocation.formattedAddress);
       LogUtils.i("get address location successfully");
     } catch (e) {
       LogUtils.e("get address location fail $e");
@@ -158,7 +158,9 @@ class HomeNotifier extends _$HomeNotifier {
       final listAddressPredict = await injection
           .getIt<IMapboxService>()
           .getListAddressPredict(location: location);
-      state = state.copyWith(listAddressPredict: listAddressPredict);
+      state = state.copyWith(
+          listAddressPredict:
+              listAddressPredict.isEmpty ? [] : listAddressPredict);
       LogUtils.i("get list address predict successfully");
       return listAddressPredict;
     } catch (e) {
@@ -244,25 +246,21 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   void moveToCurrentLocation() async {
-    geolocator.Position position =
-        await geolocator.Geolocator.getCurrentPosition(
-            desiredAccuracy: geolocator.LocationAccuracy.high);
-    PreferenceService.setLocation(
-        latCar: position.latitude, longCar: position.longitude);
+    final location = PreferenceService.getLocationCurrent();
     mapboxMap?.setCamera(
       CameraOptions(
         center: Point(
           coordinates: Position(
-            position.longitude,
-            position.latitude,
+            location.longitude,
+            location.latitude,
           ),
         ).toJson(),
         zoom: 14.0,
       ),
     );
     marker(
-      latitude: position.latitude,
-      longitude: position.longitude,
+      latitude: location.latitude,
+      longitude: location.longitude,
     );
   }
 }

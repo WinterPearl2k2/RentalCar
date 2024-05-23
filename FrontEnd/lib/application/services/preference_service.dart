@@ -13,6 +13,8 @@ class PreferenceService {
   static const String _user = 'user';
   static const String _location = 'location';
   static const String _deviceToken = 'device_token';
+  static const String _locationCurrent = 'location_current';
+  static const String _nameLocationCurrent = 'name_location_current';
 
   static late final SharedPreferences _prefs;
 
@@ -109,6 +111,35 @@ class PreferenceService {
 
   static Location getLocation() {
     final data = _prefs.getString(_location);
+    if (data != null) {
+      return Location.fromJson(jsonDecode(data));
+    }
+    return const Location();
+  }
+
+  static void setNameLocationCurrent(String nameLocationCurrent) {
+    _prefs.setString(_nameLocationCurrent, nameLocationCurrent);
+  }
+
+  static String getNameLocationCurrent() {
+    final data = _prefs.getString(_nameLocationCurrent);
+    if (data != null) {
+      return data;
+    }
+    return '';
+  }
+
+  static void setLocationCurrent({
+    required double latCar,
+    required double longCar,
+  }) {
+    String locationString =
+        jsonEncode(Location(latitude: latCar, longitude: longCar));
+    _prefs.setString(_locationCurrent, locationString);
+  }
+
+  static Location getLocationCurrent() {
+    final data = _prefs.getString(_locationCurrent);
     if (data != null) {
       return Location.fromJson(jsonDecode(data));
     }

@@ -44,65 +44,65 @@ class _HeaderHomeWidgetState extends State<HeaderHomeWidget> {
       padding: EdgeInsets.symmetric(horizontal: 14.0.w, vertical: 10.0.h),
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Your location",
-                    style: TextStyle(
-                      color: ColorUtils.textColor,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  GestureDetector(
-                    onTap: () => PopupUtils.showBottomSheetDialog(
-                      context: context,
-                      dialog: BoxMapHomeWidget(
-                        latController: latController,
-                        longController: longController,
-                        addressController: addressController,
-                        notifier: widget.notifier,
+          GestureDetector(
+            onTap: () => PopupUtils.showBottomSheetDialog(
+              context: context,
+              dialog: BoxMapHomeWidget(
+                latController: latController,
+                longController: longController,
+                addressController: addressController,
+                notifier: widget.notifier,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      "Your location",
+                      style: TextStyle(
+                        color: ColorUtils.textColor,
+                        fontSize: 14.sp,
                       ),
                     ),
-                    child: SvgPicture.asset(
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    SvgPicture.asset(
                       colorFilter: ColorFilter.mode(
                         ColorUtils.textColor,
                         BlendMode.srcIn,
                       ),
                       AssetUtils.icArrowDown,
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 2.h,
-              ),
-              Consumer(builder: (_, ref, __) {
-                final nameLocation = ref.watch(
-                  homeNotifierProvider.select(
-                    (value) => value.nameLocation,
-                  ),
-                );
-                return SizedBox(
-                  width: 250.w,
-                  child: Text(
-                    nameLocation,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: ColorUtils.primaryColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
+                  ],
+                ),
+                SizedBox(
+                  height: 2.h,
+                ),
+                Consumer(builder: (_, ref, __) {
+                  final nameLocation = ref.watch(
+                    homeNotifierProvider.select(
+                      (value) => value.nameLocation,
                     ),
-                  ),
-                );
-              })
-            ],
+                  );
+                  return SizedBox(
+                    width: 250.w,
+                    child: Text(
+                      nameLocation,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: ColorUtils.primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                      ),
+                    ),
+                  );
+                })
+              ],
+            ),
           ),
           const Spacer(),
           GestureDetector(
