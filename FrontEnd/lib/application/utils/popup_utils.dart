@@ -103,6 +103,7 @@ class PopupUtils {
     return showModalBottomSheet(
       backgroundColor: ColorUtils.whiteColor,
       context: context,
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.r),
@@ -110,12 +111,17 @@ class PopupUtils {
         ),
       ),
       builder: (_) {
-        return ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(16.r),
-              topRight: Radius.circular(16.r),
-            ),
-            child: dialog);
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16.r),
+                topRight: Radius.circular(16.r),
+              ),
+              child: dialog),
+        );
       },
     );
   }

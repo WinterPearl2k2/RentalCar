@@ -1,14 +1,19 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:geolocator/geolocator.dart' as geolocator;
+import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rental_car/application/services/car_service.dart';
+import 'package:rental_car/application/services/mapbox_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
+import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/views/manager_car/state/manager_car_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,6 +26,9 @@ part 'manager_car_notifier.g.dart';
 class ManagerCarNotifier extends _$ManagerCarNotifier {
   @override
   ManagerCarState build() => const ManagerCarState();
+  PointAnnotation? currentMarker;
+  PointAnnotationManager? pointAnnotationManager;
+  MapboxMap? mapboxMap;
 
   Future<void> getListCarByIdUser() async {
     try {
@@ -342,8 +350,8 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   Future<void> pickImageFromGallery() async {
     PermissionStatus permission = await Permission.camera.request();
     if (permission.isGranted) {
-      final pickedFile = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 20)
+      final pickedFile = await image_picker.ImagePicker()
+          .pickImage(source: image_picker.ImageSource.gallery, imageQuality: 20)
           .onError((error, stackTrace) {
         return null;
       });
@@ -362,8 +370,8 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   Future<void> pickImageFromCamera() async {
     PermissionStatus permission = await Permission.camera.request();
     if (permission.isGranted) {
-      final pickedFile = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 20)
+      final pickedFile = await image_picker.ImagePicker()
+          .pickImage(source: image_picker.ImageSource.camera, imageQuality: 20)
           .onError((error, stackTrace) {
         return null;
       });
@@ -382,6 +390,127 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   Future<void> clearImage() async {
     state = state.copyWith(
       imageFile: "",
+    );
+  }
+
+  Future<String> getAddressLocation({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final addressLocation =
+          await injection.getIt<IMapboxService>().getAddressLocation(
+                latitude: latitude,
+                longitude: longitude,
+              );
+      LogUtils.i("get address location successfully");
+      return addressLocation.placeName;
+    } catch (e) {
+      LogUtils.e("get address location fail $e");
+      return '';
+    }
+  }
+
+  Future<List<MapboxLocation>> getListAddressPredict({
+    required String location,
+  }) async {
+    try {
+      final listAddressPredict = await injection
+          .getIt<IMapboxService>()
+          .getListAddressPredict(location: location);
+      LogUtils.i("get list address predict successfully");
+      return listAddressPredict;
+    } catch (e) {
+      LogUtils.e("get list address predict fail $e");
+      return [];
+    }
+  }
+
+  void onMapCreated(
+    MapboxMap mapboxMap,
+  ) {
+    this.mapboxMap = mapboxMap;
+    initMarker(
+      latitude: PreferenceService.getLocation().latitude,
+      longitude: PreferenceService.getLocation().longitude,
+    );
+  }
+
+  Future<void> initMarker({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final ByteData bytes = await rootBundle.load(AssetUtils.imgLocation);
+    final Uint8List list = bytes.buffer.asUint8List();
+    pointAnnotationManager =
+        await mapboxMap?.annotations.createPointAnnotationManager();
+    final options = PointAnnotationOptions(
+      geometry: Point(
+        coordinates: Position(longitude, latitude),
+      ).toJson(),
+      image: list,
+    );
+    currentMarker = await pointAnnotationManager?.create(options);
+  }
+
+  Future<void> marker({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final ByteData bytes = await rootBundle.load(AssetUtils.imgLocation);
+    final Uint8List list = bytes.buffer.asUint8List();
+    final options = PointAnnotationOptions(
+      geometry: Point(
+        coordinates: Position(longitude, latitude),
+      ).toJson(),
+      image: list,
+    );
+
+    if (currentMarker != null) {
+      pointAnnotationManager?.delete(currentMarker!);
+    }
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    currentMarker = await pointAnnotationManager?.create(options);
+    getAddressLocation(
+      latitude: latitude,
+      longitude: longitude,
+    );
+    PreferenceService.setLocation(
+      latCar: latitude,
+      longCar: longitude,
+    );
+  }
+
+  void moveToCurrentLocation() async {
+    geolocator.Position position =
+        await geolocator.Geolocator.getCurrentPosition(
+            desiredAccuracy: geolocator.LocationAccuracy.high);
+    PreferenceService.setLocation(
+        latCar: position.latitude, longCar: position.longitude);
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            position.longitude,
+            position.latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    marker(
+      latitude: position.latitude,
+      longitude: position.longitude,
     );
   }
 }

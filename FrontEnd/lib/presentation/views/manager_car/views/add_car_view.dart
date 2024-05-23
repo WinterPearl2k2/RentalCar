@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/routes/routes.dart';
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/colors_utils.dart';
 import 'package:rental_car/application/utils/format_utils.dart';
 import 'package:rental_car/domain/model/car.dart';
@@ -43,8 +44,10 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
 
   final TextEditingController carPriceController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
-  final TextEditingController latController = TextEditingController();
-  final TextEditingController longController = TextEditingController();
+  final TextEditingController latController = TextEditingController(
+      text: PreferenceService.getLocation().latitude.toString());
+  final TextEditingController longController = TextEditingController(
+      text: PreferenceService.getLocation().longitude.toString());
 
   @override
   void initNotifier() {
@@ -92,14 +95,14 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
               Text(
                 "Add car",
                 style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold),
+                  color: ColorUtils.primaryColor,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               SizedBox(
                 height: 10.h,
               ),
-
               Consumer(
                 builder: (_, WidgetRef ref, __) {
                   final stateView = ref.watch(
@@ -169,7 +172,7 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                 builder: (_, WidgetRef ref, __) {
                   final stateView = ref.watch(
                     managerCarNotifierProvider.select(
-                          (value) => value.addCarStep,
+                      (value) => value.addCarStep,
                     ),
                   );
                   final isCheckNameCar = ref.watch(
@@ -268,7 +271,6 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                   );
                 },
               )
-
             ],
           ),
         ),

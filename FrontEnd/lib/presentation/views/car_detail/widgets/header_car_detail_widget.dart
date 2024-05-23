@@ -1,7 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/application/routes/routes.dart';
@@ -36,13 +34,13 @@ class HeaderCarDetailWidget extends StatelessWidget {
           height: 200.h,
           fit: BoxFit.cover,
           imageUrl: carDetail.imagesCar,
-          progressIndicatorBuilder: (_, __, downloadProgress) =>
-              SizedBox(
-                height: 10.h,
-                width: 10.h,
-                child: CircularProgressIndicator(
-                    value: downloadProgress.progress),
-              ),
+          progressIndicatorBuilder: (_, __, downloadProgress) => SizedBox(
+            height: 10.h,
+            width: 10.h,
+            child: CircularProgressIndicator(
+              value: downloadProgress.progress,
+            ),
+          ),
           errorWidget: (_, __, error) => const Icon(Icons.error),
         ),
         Positioned(
@@ -59,11 +57,13 @@ class HeaderCarDetailWidget extends StatelessWidget {
         ),
         latCar != 0.0
             ? Positioned(
-              right: 10,
-              child: SafeArea(
-                child: GestureDetector(
+                right: 10,
+                child: SafeArea(
+                  child: GestureDetector(
                     onTap: () async => await carDetailNotifier.launchMap(
-                        latCar: latCar ?? 10.0, longCar: longCar ?? 10.0),
+                      latCar: latCar ?? 10.0,
+                      longCar: longCar ?? 10.0,
+                    ),
                     child: Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
@@ -89,8 +89,8 @@ class HeaderCarDetailWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-              ),
-            )
+                ),
+              )
             : const SizedBox()
       ],
     );

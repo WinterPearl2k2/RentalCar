@@ -32,6 +32,8 @@ class MapboxServiceImpl implements IMapboxService {
   Future<List<MapboxLocation>> getListAddressPredict({
     required String location,
   }) {
-    return getListAddressPredict(location: location);
+    return _mapboxRepository.getListAddressPredict(
+      location: location,
+    );
   }
 }

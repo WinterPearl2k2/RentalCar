@@ -1,10 +1,16 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart' as geolocator;
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/contract_service.dart';
 import 'package:rental_car/application/services/firebase_service.dart';
+import 'package:rental_car/application/services/mapbox_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
+import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
@@ -17,6 +23,10 @@ part 'home_notifier.g.dart';
 class HomeNotifier extends _$HomeNotifier {
   @override
   HomeState build() => const HomeState();
+
+  PointAnnotation? currentMarker;
+  PointAnnotationManager? pointAnnotationManager;
+  MapboxMap? mapboxMap;
 
   Future<void> getListTopCars() async {
     try {
@@ -123,4 +133,125 @@ class HomeNotifier extends _$HomeNotifier {
 
   void setNameLocation({required String nameLocation}) =>
       state = state.copyWith(nameLocation: nameLocation);
+
+  Future<void> getAddressLocation({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final addressLocation =
+          await injection.getIt<IMapboxService>().getAddressLocation(
+                latitude: latitude,
+                longitude: longitude,
+              );
+      setNameLocation(nameLocation: addressLocation.placeName);
+      LogUtils.i("get address location successfully");
+    } catch (e) {
+      LogUtils.e("get address location fail $e");
+    }
+  }
+
+  Future<List<MapboxLocation>> getListAddressPredict({
+    required String location,
+  }) async {
+    try {
+      final listAddressPredict = await injection
+          .getIt<IMapboxService>()
+          .getListAddressPredict(location: location);
+      state = state.copyWith(listAddressPredict: listAddressPredict);
+      LogUtils.i("get list address predict successfully");
+      return listAddressPredict;
+    } catch (e) {
+      LogUtils.e("get list address predict fail $e");
+      return [];
+    }
+  }
+
+  void onMapCreated(
+    MapboxMap mapboxMap,
+  ) {
+    this.mapboxMap = mapboxMap;
+    initMarker(
+      latitude: PreferenceService.getLocation().latitude,
+      longitude: PreferenceService.getLocation().longitude,
+    );
+  }
+
+  Future<void> initMarker({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final ByteData bytes = await rootBundle.load(AssetUtils.imgLocation);
+    final Uint8List list = bytes.buffer.asUint8List();
+    pointAnnotationManager =
+        await mapboxMap?.annotations.createPointAnnotationManager();
+    final options = PointAnnotationOptions(
+      geometry: Point(
+        coordinates: Position(longitude, latitude),
+      ).toJson(),
+      image: list,
+    );
+    currentMarker = await pointAnnotationManager?.create(options);
+  }
+
+  Future<void> marker({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final ByteData bytes = await rootBundle.load(AssetUtils.imgLocation);
+    final Uint8List list = bytes.buffer.asUint8List();
+    final options = PointAnnotationOptions(
+      geometry: Point(
+        coordinates: Position(longitude, latitude),
+      ).toJson(),
+      image: list,
+    );
+
+    if (currentMarker != null) {
+      pointAnnotationManager?.delete(currentMarker!);
+    }
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    currentMarker = await pointAnnotationManager?.create(options);
+    getAddressLocation(
+      latitude: latitude,
+      longitude: longitude,
+    );
+    PreferenceService.setLocation(
+      latCar: latitude,
+      longCar: longitude,
+    );
+  }
+
+  void moveToCurrentLocation() async {
+    geolocator.Position position =
+        await geolocator.Geolocator.getCurrentPosition(
+            desiredAccuracy: geolocator.LocationAccuracy.high);
+    PreferenceService.setLocation(
+        latCar: position.latitude, longCar: position.longitude);
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            position.longitude,
+            position.latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    marker(
+      latitude: position.latitude,
+      longitude: position.longitude,
+    );
+  }
 }

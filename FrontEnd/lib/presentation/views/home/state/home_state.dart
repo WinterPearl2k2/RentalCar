@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/top_car_dto.dart';
+import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
 
 part 'home_state.freezed.dart';
@@ -21,6 +22,7 @@ class HomeState with _$HomeState {
     @Default(Status.loading) Status statusSearch,
     @Default(false) bool isCheckSearch,
     @Default('') String nameLocation,
+    @Default([]) List<MapboxLocation> listAddressPredict,
   }) = _HomeState;
 }
 
