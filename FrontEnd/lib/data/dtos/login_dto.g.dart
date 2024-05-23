@@ -11,6 +11,7 @@ _$LoginDTOImpl _$$LoginDTOImplFromJson(Map<String, dynamic> json) =>
       password: json['password'] as String? ?? '',
       email: json['email'] as String? ?? '',
       deviceToken: json['deviceToken'] as String? ?? '',
+      authentication: json['authentication'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$LoginDTOImplToJson(_$LoginDTOImpl instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$LoginDTOImplToJson(_$LoginDTOImpl instance) =>
       'password': instance.password,
       'email': instance.email,
       'deviceToken': instance.deviceToken,
+      'authentication': instance.authentication,
     };

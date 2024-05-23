@@ -5,11 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
-import 'package:rental_car/presentation/verify_id/verify_id_notifier/verify_id_notifier.dart';
-import 'package:rental_car/presentation/verify_id/widgets/text_information_widget.dart';
+import 'package:rental_car/presentation/views/verify_id/widgets/text_information_widget.dart';
 
-import '../../../application/utils/colors_utils.dart';
-
+import '../../../../application/utils/colors_utils.dart';
+import '../verify_id_notifier/verify_id_notifier.dart';
 class VerifySuccessWidget extends StatelessWidget {
   const VerifySuccessWidget({
     super.key,
@@ -108,8 +107,9 @@ class VerifySuccessWidget extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 40.h,
-                    child: const TextButtonWidget(
-                      label: "Go back",
+                    child: TextButtonWidget(
+                      label: "Save information",
+                      onPressed: () => notifier.updateInformation(context),
                     ),
                   )
                 ],

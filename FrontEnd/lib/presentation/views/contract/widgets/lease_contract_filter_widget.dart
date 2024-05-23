@@ -35,10 +35,13 @@ class LeaseContractFilterWidget extends StatelessWidget {
           borderWidth: 1,
           unselectedBorderColor: ColorUtils.primaryColor,
           radius: 15,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 12.w,
+          ),
           onTap: widget.notifier.filterLease,
           tabs: const [
             Tab(
-              text: "  All  ",
+              text: "All",
             ),
             Tab(
               text: "Active",

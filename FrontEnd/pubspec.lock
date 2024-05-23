@@ -385,6 +385,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.3+1"
+  double_back_to_close_app:
+    dependency: "direct main"
+    description:
+      name: double_back_to_close_app
+      sha256: d19ce4e2f8d2cb9f35bdbc90eecd5c731cc0e6216f5e8f14e7d1e076dafb344a
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   easy_refresh:
     dependency: "direct main"
     description:
@@ -1037,6 +1045,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  lottie:
+    dependency: transitive
+    description:
+      name: lottie
+      sha256: a93542cc2d60a7057255405f62252533f8e8956e7e06754955669fd32fb4b216
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.0"
   map_launcher:
     dependency: "direct main"
     description:
@@ -1061,6 +1077,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.8.0"
+  material_dialogs:
+    dependency: "direct main"
+    description:
+      name: material_dialogs
+      sha256: "7828b8e70e5227c1fc2bcdf5c3ac4f22049b9ead6bae96a44ca55a4c7b8da949"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.4"
   meta:
     dependency: transitive
     description:

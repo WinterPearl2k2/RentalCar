@@ -1,3 +1,4 @@
+import 'package:rental_car/data/dtos/citizen_dto.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
 import 'package:rental_car/data/dtos/password_dto.dart';
 import 'package:rental_car/data/dtos/reset_password_dto.dart';
@@ -34,6 +35,8 @@ abstract class IUserRepository {
 
   Future<UserProfileDTO> getUser();
   Future<void> checkAuthentication();
+  Future<void> checkValidResume({required String no});
+  Future<void> updateInformation({required CitizenDto citizen});
 
   Future<UserProfileDTO> updateUser({
     required UserProfileDTO userDTO,

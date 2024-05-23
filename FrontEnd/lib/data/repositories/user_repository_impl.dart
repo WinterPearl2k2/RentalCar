@@ -1,5 +1,6 @@
 import 'package:rental_car/data/data_sources/remote/api/end_point.dart';
 import 'package:rental_car/data/data_sources/remote/api/network_api.dart';
+import 'package:rental_car/data/dtos/citizen_dto.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
 import 'package:rental_car/data/dtos/password_dto.dart';
 import 'package:rental_car/data/dtos/reset_password_dto.dart';
@@ -109,6 +110,23 @@ class UserRepositoryImpl extends NetworkApi implements IUserRepository {
   Future<void> checkAuthentication() {
     return get<void>(
       url: EndPoint.restUrlCheckAuthentication,
+      mapper: (_) {},
+    );
+  }
+
+  @override
+  Future<void> updateInformation({required CitizenDto citizen}) {
+    return post<void>(
+      url: EndPoint.restUrlVerifyInformation,
+      data: citizen.toJson(),
+      mapper: (_) {},
+    );
+  }
+
+  @override
+  Future<void> checkValidResume({required String no}) {
+    return get<void>(
+      url: '${EndPoint.restUrlCheckValidResume}/$no',
       mapper: (_) {},
     );
   }

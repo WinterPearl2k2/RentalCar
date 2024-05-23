@@ -82,6 +82,8 @@ dependencies:
   camera: ^0.10.6
   image: ^4.1.7
   circle_avatar: ^1.0.1
+  material_dialogs: ^1.1.4
+  double_back_to_close_app: ^2.1.0
 
 
 dev_dependencies:

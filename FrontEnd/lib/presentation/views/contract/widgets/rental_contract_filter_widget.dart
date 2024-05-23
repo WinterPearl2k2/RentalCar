@@ -1,4 +1,3 @@
-
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +16,7 @@ class RentalContractFilterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10.w, top: 10.h),
+      margin: EdgeInsets.only(left: 10.w, top: 10.h, right: 10.w),
       child: DefaultTabController(
         length: 5,
         child: ButtonsTabBar(
@@ -35,10 +34,13 @@ class RentalContractFilterWidget extends StatelessWidget {
           borderWidth: 1,
           unselectedBorderColor: ColorUtils.primaryColor,
           radius: 15,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 12.w,
+          ),
           onTap: widget.notifier.filterRental,
           tabs: const [
             Tab(
-              text: "  All  ",
+              text: "All",
             ),
             Tab(
               text: "Processing",

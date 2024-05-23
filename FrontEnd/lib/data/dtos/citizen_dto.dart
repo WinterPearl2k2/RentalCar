@@ -1,20 +1,20 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'citizen.freezed.dart';
+part 'citizen_dto.freezed.dart';
 
-part 'citizen.g.dart';
+part 'citizen_dto.g.dart';
 
 @freezed
-class Citizen with _$Citizen {
-  const factory Citizen({
+class CitizenDto with _$CitizenDto {
+  const factory CitizenDto({
     @Default('') String no,
     @Default('') String fullName,
     @Default('') String dateOfBirth,
     @Default('') String sex,
     @Default('') String nationality,
     @Default('') String placeOfOrigin,
-  }) = _Citizen;
+  }) = _CitizenDto;
 
-  factory Citizen.fromJson(Map<String, dynamic> json) =>
-      _$CitizenFromJson(json);
+  factory CitizenDto.fromJson(Map<String, dynamic> json) =>
+      _$CitizenDtoFromJson(json);
 }

@@ -6,7 +6,7 @@ part of 'verify_id_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$verifyIdNotifierHash() => r'bca46304225777b1208d2d70d73e75e2c3634a70';
+String _$verifyIdNotifierHash() => r'd77820ea7a94f2a66638c21ee660ee14b0b80841';
 
 /// See also [VerifyIdNotifier].
 @ProviderFor(VerifyIdNotifier)

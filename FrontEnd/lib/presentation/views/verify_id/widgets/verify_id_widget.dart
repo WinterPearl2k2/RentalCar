@@ -2,10 +2,9 @@ import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rental_car/presentation/verify_id/verify_id_notifier/verify_id_notifier.dart';
-import 'package:rental_car/presentation/verify_id/verify_id_state/verify_id_state.dart';
-
-import '../../common/widgets/text_button_widget.dart';
+import '../../../common/widgets/text_button_widget.dart';
+import '../verify_id_notifier/verify_id_notifier.dart';
+import '../verify_id_state/verify_id_state.dart';
 import 'item_add_resume_widget.dart';
 
 class VerifyIdWidget extends StatelessWidget {
@@ -92,7 +91,7 @@ class VerifyIdWidget extends StatelessWidget {
                   return TextButtonWidget(
                     label: 'Continue',
                     blockButton: pathFront.isEmpty || pathBack.isEmpty,
-                    onPressed: () => notifier.checkExistId,
+                    onPressed: notifier.checkExistId,
                   );
                 },
               ),

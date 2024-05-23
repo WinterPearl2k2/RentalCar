@@ -10,10 +10,13 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rental_car/application/services/auth_service.dart';
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
+import 'package:rental_car/data/dtos/citizen_dto.dart';
 import 'package:rental_car/domain/model/citizen.dart';
 import 'package:rental_car/main.dart';
+import 'package:rental_car/presentation/views/verify_id/widgets/camera_widget.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tiengviet/tiengviet.dart';
 
@@ -28,14 +31,52 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
   @override
   VerifyIdState build() => const VerifyIdState();
 
-  void changeStateView(VerifyStateView stateView) {
-    state = state.copyWith(stateView: stateView);
+  Future<void> initCamera(
+    CameraController controller,
+    bool mounted,
+  ) async {
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
+    state = state.copyWith(wait: true);
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      state = state.copyWith(wait: false);
+    });
+  }
+
+  Future<void> updateInformation(context) async {
+    state = state.copyWith(wait: true);
+    try {
+      final citizenDto = CitizenDto(
+        no: state.citizen.no,
+        dateOfBirth: state.citizen.dateOfBirth,
+        fullName: state.citizen.fullName,
+        nationality: state.citizen.nationality,
+        placeOfOrigin: state.citizen.placeOfOrigin,
+        sex: state.citizen.sex,
+      );
+      await injection
+          .getIt<IAuthService>()
+          .updateInformation(citizen: citizenDto);
+      PreferenceService.setAuth(true);
+      Navigator.pop(context, true);
+      Fluttertoast.showToast(msg: 'Information updated successfully.');
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
+    state = state.copyWith(wait: false);
   }
 
   Future<void> checkExistId() async {
     state = state.copyWith(wait: true);
     try {
-      await injection.getIt<IAuthService>().getUser();
+      await injection.getIt<IAuthService>().checkValidResume(
+            no: state.citizen.no,
+          );
       state = state.copyWith(
         stateView: VerifyStateView.verifyFace,
       );
@@ -71,21 +112,10 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => CameraCamera(
-          resolutionPreset: ResolutionPreset.max,
-          cameraSide: CameraSide.front,
-          enableZoom: true,
-          onFile: (file) async {
-            Navigator.pop(context);
-            switch (type) {
-              case TypeCard.frontCard:
-                await _handleDataImage(file);
-                break;
-              case TypeCard.backCard:
-                _saveBackCardImage(file);
-                break;
-            }
-          },
+        builder: (_) => CameraWidget(
+          type: type,
+          cardImage: (file)=> _saveBackCardImage(file),
+          dataImage: (file)=> _handleDataImage(file),
         ),
       ),
     );

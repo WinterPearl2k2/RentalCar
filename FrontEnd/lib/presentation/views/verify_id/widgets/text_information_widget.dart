@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../application/utils/colors_utils.dart';
+import '../../../../application/utils/colors_utils.dart';
 
 class TextInformationWidget extends StatelessWidget {
   const TextInformationWidget({

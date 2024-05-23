@@ -11,7 +11,6 @@ import 'package:rental_car/presentation/views/account_profile/notifier/account_p
 
 import '../../common/widgets/loading_widget.dart';
 import '../../common/widgets/text_form_field.dart';
-import '../../verify_id/verify_id_view.dart';
 
 class AccountProfileView extends ConsumerStatefulWidget {
   const AccountProfileView({super.key, required this.user});
@@ -43,7 +42,7 @@ class _AccountProfileViewState
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        builder: (_, ref, __) {
           final user = ref.watch(
             accountProfileNotifierProvider.select(
               (value) => value.user,
@@ -102,29 +101,25 @@ class _AccountProfileViewState
                                     'assets/images/avatar_empty.svg',
                                   ),
                                 ),
-                                TextButton(
-                                  onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const VerifyIdView(),
-                                    ),
-                                  ),
-                                  child: Consumer(
-                                    builder: (BuildContext context,
-                                        WidgetRef ref, Widget? child) {
-                                      final isAuthentication = ref.watch(
-                                        accountProfileNotifierProvider.select(
-                                          (value) => value
-                                              .user.authentication,
-                                        ),
-                                      );
-                                      return Row(
+                                Consumer(
+                                  builder: (BuildContext context, WidgetRef ref,
+                                      Widget? child) {
+                                    final isAuthentication = ref.watch(
+                                      accountProfileNotifierProvider.select(
+                                        (value) => value.user.authentication,
+                                      ),
+                                    );
+                                    return TextButton(
+                                      onPressed: () => {
+                                        if (!isAuthentication)
+                                          notifier.goToVerifyUser(context)
+                                      },
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            user.authentication
+                                            isAuthentication
                                                 ? 'User authenticated'
                                                 : 'User not authenticated',
                                             style: TextStyle(
@@ -155,9 +150,9 @@ class _AccountProfileViewState
                                             ),
                                           ),
                                         ],
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),

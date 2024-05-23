@@ -13,7 +13,7 @@ func GetCetizenById(uuidStr string) bool {
 	if errUUID != nil {
 		return false
 	}
-	if err := initializers.DB.First(&cetizen, uuid).Error; err != nil {
+	if err := initializers.DB.First(&cetizen, "user_id = ?", uuid).Error; err != nil {
 		return false
 	}
 	return true

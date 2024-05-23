@@ -9,6 +9,7 @@ class LoginDTO with _$LoginDTO {
     @Default('') String password,
     @Default('') String email,
     @Default('') String deviceToken,
+    @Default(false) bool authentication,
   }) = _LoginDTO;
 
   factory LoginDTO.fromJson(Map<String, dynamic> json) => _$LoginDTOFromJson(json);

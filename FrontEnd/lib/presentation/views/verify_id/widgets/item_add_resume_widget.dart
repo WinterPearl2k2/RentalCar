@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rental_car/application/utils/popup_utils.dart';
 
-import '../../../application/utils/colors_utils.dart';
+import '../../../../application/utils/colors_utils.dart';
 
 class ItemAddResumeWidget extends StatelessWidget {
   final String url;

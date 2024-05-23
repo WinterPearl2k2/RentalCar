@@ -2,6 +2,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../application/routes/routes.dart';
 import '../../../../application/services/auth_service.dart';
 import '../../../../application/utils/log_utils.dart';
 import '../../../../application/utils/regex_check_utils.dart';
@@ -19,14 +20,29 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
   Future<void> setUpData({
     required UserProfileDTO user,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 1),);
+    await Future.delayed(
+      const Duration(milliseconds: 1),
+    );
     state = state.copyWith(
       user: UserProfileDTO(
         email: user.email.trim(),
         phone: user.phone.trim(),
         name: user.name.trim(),
+        authentication: user.authentication,
       ),
     );
+  }
+
+  void goToVerifyUser(context) {
+    Routes.goToVerifyUserView(context).then((value) {
+      if (value == true) {
+        UserProfileDTO user = state.user;
+        user = user.copyWith(
+          authentication: true,
+        );
+        state = state.copyWith(user: user);
+      }
+    });
   }
 
   Future<void> updateProfile({
@@ -50,13 +66,14 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
       name: name.text.trim(),
       email: email.text.trim(),
       phone: phoneNumber.text.trim(),
+      authentication: state.user.authentication,
     );
     try {
-      final userUpdated = await injection.getIt<IAuthService>().updateUser(
-        userDTO: userProfileDto,
-      );
+      await injection.getIt<IAuthService>().updateUser(
+            userDTO: userProfileDto,
+          );
       state = state.copyWith(
-        user: userUpdated,
+        user: userProfileDto,
       );
       state = state.copyWith(blockButton: false);
       Fluttertoast.showToast(msg: 'Information updated successfully.');
@@ -89,7 +106,7 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
   }
 
   void checkName(String value) {
-    if(value == state.user.name) {
+    if (value == state.user.name) {
       state = state.copyWith(blockButton: false);
       return;
     }
@@ -100,7 +117,7 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
   }
 
   void checkEmail(String value) {
-    if(value == state.user.email) {
+    if (value == state.user.email) {
       state = state.copyWith(blockButton: false);
       return;
     }
@@ -113,7 +130,7 @@ class AccountProfileNotifier extends _$AccountProfileNotifier {
   }
 
   void checkPhone(String value) {
-    if(value == state.user.phone) {
+    if (value == state.user.phone) {
       state = state.copyWith(blockButton: false);
       return;
     }

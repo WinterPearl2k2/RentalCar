@@ -34,7 +34,7 @@ func GetUserProfile(context *gin.Context) {
 
 	isAuthen := UserRepository.GetCetizenById(uuid.String())
 
-	log.Print(user)
+	log.Print(isAuthen)
 
 	context.JSON(http.StatusOK, gin.H{
 		"name":           user.NameUser,
