@@ -1,3 +1,4 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,45 +37,50 @@ class _AuthViewState extends BaseStateDelegate<AuthView, AuthNotifier> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(
-                      top: 70, left: 30, right: 30, bottom: 20)
-                  .r,
-              child: Consumer(
-                builder: (_, ref, child) {
-                  final stateView = ref.watch(
-                    authNotifierProvider.select((value) => value.stateView),
+        body: DoubleBackToCloseApp(
+          snackBar: const SnackBar(
+            content: Text('Tap back again to leave'),
+          ),
+          child: Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                        top: 70, left: 30, right: 30, bottom: 20)
+                    .r,
+                child: Consumer(
+                  builder: (_, ref, child) {
+                    final stateView = ref.watch(
+                      authNotifierProvider.select((value) => value.stateView),
+                    );
+                    switch (stateView) {
+                      case StateView.signIn:
+                        return LoginWidget(
+                          emailController: emailController,
+                          passwordController: passwordController,
+                          notifier: notifier,
+                        );
+                      case StateView.signUp:
+                        return RegisterWidget(
+                          emailController: emailController,
+                          nameController: nameController,
+                          passwordController: passwordController,
+                          phoneController: phoneController,
+                          notifier: notifier,
+                        );
+                    }
+                  },
+                ),
+              ),
+              Consumer(
+                builder: (context, ref, child) {
+                  final isWaiting = ref.watch(
+                    authNotifierProvider.select((value) => value.wait),
                   );
-                  switch (stateView) {
-                    case StateView.signIn:
-                      return LoginWidget(
-                        emailController: emailController,
-                        passwordController: passwordController,
-                        notifier: notifier,
-                      );
-                    case StateView.signUp:
-                      return RegisterWidget(
-                        emailController: emailController,
-                        nameController: nameController,
-                        passwordController: passwordController,
-                        phoneController: phoneController,
-                        notifier: notifier,
-                      );
-                  }
+                  return isWaiting ? const LoadingWidget() : const SizedBox();
                 },
               ),
-            ),
-            Consumer(
-              builder: (context, ref, child) {
-                final isWaiting = ref.watch(
-                  authNotifierProvider.select((value) => value.wait),
-                );
-                return isWaiting ? const LoadingWidget() : const SizedBox();
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

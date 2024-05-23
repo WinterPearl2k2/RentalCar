@@ -11,7 +11,6 @@ import 'package:rental_car/presentation/views/account_profile/notifier/account_p
 
 import '../../common/widgets/loading_widget.dart';
 import '../../common/widgets/text_form_field.dart';
-import '../../verify_id/verify_id_view.dart';
 
 class AccountProfileView extends ConsumerStatefulWidget {
   const AccountProfileView({super.key, required this.user});
@@ -43,7 +42,7 @@ class _AccountProfileViewState
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Consumer(
-        builder: (BuildContext context, WidgetRef ref, Widget? child) {
+        builder: (_, ref, __) {
           final user = ref.watch(
             accountProfileNotifierProvider.select(
               (value) => value.user,
@@ -102,21 +101,58 @@ class _AccountProfileViewState
                                     'assets/images/avatar_empty.svg',
                                   ),
                                 ),
-                                TextButton(
-                                  onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const VerifyIdView(),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'Change profile picture',
-                                    style: TextStyle(
-                                      color: ColorUtils.primaryColor,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                Consumer(
+                                  builder: (BuildContext context, WidgetRef ref,
+                                      Widget? child) {
+                                    final isAuthentication = ref.watch(
+                                      accountProfileNotifierProvider.select(
+                                        (value) => value.user.authentication,
+                                      ),
+                                    );
+                                    return TextButton(
+                                      onPressed: () => {
+                                        if (!isAuthentication)
+                                          notifier.goToVerifyUser(context)
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            isAuthentication
+                                                ? 'User authenticated'
+                                                : 'User not authenticated',
+                                            style: TextStyle(
+                                              color: ColorUtils.primaryColor,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 5.w,
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                              color: isAuthentication
+                                                  ? ColorUtils.greenColor
+                                                  : ColorUtils.redColor,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: SvgPicture.asset(
+                                              'assets/icons/ic_security.svg',
+                                              width: 15.w,
+                                              height: 15.w,
+                                              colorFilter: ColorFilter.mode(
+                                                ColorUtils.whiteColor,
+                                                BlendMode.srcIn,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),

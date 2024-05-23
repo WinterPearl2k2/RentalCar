@@ -13,6 +13,7 @@ class PreferenceService {
   static const String _user = 'user';
   static const String _location = 'location';
   static const String _deviceToken = 'device_token';
+  static const String _auth = 'auth';
 
   static late final SharedPreferences _prefs;
 
@@ -24,6 +25,21 @@ class PreferenceService {
       _deviceToken,
       token,
     );
+  }
+
+  static void setAuth(bool no) {
+    _prefs.setBool(
+      _auth,
+      no,
+    );
+  }
+
+  static bool getAuth() {
+    final data = _prefs.getBool(_auth);
+    if (data != null) {
+      return data;
+    }
+    return false;
   }
 
   static String getDeviceToken() {
@@ -96,6 +112,10 @@ class PreferenceService {
 
   static clearUser() {
     _prefs.remove(_user);
+  }
+
+  static clearAuth() {
+    _prefs.remove(_auth);
   }
 
   static void setLocation({

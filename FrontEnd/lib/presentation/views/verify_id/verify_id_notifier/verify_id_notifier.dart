@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
@@ -10,7 +9,14 @@ import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:rental_car/application/services/auth_service.dart';
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
+import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
+import 'package:rental_car/data/dtos/citizen_dto.dart';
+import 'package:rental_car/domain/model/citizen.dart';
+import 'package:rental_car/main.dart';
+import 'package:rental_car/presentation/views/verify_id/widgets/camera_widget.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tiengviet/tiengviet.dart';
 
@@ -25,8 +31,60 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
   @override
   VerifyIdState build() => const VerifyIdState();
 
-  void changeStateView(VerifyStateView stateView) {
-    state = state.copyWith(stateView: stateView);
+  Future<void> initCamera(
+    CameraController controller,
+    bool mounted,
+  ) async {
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
+    state = state.copyWith(wait: true);
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      state = state.copyWith(wait: false);
+    });
+  }
+
+  Future<void> updateInformation(context) async {
+    state = state.copyWith(wait: true);
+    try {
+      final citizenDto = CitizenDto(
+        no: state.citizen.no,
+        dateOfBirth: state.citizen.dateOfBirth,
+        fullName: state.citizen.fullName,
+        nationality: state.citizen.nationality,
+        placeOfOrigin: state.citizen.placeOfOrigin,
+        sex: state.citizen.sex,
+      );
+      await injection
+          .getIt<IAuthService>()
+          .updateInformation(citizen: citizenDto);
+      PreferenceService.setAuth(true);
+      Navigator.pop(context, true);
+      Fluttertoast.showToast(msg: 'Information updated successfully.');
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
+    state = state.copyWith(wait: false);
+  }
+
+  Future<void> checkExistId() async {
+    state = state.copyWith(wait: true);
+    try {
+      await injection.getIt<IAuthService>().checkValidResume(
+            no: state.citizen.no,
+          );
+      state = state.copyWith(
+        stateView: VerifyStateView.verifyFace,
+      );
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+    }
+    state = state.copyWith(wait: false);
   }
 
   Future<void> handleVerifyFace(CameraController controller) async {
@@ -35,7 +93,16 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     InputImage inputImage = InputImage.fromFile(file);
     final output = await _handleDataFace(inputImage, file);
     final isValid = await _compareDataFace(output, state.dataFaceIdCard);
-    LogUtils.i('valid $isValid');
+    if (!isValid) {
+      Fluttertoast.showToast(
+        msg:
+            'The facial information does not match the information on the ID card, please verify again.',
+      );
+      return;
+    }
+    state = state.copyWith(
+      stateView: VerifyStateView.verifySuccess,
+    );
   }
 
   void openCamera({
@@ -45,19 +112,10 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => CameraCamera(
-          resolutionPreset: ResolutionPreset.max,
-          cameraSide: CameraSide.front,
-          enableZoom: true,
-          onFile: (file) async {
-            Navigator.pop(context);
-            switch (type) {
-              case TypeCard.frontCard:
-                await _handleDataImage(file);
-              case TypeCard.backCard:
-                _saveBackCardImage(file);
-            }
-          },
+        builder: (_) => CameraWidget(
+          type: type,
+          cardImage: (file)=> _saveBackCardImage(file),
+          dataImage: (file)=> _handleDataImage(file),
         ),
       ),
     );
@@ -75,8 +133,10 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
       switch (type) {
         case TypeCard.frontCard:
           await _handleDataImage(file);
+          break;
         case TypeCard.backCard:
           _saveBackCardImage(file);
+          break;
       }
     } else if (permission.isDenied) {
       Fluttertoast.showToast(msg: "Gallery access has not been granted");
@@ -95,7 +155,7 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     String text = recognizedText.text;
     Map<String, String> extractedInfo = extractInfo(text);
     LogUtils.i(extractedInfo.toString());
-    if (extractedInfo.length != 5) {
+    if (extractedInfo.length != 6) {
       Fluttertoast.showToast(
         msg:
             'The provided image is blurred or unclear, please provide the information again.',
@@ -107,6 +167,7 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     state = state.copyWith(
       imgFileFront: file.path,
       dataFaceIdCard: output,
+      citizen: Citizen.fromJson(extractedInfo),
     );
   }
 
@@ -155,13 +216,16 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
       112,
       3,
     ]);
-    final imgU8List = Uint8List.fromList(img.encodeJpg(imgFace));
-    final imageEncoded = base64.encode(imgU8List);
-    List<int> list = imgU8List.toList();
-    state = state.copyWith(test: list);
-    LogUtils.i(imageEncoded);
-    debugPrint(imageEncoded);
-    List output = List.filled(1 * 192, null, growable: false).reshape(
+    final imgU8List = Uint8List.fromList(
+      img.encodeJpg(imgFace),
+    );
+    final faceMemory = imgU8List.toList();
+    state = state.copyWith(faceMemory: faceMemory);
+    List output = List.filled(
+      1 * 192,
+      null,
+      growable: false,
+    ).reshape(
       [1, 192],
     );
     final interpreter = await tfl.Interpreter.fromAsset(
@@ -178,12 +242,9 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     int mean,
     int std,
   ) {
-    // Cấp phát một đối tượng Float32List mới để lưu trữ các giá trị pixel đã chuyển đổi.
     var convertedBytes = Float32List(1 * inputSize * inputSize * 3);
-    // Đối tượng Float32List dưới dạng một bộ đệm
     var buffer = Float32List.view(convertedBytes.buffer);
     int pixelIndex = 0;
-    // Lặp qua các pixel của ảnh đầu vào.
     for (var x = 0; x < inputSize; x++) {
       for (var y = 0; y < inputSize; y++) {
         var pixel = imgFace.getPixel(y, x);
@@ -217,28 +278,28 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     final originMatch = originRegExp.firstMatch(text);
 
     if (noMatch != null) {
-      info['No'] = noMatch.group(1)!;
+      info['no'] = noMatch.group(1)!;
     }
     if (nameMatch != null) {
-      info['Full name'] = TiengViet.parse(
+      info['fullName'] = TiengViet.parse(
         nameMatch.group(1)!.trim().toUpperCase(),
       );
     }
     if (dobMatch != null) {
-      info['Date of birth'] = dobMatch.group(1)!;
+      info['dateOfBirth'] = dobMatch.group(1)!;
     }
     if (sexMatch != null) {
-      info['Sex'] = TiengViet.parse(
+      info['sex'] = TiengViet.parse(
         sexMatch.group(1)!.toUpperCase(),
       );
     }
     if (nationalityMatch != null) {
-      info['Nationality'] = TiengViet.parse(
+      info['nationality'] = TiengViet.parse(
         nationalityMatch.group(1)!.toUpperCase(),
       );
     }
     if (originMatch != null) {
-      info['Place of origin'] = TiengViet.parse(
+      info['placeOfOrigin'] = TiengViet.parse(
         originMatch.group(1)!.trim().toUpperCase(),
       );
     }
@@ -250,21 +311,56 @@ class VerifyIdNotifier extends _$VerifyIdNotifier {
     List<dynamic> output,
     List<dynamic> dataFaceIdCard,
   ) async {
-    const minDist = 999;
-    double currDist = 0.0;
+    // const minDist = 999;
+    // double currDist = 0.0;
+    // double sum = 0;
+    // final dataFace = List.from(output);
+    // final dataFaceId = List.from(dataFaceIdCard);
+    // LogUtils.w('dataface$dataFace');
+    // LogUtils.w('datafaceId$dataFaceId');
+    // for (int i = 0; i < output.length; i++) {
+    //   sum += pow((dataFaceId[i] - dataFace[i]), 2);
+    // }
+    //   currDist = sqrt(sum);
+    // LogUtils.e('currDist: $currDist');
+    // if (currDist <= 0.7) {
+    //   return true;
+    // }
     double sum = 0;
     final dataFace = List.from(output);
     final dataFaceId = List.from(dataFaceIdCard);
-    LogUtils.w('dataface$dataFace');
-    LogUtils.w('datafaceId$dataFaceId');
     for (int i = 0; i < output.length; i++) {
       sum += pow((dataFaceId[i] - dataFace[i]), 2);
     }
-    currDist = sqrt(sum);
-    LogUtils.e('currDist: $currDist');
-    if (currDist <= 0.7 && currDist < minDist) {
+    double same = 0.0;
+    for (int i = 0; i < 400; i++) {
+      final threshold = 0.01 * (i + 1);
+      if (sum < threshold) {
+        same += 1.0 / 400;
+      }
+    }
+    // final currDist = cosineSimilarity(output, dataFaceIdCard);
+    if (same >= 0.75) {
       return true;
     }
     return false;
+  }
+
+  double cosineSimilarity(List<dynamic> vectorA, List<dynamic> vectorB) {
+    double dotProduct = 0;
+    double magnitudeA = 0;
+    double magnitudeB = 0;
+
+    for (int i = 0; i < vectorA.length; i++) {
+      dotProduct += vectorA[i] * vectorB[i];
+      magnitudeA += vectorA[i] * vectorA[i];
+      magnitudeB += vectorB[i] * vectorB[i];
+    }
+
+    if (magnitudeA == 0 || magnitudeB == 0) {
+      return 0.0;
+    }
+
+    return dotProduct / (sqrt(magnitudeA) * sqrt(magnitudeB));
   }
 }

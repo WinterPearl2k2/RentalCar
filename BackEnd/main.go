@@ -34,6 +34,9 @@ func main() {
 	router.POST("/auth/verifyCode", AuthController.VerifyCode)
 	router.POST("/auth/resetPassword", AuthController.ResetPasswordUser)
 	router.PUT("/auth/changePassword", AuthController.ChangePassword)
+	router.GET("/auth/checkAuthentication", UserController.CheckAuthentication)
+	router.POST("/auth/verifyInformation", AuthController.AuthenticationUser)
+	router.GET("/auth/checkValidResume/:no", UserController.CheckValidResume)
 	//profile
 	router.GET("/profile/getUserProfile", UserController.GetUserProfile)
 	router.PUT("/profile/updateUserProfile", UserController.ChangeProfile)

@@ -1,13 +1,10 @@
-import 'dart:typed_data';
-
 import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rental_car/presentation/verify_id/verify_id_notifier/verify_id_notifier.dart';
-import 'package:rental_car/presentation/verify_id/verify_id_state/verify_id_state.dart';
-
-import '../../common/widgets/text_button_widget.dart';
+import '../../../common/widgets/text_button_widget.dart';
+import '../verify_id_notifier/verify_id_notifier.dart';
+import '../verify_id_state/verify_id_state.dart';
 import 'item_add_resume_widget.dart';
 
 class VerifyIdWidget extends StatelessWidget {
@@ -57,15 +54,6 @@ class VerifyIdWidget extends StatelessWidget {
                 height: 20.h,
               ),
               Consumer(
-                builder: (context, ref, child) {
-                  final listData = ref.watch(
-                    verifyIdNotifierProvider.select((value) => value.test),
-                  );
-                  Uint8List uInt8List = Uint8List.fromList(listData);
-                  return Image.memory(uInt8List);
-                },
-              ),
-              Consumer(
                 builder: (_, ref, __) {
                   final path = ref.watch(
                     verifyIdNotifierProvider.select(
@@ -103,9 +91,7 @@ class VerifyIdWidget extends StatelessWidget {
                   return TextButtonWidget(
                     label: 'Continue',
                     blockButton: pathFront.isEmpty || pathBack.isEmpty,
-                    onPressed: () => notifier.changeStateView(
-                      VerifyStateView.verifyFace,
-                    ),
+                    onPressed: notifier.checkExistId,
                   );
                 },
               ),

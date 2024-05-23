@@ -21,6 +21,7 @@ class RoutesName {
   static const carRentalManagement = '/car_rental_management';
   //detail contract
   static const detailContract = '/detail_contract';
+  static const verifyUser = '/verify_user';
 
   //car
   static const addCar = 'add_car_view';

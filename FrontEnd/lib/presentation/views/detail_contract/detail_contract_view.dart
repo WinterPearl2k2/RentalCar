@@ -88,6 +88,7 @@ class _DetailContractViewState
         child: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
+            vertical: 15,
           ),
           child: Column(
             children: [
@@ -99,6 +100,8 @@ class _DetailContractViewState
                 child:  CachedNetworkImage(
                   fit: BoxFit.cover,
                   imageUrl: data.imgCar,
+                  width: double.infinity,
+                  height: 200.h,
                   progressIndicatorBuilder: (_, __, downloadProgress) =>
                       SizedBox(
                         height: 10.h,

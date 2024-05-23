@@ -1,7 +1,7 @@
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:rental_car/application/routes/routes.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/notifier/bottom_navigation_notifier.dart';
 import 'package:rental_car/presentation/views/home/home_view.dart';
@@ -32,30 +32,35 @@ class _BottomNavigationViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.white,
-        child: Consumer(
-          builder: (context, ref, child) {
-            ref.watch(
-              bottomNavigationNotifierProvider.select(
-                (value) => value.currentIndex,
-              ),
-            );
-            return PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _pageController,
-              children: const [
-                HomeView(),
-                ManagerCarView(),
-                ContractView(),
-                ProfileView(),
-              ],
-            );
-          },
+      body: DoubleBackToCloseApp(
+        snackBar: const SnackBar(
+          content: Text('Tap back again to leave'),
+        ),
+        child: Container(
+          color: Colors.white,
+          child: Consumer(
+            builder: (context, ref, child) {
+              ref.watch(
+                bottomNavigationNotifierProvider.select(
+                  (value) => value.currentIndex,
+                ),
+              );
+              return PageView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _pageController,
+                children: const [
+                  HomeView(),
+                  ManagerCarView(),
+                  ContractView(),
+                  ProfileView(),
+                ],
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Routes.goToAddCarView(context),
+        onPressed: () => notifier.checkAuthentication(context),
         backgroundColor: Colors.transparent,
         elevation: 0,
         child: Container(

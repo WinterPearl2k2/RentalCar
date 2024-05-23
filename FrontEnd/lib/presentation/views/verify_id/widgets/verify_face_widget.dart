@@ -1,13 +1,13 @@
-
 import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/presentation/common/widgets/text_button_widget.dart';
-import 'package:rental_car/presentation/verify_id/verify_id_notifier/verify_id_notifier.dart';
 
-import '../../../application/utils/colors_utils.dart';
+import '../../../../application/utils/colors_utils.dart';
+import '../verify_id_notifier/verify_id_notifier.dart';
 import 'circle_painter_widget.dart';
 
 class VerifyFaceWidget extends StatefulWidget {
@@ -33,19 +33,25 @@ class _VerifyFaceWidgetState extends State<VerifyFaceWidget> {
   @override
   void initState() {
     super.initState();
-    _controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
+    widget.notifier.initCamera(_controller, mounted);
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CameraPreview(_controller),
+        Consumer(
+          builder: (BuildContext context, WidgetRef ref, Widget? child) {
+            final waitCam = ref.watch(
+              verifyIdNotifierProvider.select(
+                (value) => value.wait,
+              ),
+            );
+            return !waitCam
+                ? CameraPreview(_controller)
+                : const SizedBox.shrink();
+          },
+        ),
         CustomPaint(
           size: const Size(
             double.infinity,

@@ -19,8 +19,11 @@ mixin _$VerifyIdState {
   String get imgFileFront => throw _privateConstructorUsedError;
   String get imgFileBack => throw _privateConstructorUsedError;
   List<dynamic> get dataFaceIdCard => throw _privateConstructorUsedError;
-  List<int> get test => throw _privateConstructorUsedError;
+  int get count => throw _privateConstructorUsedError;
+  List<int> get faceMemory => throw _privateConstructorUsedError;
+  Citizen get citizen => throw _privateConstructorUsedError;
   VerifyStateView get stateView => throw _privateConstructorUsedError;
+  dynamic get wait => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VerifyIdStateCopyWith<VerifyIdState> get copyWith =>
@@ -37,8 +40,13 @@ abstract class $VerifyIdStateCopyWith<$Res> {
       {String imgFileFront,
       String imgFileBack,
       List<dynamic> dataFaceIdCard,
-      List<int> test,
-      VerifyStateView stateView});
+      int count,
+      List<int> faceMemory,
+      Citizen citizen,
+      VerifyStateView stateView,
+      dynamic wait});
+
+  $CitizenCopyWith<$Res> get citizen;
 }
 
 /// @nodoc
@@ -57,8 +65,11 @@ class _$VerifyIdStateCopyWithImpl<$Res, $Val extends VerifyIdState>
     Object? imgFileFront = null,
     Object? imgFileBack = null,
     Object? dataFaceIdCard = null,
-    Object? test = null,
+    Object? count = null,
+    Object? faceMemory = null,
+    Object? citizen = null,
     Object? stateView = null,
+    Object? wait = freezed,
   }) {
     return _then(_value.copyWith(
       imgFileFront: null == imgFileFront
@@ -73,15 +84,35 @@ class _$VerifyIdStateCopyWithImpl<$Res, $Val extends VerifyIdState>
           ? _value.dataFaceIdCard
           : dataFaceIdCard // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      test: null == test
-          ? _value.test
-          : test // ignore: cast_nullable_to_non_nullable
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      faceMemory: null == faceMemory
+          ? _value.faceMemory
+          : faceMemory // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      citizen: null == citizen
+          ? _value.citizen
+          : citizen // ignore: cast_nullable_to_non_nullable
+              as Citizen,
       stateView: null == stateView
           ? _value.stateView
           : stateView // ignore: cast_nullable_to_non_nullable
               as VerifyStateView,
+      wait: freezed == wait
+          ? _value.wait
+          : wait // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $CitizenCopyWith<$Res> get citizen {
+    return $CitizenCopyWith<$Res>(_value.citizen, (value) {
+      return _then(_value.copyWith(citizen: value) as $Val);
+    });
   }
 }
 
@@ -97,8 +128,14 @@ abstract class _$$VerifyIdStateImplCopyWith<$Res>
       {String imgFileFront,
       String imgFileBack,
       List<dynamic> dataFaceIdCard,
-      List<int> test,
-      VerifyStateView stateView});
+      int count,
+      List<int> faceMemory,
+      Citizen citizen,
+      VerifyStateView stateView,
+      dynamic wait});
+
+  @override
+  $CitizenCopyWith<$Res> get citizen;
 }
 
 /// @nodoc
@@ -115,8 +152,11 @@ class __$$VerifyIdStateImplCopyWithImpl<$Res>
     Object? imgFileFront = null,
     Object? imgFileBack = null,
     Object? dataFaceIdCard = null,
-    Object? test = null,
+    Object? count = null,
+    Object? faceMemory = null,
+    Object? citizen = null,
     Object? stateView = null,
+    Object? wait = freezed,
   }) {
     return _then(_$VerifyIdStateImpl(
       imgFileFront: null == imgFileFront
@@ -131,14 +171,23 @@ class __$$VerifyIdStateImplCopyWithImpl<$Res>
           ? _value._dataFaceIdCard
           : dataFaceIdCard // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
-      test: null == test
-          ? _value._test
-          : test // ignore: cast_nullable_to_non_nullable
+      count: null == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int,
+      faceMemory: null == faceMemory
+          ? _value._faceMemory
+          : faceMemory // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      citizen: null == citizen
+          ? _value.citizen
+          : citizen // ignore: cast_nullable_to_non_nullable
+              as Citizen,
       stateView: null == stateView
           ? _value.stateView
           : stateView // ignore: cast_nullable_to_non_nullable
               as VerifyStateView,
+      wait: freezed == wait ? _value.wait! : wait,
     ));
   }
 }
@@ -150,10 +199,13 @@ class _$VerifyIdStateImpl implements _VerifyIdState {
       {this.imgFileFront = '',
       this.imgFileBack = '',
       final List<dynamic> dataFaceIdCard = const [],
-      final List<int> test = const [],
-      this.stateView = VerifyStateView.verifyId})
+      this.count = 0,
+      final List<int> faceMemory = const [],
+      this.citizen = const Citizen(),
+      this.stateView = VerifyStateView.verifyId,
+      this.wait = false})
       : _dataFaceIdCard = dataFaceIdCard,
-        _test = test;
+        _faceMemory = faceMemory;
 
   @override
   @JsonKey()
@@ -170,22 +222,31 @@ class _$VerifyIdStateImpl implements _VerifyIdState {
     return EqualUnmodifiableListView(_dataFaceIdCard);
   }
 
-  final List<int> _test;
   @override
   @JsonKey()
-  List<int> get test {
-    if (_test is EqualUnmodifiableListView) return _test;
+  final int count;
+  final List<int> _faceMemory;
+  @override
+  @JsonKey()
+  List<int> get faceMemory {
+    if (_faceMemory is EqualUnmodifiableListView) return _faceMemory;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_test);
+    return EqualUnmodifiableListView(_faceMemory);
   }
 
   @override
   @JsonKey()
+  final Citizen citizen;
+  @override
+  @JsonKey()
   final VerifyStateView stateView;
+  @override
+  @JsonKey()
+  final dynamic wait;
 
   @override
   String toString() {
-    return 'VerifyIdState(imgFileFront: $imgFileFront, imgFileBack: $imgFileBack, dataFaceIdCard: $dataFaceIdCard, test: $test, stateView: $stateView)';
+    return 'VerifyIdState(imgFileFront: $imgFileFront, imgFileBack: $imgFileBack, dataFaceIdCard: $dataFaceIdCard, count: $count, faceMemory: $faceMemory, citizen: $citizen, stateView: $stateView, wait: $wait)';
   }
 
   @override
@@ -199,9 +260,13 @@ class _$VerifyIdStateImpl implements _VerifyIdState {
                 other.imgFileBack == imgFileBack) &&
             const DeepCollectionEquality()
                 .equals(other._dataFaceIdCard, _dataFaceIdCard) &&
-            const DeepCollectionEquality().equals(other._test, _test) &&
+            (identical(other.count, count) || other.count == count) &&
+            const DeepCollectionEquality()
+                .equals(other._faceMemory, _faceMemory) &&
+            (identical(other.citizen, citizen) || other.citizen == citizen) &&
             (identical(other.stateView, stateView) ||
-                other.stateView == stateView));
+                other.stateView == stateView) &&
+            const DeepCollectionEquality().equals(other.wait, wait));
   }
 
   @override
@@ -210,8 +275,11 @@ class _$VerifyIdStateImpl implements _VerifyIdState {
       imgFileFront,
       imgFileBack,
       const DeepCollectionEquality().hash(_dataFaceIdCard),
-      const DeepCollectionEquality().hash(_test),
-      stateView);
+      count,
+      const DeepCollectionEquality().hash(_faceMemory),
+      citizen,
+      stateView,
+      const DeepCollectionEquality().hash(wait));
 
   @JsonKey(ignore: true)
   @override
@@ -225,8 +293,11 @@ abstract class _VerifyIdState implements VerifyIdState {
       {final String imgFileFront,
       final String imgFileBack,
       final List<dynamic> dataFaceIdCard,
-      final List<int> test,
-      final VerifyStateView stateView}) = _$VerifyIdStateImpl;
+      final int count,
+      final List<int> faceMemory,
+      final Citizen citizen,
+      final VerifyStateView stateView,
+      final dynamic wait}) = _$VerifyIdStateImpl;
 
   @override
   String get imgFileFront;
@@ -235,9 +306,15 @@ abstract class _VerifyIdState implements VerifyIdState {
   @override
   List<dynamic> get dataFaceIdCard;
   @override
-  List<int> get test;
+  int get count;
+  @override
+  List<int> get faceMemory;
+  @override
+  Citizen get citizen;
   @override
   VerifyStateView get stateView;
+  @override
+  dynamic get wait;
   @override
   @JsonKey(ignore: true)
   _$$VerifyIdStateImplCopyWith<_$VerifyIdStateImpl> get copyWith =>

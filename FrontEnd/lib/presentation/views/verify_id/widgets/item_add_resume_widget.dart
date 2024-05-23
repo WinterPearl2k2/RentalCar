@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rental_car/application/utils/popup_utils.dart';
 
-import '../../../application/utils/colors_utils.dart';
+import '../../../../application/utils/colors_utils.dart';
 
 class ItemAddResumeWidget extends StatelessWidget {
   final String url;
@@ -33,6 +34,8 @@ class ItemAddResumeWidget extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(15),
+            width: 320.w,
+            height: 200.h,
             decoration: BoxDecoration(
               color: ColorUtils.blueMiddleColor.withOpacity(.2),
               borderRadius: BorderRadius.circular(15),
@@ -45,8 +48,6 @@ class ItemAddResumeWidget extends StatelessWidget {
             child: path.isNotEmpty
                 ? Image.file(
                     File(path),
-                    width: 320,
-                    height: 200,
                     fit: BoxFit.fitWidth,
                   )
                 : SvgPicture.network(

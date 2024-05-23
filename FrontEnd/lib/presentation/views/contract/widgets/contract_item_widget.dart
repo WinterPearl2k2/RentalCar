@@ -55,8 +55,8 @@ class ContractItemWidget extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child:  CachedNetworkImage(
-                    width: 360.w,
-                    height: 200.h,
+                    width: 60.w,
+                    height: 60.w,
                     fit: BoxFit.cover,
                     imageUrl: rentalContracts[index].imgCar,
                     progressIndicatorBuilder: (_, __, downloadProgress) =>
