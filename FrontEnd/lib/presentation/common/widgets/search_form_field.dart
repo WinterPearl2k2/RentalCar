@@ -8,6 +8,8 @@ class SearchFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final TextInputAction? inputAction;
   final Function(String value)? onChanged;
+  final FocusNode? focusNode;
+  final Widget? suffixIcon;
 
 
   const SearchFormField({
@@ -17,6 +19,8 @@ class SearchFormField extends StatelessWidget {
     this.prefixIcon,
     this.onChanged,
     this.inputAction,
+    this.focusNode,
+    this.suffixIcon,
   });
 
   @override
@@ -25,6 +29,8 @@ class SearchFormField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          focusNode: focusNode,
+          autofocus: true,
           controller: controller,
           onChanged: onChanged,
           textInputAction: inputAction,
@@ -35,10 +41,13 @@ class SearchFormField extends StatelessWidget {
               vertical: 15.h,
             ),
             prefixIcon: prefixIcon ?? const SizedBox(),
+            suffixIcon: suffixIcon ?? const SizedBox(),
             hintStyle: TextStyle(
               color: ColorUtils.textColor,
               fontSize: 14.sp,
             ),
+            filled: true, // Thêm màu nền
+            fillColor: Colors.white,
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: const BorderSide(

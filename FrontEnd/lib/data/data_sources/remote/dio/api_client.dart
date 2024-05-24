@@ -14,10 +14,17 @@ class ApiClient {
   //http://10.20.23.243:8080
   final Dio dio = Dio(
     BaseOptions(
-      baseUrl: "https://1vp996ng-4000.asse.devtunnels.ms",
-      contentType: 'application/json',
+      // baseUrl: "https://1vp996ng-4000.asse.devtunnels.ms",
+      baseUrl: "https://55slkn6k-4534.asse.devtunnels.ms",
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 15),
     ),
   )..interceptors.add(DioInterceptor());
+
+  final Dio dioMapbox = Dio(
+    BaseOptions(
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 15),
+    ),
+  );
 }

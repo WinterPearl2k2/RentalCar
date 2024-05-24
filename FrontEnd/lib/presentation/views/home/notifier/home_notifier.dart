@@ -1,15 +1,20 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/services.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/contract_service.dart';
 import 'package:rental_car/application/services/firebase_service.dart';
+import 'package:rental_car/application/services/mapbox_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
+import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:rental_car/domain/model/location.dart' as location;
 
 part 'home_notifier.g.dart';
 
@@ -18,23 +23,20 @@ class HomeNotifier extends _$HomeNotifier {
   @override
   HomeState build() => const HomeState();
 
+  PointAnnotation? currentMarker;
+  PointAnnotationManager? pointAnnotationManager;
+  MapboxMap? mapboxMap;
+
   Future<void> getListTopCars() async {
     try {
       final listTopCar = await injection.getIt<ICarService>().getTopCar();
-      if (listTopCar.isEmpty) {
-        state = state.copyWith(
-          listTopCar: [],
-          statusTopCar: Status.success,
-        );
-      } else {
-        state = state.copyWith(
-          listTopCar: listTopCar,
-          statusTopCar: Status.success,
-        );
-      }
-      LogUtils.i("getList oke");
+      state = state.copyWith(
+        listTopCar: listTopCar,
+        statusTopCar: Status.success,
+      );
+      LogUtils.i("get list top car successfully");
     } catch (e) {
-      LogUtils.i(e.toString());
+      LogUtils.e("get list top car fail $e");
       state = state.copyWith(statusTopCar: Status.error);
     }
   }
@@ -46,20 +48,13 @@ class HomeNotifier extends _$HomeNotifier {
       );
       final listSearchCar =
           await injection.getIt<ICarService>().getSearchCar(nameCar: nameCar);
-      if (listSearchCar.isEmpty) {
-        state = state.copyWith(
-          listSearchCar: [],
-          statusSearch: Status.success,
-        );
-      } else {
-        state = state.copyWith(
-          listSearchCar: listSearchCar,
-          statusSearch: Status.success,
-        );
-      }
-      LogUtils.i("getList oke");
+      state = state.copyWith(
+        listSearchCar: listSearchCar,
+        statusSearch: Status.success,
+      );
+      LogUtils.i("get list search car successfully");
     } catch (e) {
-      LogUtils.i(e.toString());
+      LogUtils.e("get list search car fail $e");
       state = state.copyWith(statusSearch: Status.error);
     }
   }
@@ -75,24 +70,23 @@ class HomeNotifier extends _$HomeNotifier {
   }
 
   void isCheckSearch({required String searchController}) {
-    if (searchController.isEmpty) {
-      state = state.copyWith(isCheckSearch: false);
-    } else {
-      state = state.copyWith(isCheckSearch: true, statusSearch: Status.loading);
-    }
+    final isCheckSearch = searchController.isEmpty ? false : true;
+    state = state.copyWith(
+      isCheckSearch: isCheckSearch,
+      statusSearch: Status.loading,
+    );
   }
 
   Future<void> getListAllCars() async {
     try {
       final listAllCar = await injection.getIt<ICarService>().getAllCar();
-        state = state.copyWith(
-          listAllCar: listAllCar,
-          statusNearCar: Status.success,
-        );
-
-      LogUtils.i("get list car near you oke");
+      state = state.copyWith(
+        listAllCar: listAllCar,
+        statusNearCar: Status.success,
+      );
+      LogUtils.i("get list car near you successfully");
     } catch (e) {
-      LogUtils.i(e.toString());
+      LogUtils.e("get list car near you fail $e");
       state = state.copyWith(statusNearCar: Status.error);
     }
   }
@@ -100,15 +94,14 @@ class HomeNotifier extends _$HomeNotifier {
   Future<void> getLocationUser() async {
     double currentLatitude = PreferenceService.getLocation().latitude;
     double currentLongitude = PreferenceService.getLocation().longitude;
-    List<Placemark> placeMarks =
-        await placemarkFromCoordinates(currentLatitude, currentLongitude);
-    state = state.copyWith(placeMarks: placeMarks);
-    setNameLocation(
-        nameLocation: placeMarks.isNotEmpty
-            ? "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}"
-            : "Loading...");
+    final addressLocation =
+        await injection.getIt<IMapboxService>().getAddressLocation(
+              latitude: currentLatitude,
+              longitude: currentLongitude,
+            );
+    PreferenceService.setNameLocationCurrent(addressLocation.formattedAddress);
+    setNameLocation(nameLocation: addressLocation.formattedAddress);
   }
-
   Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
     await getNumberNotification();
   }
@@ -139,4 +132,183 @@ class HomeNotifier extends _$HomeNotifier {
 
   void setNameLocation({required String nameLocation}) =>
       state = state.copyWith(nameLocation: nameLocation);
+
+  Future<void> getAddressLocation({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final addressLocation =
+          await injection.getIt<IMapboxService>().getAddressLocation(
+                latitude: latitude,
+                longitude: longitude,
+              );
+      setNameLocation(nameLocation: addressLocation.formattedAddress);
+      LogUtils.i("get address location successfully");
+    } catch (e) {
+      LogUtils.e("get address location fail $e");
+    }
+  }
+
+  Future<void> getAddressLocationTemp({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final addressLocation =
+          await injection.getIt<IMapboxService>().getAddressLocation(
+                latitude: latitude,
+                longitude: longitude,
+              );
+      state =
+          state.copyWith(nameLocationTemp: addressLocation.formattedAddress);
+      LogUtils.i("get address location successfully");
+    } catch (e) {
+      LogUtils.e("get address location fail $e");
+    }
+  }
+
+  Future<List<MapboxLocation>> getListAddressPredict({
+    required String location,
+  }) async {
+    try {
+      final listAddressPredict = await injection
+          .getIt<IMapboxService>()
+          .getListAddressPredict(location: location);
+      state = state.copyWith(
+          listAddressPredict:
+              listAddressPredict.isEmpty ? [] : listAddressPredict);
+      LogUtils.i("get list address predict successfully");
+      return listAddressPredict;
+    } catch (e) {
+      LogUtils.e("get list address predict fail $e");
+      return [];
+    }
+  }
+
+  Future<location.Location> getLatLongAddress({
+    required String placeId,
+  }) async {
+    try {
+      final latLong = await injection
+          .getIt<IMapboxService>()
+          .getLatLongLocation(placeId: placeId);
+      LogUtils.i("get latLong successfully");
+      return latLong;
+    } catch (e) {
+      LogUtils.e("get list address predict fail $e");
+      return const location.Location(latitude: 0, longitude: 0);
+    }
+  }
+
+  void onMapCreated(
+    MapboxMap mapboxMap,
+  ) {
+    this.mapboxMap = mapboxMap;
+    initMarker(
+      latitude: PreferenceService.getLocation().latitude,
+      longitude: PreferenceService.getLocation().longitude,
+    );
+  }
+
+  Future<void> initMarker({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final ByteData bytes = await rootBundle.load(AssetUtils.imgLocation);
+    final Uint8List list = bytes.buffer.asUint8List();
+    pointAnnotationManager =
+        await mapboxMap?.annotations.createPointAnnotationManager();
+    final options = PointAnnotationOptions(
+      geometry: Point(
+        coordinates: Position(longitude, latitude),
+      ).toJson(),
+      image: list,
+    );
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    currentMarker = await pointAnnotationManager?.create(options);
+    setLocation(latitude: latitude, longitude: longitude);
+    state = state.copyWith(nameLocationTemp: state.nameLocation);
+  }
+
+  Future<void> marker({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final ByteData bytes = await rootBundle.load(AssetUtils.imgLocation);
+    final Uint8List list = bytes.buffer.asUint8List();
+    final options = PointAnnotationOptions(
+      geometry: Point(
+        coordinates: Position(longitude, latitude),
+      ).toJson(),
+      image: list,
+    );
+
+    if (currentMarker != null) {
+      pointAnnotationManager?.delete(currentMarker!);
+    }
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    MapAnimationOptions(
+      duration: 1000, // Duration in milliseconds
+    );
+    currentMarker = await pointAnnotationManager?.create(options);
+    getAddressLocationTemp(
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
+
+  void setLocation({
+    required double latitude,
+    required double longitude,
+  }) {
+    getAddressLocation(
+      latitude: latitude,
+      longitude: longitude,
+    );
+    PreferenceService.setLocation(
+      latCar: latitude,
+      longCar: longitude,
+    );
+    getListAllCars();
+  }
+
+  void moveToCurrentLocation(
+      {required double longitude, required double latitude}) async {
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    marker(
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
 }

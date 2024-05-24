@@ -66,10 +66,10 @@ class _EditCarState extends BaseStateDelegate<EditCarView, ManagerCarNotifier> {
     );
     addressController = TextEditingController(text: widget.car.addressCar);
     latController = TextEditingController(
-      text: FormatUtils.formatNumber(widget.car.latCar),
+      text:  widget.car.latCar.toString(),
     );
     longController = TextEditingController(
-      text: FormatUtils.formatNumber(widget.car.longCar),
+      text:widget.car.longCar.toString(),
     );
     notifier.setUpData(
       carDTO: CarDTO(

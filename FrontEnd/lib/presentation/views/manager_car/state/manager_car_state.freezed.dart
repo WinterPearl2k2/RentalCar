@@ -31,6 +31,8 @@ mixin _$ManagerCarState {
   String get imageFile => throw _privateConstructorUsedError;
   bool get isEditButton => throw _privateConstructorUsedError;
   bool get isContinueButtonEnabled => throw _privateConstructorUsedError;
+  bool get isLoadingImg => throw _privateConstructorUsedError;
+  String get nameLocationTemp => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ManagerCarStateCopyWith<ManagerCarState> get copyWith =>
@@ -58,7 +60,9 @@ abstract class $ManagerCarStateCopyWith<$Res> {
       bool isCheckImageCar,
       String imageFile,
       bool isEditButton,
-      bool isContinueButtonEnabled});
+      bool isContinueButtonEnabled,
+      bool isLoadingImg,
+      String nameLocationTemp});
 
   $CarDTOCopyWith<$Res> get carDTO;
 }
@@ -91,6 +95,8 @@ class _$ManagerCarStateCopyWithImpl<$Res, $Val extends ManagerCarState>
     Object? imageFile = null,
     Object? isEditButton = null,
     Object? isContinueButtonEnabled = null,
+    Object? isLoadingImg = null,
+    Object? nameLocationTemp = null,
   }) {
     return _then(_value.copyWith(
       listCarUser: null == listCarUser
@@ -153,6 +159,14 @@ class _$ManagerCarStateCopyWithImpl<$Res, $Val extends ManagerCarState>
           ? _value.isContinueButtonEnabled
           : isContinueButtonEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      isLoadingImg: null == isLoadingImg
+          ? _value.isLoadingImg
+          : isLoadingImg // ignore: cast_nullable_to_non_nullable
+              as bool,
+      nameLocationTemp: null == nameLocationTemp
+          ? _value.nameLocationTemp
+          : nameLocationTemp // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -188,7 +202,9 @@ abstract class _$$ManagerCarStateImplCopyWith<$Res>
       bool isCheckImageCar,
       String imageFile,
       bool isEditButton,
-      bool isContinueButtonEnabled});
+      bool isContinueButtonEnabled,
+      bool isLoadingImg,
+      String nameLocationTemp});
 
   @override
   $CarDTOCopyWith<$Res> get carDTO;
@@ -220,6 +236,8 @@ class __$$ManagerCarStateImplCopyWithImpl<$Res>
     Object? imageFile = null,
     Object? isEditButton = null,
     Object? isContinueButtonEnabled = null,
+    Object? isLoadingImg = null,
+    Object? nameLocationTemp = null,
   }) {
     return _then(_$ManagerCarStateImpl(
       listCarUser: null == listCarUser
@@ -282,6 +300,14 @@ class __$$ManagerCarStateImplCopyWithImpl<$Res>
           ? _value.isContinueButtonEnabled
           : isContinueButtonEnabled // ignore: cast_nullable_to_non_nullable
               as bool,
+      isLoadingImg: null == isLoadingImg
+          ? _value.isLoadingImg
+          : isLoadingImg // ignore: cast_nullable_to_non_nullable
+              as bool,
+      nameLocationTemp: null == nameLocationTemp
+          ? _value.nameLocationTemp
+          : nameLocationTemp // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -304,7 +330,9 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
       this.isCheckImageCar = false,
       this.imageFile = '',
       this.isEditButton = false,
-      this.isContinueButtonEnabled = true})
+      this.isContinueButtonEnabled = true,
+      this.isLoadingImg = false,
+      this.nameLocationTemp = ''})
       : _listCarUser = listCarUser;
 
   final List<Car> _listCarUser;
@@ -358,10 +386,16 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
   @override
   @JsonKey()
   final bool isContinueButtonEnabled;
+  @override
+  @JsonKey()
+  final bool isLoadingImg;
+  @override
+  @JsonKey()
+  final String nameLocationTemp;
 
   @override
   String toString() {
-    return 'ManagerCarState(listCarUser: $listCarUser, carDTO: $carDTO, status: $status, addCarStep: $addCarStep, isCheckNameCar: $isCheckNameCar, isCheckColorCar: $isCheckColorCar, isCheckDescriptionCar: $isCheckDescriptionCar, isCheckKilometers: $isCheckKilometers, isCheckSeatsCar: $isCheckSeatsCar, isCheckPriceCar: $isCheckPriceCar, isCheckAddressCar: $isCheckAddressCar, isCheckImageCar: $isCheckImageCar, imageFile: $imageFile, isEditButton: $isEditButton, isContinueButtonEnabled: $isContinueButtonEnabled)';
+    return 'ManagerCarState(listCarUser: $listCarUser, carDTO: $carDTO, status: $status, addCarStep: $addCarStep, isCheckNameCar: $isCheckNameCar, isCheckColorCar: $isCheckColorCar, isCheckDescriptionCar: $isCheckDescriptionCar, isCheckKilometers: $isCheckKilometers, isCheckSeatsCar: $isCheckSeatsCar, isCheckPriceCar: $isCheckPriceCar, isCheckAddressCar: $isCheckAddressCar, isCheckImageCar: $isCheckImageCar, imageFile: $imageFile, isEditButton: $isEditButton, isContinueButtonEnabled: $isContinueButtonEnabled, isLoadingImg: $isLoadingImg, nameLocationTemp: $nameLocationTemp)';
   }
 
   @override
@@ -397,7 +431,11 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
                 other.isEditButton == isEditButton) &&
             (identical(
                     other.isContinueButtonEnabled, isContinueButtonEnabled) ||
-                other.isContinueButtonEnabled == isContinueButtonEnabled));
+                other.isContinueButtonEnabled == isContinueButtonEnabled) &&
+            (identical(other.isLoadingImg, isLoadingImg) ||
+                other.isLoadingImg == isLoadingImg) &&
+            (identical(other.nameLocationTemp, nameLocationTemp) ||
+                other.nameLocationTemp == nameLocationTemp));
   }
 
   @override
@@ -417,7 +455,9 @@ class _$ManagerCarStateImpl implements _ManagerCarState {
       isCheckImageCar,
       imageFile,
       isEditButton,
-      isContinueButtonEnabled);
+      isContinueButtonEnabled,
+      isLoadingImg,
+      nameLocationTemp);
 
   @JsonKey(ignore: true)
   @override
@@ -443,7 +483,9 @@ abstract class _ManagerCarState implements ManagerCarState {
       final bool isCheckImageCar,
       final String imageFile,
       final bool isEditButton,
-      final bool isContinueButtonEnabled}) = _$ManagerCarStateImpl;
+      final bool isContinueButtonEnabled,
+      final bool isLoadingImg,
+      final String nameLocationTemp}) = _$ManagerCarStateImpl;
 
   @override
   List<Car> get listCarUser;
@@ -475,6 +517,10 @@ abstract class _ManagerCarState implements ManagerCarState {
   bool get isEditButton;
   @override
   bool get isContinueButtonEnabled;
+  @override
+  bool get isLoadingImg;
+  @override
+  String get nameLocationTemp;
   @override
   @JsonKey(ignore: true)
   _$$ManagerCarStateImplCopyWith<_$ManagerCarStateImpl> get copyWith =>

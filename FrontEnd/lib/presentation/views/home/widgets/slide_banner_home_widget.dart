@@ -14,7 +14,9 @@ class SlideBannerHomeWidget extends StatelessWidget {
       {"id": 3, "image_path": AssetUtils.imgHondaCivic}
     ];
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 14.0.w, vertical: 10.0.h),
+      padding: EdgeInsets.symmetric(
+        horizontal: 14.0.w,
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20.r),
         child: SizedBox(

@@ -20,7 +20,9 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Location {
+  @JsonKey(name: 'lat')
   double get latitude => throw _privateConstructorUsedError;
+  @JsonKey(name: 'lng')
   double get longitude => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +36,9 @@ abstract class $LocationCopyWith<$Res> {
   factory $LocationCopyWith(Location value, $Res Function(Location) then) =
       _$LocationCopyWithImpl<$Res, Location>;
   @useResult
-  $Res call({double latitude, double longitude});
+  $Res call(
+      {@JsonKey(name: 'lat') double latitude,
+      @JsonKey(name: 'lng') double longitude});
 }
 
 /// @nodoc
@@ -74,7 +78,9 @@ abstract class _$$LocationImplCopyWith<$Res>
       __$$LocationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double latitude, double longitude});
+  $Res call(
+      {@JsonKey(name: 'lat') double latitude,
+      @JsonKey(name: 'lng') double longitude});
 }
 
 /// @nodoc
@@ -107,16 +113,18 @@ class __$$LocationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LocationImpl implements _Location {
-  const _$LocationImpl({this.latitude = 0, this.longitude = 0});
+  const _$LocationImpl(
+      {@JsonKey(name: 'lat') this.latitude = 0,
+      @JsonKey(name: 'lng') this.longitude = 0});
 
   factory _$LocationImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocationImplFromJson(json);
 
   @override
-  @JsonKey()
+  @JsonKey(name: 'lat')
   final double latitude;
   @override
-  @JsonKey()
+  @JsonKey(name: 'lng')
   final double longitude;
 
   @override
@@ -154,15 +162,18 @@ class _$LocationImpl implements _Location {
 }
 
 abstract class _Location implements Location {
-  const factory _Location({final double latitude, final double longitude}) =
-      _$LocationImpl;
+  const factory _Location(
+      {@JsonKey(name: 'lat') final double latitude,
+      @JsonKey(name: 'lng') final double longitude}) = _$LocationImpl;
 
   factory _Location.fromJson(Map<String, dynamic> json) =
       _$LocationImpl.fromJson;
 
   @override
+  @JsonKey(name: 'lat')
   double get latitude;
   @override
+  @JsonKey(name: 'lng')
   double get longitude;
   @override
   @JsonKey(ignore: true)

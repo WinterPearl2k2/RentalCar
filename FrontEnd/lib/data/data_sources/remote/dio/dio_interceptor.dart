@@ -20,7 +20,7 @@ class DioInterceptor extends QueuedInterceptorsWrapper {
     if (token.accessToken.isNotEmpty ||
         (options.path != EndPoint.restUrlLogin ||
             options.path != EndPoint.restUrlRefreshToken ||
-            options.path != EndPoint.restUrlRegister)) {
+            options.path != EndPoint.restUrlRegister || options.path != EndPoint.restUrlGoong)) {
       options.headers.addAll({
         "Authorization": "Bearer ${token.accessToken}",
       });

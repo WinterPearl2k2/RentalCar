@@ -1,14 +1,19 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rental_car/application/services/car_service.dart';
+import 'package:rental_car/application/services/mapbox_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
 import 'package:rental_car/data/data_sources/remote/dio/api_exception.dart';
 import 'package:rental_car/data/dtos/car_dto.dart';
+import 'package:rental_car/domain/model/location.dart' as location;
+import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/views/manager_car/state/manager_car_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,6 +26,9 @@ part 'manager_car_notifier.g.dart';
 class ManagerCarNotifier extends _$ManagerCarNotifier {
   @override
   ManagerCarState build() => const ManagerCarState();
+  PointAnnotation? currentMarker;
+  PointAnnotationManager? pointAnnotationManager;
+  MapboxMap? mapboxMap;
 
   Future<void> getListCarByIdUser() async {
     try {
@@ -28,15 +36,13 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           await injection.getIt<ICarService>().getAllCarByIdUser(
                 idUser: PreferenceService.getUUID(),
               );
-      state = state.copyWith(status: Status.success);
-      if (listCarUser.isNotEmpty) {
-        state = state.copyWith(listCarUser: listCarUser);
-      } else {
-        state = state.copyWith(listCarUser: []);
-      }
-      LogUtils.i("getList oke");
+      state = state.copyWith(
+        listCarUser: listCarUser,
+        status: Status.success,
+      );
+      LogUtils.i("get list car successfully");
     } catch (e) {
-      LogUtils.i(e.toString());
+      LogUtils.e("get list car fail $e");
       state = state.copyWith(status: Status.error);
     }
   }
@@ -48,11 +54,11 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           );
       getListCarByIdUser();
       Fluttertoast.showToast(msg: "Deleted successfully");
-      LogUtils.i("delete oke");
+      LogUtils.i("delete successfully");
       state = state.copyWith(status: Status.success);
     } catch (e) {
       Fluttertoast.showToast(msg: "Delete failed, Car is rented");
-      LogUtils.i(e.toString());
+      LogUtils.e("Delete failed $e");
       state = state.copyWith(status: Status.error);
     }
   }
@@ -119,10 +125,10 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       state = state.copyWith(status: Status.success);
       getListCarByIdUser();
       Fluttertoast.showToast(msg: "Edited successfully");
-      LogUtils.i("edit oke");
+      LogUtils.i("Edited successfully");
     } catch (e) {
       Fluttertoast.showToast(msg: "Edited failed");
-      LogUtils.i(e.toString());
+      LogUtils.e("Edited failed $e");
       state = state.copyWith(status: Status.error);
     }
   }
@@ -202,6 +208,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       Fluttertoast.showToast(msg: "Create a successful car");
       getListCarByIdUser();
       state = state.copyWith(status: Status.success);
+      LogUtils.i("Create a successful car");
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
       Fluttertoast.showToast(msg: e.message.toString());
@@ -210,151 +217,121 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   }
 
   void isCheckNameCarEmpty({required String nameCar}) {
-    if (nameCar.isEmpty) {
-      state = state.copyWith(isCheckNameCar: false);
-    } else {
-      state = state.copyWith(isCheckNameCar: true);
-    }
+    final isCheckNameCar = nameCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckNameCar: isCheckNameCar);
   }
 
   void isCheckDescriptionCarEmpty({required String descriptionCar}) {
-    if (descriptionCar.isEmpty) {
-      state = state.copyWith(isCheckDescriptionCar: false);
-    } else {
-      state = state.copyWith(isCheckDescriptionCar: true);
-    }
+    final isCheckDescriptionCar = descriptionCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckDescriptionCar: isCheckDescriptionCar);
   }
 
   void isCheckColorCarEmpty({required String colorCar}) {
-    if (colorCar.isEmpty) {
-      state = state.copyWith(isCheckColorCar: false);
-    } else {
-      state = state.copyWith(isCheckColorCar: true);
-    }
+    final isCheckColorCar = colorCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckColorCar: isCheckColorCar);
   }
 
   void isCheckKilometersEmpty({required String kilometers}) {
-    if (kilometers.isEmpty) {
-      state = state.copyWith(isCheckKilometers: false);
-    } else {
-      state = state.copyWith(isCheckKilometers: true);
-    }
+    final isCheckKilometers = kilometers.isEmpty ? false : true;
+    state = state.copyWith(isCheckKilometers: isCheckKilometers);
   }
 
   void isCheckSeatsCarEmpty({required String seatsCar}) {
-    if (seatsCar.isEmpty) {
-      state = state.copyWith(isCheckSeatsCar: false);
-    } else {
-      state = state.copyWith(isCheckSeatsCar: true);
-    }
+    final isCheckSeatsCar = seatsCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckSeatsCar: isCheckSeatsCar);
   }
 
   void isCheckAddressCarEmpty({required String addressCar}) {
-    if (addressCar.isEmpty) {
-      state = state.copyWith(isCheckAddressCar: false);
-    } else {
-      state = state.copyWith(isCheckAddressCar: true);
-    }
+    final isCheckAddressCar = addressCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckAddressCar: isCheckAddressCar);
   }
 
   void isCheckPriceCarEmpty({required String priceCar}) {
-    if (priceCar.isEmpty) {
-      state = state.copyWith(isCheckPriceCar: false);
-    } else {
-      state = state.copyWith(isCheckPriceCar: true);
-    }
+    final isCheckPriceCar = priceCar.isEmpty ? false : true;
+    state = state.copyWith(isCheckPriceCar: isCheckPriceCar);
   }
 
   void isCheckNameCarChange({required String nameCar}) {
-    if (nameCar != state.carDTO.nameCar && nameCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        nameCar != state.carDTO.nameCar && nameCar.isNotEmpty ? true : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckBrandCarChange({required String brandCar}) {
-    if (brandCar != state.carDTO.brandCar && brandCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        brandCar != state.carDTO.brandCar && brandCar.isNotEmpty ? true : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckDescriptionCarChange({required String descriptionCar}) {
-    if (descriptionCar != state.carDTO.descriptionCar &&
-        descriptionCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton = descriptionCar != state.carDTO.descriptionCar &&
+            descriptionCar.isNotEmpty
+        ? true
+        : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckColorCarChange({required String colorCar}) {
-    if (colorCar != state.carDTO.colorCar && colorCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        colorCar != state.carDTO.colorCar && colorCar.isNotEmpty ? true : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckFuelTypeCarChange({required String fuelTypeCar}) {
-    if (fuelTypeCar != state.carDTO.fuelTypeCar && fuelTypeCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        fuelTypeCar != state.carDTO.fuelTypeCar && fuelTypeCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckKilometersCarChange({required String kilometersCar}) {
-    if (kilometersCar != state.carDTO.kilometersCar.toString() &&
-        kilometersCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        kilometersCar != state.carDTO.kilometersCar.toString() &&
+                kilometersCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckSeatsCarChange({required String seatsCar}) {
-    if (seatsCar != state.carDTO.seatsCar.toString() && seatsCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        seatsCar != state.carDTO.seatsCar.toString() && seatsCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckTransmissionCarChange({required String transmissionCar}) {
-    if (transmissionCar != state.carDTO.transmissionCar &&
-        transmissionCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton = transmissionCar != state.carDTO.transmissionCar &&
+            transmissionCar.isNotEmpty
+        ? true
+        : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckPriceCarChange({required String priceCar}) {
-    if (priceCar != state.carDTO.priceCar.toString() && priceCar.isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        priceCar != state.carDTO.priceCar.toString() && priceCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckAddressCarChange({required String addressCar}) {
-    if (addressCar != state.carDTO.addressCar &&
-        addressCar.toString().isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        addressCar != state.carDTO.addressCar && addressCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   void isCheckAddressImageChange({required String imageCar}) {
-    if (imageCar != state.carDTO.imagesCar && imageCar.toString().isNotEmpty) {
-      state = state.copyWith(isEditButton: true);
-    } else {
-      state = state.copyWith(isEditButton: false);
-    }
+    final isEditButton =
+        imageCar != state.carDTO.imagesCar && imageCar.isNotEmpty
+            ? true
+            : false;
+    state = state.copyWith(isEditButton: isEditButton);
   }
 
   Future<void> isContinueButtonEnabled({required bool isContinue}) async {
@@ -373,17 +350,19 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   Future<void> pickImageFromGallery() async {
     PermissionStatus permission = await Permission.camera.request();
     if (permission.isGranted) {
-      final pickedFile = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: 20)
+      final pickedFile = await image_picker.ImagePicker()
+          .pickImage(source: image_picker.ImageSource.gallery, imageQuality: 20)
           .onError((error, stackTrace) {
         return null;
       });
+      state = state.copyWith(isLoadingImg: true);
       final image = await MultipartFile.fromFile(pickedFile?.path ?? "");
-      final imageFile = await injection.getIt<ICarService>().uploadImage(
-          imageFile: image);
+      final imageFile =
+          await injection.getIt<ICarService>().uploadImage(imageFile: image);
       state = state.copyWith(
         imageFile: imageFile.url,
         isEditButton: true,
+        isLoadingImg: false,
       );
     } else if (permission.isDenied) {
       Fluttertoast.showToast(msg: "Gallery access has not been granted");
@@ -393,17 +372,19 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
   Future<void> pickImageFromCamera() async {
     PermissionStatus permission = await Permission.camera.request();
     if (permission.isGranted) {
-      final pickedFile = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: 20)
+      final pickedFile = await image_picker.ImagePicker()
+          .pickImage(source: image_picker.ImageSource.camera, imageQuality: 20)
           .onError((error, stackTrace) {
         return null;
       });
+      state = state.copyWith(isLoadingImg: true);
       final image = await MultipartFile.fromFile(pickedFile?.path ?? "");
-       final imageFile = await injection.getIt<ICarService>().uploadImage(
-          imageFile: image);
+      final imageFile =
+          await injection.getIt<ICarService>().uploadImage(imageFile: image);
       state = state.copyWith(
         imageFile: imageFile.url,
         isEditButton: true,
+        isLoadingImg: false,
       );
     } else if (permission.isDenied) {
       Fluttertoast.showToast(msg: "Camera access has not been granted");
@@ -416,19 +397,152 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     );
   }
 
-  bool isFileExtension({required String imageFile}) {
-    String fileExtension = imageFile.split('.').last.toLowerCase();
-    if (fileExtension == 'jpg' ||
-        fileExtension == 'jpeg' ||
-        fileExtension == 'png' ||
-        fileExtension == 'gif' ||
-        fileExtension == 'bmp' ||
-        fileExtension == 'webp' ||
-        fileExtension == 'tif' ||
-        fileExtension == 'tiff') {
-      return true;
-    } else {
-      return false;
+  Future<String> getAddressLocation({
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final addressLocation =
+          await injection.getIt<IMapboxService>().getAddressLocation(
+                latitude: latitude,
+                longitude: longitude,
+              );
+      LogUtils.i("get address location successfully");
+      return addressLocation.formattedAddress;
+    } catch (e) {
+      LogUtils.e("get address location fail $e");
+      return '';
     }
+  }
+
+  Future<List<MapboxLocation>> getListAddressPredict({
+    required String location,
+  }) async {
+    try {
+      final listAddressPredict = await injection
+          .getIt<IMapboxService>()
+          .getListAddressPredict(location: location);
+      LogUtils.i("get list address predict successfully");
+      return listAddressPredict;
+    } catch (e) {
+      LogUtils.e("get list address predict fail $e");
+      return [];
+    }
+  }
+
+  Future<location.Location> getLatLongAddress({
+    required String placeId,
+  }) async {
+    try {
+      final latLong = await injection
+          .getIt<IMapboxService>()
+          .getLatLongLocation(placeId: placeId);
+      LogUtils.i("get latLong successfully");
+      return latLong;
+    } catch (e) {
+      LogUtils.e("get list address predict fail $e");
+      return const location.Location(latitude: 0, longitude: 0);
+    }
+  }
+
+  void onMapCreated({
+    required double latitude,
+    required double longitude,
+    required MapboxMap mapboxMap,
+  }) {
+    this.mapboxMap = mapboxMap;
+    initMarker(
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
+
+  Future<void> initMarker({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final ByteData bytes = await rootBundle.load(AssetUtils.imgLocation);
+    final Uint8List list = bytes.buffer.asUint8List();
+    pointAnnotationManager =
+        await mapboxMap?.annotations.createPointAnnotationManager();
+    final options = PointAnnotationOptions(
+      geometry: Point(
+        coordinates: Position(longitude, latitude),
+      ).toJson(),
+      image: list,
+    );
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    currentMarker = await pointAnnotationManager?.create(options);
+  }
+
+  Future<void> marker({
+    required double latitude,
+    required double longitude,
+  }) async {
+    final ByteData bytes = await rootBundle.load(AssetUtils.imgLocation);
+    final Uint8List list = bytes.buffer.asUint8List();
+    final options = PointAnnotationOptions(
+      geometry: Point(
+        coordinates: Position(longitude, latitude),
+      ).toJson(),
+      image: list,
+    );
+
+    if (currentMarker != null) {
+      pointAnnotationManager?.delete(currentMarker!);
+    }
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    currentMarker = await pointAnnotationManager?.create(options);
+  }
+
+  void setLocation({
+    required double latitude,
+    required double longitude,
+  }) {
+    getAddressLocation(
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
+
+  void moveToCurrentLocation({
+    required double longitude,
+    required double latitude,
+  }) async {
+    mapboxMap?.setCamera(
+      CameraOptions(
+        center: Point(
+          coordinates: Position(
+            longitude,
+            latitude,
+          ),
+        ).toJson(),
+        zoom: 14.0,
+      ),
+    );
+    marker(
+      latitude: latitude,
+      longitude: longitude,
+    );
   }
 }

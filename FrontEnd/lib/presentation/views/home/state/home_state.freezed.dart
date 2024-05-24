@@ -28,9 +28,10 @@ mixin _$HomeState {
   Status get statusNearCar => throw _privateConstructorUsedError;
   Status get statusSearch => throw _privateConstructorUsedError;
   bool get isCheckSearch => throw _privateConstructorUsedError;
-  List<Placemark> get placeMarks => throw _privateConstructorUsedError;
   String get nameLocation => throw _privateConstructorUsedError;
-  Position get position => throw _privateConstructorUsedError;
+  String get nameLocationTemp => throw _privateConstructorUsedError;
+  List<MapboxLocation> get listAddressPredict =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -55,9 +56,9 @@ abstract class $HomeStateCopyWith<$Res> {
       Status statusNearCar,
       Status statusSearch,
       bool isCheckSearch,
-      List<Placemark> placeMarks,
       String nameLocation,
-      Position position});
+      String nameLocationTemp,
+      List<MapboxLocation> listAddressPredict});
 }
 
 /// @nodoc
@@ -85,9 +86,9 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? statusNearCar = null,
     Object? statusSearch = null,
     Object? isCheckSearch = null,
-    Object? placeMarks = null,
     Object? nameLocation = null,
-    Object? position = null,
+    Object? nameLocationTemp = null,
+    Object? listAddressPredict = null,
   }) {
     return _then(_value.copyWith(
       listTopCar: null == listTopCar
@@ -138,18 +139,18 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.isCheckSearch
           : isCheckSearch // ignore: cast_nullable_to_non_nullable
               as bool,
-      placeMarks: null == placeMarks
-          ? _value.placeMarks
-          : placeMarks // ignore: cast_nullable_to_non_nullable
-              as List<Placemark>,
       nameLocation: null == nameLocation
           ? _value.nameLocation
           : nameLocation // ignore: cast_nullable_to_non_nullable
               as String,
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Position,
+      nameLocationTemp: null == nameLocationTemp
+          ? _value.nameLocationTemp
+          : nameLocationTemp // ignore: cast_nullable_to_non_nullable
+              as String,
+      listAddressPredict: null == listAddressPredict
+          ? _value.listAddressPredict
+          : listAddressPredict // ignore: cast_nullable_to_non_nullable
+              as List<MapboxLocation>,
     ) as $Val);
   }
 }
@@ -175,9 +176,9 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       Status statusNearCar,
       Status statusSearch,
       bool isCheckSearch,
-      List<Placemark> placeMarks,
       String nameLocation,
-      Position position});
+      String nameLocationTemp,
+      List<MapboxLocation> listAddressPredict});
 }
 
 /// @nodoc
@@ -203,9 +204,9 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? statusNearCar = null,
     Object? statusSearch = null,
     Object? isCheckSearch = null,
-    Object? placeMarks = null,
     Object? nameLocation = null,
-    Object? position = null,
+    Object? nameLocationTemp = null,
+    Object? listAddressPredict = null,
   }) {
     return _then(_$HomeStateImpl(
       listTopCar: null == listTopCar
@@ -256,18 +257,18 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.isCheckSearch
           : isCheckSearch // ignore: cast_nullable_to_non_nullable
               as bool,
-      placeMarks: null == placeMarks
-          ? _value._placeMarks
-          : placeMarks // ignore: cast_nullable_to_non_nullable
-              as List<Placemark>,
       nameLocation: null == nameLocation
           ? _value.nameLocation
           : nameLocation // ignore: cast_nullable_to_non_nullable
               as String,
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as Position,
+      nameLocationTemp: null == nameLocationTemp
+          ? _value.nameLocationTemp
+          : nameLocationTemp // ignore: cast_nullable_to_non_nullable
+              as String,
+      listAddressPredict: null == listAddressPredict
+          ? _value._listAddressPredict
+          : listAddressPredict // ignore: cast_nullable_to_non_nullable
+              as List<MapboxLocation>,
     ));
   }
 }
@@ -288,23 +289,13 @@ class _$HomeStateImpl implements _HomeState {
       this.statusNearCar = Status.loading,
       this.statusSearch = Status.loading,
       this.isCheckSearch = false,
-      final List<Placemark> placeMarks = const [],
       this.nameLocation = '',
-      this.position = const Position(
-          longitude: 0.0,
-          latitude: 0.0,
-          timestamp: ConstDateTime(2024),
-          accuracy: 0.0,
-          altitude: 0.0,
-          altitudeAccuracy: 0.0,
-          heading: 0.0,
-          headingAccuracy: 0.0,
-          speed: 0.0,
-          speedAccuracy: 0.0)})
+      this.nameLocationTemp = '',
+      final List<MapboxLocation> listAddressPredict = const []})
       : _listTopCar = listTopCar,
         _listAllCar = listAllCar,
         _listSearchCar = listSearchCar,
-        _placeMarks = placeMarks;
+        _listAddressPredict = listAddressPredict;
 
   final List<TopCarDTO> _listTopCar;
   @override
@@ -360,25 +351,25 @@ class _$HomeStateImpl implements _HomeState {
   @override
   @JsonKey()
   final bool isCheckSearch;
-  final List<Placemark> _placeMarks;
-  @override
-  @JsonKey()
-  List<Placemark> get placeMarks {
-    if (_placeMarks is EqualUnmodifiableListView) return _placeMarks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_placeMarks);
-  }
-
   @override
   @JsonKey()
   final String nameLocation;
   @override
   @JsonKey()
-  final Position position;
+  final String nameLocationTemp;
+  final List<MapboxLocation> _listAddressPredict;
+  @override
+  @JsonKey()
+  List<MapboxLocation> get listAddressPredict {
+    if (_listAddressPredict is EqualUnmodifiableListView)
+      return _listAddressPredict;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listAddressPredict);
+  }
 
   @override
   String toString() {
-    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, numberNewNotification: $numberNewNotification, isLoadingMore: $isLoadingMore, statusTopCar: $statusTopCar, statusNearCar: $statusNearCar, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, placeMarks: $placeMarks, nameLocation: $nameLocation, position: $position)';
+    return 'HomeState(listTopCar: $listTopCar, listAllCar: $listAllCar, listSearchCar: $listSearchCar, instanceCar: $instanceCar, currentPage: $currentPage, pageSize: $pageSize, numberNewNotification: $numberNewNotification, isLoadingMore: $isLoadingMore, statusTopCar: $statusTopCar, statusNearCar: $statusNearCar, statusSearch: $statusSearch, isCheckSearch: $isCheckSearch, nameLocation: $nameLocation, nameLocationTemp: $nameLocationTemp, listAddressPredict: $listAddressPredict)';
   }
 
   @override
@@ -410,12 +401,12 @@ class _$HomeStateImpl implements _HomeState {
                 other.statusSearch == statusSearch) &&
             (identical(other.isCheckSearch, isCheckSearch) ||
                 other.isCheckSearch == isCheckSearch) &&
-            const DeepCollectionEquality()
-                .equals(other._placeMarks, _placeMarks) &&
             (identical(other.nameLocation, nameLocation) ||
                 other.nameLocation == nameLocation) &&
-            (identical(other.position, position) ||
-                other.position == position));
+            (identical(other.nameLocationTemp, nameLocationTemp) ||
+                other.nameLocationTemp == nameLocationTemp) &&
+            const DeepCollectionEquality()
+                .equals(other._listAddressPredict, _listAddressPredict));
   }
 
   @override
@@ -433,9 +424,9 @@ class _$HomeStateImpl implements _HomeState {
       statusNearCar,
       statusSearch,
       isCheckSearch,
-      const DeepCollectionEquality().hash(_placeMarks),
       nameLocation,
-      position);
+      nameLocationTemp,
+      const DeepCollectionEquality().hash(_listAddressPredict));
 
   @JsonKey(ignore: true)
   @override
@@ -458,9 +449,9 @@ abstract class _HomeState implements HomeState {
       final Status statusNearCar,
       final Status statusSearch,
       final bool isCheckSearch,
-      final List<Placemark> placeMarks,
       final String nameLocation,
-      final Position position}) = _$HomeStateImpl;
+      final String nameLocationTemp,
+      final List<MapboxLocation> listAddressPredict}) = _$HomeStateImpl;
 
   @override
   List<TopCarDTO> get listTopCar;
@@ -487,11 +478,11 @@ abstract class _HomeState implements HomeState {
   @override
   bool get isCheckSearch;
   @override
-  List<Placemark> get placeMarks;
-  @override
   String get nameLocation;
   @override
-  Position get position;
+  String get nameLocationTemp;
+  @override
+  List<MapboxLocation> get listAddressPredict;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>

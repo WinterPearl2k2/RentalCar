@@ -21,6 +21,10 @@ class AssetUtils {
   static const icDirect = 'assets/icons/ic_direct.svg';
   static const icBack = 'assets/icons/ic_arrow_back.svg';
   static const icFoot = 'assets/icons/ic_foot.svg';
+  static const icLocation = 'assets/icons/ic_location.svg';
+  static const icClear = 'assets/icons/ic_close.svg';
+  static const icBackSearch = 'assets/icons/ic_back.svg';
+  static const icArrowLeftTop = 'assets/icons/ic_arrow_left_top.svg';
 
   //images
   static const imgHondaBrV = 'assets/images/img_honda_br_v.jpg';
@@ -28,4 +32,5 @@ class AssetUtils {
   static const imgHondaCivic = 'assets/images/img_honda_civic.jpg';
   static const imgEmpty = 'assets/images/img_empty.svg';
   static const imgLoading = 'assets/images/img_loading.gif';
+  static const imgLocation = 'assets/images/img_location.png';
 }

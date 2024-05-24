@@ -24,6 +24,8 @@ class ManagerCarState with _$ManagerCarState {
     @Default('') String imageFile,
     @Default(false) bool isEditButton,
     @Default(true) bool isContinueButtonEnabled,
+    @Default(false) bool isLoadingImg,
+    @Default('') String nameLocationTemp,
   }) = _ManagerCarState;
 }
 

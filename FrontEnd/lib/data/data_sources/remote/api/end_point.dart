@@ -1,5 +1,6 @@
 class EndPoint {
   const EndPoint._();
+
   static const restUrlEmpty = '';
 
   //Auth
@@ -42,4 +43,7 @@ class EndPoint {
   static const restUrlGetCarReview = '/getCarReview';
   static const restUrlUploadImage = '/uploadImage';
 
+  //goong io
+  static const restUrlGoong =
+      'https://rsapi.goong.io';
 }
