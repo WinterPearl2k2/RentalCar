@@ -532,7 +532,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     required double longitude,
     required double latitude,
   }) async {
-    mapboxMap?.setCamera(
+    mapboxMap?.flyTo(
       CameraOptions(
         center: Point(
           coordinates: Position(
@@ -541,6 +541,9 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           ),
         ).toJson(),
         zoom: 14.0,
+      ),
+      MapAnimationOptions(
+        duration: 1500,
       ),
     );
     marker(
