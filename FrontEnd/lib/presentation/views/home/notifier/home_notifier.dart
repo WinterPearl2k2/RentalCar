@@ -297,7 +297,7 @@ class HomeNotifier extends _$HomeNotifier {
 
   void moveToCurrentLocation(
       {required double longitude, required double latitude}) async {
-    mapboxMap?.setCamera(
+    mapboxMap?.flyTo(
       CameraOptions(
         center: Point(
           coordinates: Position(
@@ -306,6 +306,9 @@ class HomeNotifier extends _$HomeNotifier {
           ),
         ).toJson(),
         zoom: 14.0,
+      ),
+      MapAnimationOptions(
+        duration: 1500,
       ),
     );
     marker(
