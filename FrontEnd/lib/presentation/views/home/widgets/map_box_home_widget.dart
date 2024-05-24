@@ -55,17 +55,23 @@ class BoxMapHomeWidget extends StatelessWidget {
         Positioned(
           bottom: 20,
           right: 10,
-          child: IconButton(
-            icon: const Icon(Icons.my_location),
-            onPressed: () {
-              final location = PreferenceService.getLocationCurrent();
-              notifier.moveToCurrentLocation(
-                longitude: location.longitude,
-                latitude: location.latitude,
-              );
-              latController.text = location.latitude.toString();
-              longController.text = location.longitude.toString();
-            },
+          child: Container(
+            decoration: BoxDecoration(
+              color: ColorUtils.whiteColor,
+              shape: BoxShape.circle
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.my_location),
+              onPressed: () {
+                final location = PreferenceService.getLocationCurrent();
+                notifier.moveToCurrentLocation(
+                  longitude: location.longitude,
+                  latitude: location.latitude,
+                );
+                latController.text = location.latitude.toString();
+                longController.text = location.longitude.toString();
+              },
+            ),
           ),
         ),
         Positioned(

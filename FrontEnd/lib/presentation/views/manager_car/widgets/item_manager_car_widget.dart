@@ -50,13 +50,12 @@ class ItemManagerCarWidget extends StatelessWidget {
                   height: 200.h,
                   fit: BoxFit.cover,
                   imageUrl: car.imagesCar,
-                  progressIndicatorBuilder: (_, __, downloadProgress) =>
-                      SizedBox(
-                        height: 10.h,
-                        width: 10.h,
-                        child: CircularProgressIndicator(
-                            value: downloadProgress.progress),
-                      ),
+                  progressIndicatorBuilder: (_, __, ___) => Image.asset(
+                    AssetUtils.imgLoading,
+                    width: 360.w,
+                    height: 200.h,
+                    fit: BoxFit.cover,
+                  ),
                   errorWidget: (_, __, error) => const Icon(Icons.error),
                 ),
               ),
