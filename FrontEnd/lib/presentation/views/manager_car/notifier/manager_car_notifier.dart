@@ -501,7 +501,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     if (currentMarker != null) {
       pointAnnotationManager?.delete(currentMarker!);
     }
-    mapboxMap?.setCamera(
+    mapboxMap?.flyTo(
       CameraOptions(
         center: Point(
           coordinates: Position(
@@ -510,6 +510,9 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           ),
         ).toJson(),
         zoom: 14.0,
+      ),
+      MapAnimationOptions(
+        duration: 1500,
       ),
     );
     currentMarker = await pointAnnotationManager?.create(options);
