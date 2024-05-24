@@ -154,7 +154,7 @@ class RentalCarWidget extends StatelessWidget {
           SizedBox(height: 20.h),
           TextButtonWidget(
             label: 'Rental',
-            onPressed: () => notifier.rentalCar(),
+            onPressed: () => notifier.rentalCar(context),
           ),
         ],
       ),

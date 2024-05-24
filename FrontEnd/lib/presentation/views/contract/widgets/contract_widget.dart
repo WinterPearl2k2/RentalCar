@@ -80,12 +80,21 @@ class _RentalContractWidgetState extends State<RentalContractWidget>
               case Status.success:
                 return Expanded(
                   child: EasyRefresh(
+                    callLoadOverOffset: 10,
+                    callRefreshOverOffset: 10,
+                    simultaneously: true,
+                    footer: DeliveryFooter(
+                      skyColor: ColorUtils.blueColor.withOpacity(.5),
+                    ),
                     onRefresh: () => widget.notifier.getRentalContract(),
                     onLoad: () => widget.notifier.getMoreRentalContract(),
                     child: rentalContracts.isNotEmpty
                         ? ListView.builder(
                             itemCount: rentalContracts.length,
                             itemBuilder: (context, index) {
+                              if((index == rentalContracts.length - 10)) {
+                                widget.notifier.getMoreRentalContract();
+                              }
                               return ContractItemWidget(
                                 rentalContracts: rentalContracts,
                                 statusStr: statusStr,

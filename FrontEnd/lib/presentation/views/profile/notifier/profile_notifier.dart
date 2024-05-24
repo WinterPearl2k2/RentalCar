@@ -27,6 +27,7 @@ class ProfileNotifier extends _$ProfileNotifier {
       PreferenceService.clearUUID();
       PreferenceService.clearToken();
       PreferenceService.clearUser();
+      PreferenceService.clearAuth();
       Routes.goToAuthScreen(context);
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());
@@ -35,8 +36,11 @@ class ProfileNotifier extends _$ProfileNotifier {
   }
 
   Future<void> getUser() async {
+    await Future.delayed(const Duration(milliseconds: 1),);
+    state = state.copyWith(loading: true);
     try {
       final user = await injection.getIt<IAuthService>().getUser();
+      LogUtils.i(user.toString());
       state = state.copyWith(user: user);
     } on APIException catch (e) {
       LogUtils.e(e.message.toString());

@@ -1,15 +1,22 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:material_dialogs/dialogs.dart';
 import 'package:rental_car/application/services/auth_service.dart';
 import 'package:rental_car/application/services/car_service.dart';
+import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/date_time_format_untils.dart';
 import 'package:rental_car/data/dtos/car_rental_dto.dart';
 import 'package:rental_car/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
+import '../../../../application/routes/routes.dart';
+import '../../../../application/utils/colors_utils.dart';
 import '../../../../application/utils/log_utils.dart';
 import '../../../../data/data_sources/remote/dio/api_exception.dart';
 import '../../../../data/dtos/car_detail_dto.dart';
+import '../../../common/widgets/text_button_widget.dart';
 import '../state/rental_car_state.dart';
 
 part 'rental_car_notifier.g.dart';
@@ -44,20 +51,15 @@ class RentalCarNotifier extends _$RentalCarNotifier {
               dateTime.isBefore(
                 DateTime.parse(date.endDate),
               );
-          print(dateTime.isAfter(DateTime.parse(date.startDate)));
-          print(dateTime.isAfter(DateTime.parse(date.endDate)));
-          print(dateTime);
-          print(DateTime.parse(date.startDate));
-          print(DateTime.parse(date.endDate));
           if (isInsideRange) {
-            dateTime = dateTime.add(const Duration(days: 1));
-            print(dateTime);
+            dateTime = dateTime.add(
+              const Duration(days: 1),
+            );
           } else {
             break;
           }
         }
       }
-      print(dateTime);
       state = state.copyWith(
         user: user,
         car: carData,
@@ -103,37 +105,73 @@ class RentalCarNotifier extends _$RentalCarNotifier {
     );
   }
 
-  Future<void> rentalCar() async {
-    state = state.copyWith(loading: false);
-    try {
-      final startDate = DateTimeFormatUtils.stringToDateFormat(
-        date: state.startDate,
-        format: 'dd/MM/yyyy',
-      ).toString();
-      final endDate = DateTimeFormatUtils.stringToDateFormat(
-        date: state.endDate,
-        format: 'dd/MM/yyyy',
-      ).toString();
-      final carRentalDto = CarRentalDto(
-        idCar: state.car.idCar,
-        rentalDays: state.numberDays,
-        rentalPrice: state.total,
-        startDate: startDate,
-        endDate: endDate,
-      );
-      await injection.getIt<ICarService>().rentalCar(
-            carRentalDto: carRentalDto,
-          );
-      state = state.copyWith(
-        statusView: RentalCarStatus.rentalSuccess,
-      );
-      LogUtils.e('Success');
-      Fluttertoast.showToast(msg: 'Rental success');
-    } on APIException catch (e) {
-      LogUtils.e(e.message.toString());
-      Fluttertoast.showToast(msg: e.message.toString());
+  Future<void> rentalCar(context) async {
+    final auth = PreferenceService.getAuth();
+    if(auth) {
+      state = state.copyWith(loading: false);
+      try {
+        final startDate = DateTimeFormatUtils.stringToDateFormat(
+          date: state.startDate,
+          format: 'dd/MM/yyyy',
+        ).toString();
+        final endDate = DateTimeFormatUtils.stringToDateFormat(
+          date: state.endDate,
+          format: 'dd/MM/yyyy',
+        ).toString();
+        final carRentalDto = CarRentalDto(
+          idCar: state.car.idCar,
+          rentalDays: state.numberDays,
+          rentalPrice: state.total,
+          startDate: startDate,
+          endDate: endDate,
+        );
+        await injection.getIt<ICarService>().rentalCar(
+          carRentalDto: carRentalDto,
+        );
+        state = state.copyWith(
+          statusView: RentalCarStatus.rentalSuccess,
+        );
+        LogUtils.e('Success');
+        Fluttertoast.showToast(msg: 'Rental success');
+      } on APIException catch (e) {
+        LogUtils.e(e.message.toString());
+        Fluttertoast.showToast(msg: e.message.toString());
+      }
+      state = state.copyWith(loading: true);
+    } else {
+      dialogNotVerified(context);
     }
-    state = state.copyWith(loading: true);
+
+  }
+
+  Future<void> dialogNotVerified(context) {
+    return Dialogs.materialDialog(
+      msg: 'Your user is not verified, please press to verify the user.',
+      title: "User not verified!",
+      color: Colors.white,
+      context: context,
+      actions: [
+        SizedBox(
+          height: 40.h,
+          child: TextButtonWidget(
+            label: 'Cancel',
+            onPressed: () => Navigator.pop(context),
+            colorButton: ColorUtils.textColor.withOpacity(.5),
+            textColor: ColorUtils.whiteColor,
+          ),
+        ),
+        SizedBox(
+          height: 40.h,
+          child: TextButtonWidget(
+            label: 'Verify',
+            onPressed: () => {
+              Navigator.pop(context),
+              Routes.goToVerifyUserView(context),
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   void onSelectionChanged(DateRangePickerSelectionChangedArgs args) {

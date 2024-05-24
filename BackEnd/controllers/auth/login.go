@@ -68,9 +68,12 @@ func Login(context *gin.Context) {
 	}
 	initializers.DB.Create(&deviceToken)
 
+	isAuthen := UserRepository.GetCetizenById(user.IdUser.String())
+
 	context.JSON(http.StatusOK, gin.H{
-		"accessToken":  accessToken,
-		"refreshToken": refreshToken,
-		"userId":       user.IdUser,
+		"accessToken":    accessToken,
+		"refreshToken":   refreshToken,
+		"userId":         user.IdUser,
+		"authentication": isAuthen,
 	})
 }

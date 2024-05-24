@@ -5,7 +5,9 @@ import 'package:rental_car/presentation/views/car_rental_management/notification
 import 'package:rental_car/presentation/views/change_password/change_password_view.dart';
 import 'package:rental_car/presentation/views/detail_contract/detail_contract_view.dart';
 import 'package:rental_car/presentation/views/forgot_password/forgot_password_view.dart';
+import 'package:rental_car/presentation/views/verify_id/verify_id_view.dart';
 import '../../presentation/views/auth/auth_view.dart';
+import '../../presentation/views/manager_car/views/add_car_view.dart';
 
 class RoutesNavigator {
   static Map<String, WidgetBuilder> routes() {
@@ -16,6 +18,8 @@ class RoutesNavigator {
       RoutesName.changePassword: (context) => const ChangePasswordView(),
       RoutesName.carRentalManagement: (context) => const CarRentalManagementView(),
       RoutesName.detailContract: (context) => const DetailContractView(),
+      RoutesName.verifyUser: (context) => const VerifyIdView(),
+      RoutesName.addCar: (context) => const AddCarView(),
     };
   }
 }

@@ -1,4 +1,5 @@
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/data/dtos/citizen_dto.dart';
 import 'package:rental_car/data/dtos/login_dto.dart';
 import 'package:rental_car/data/dtos/password_dto.dart';
 import 'package:rental_car/data/dtos/reset_password_dto.dart';
@@ -32,6 +33,9 @@ abstract class IAuthService {
   });
 
   Future<UserProfileDTO> getUser();
+  Future<void> checkAuthentication();
+  Future<void> checkValidResume({required String no});
+  Future<void> updateInformation({required CitizenDto citizen});
   Future<void> logout({required String deviceToken});
 
   Future<UserProfileDTO> updateUser({
@@ -79,9 +83,11 @@ class AuthServiceImpl implements IAuthService {
       );
       PreferenceService.setToken(data['accessToken'], data['refreshToken']);
       PreferenceService.setUUID(data['userId']);
+      PreferenceService.setAuth(data['authentication']);
     } catch (_) {
       PreferenceService.clearToken();
       PreferenceService.clearUUID();
+      PreferenceService.clearAuth();
       rethrow;
     }
   }
@@ -133,5 +139,20 @@ class AuthServiceImpl implements IAuthService {
   @override
   Future<void> logout({required String deviceToken}) {
     return _userRepository.logout(deviceToken: deviceToken);
+  }
+
+  @override
+  Future<void> checkAuthentication() {
+    return _userRepository.checkAuthentication();
+  }
+
+  @override
+  Future<void> updateInformation({required CitizenDto citizen}) {
+    return _userRepository.updateInformation(citizen: citizen);
+  }
+
+  @override
+  Future<void> checkValidResume({required String no}) {
+    return _userRepository.checkValidResume(no: no);
   }
 }

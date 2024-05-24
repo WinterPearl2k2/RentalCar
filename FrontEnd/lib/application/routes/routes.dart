@@ -4,16 +4,13 @@ import 'package:rental_car/data/dtos/user_profile_dto.dart';
 import 'package:rental_car/domain/model/car.dart';
 import 'package:rental_car/presentation/views/account_profile/account_profile_view.dart';
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
-import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
 import 'package:rental_car/presentation/views/car_detail/car_detail_view.dart';
 import 'package:rental_car/presentation/views/car_rental_management/notification_view.dart';
 import 'package:rental_car/presentation/views/car_review/car_review_view.dart';
 import 'package:rental_car/presentation/views/home/notifier/home_notifier.dart';
 import 'package:rental_car/presentation/views/home/views/search_car_view.dart';
 import 'package:rental_car/presentation/views/home/views/see_all_car_view.dart';
-import 'package:rental_car/presentation/views/manager_car/views/add_car_view.dart';
 import 'package:rental_car/presentation/views/manager_car/views/edit_car_view.dart';
-import 'package:rental_car/presentation/views/forgot_password/forgot_password_view.dart';
 
 import '../../data/dtos/rental_contract_dto.dart';
 import '../../presentation/views/rental_car/rental_car_view.dart';
@@ -22,22 +19,6 @@ import 'routes_name.dart';
 class Routes {
   static Route<dynamic> routeBuilder(RouteSettings settings) {
     switch (settings.name) {
-      case RoutesName.auth:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const AuthView(),
-        );
-      case RoutesName.addCar:
-        return MaterialPageRoute(
-          builder: (BuildContext context) => const AddCarView(),
-        );
-      case RoutesName.bottomNavigation:
-        return MaterialPageRoute(
-          builder: (context) => const BottomNavigationView(),
-        );
-      case RoutesName.forgotPassword:
-        return MaterialPageRoute(
-          builder: (context) => const ForgotPasswordView(),
-        );
       case RoutesName.carRentalManagement:
         return MaterialPageRoute(
           builder: (context) => const CarRentalManagementView(),
@@ -140,6 +121,15 @@ class Routes {
     );
   }
 
+  static Future<Object?> goToVerifyUserView(
+    BuildContext context,
+  ) {
+    return Navigator.pushNamed(
+      context,
+      RoutesName.verifyUser,
+    );
+  }
+
   static void goToResetPasswordView(
     BuildContext context,
     String email,
@@ -219,8 +209,7 @@ class Routes {
     );
   }
 
-  static void goToSeeAllCarView(
-      BuildContext context, HomeNotifier notifier) {
+  static void goToSeeAllCarView(BuildContext context, HomeNotifier notifier) {
     Navigator.of(context)
         .pushNamed(RoutesName.seeAllCar, arguments: {'notifier': notifier});
   }
@@ -230,11 +219,13 @@ class Routes {
   }
 
   static void goToCarReviewView(BuildContext context,
-      {required String idCar, required String imgCar, required String nameCar}) {
+      {required String idCar,
+      required String imgCar,
+      required String nameCar}) {
     Navigator.of(context).pushNamed(RoutesName.reviewCar, arguments: {
-      'idCar' : idCar,
-      'nameCar' : nameCar,
-      'imgCar' : imgCar,
+      'idCar': idCar,
+      'nameCar': nameCar,
+      'imgCar': imgCar,
     });
   }
 }

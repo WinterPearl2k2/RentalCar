@@ -23,6 +23,7 @@ mixin _$LoginDTO {
   String get password => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get deviceToken => throw _privateConstructorUsedError;
+  bool get authentication => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,8 @@ abstract class $LoginDTOCopyWith<$Res> {
   factory $LoginDTOCopyWith(LoginDTO value, $Res Function(LoginDTO) then) =
       _$LoginDTOCopyWithImpl<$Res, LoginDTO>;
   @useResult
-  $Res call({String password, String email, String deviceToken});
+  $Res call(
+      {String password, String email, String deviceToken, bool authentication});
 }
 
 /// @nodoc
@@ -54,6 +56,7 @@ class _$LoginDTOCopyWithImpl<$Res, $Val extends LoginDTO>
     Object? password = null,
     Object? email = null,
     Object? deviceToken = null,
+    Object? authentication = null,
   }) {
     return _then(_value.copyWith(
       password: null == password
@@ -68,6 +71,10 @@ class _$LoginDTOCopyWithImpl<$Res, $Val extends LoginDTO>
           ? _value.deviceToken
           : deviceToken // ignore: cast_nullable_to_non_nullable
               as String,
+      authentication: null == authentication
+          ? _value.authentication
+          : authentication // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -80,7 +87,8 @@ abstract class _$$LoginDTOImplCopyWith<$Res>
       __$$LoginDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String password, String email, String deviceToken});
+  $Res call(
+      {String password, String email, String deviceToken, bool authentication});
 }
 
 /// @nodoc
@@ -97,6 +105,7 @@ class __$$LoginDTOImplCopyWithImpl<$Res>
     Object? password = null,
     Object? email = null,
     Object? deviceToken = null,
+    Object? authentication = null,
   }) {
     return _then(_$LoginDTOImpl(
       password: null == password
@@ -111,6 +120,10 @@ class __$$LoginDTOImplCopyWithImpl<$Res>
           ? _value.deviceToken
           : deviceToken // ignore: cast_nullable_to_non_nullable
               as String,
+      authentication: null == authentication
+          ? _value.authentication
+          : authentication // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -119,7 +132,10 @@ class __$$LoginDTOImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LoginDTOImpl implements _LoginDTO {
   const _$LoginDTOImpl(
-      {this.password = '', this.email = '', this.deviceToken = ''});
+      {this.password = '',
+      this.email = '',
+      this.deviceToken = '',
+      this.authentication = false});
 
   factory _$LoginDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginDTOImplFromJson(json);
@@ -133,10 +149,13 @@ class _$LoginDTOImpl implements _LoginDTO {
   @override
   @JsonKey()
   final String deviceToken;
+  @override
+  @JsonKey()
+  final bool authentication;
 
   @override
   String toString() {
-    return 'LoginDTO(password: $password, email: $email, deviceToken: $deviceToken)';
+    return 'LoginDTO(password: $password, email: $email, deviceToken: $deviceToken, authentication: $authentication)';
   }
 
   @override
@@ -148,12 +167,15 @@ class _$LoginDTOImpl implements _LoginDTO {
                 other.password == password) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.deviceToken, deviceToken) ||
-                other.deviceToken == deviceToken));
+                other.deviceToken == deviceToken) &&
+            (identical(other.authentication, authentication) ||
+                other.authentication == authentication));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, password, email, deviceToken);
+  int get hashCode =>
+      Object.hash(runtimeType, password, email, deviceToken, authentication);
 
   @JsonKey(ignore: true)
   @override
@@ -173,7 +195,8 @@ abstract class _LoginDTO implements LoginDTO {
   const factory _LoginDTO(
       {final String password,
       final String email,
-      final String deviceToken}) = _$LoginDTOImpl;
+      final String deviceToken,
+      final bool authentication}) = _$LoginDTOImpl;
 
   factory _LoginDTO.fromJson(Map<String, dynamic> json) =
       _$LoginDTOImpl.fromJson;
@@ -184,6 +207,8 @@ abstract class _LoginDTO implements LoginDTO {
   String get email;
   @override
   String get deviceToken;
+  @override
+  bool get authentication;
   @override
   @JsonKey(ignore: true)
   _$$LoginDTOImplCopyWith<_$LoginDTOImpl> get copyWith =>

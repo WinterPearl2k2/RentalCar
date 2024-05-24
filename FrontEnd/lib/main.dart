@@ -1,5 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rental_car/application/di/injection.dart';
@@ -9,20 +11,27 @@ import 'application/services/local_notification_service.dart';
 import 'firebase_options.dart';
 
 import 'application/routes/routes.dart';
-import 'application/routes/routes_name.dart';
 import 'application/routes/routes_navigator.dart';
 
 final injection = Injection();
 final navigatorKey = GlobalKey<NavigatorState>();
+late List<CameraDescription> cameras;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
+  );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   injection.configDependencies();
   await LocalNotificationService().init();
   await LocationService().init();
+  cameras = await availableCameras();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -47,7 +56,6 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         navigatorKey: navigatorKey,
-        initialRoute: RoutesName.auth,
         onGenerateRoute: Routes.routeBuilder,
         routes: RoutesNavigator.routes(),
       ),

@@ -23,6 +23,7 @@ mixin _$UserProfileDTO {
   String get name => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
+  bool get authentication => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,7 @@ abstract class $UserProfileDTOCopyWith<$Res> {
           UserProfileDTO value, $Res Function(UserProfileDTO) then) =
       _$UserProfileDTOCopyWithImpl<$Res, UserProfileDTO>;
   @useResult
-  $Res call({String name, String email, String phone});
+  $Res call({String name, String email, String phone, bool authentication});
 }
 
 /// @nodoc
@@ -55,6 +56,7 @@ class _$UserProfileDTOCopyWithImpl<$Res, $Val extends UserProfileDTO>
     Object? name = null,
     Object? email = null,
     Object? phone = null,
+    Object? authentication = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -69,6 +71,10 @@ class _$UserProfileDTOCopyWithImpl<$Res, $Val extends UserProfileDTO>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
+      authentication: null == authentication
+          ? _value.authentication
+          : authentication // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$UserProfileDTOImplCopyWith<$Res>
       __$$UserProfileDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, String email, String phone});
+  $Res call({String name, String email, String phone, bool authentication});
 }
 
 /// @nodoc
@@ -98,6 +104,7 @@ class __$$UserProfileDTOImplCopyWithImpl<$Res>
     Object? name = null,
     Object? email = null,
     Object? phone = null,
+    Object? authentication = null,
   }) {
     return _then(_$UserProfileDTOImpl(
       name: null == name
@@ -112,6 +119,10 @@ class __$$UserProfileDTOImplCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
+      authentication: null == authentication
+          ? _value.authentication
+          : authentication // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -120,7 +131,10 @@ class __$$UserProfileDTOImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserProfileDTOImpl implements _UserProfileDTO {
   const _$UserProfileDTOImpl(
-      {this.name = '', this.email = '', this.phone = ''});
+      {this.name = '',
+      this.email = '',
+      this.phone = '',
+      this.authentication = false});
 
   factory _$UserProfileDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserProfileDTOImplFromJson(json);
@@ -134,10 +148,13 @@ class _$UserProfileDTOImpl implements _UserProfileDTO {
   @override
   @JsonKey()
   final String phone;
+  @override
+  @JsonKey()
+  final bool authentication;
 
   @override
   String toString() {
-    return 'UserProfileDTO(name: $name, email: $email, phone: $phone)';
+    return 'UserProfileDTO(name: $name, email: $email, phone: $phone, authentication: $authentication)';
   }
 
   @override
@@ -147,12 +164,15 @@ class _$UserProfileDTOImpl implements _UserProfileDTO {
             other is _$UserProfileDTOImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
-            (identical(other.phone, phone) || other.phone == phone));
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.authentication, authentication) ||
+                other.authentication == authentication));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, email, phone);
+  int get hashCode =>
+      Object.hash(runtimeType, name, email, phone, authentication);
 
   @JsonKey(ignore: true)
   @override
@@ -173,7 +193,8 @@ abstract class _UserProfileDTO implements UserProfileDTO {
   const factory _UserProfileDTO(
       {final String name,
       final String email,
-      final String phone}) = _$UserProfileDTOImpl;
+      final String phone,
+      final bool authentication}) = _$UserProfileDTOImpl;
 
   factory _UserProfileDTO.fromJson(Map<String, dynamic> json) =
       _$UserProfileDTOImpl.fromJson;
@@ -184,6 +205,8 @@ abstract class _UserProfileDTO implements UserProfileDTO {
   String get email;
   @override
   String get phone;
+  @override
+  bool get authentication;
   @override
   @JsonKey(ignore: true)
   _$$UserProfileDTOImplCopyWith<_$UserProfileDTOImpl> get copyWith =>
