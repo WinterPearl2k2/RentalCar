@@ -55,46 +55,48 @@ class _HomeViewState
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(
-              child: EasyRefresh(
+              child: RefreshIndicator(
                 onRefresh: () async {
                   await notifier.getListCarByIdUser();
                 },
-                onLoad: () async {
-                  await notifier.getListCarByIdUser();
-                },
-                child: Consumer(
-                  builder: (_, ref, __) {
-                    final listCarUser = ref.watch(
-                      managerCarNotifierProvider
-                          .select((value) => value.listCarUser),
-                    );
-                    final status = ref.watch(
-                      managerCarNotifierProvider
-                          .select((value) => value.status),
-                    );
-                    switch (status) {
-                      case Status.loading:
-                        return Stack(children: [
-                          ListView.builder(
-                            itemCount: 2,
-                            itemBuilder: (context, index) => Padding(
-                              padding: EdgeInsets.only(bottom: 20.h),
-                              child: const ItemManagerCarLoadingWidget(),
-                            ),
-                          ),
-                          const LoadingWidget(),
-                        ]);
-                      case Status.success:
-                        return listCarUser.isNotEmpty
-                            ? ListManagerCarWidget(
-                                notifier: notifier,
-                                listCarUser: listCarUser,
-                              )
-                            : const NoCarWidget();
-                      case Status.error:
-                        return const ErrorCustomWidget();
-                    }
+                child: EasyRefresh(
+                  onLoad: () async {
+                    await notifier.getListCarByIdUser();
                   },
+                  child: Consumer(
+                    builder: (_, ref, __) {
+                      final listCarUser = ref.watch(
+                        managerCarNotifierProvider
+                            .select((value) => value.listCarUser),
+                      );
+                      final status = ref.watch(
+                        managerCarNotifierProvider
+                            .select((value) => value.status),
+                      );
+                      switch (status) {
+                        case Status.loading:
+                          return Stack(children: [
+                            ListView.builder(
+                              itemCount: 2,
+                              itemBuilder: (context, index) => Padding(
+                                padding: EdgeInsets.only(bottom: 20.h),
+                                child: const ItemManagerCarLoadingWidget(),
+                              ),
+                            ),
+                            const LoadingWidget(),
+                          ]);
+                        case Status.success:
+                          return listCarUser.isNotEmpty
+                              ? ListManagerCarWidget(
+                                  notifier: notifier,
+                                  listCarUser: listCarUser,
+                                )
+                              : const NoCarWidget();
+                        case Status.error:
+                          return const ErrorCustomWidget();
+                      }
+                    },
+                  ),
                 ),
               ),
             )

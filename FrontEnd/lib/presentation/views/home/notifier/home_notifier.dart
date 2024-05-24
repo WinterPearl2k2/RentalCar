@@ -269,7 +269,7 @@ class HomeNotifier extends _$HomeNotifier {
         zoom: 14.0,
       ),
       MapAnimationOptions(
-        duration: 2000,
+        duration: 1500,
       ),
     );
 

@@ -512,7 +512,7 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
         zoom: 14.0,
       ),
       MapAnimationOptions(
-        duration: 2000,
+        duration: 1500,
       ),
     );
     currentMarker = await pointAnnotationManager?.create(options);
