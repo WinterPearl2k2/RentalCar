@@ -94,8 +94,9 @@ class BoxMapHomeWidget extends StatelessWidget {
             child: Consumer(
               builder: (context, ref, _) {
                 final nameLocationTemp = ref.watch(
-                  homeNotifierProvider
-                      .select((value) => value.nameLocationTemp),
+                  homeNotifierProvider.select(
+                    (value) => value.nameLocationTemp,
+                  ),
                 );
                 addressController.text = nameLocationTemp;
                 return TypeAheadField<MapboxLocation>(

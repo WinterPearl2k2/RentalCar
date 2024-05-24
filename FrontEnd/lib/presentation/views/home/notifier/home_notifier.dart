@@ -102,6 +102,7 @@ class HomeNotifier extends _$HomeNotifier {
     PreferenceService.setNameLocationCurrent(addressLocation.formattedAddress);
     setNameLocation(nameLocation: addressLocation.formattedAddress);
   }
+
   Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
     await getNumberNotification();
   }
@@ -257,7 +258,7 @@ class HomeNotifier extends _$HomeNotifier {
     if (currentMarker != null) {
       pointAnnotationManager?.delete(currentMarker!);
     }
-    mapboxMap?.setCamera(
+    mapboxMap?.flyTo(
       CameraOptions(
         center: Point(
           coordinates: Position(
@@ -267,10 +268,11 @@ class HomeNotifier extends _$HomeNotifier {
         ).toJson(),
         zoom: 14.0,
       ),
+      MapAnimationOptions(
+        duration: 2000,
+      ),
     );
-    MapAnimationOptions(
-      duration: 1000, // Duration in milliseconds
-    );
+
     currentMarker = await pointAnnotationManager?.create(options);
     getAddressLocationTemp(
       latitude: latitude,
