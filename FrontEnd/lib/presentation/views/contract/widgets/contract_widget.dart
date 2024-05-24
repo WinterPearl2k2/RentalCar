@@ -83,8 +83,11 @@ class _RentalContractWidgetState extends State<RentalContractWidget>
                     callLoadOverOffset: 10,
                     callRefreshOverOffset: 10,
                     simultaneously: true,
+                    footer: DeliveryFooter(
+                      skyColor: ColorUtils.blueColor.withOpacity(.5),
+                    ),
                     onRefresh: () => widget.notifier.getRentalContract(),
-                    // onLoad: () => widget.notifier.getMoreRentalContract(),
+                    onLoad: () => widget.notifier.getMoreRentalContract(),
                     child: rentalContracts.isNotEmpty
                         ? ListView.builder(
                             itemCount: rentalContracts.length,

@@ -36,6 +36,8 @@ class ProfileNotifier extends _$ProfileNotifier {
   }
 
   Future<void> getUser() async {
+    await Future.delayed(const Duration(milliseconds: 1),);
+    state = state.copyWith(loading: true);
     try {
       final user = await injection.getIt<IAuthService>().getUser();
       LogUtils.i(user.toString());
