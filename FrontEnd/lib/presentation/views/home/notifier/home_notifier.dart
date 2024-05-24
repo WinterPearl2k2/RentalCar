@@ -14,7 +14,6 @@ import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/home/state/home_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:rental_car/domain/model/location.dart' as location;
 
 part 'home_notifier.g.dart';
@@ -95,16 +94,14 @@ class HomeNotifier extends _$HomeNotifier {
   Future<void> getLocationUser() async {
     double currentLatitude = PreferenceService.getLocation().latitude;
     double currentLongitude = PreferenceService.getLocation().longitude;
-    List<Placemark> placeMarks =
-        await placemarkFromCoordinates(currentLatitude, currentLongitude);
-    PreferenceService.setNameLocationCurrent(
-        "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}");
-    setNameLocation(
-        nameLocation: placeMarks.isNotEmpty
-            ? "${placeMarks[0].subAdministrativeArea}, ${placeMarks[0].administrativeArea}, ${placeMarks[0].country}"
-            : "Loading...");
+    final addressLocation =
+        await injection.getIt<IMapboxService>().getAddressLocation(
+              latitude: currentLatitude,
+              longitude: currentLongitude,
+            );
+    PreferenceService.setNameLocationCurrent(addressLocation.formattedAddress);
+    setNameLocation(nameLocation: addressLocation.formattedAddress);
   }
-
   Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
     await getNumberNotification();
   }
@@ -270,6 +267,9 @@ class HomeNotifier extends _$HomeNotifier {
         ).toJson(),
         zoom: 14.0,
       ),
+    );
+    MapAnimationOptions(
+      duration: 1000, // Duration in milliseconds
     );
     currentMarker = await pointAnnotationManager?.create(options);
     getAddressLocationTemp(

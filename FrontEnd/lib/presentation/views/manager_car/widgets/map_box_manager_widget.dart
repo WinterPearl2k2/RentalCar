@@ -98,11 +98,12 @@ class BoxMapManagerWidget extends StatelessWidget {
                     longitude: double.parse(longController.text),
                   );
                   onPress?.call();
+                  Routes.goToPreviousView(context);
                 }),
           ),
         ),
         Positioned(
-          top: 30,
+          top: 50,
           right: 10,
           left: 10,
           child: SafeArea(

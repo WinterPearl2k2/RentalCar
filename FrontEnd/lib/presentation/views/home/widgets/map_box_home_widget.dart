@@ -75,17 +75,19 @@ class BoxMapHomeWidget extends StatelessWidget {
           child: SizedBox(
             height: 50,
             child: TextButtonWidget(
-              colorButton: ColorUtils.blueColor,
-              label: 'Set Location',
-              onPressed: () => notifier.setLocation(
-                latitude: double.parse(latController.text),
-                longitude: double.parse(longController.text),
-              ),
-            ),
+                colorButton: ColorUtils.blueColor,
+                label: 'Set Location',
+                onPressed: () {
+                  notifier.setLocation(
+                    latitude: double.parse(latController.text),
+                    longitude: double.parse(longController.text),
+                  );
+                  Routes.goToPreviousView(context);
+                }),
           ),
         ),
         Positioned(
-          top: 40,
+          top: 50,
           right: 10,
           left: 10,
           child: SafeArea(
@@ -111,15 +113,17 @@ class BoxMapHomeWidget extends StatelessWidget {
                           fit: BoxFit.scaleDown,
                         ),
                       ),
-                      suffixIcon: InkWell(
-                        onTap: () => addressController.clear(),
-                        child: SvgPicture.asset(
-                          AssetUtils.icClear,
-                          height: 5.h,
-                          width: 5.w,
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
+                      suffixIcon: addressController.text.isNotEmpty
+                          ? InkWell(
+                              onTap: () => addressController.clear(),
+                              child: SvgPicture.asset(
+                                AssetUtils.icClear,
+                                height: 5.h,
+                                width: 5.w,
+                                fit: BoxFit.scaleDown,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
                     );
                   },
                   itemBuilder: (context, MapboxLocation listAddressPredict) {
@@ -137,9 +141,26 @@ class BoxMapHomeWidget extends StatelessWidget {
                           ),
                           SizedBox(
                             width: 250.w,
-                            child: Text(
-                              listAddressPredict.descriptionLocation,
-                              overflow: TextOverflow.ellipsis,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  listAddressPredict.descriptionLocation
+                                      .split(', ')
+                                      .first,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                                Text(
+                                  listAddressPredict.descriptionLocation
+                                      .split(', ')
+                                      .skip(1)
+                                      .join(', '),
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                  style: TextStyle(fontSize: 12.sp),
+                                ),
+                              ],
                             ),
                           ),
                           SizedBox(
