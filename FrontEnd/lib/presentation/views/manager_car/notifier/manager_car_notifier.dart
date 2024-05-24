@@ -355,12 +355,14 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           .onError((error, stackTrace) {
         return null;
       });
+      state = state.copyWith(isLoadingImg: true);
       final image = await MultipartFile.fromFile(pickedFile?.path ?? "");
       final imageFile =
           await injection.getIt<ICarService>().uploadImage(imageFile: image);
       state = state.copyWith(
         imageFile: imageFile.url,
         isEditButton: true,
+        isLoadingImg: false,
       );
     } else if (permission.isDenied) {
       Fluttertoast.showToast(msg: "Gallery access has not been granted");
@@ -375,12 +377,14 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
           .onError((error, stackTrace) {
         return null;
       });
+      state = state.copyWith(isLoadingImg: true);
       final image = await MultipartFile.fromFile(pickedFile?.path ?? "");
       final imageFile =
           await injection.getIt<ICarService>().uploadImage(imageFile: image);
       state = state.copyWith(
         imageFile: imageFile.url,
         isEditButton: true,
+        isLoadingImg: false,
       );
     } else if (permission.isDenied) {
       Fluttertoast.showToast(msg: "Camera access has not been granted");
@@ -408,23 +412,6 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     } catch (e) {
       LogUtils.e("get address location fail $e");
       return '';
-    }
-  }
-
-  Future<void> getAddressLocationTemp({
-    required double latitude,
-    required double longitude,
-  }) async {
-    try {
-      final addressLocation =
-          await injection.getIt<IMapboxService>().getAddressLocation(
-                latitude: latitude,
-                longitude: longitude,
-              );
-
-      LogUtils.i("get address location successfully");
-    } catch (e) {
-      LogUtils.e("get address location fail $e");
     }
   }
 
@@ -458,13 +445,15 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
     }
   }
 
-  void onMapCreated(
-    MapboxMap mapboxMap,
-  ) {
+  void onMapCreated({
+    required double latitude,
+    required double longitude,
+    required MapboxMap mapboxMap,
+  }) {
     this.mapboxMap = mapboxMap;
     initMarker(
-      latitude: PreferenceService.getLocation().latitude,
-      longitude: PreferenceService.getLocation().longitude,
+      latitude: latitude,
+      longitude: longitude,
     );
   }
 
@@ -494,8 +483,6 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       ),
     );
     currentMarker = await pointAnnotationManager?.create(options);
-    setLocation(latitude: latitude, longitude: longitude);
-    
   }
 
   Future<void> marker({
@@ -526,10 +513,6 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       ),
     );
     currentMarker = await pointAnnotationManager?.create(options);
-    getAddressLocationTemp(
-      latitude: latitude,
-      longitude: longitude,
-    );
   }
 
   void setLocation({
@@ -540,14 +523,12 @@ class ManagerCarNotifier extends _$ManagerCarNotifier {
       latitude: latitude,
       longitude: longitude,
     );
-    PreferenceService.setLocation(
-      latCar: latitude,
-      longCar: longitude,
-    );
   }
 
-  void moveToCurrentLocation(
-      {required double longitude, required double latitude}) async {
+  void moveToCurrentLocation({
+    required double longitude,
+    required double latitude,
+  }) async {
     mapboxMap?.setCamera(
       CameraOptions(
         center: Point(

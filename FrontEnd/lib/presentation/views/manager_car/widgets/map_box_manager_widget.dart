@@ -42,10 +42,15 @@ class BoxMapManagerWidget extends StatelessWidget {
               longitude: coordinate.y,
             );
             addressController.text = await notifier.getAddressLocation(
-                latitude: coordinate.x, longitude: coordinate.y);
-            onPress?.call();
+              latitude: coordinate.x,
+              longitude: coordinate.y,
+            );
           },
-          onMapCreated: notifier.onMapCreated,
+          onMapCreated: (controller) => notifier.onMapCreated(
+            mapboxMap: controller,
+            latitude: double.parse(latController.text),
+            longitude: double.parse(longController.text),
+          ),
           textureView: true,
           cameraOptions: CameraOptions(
             center: Point(
@@ -62,7 +67,7 @@ class BoxMapManagerWidget extends StatelessWidget {
           right: 10,
           child: IconButton(
             icon: const Icon(Icons.my_location),
-            onPressed: () {
+            onPressed: () async {
               final location = PreferenceService.getLocationCurrent();
               notifier.moveToCurrentLocation(
                 longitude: location.longitude,
@@ -70,6 +75,10 @@ class BoxMapManagerWidget extends StatelessWidget {
               );
               latController.text = location.latitude.toString();
               longController.text = location.longitude.toString();
+              addressController.text = await notifier.getAddressLocation(
+                longitude: location.longitude,
+                latitude: location.latitude,
+              );
               onPress?.call();
             },
           ),
@@ -173,7 +182,6 @@ class BoxMapManagerWidget extends StatelessWidget {
                       latitude: double.parse(latController.text),
                       longitude: double.parse(longController.text),
                     );
-                    onPress?.call();
                   },
                 );
               },

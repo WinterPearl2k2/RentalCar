@@ -5,7 +5,7 @@ import 'package:rental_car/domain/model/mapbox_location.dart';
 import 'package:rental_car/domain/repositories/mapbox_repository.dart';
 
 class MapboxRepositoryImpl extends NetworkApi implements IMapboxRepository {
-  final apikey = 'QxECjlKo7clhHkE989L5Z90rktRNn9NgI317WyeS';
+  final apikey = 'e2teqOAgivtdsV8d4ZMFa6Gl1dvftVd9ZF5iwLCj';
 
   @override
   Future<MapboxLocation> getAddressLocation(

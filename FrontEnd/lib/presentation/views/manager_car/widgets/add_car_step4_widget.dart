@@ -50,7 +50,10 @@ class CarImageTextFormFieldWidget extends StatelessWidget {
       builder: (_, ref, __) {
         final imageFile = ref.watch(
           managerCarNotifierProvider.select((value) => value.imageFile),
+        ); final isLoading = ref.watch(
+          managerCarNotifierProvider.select((value) => value.isLoadingImg),
         );
+
         return GestureDetector(
           onTap: () async => PopupUtils.showBottomSheetAddImageDialog(
             context: context,
@@ -61,27 +64,27 @@ class CarImageTextFormFieldWidget extends StatelessWidget {
             height: 100.h,
             width: 100.w,
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               border: Border.all(color: ColorUtils.textColor),
             ),
-            child: imageFile.isNotEmpty
+            child: isLoading
+                ? const Center(
+              child: CircularProgressIndicator(),
+            )
+                : imageFile.isNotEmpty
                 ? ClipRRect(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    child: CachedNetworkImage(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: imageFile,
+                progressIndicatorBuilder: (_, __, downloadProgress) =>
+                    Image.asset(
+                      AssetUtils.imgLoading,
                       fit: BoxFit.cover,
-                      imageUrl: imageFile,
-                      progressIndicatorBuilder: (_, __, downloadProgress) =>
-                          Image.asset(
-                            AssetUtils.imgLoading,
-                            fit: BoxFit.cover,
-                          ),
-                      errorWidget: (_, __, error) => const Icon(Icons.error),
                     ),
-                  )
+                errorWidget: (_, __, error) => const Icon(Icons.error),
+              ),
+            )
                 : const Icon(Icons.add),
           ),
         );
