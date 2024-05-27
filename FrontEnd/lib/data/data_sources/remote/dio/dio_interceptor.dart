@@ -42,7 +42,7 @@ class DioInterceptor extends QueuedInterceptorsWrapper {
       return handler.reject(
         RequestTimeoutException(
           requestOptions: requestOptions,
-          message: msgError,
+          message: msgError.toString(),
         ),
       );
     }

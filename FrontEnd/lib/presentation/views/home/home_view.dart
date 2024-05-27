@@ -51,6 +51,9 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
                   await notifier.getListAllCars();
                 },
                 child: EasyRefresh(
+                  footer: const MaterialFooter(
+                    infiniteHitOver: false,
+                  ),
                   onLoad: () async {
                     await notifier.getListAllCars();
                   },
@@ -111,7 +114,8 @@ class _HomeViewState extends BaseStateDelegate<HomeView, HomeNotifier>
                         ListVehicleNearYouWidget(
                           notifier: notifier,
                           scrollController: _scrollController,
-                        )
+                        ),
+                        const SizedBox(height: 20,),
                       ],
                     ),
                   ),
