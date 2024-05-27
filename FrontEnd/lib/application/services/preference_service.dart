@@ -16,6 +16,7 @@ class PreferenceService {
   static const String _auth = 'auth';
   static const String _locationCurrent = 'location_current';
   static const String _nameLocationCurrent = 'name_location_current';
+  static const String _apiKeyGoong = 'api_key_goong';
 
   static late final SharedPreferences _prefs;
 
@@ -165,4 +166,17 @@ class PreferenceService {
     }
     return const Location();
   }
+
+  static void setApiKeyGoong(String apiKeyGoong) {
+    _prefs.setString(_apiKeyGoong, apiKeyGoong);
+  }
+
+  static String getApiKeyGoong() {
+    final data = _prefs.getString(_apiKeyGoong);
+    if (data != null) {
+      return data;
+    }
+    return '';
+  }
 }
+
