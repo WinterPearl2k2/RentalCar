@@ -44,83 +44,87 @@ class _SearchCarViewState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            AssetUtils.icBack,
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              AssetUtils.icBack,
+            ),
+            onPressed: () => Routes.goToPreviousView(context),
           ),
-          onPressed: () => Routes.goToPreviousView(context),
         ),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Review',
-              style: TextStyle(
-                color: ColorUtils.primaryColor,
-                fontSize: 26.sp,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Consumer(
-              builder: (_, ref, __) {
-                final status = ref.watch(
-                  carReviewNotifierProvider.select((value) => value.status),
-                );
-                switch (status) {
-                  case Status.loading:
-                    return Stack(
-                      children: [
-                        BodyCarReviewWidget(
-                            widget: widget,
-                            rateController: rateController,
-                            commentController: commentController,
-                            ref: ref),
-                        const LoadingWidget(),
-                      ],
-                    );
-                  case Status.success:
-                    return  Stack(
-                      children: [
-                        BodyCarReviewWidget(
-                            widget: widget,
-                            rateController: rateController,
-                            commentController: commentController,
-                            ref: ref),
-                      ],
-                    );
-                  case Status.error:
-                    return const ErrorCustomWidget();
-                }
-              },
-            ),
-            const Spacer(),
-            TextButtonWidget(
-              onPressed: () {
-                notifier.createCarReview(
-                  carReviewDTO: CarReviewDTO(
-                    idCar: widget.idCar,
-                    commentReview: commentController.text,
-                    rateReview: double.tryParse(rateController.text) ?? 3,
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Review',
+                  style: TextStyle(
+                    color: ColorUtils.primaryColor,
+                    fontSize: 26.sp,
+                    fontWeight: FontWeight.bold,
                   ),
-                );
-                Routes.goToPreviousView(context);
-              },
-              label: 'Send',
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Consumer(
+                  builder: (_, ref, __) {
+                    final status = ref.watch(
+                      carReviewNotifierProvider.select((value) => value.status),
+                    );
+                    switch (status) {
+                      case Status.loading:
+                        return Stack(
+                          children: [
+                            BodyCarReviewWidget(
+                                widget: widget,
+                                rateController: rateController,
+                                commentController: commentController,
+                                ref: ref),
+                            const LoadingWidget(),
+                          ],
+                        );
+                      case Status.success:
+                        return  Stack(
+                          children: [
+                            BodyCarReviewWidget(
+                                widget: widget,
+                                rateController: rateController,
+                                commentController: commentController,
+                                ref: ref),
+                          ],
+                        );
+                      case Status.error:
+                        return const ErrorCustomWidget();
+                    }
+                  },
+                ),
+                SizedBox(height: 15.h,),
+                TextButtonWidget(
+                  onPressed: () {
+                    notifier.createCarReview(
+                      carReviewDTO: CarReviewDTO(
+                        idCar: widget.idCar,
+                        commentReview: commentController.text,
+                        rateReview: double.tryParse(rateController.text) ?? 3,
+                      ),
+                    );
+                    Routes.goToPreviousView(context);
+                  },
+                  label: 'Send',
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 12.h,
-            ),
-          ],
+          ),
         ),
       ),
     );

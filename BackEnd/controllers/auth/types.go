@@ -13,6 +13,11 @@ type LoginBody struct {
 	DeviceToken string `binding:"required"`
 }
 
+type ResetPassword struct {
+	Email    string `binding:"required"`
+	Password string `binding:"required"`
+}
+
 type RefreshToken struct {
 	RefreshToken string `binding:"required"`
 }

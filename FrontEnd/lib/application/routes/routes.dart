@@ -19,6 +19,10 @@ import 'routes_name.dart';
 class Routes {
   static Route<dynamic> routeBuilder(RouteSettings settings) {
     switch (settings.name) {
+      case RoutesName.auth:
+        return MaterialPageRoute(
+          builder: (context) => const AuthView(),
+        );
       case RoutesName.carRentalManagement:
         return MaterialPageRoute(
           builder: (context) => const CarRentalManagementView(),

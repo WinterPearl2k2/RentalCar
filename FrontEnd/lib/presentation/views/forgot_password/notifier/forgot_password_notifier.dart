@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:rental_car/application/routes/routes_name.dart';
 import 'package:rental_car/application/services/auth_service.dart';
 import 'package:rental_car/main.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -132,9 +133,8 @@ class ForgotPasswordNotifier extends _$ForgotPasswordNotifier {
           );
         },
       ).then(
-        (value) => Navigator.popUntil(
+        (value) => Navigator.pop(
           context,
-          ModalRoute.withName('/auth'),
         ),
       );
     } on APIException catch (e) {
