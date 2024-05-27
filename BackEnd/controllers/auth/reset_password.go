@@ -11,7 +11,7 @@ import (
 )
 
 func ResetPasswordUser(context *gin.Context) {
-	var body LoginBody
+	var body ResetPassword
 	if err := context.ShouldBindJSON(&body); err != nil {
 		context.JSON(http.StatusUnprocessableEntity, gin.H{
 			"message": "Invalid information",
