@@ -84,6 +84,7 @@ class AuthServiceImpl implements IAuthService {
       PreferenceService.setToken(data['accessToken'], data['refreshToken']);
       PreferenceService.setUUID(data['userId']);
       PreferenceService.setAuth(data['authentication']);
+      PreferenceService.setApiKeyGoong(data['apiKey']); 
     } catch (_) {
       PreferenceService.clearToken();
       PreferenceService.clearUUID();

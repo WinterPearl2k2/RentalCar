@@ -249,7 +249,7 @@ class _AddCarState extends BaseStateDelegate<AddCarView, ManagerCarNotifier> {
                       kilometersCar: double.parse(
                         FormatUtils.removeDot(kilometersController.text),
                       ),
-                      seatsCar: int.parse(seatsController.text),
+                      seatsCar: double.parse(seatsController.text).round().toInt(),
                       addressCar: addressController.text,
                       latCar: double.parse(latController.text),
                       longCar: double.parse(longController.text),
