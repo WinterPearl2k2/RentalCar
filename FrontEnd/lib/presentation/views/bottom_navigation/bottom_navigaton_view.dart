@@ -2,6 +2,7 @@ import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:rental_car/application/services/app_link_service.dart';
 import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/notifier/bottom_navigation_notifier.dart';
 import 'package:rental_car/presentation/views/home/home_view.dart';
@@ -27,6 +28,8 @@ class _BottomNavigationViewState
   @override
   void initNotifier() {
     notifier = ref.read(bottomNavigationNotifierProvider.notifier);
+    AppLinkService.initialize();
+
   }
 
   @override

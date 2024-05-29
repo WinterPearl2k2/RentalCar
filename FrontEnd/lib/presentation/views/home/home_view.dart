@@ -12,6 +12,7 @@ import 'package:rental_car/presentation/views/home/widgets/list_top_vehicle_widg
 import 'package:rental_car/presentation/views/home/widgets/list_vehicle_near_you_widget.dart';
 import 'package:rental_car/presentation/views/home/widgets/slide_banner_home_widget.dart';
 
+
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
 

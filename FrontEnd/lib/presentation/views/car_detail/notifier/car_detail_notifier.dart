@@ -8,6 +8,7 @@ import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/car_detail/state/car_detail_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:share_plus/share_plus.dart';
 
 part 'car_detail_notifier.g.dart';
 
@@ -65,5 +66,9 @@ class CarDetailNotifier extends _$CarDetailNotifier {
         mapType: MapType.google,
         destination: Coords(latCar, longCar),
         origin: Coords(currentLatitude, currentLongitude));
+  }
+  void shareLink({required String idCar}) {
+    final carLink = 'https://55slkn6k-4534.asse.devtunnels.ms/carRental?idCar=$idCar';
+    Share.share('Xem xe xịn tại: $carLink');
   }
 }

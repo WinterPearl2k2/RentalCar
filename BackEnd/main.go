@@ -66,6 +66,23 @@ func main() {
 	router.GET("/getCarReview/:idCar", CarController.GetCarReview)
 	router.POST("/uploadImage", CarController.UploadImage)
 
+	//deeplink
+	router.GET("/carRental/:idCar", func(ctx *gin.Context) {
+		htmlContent :=
+			`<html>
+		<head>
+			<title>Download Link</title>
+		</head>
+		<body>
+			<h1>Download Link</h1>
+			<p>Click the link below to download:</p>
+			<a href="">Download</a>
+		</body>
+		</html>`
+
+		ctx.Data(200, "text/html; charset=utf-8", []byte(htmlContent))
+	})
+
 	router.Run()
 }
 
