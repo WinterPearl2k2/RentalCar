@@ -69,6 +69,6 @@ class CarDetailNotifier extends _$CarDetailNotifier {
   }
   void shareLink({required String idCar}) {
     final carLink = 'https://55slkn6k-4534.asse.devtunnels.ms/carRental?idCar=$idCar';
-    Share.share('Xem xe xịn tại: $carLink');
+    Share.share(carLink);
   }
 }
