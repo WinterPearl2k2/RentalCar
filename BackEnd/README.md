@@ -9,3 +9,15 @@ go run database/migrate.go
 ```go
 go run main.go
 ```
+
+# Run docker
+
+```docker build
+docker-compose up --build
+```
+
+# Down docker
+
+```docker down
+docker-compose down
+```
