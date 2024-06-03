@@ -24,6 +24,10 @@ func removeDuplicates(tokens []string) []string {
 	return result
 }
 
+func ConnectUser(deviceToken []string, keyRoom string, notification NotificationData) {
+
+}
+
 func SendNotification(deviceToken []string, user models.User, notification NotificationData) {
 	opt := option.WithCredentialsFile("serviceAccountKey.json")
 	config := &firebase.Config{ProjectID: "rentalcar-e3d6b"}

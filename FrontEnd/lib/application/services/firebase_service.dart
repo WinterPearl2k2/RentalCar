@@ -25,8 +25,12 @@ class FirebaseService {
     );
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
     LogUtils.i(notifierDto.toString());
-    injection.getIt<NavigationService>().navigateReplaceTo(RoutesName.bottomNavigation);
-    injection.getIt<NavigationService>().navigateTo(RoutesName.carRentalManagement);
+    injection
+        .getIt<NavigationService>()
+        .navigateReplaceTo(RoutesName.bottomNavigation);
+    injection
+        .getIt<NavigationService>()
+        .navigateTo(RoutesName.carRentalManagement);
   }
 
   static Future<void> _handleOpenAppMessage(RemoteMessage msg) async {
@@ -35,11 +39,15 @@ class FirebaseService {
     );
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
     LogUtils.i(notifierDto.toString());
-    injection.getIt<NavigationService>().navigateReplaceTo(RoutesName.bottomNavigation);
-    injection.getIt<NavigationService>().navigateTo(RoutesName.carRentalManagement);
+    injection
+        .getIt<NavigationService>()
+        .navigateReplaceTo(RoutesName.bottomNavigation);
+    injection
+        .getIt<NavigationService>()
+        .navigateTo(RoutesName.carRentalManagement);
   }
 
-  Future<void> _handleMessage(RemoteMessage msg) async {
+  static Future<void> _handleMessage(RemoteMessage msg) async {
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
     LogUtils.i(notifierDto.toString());
     LocalNotificationService().showNotification(

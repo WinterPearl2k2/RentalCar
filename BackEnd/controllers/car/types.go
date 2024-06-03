@@ -37,6 +37,11 @@ type CarReviewBody struct {
 	CarId         string  `json:"idCar" binding:"required"`
 }
 type CarInfo struct {
-	ReviewCount     int
-	AverageRating   float64
+	ReviewCount   int
+	AverageRating float64
+}
+
+type Room struct {
+	UserId  string
+	KeyRoom string
 }

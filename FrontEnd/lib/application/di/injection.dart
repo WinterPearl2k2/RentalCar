@@ -1,13 +1,16 @@
 import 'package:get_it/get_it.dart';
 import 'package:rental_car/application/services/auth_service.dart';
+import 'package:rental_car/application/services/calling_service.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/contract_service.dart';
 import 'package:rental_car/application/services/mapbox_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
+import 'package:rental_car/data/repositories/calling_repository_impl.dart';
 import 'package:rental_car/data/repositories/car_repository_impl.dart';
 import 'package:rental_car/data/repositories/contract_repository_impl.dart';
 import 'package:rental_car/data/repositories/mapbox_repository_impl.dart';
 import 'package:rental_car/data/repositories/user_repository_impl.dart';
+import 'package:rental_car/domain/repositories/calling_repository.dart';
 import 'package:rental_car/domain/repositories/car_repository.dart';
 import 'package:rental_car/domain/repositories/contract_repository.dart';
 import 'package:rental_car/domain/repositories/mapbox_repository.dart';
@@ -36,6 +39,16 @@ class Injection {
     getIt.registerLazySingleton<IAuthService>(
       () => AuthServiceImpl(
         getIt<IUserRepository>(),
+      ),
+    );
+    //ICallingRepository
+    getIt.registerLazySingleton<ICallingRepository>(
+      () => CallingRepository(),
+    );
+    //ICallingService
+    getIt.registerLazySingleton<ICallingService>(
+      () => CallingServiceImpl(
+        getIt<ICallingRepository>(),
       ),
     );
     //ICarRepository
@@ -68,12 +81,12 @@ class Injection {
     );
     //IMapboxRepository
     getIt.registerLazySingleton<IMapboxRepository>(
-          () => MapboxRepositoryImpl(),
+      () => MapboxRepositoryImpl(),
     );
 
     //IMapboxService
     getIt.registerLazySingleton<IMapboxService>(
-          () => MapboxServiceImpl(
+      () => MapboxServiceImpl(
         getIt<IMapboxRepository>(),
       ),
     );

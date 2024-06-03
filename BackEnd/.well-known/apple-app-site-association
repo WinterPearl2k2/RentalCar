@@ -1,0 +1,27 @@
+{
+    "applinks":{
+      "apps":[
+         
+      ],
+      "details":[
+        {
+          "appIDs":[
+            "com.example.testDeepLink"
+          ],
+          "components":[
+            {
+              "/":"*",
+              "comment":"Matches URL with a path"
+            }
+          ]
+        }
+      ]
+    },
+    
+   "webcredentials": {
+    "apps": [ "com.example.testDeepLink" ]
+    },
+    "appclips": {
+        "apps": ["com.example.testDeepLink"]
+    }
+}

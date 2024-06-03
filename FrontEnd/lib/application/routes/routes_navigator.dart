@@ -16,7 +16,8 @@ class RoutesNavigator {
       RoutesName.forgotPassword: (context) => const ForgotPasswordView(),
       RoutesName.bottomNavigation: (context) => const BottomNavigationView(),
       RoutesName.changePassword: (context) => const ChangePasswordView(),
-      RoutesName.carRentalManagement: (context) => const CarRentalManagementView(),
+      RoutesName.carRentalManagement: (context) =>
+          const CarRentalManagementView(),
       RoutesName.detailContract: (context) => const DetailContractView(),
       RoutesName.verifyUser: (context) => const VerifyIdView(),
       RoutesName.addCar: (context) => const AddCarView(),

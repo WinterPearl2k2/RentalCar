@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:rental_car/application/routes/routes.dart';
+import 'package:rental_car/application/services/calling_service.dart';
 import 'package:rental_car/application/services/car_service.dart';
 import 'package:rental_car/application/services/preference_service.dart';
 import 'package:rental_car/application/utils/log_utils.dart';
@@ -7,7 +10,11 @@ import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/main.dart';
 import 'package:rental_car/presentation/common/enum/status.dart';
 import 'package:rental_car/presentation/views/car_detail/state/car_detail_state.dart';
+import 'package:rental_car/presentation/views/room_call/room_call_view.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../../data/data_sources/remote/dio/api_client.dart';
+import '../../../../data/data_sources/remote/dio/api_exception.dart';
 
 part 'car_detail_notifier.g.dart';
 
@@ -49,7 +56,8 @@ class CarDetailNotifier extends _$CarDetailNotifier {
     } catch (e) {
       state = state.copyWith(isLoadingMore: false);
       LogUtils.i(e.toString());
-      state = state.copyWith(carDetail: const CarDetailDTO(), status: Status.error);
+      state =
+          state.copyWith(carDetail: const CarDetailDTO(), status: Status.error);
     }
   }
 
@@ -65,5 +73,28 @@ class CarDetailNotifier extends _$CarDetailNotifier {
         mapType: MapType.google,
         destination: Coords(latCar, longCar),
         origin: Coords(currentLatitude, currentLongitude));
+  }
+
+  Future<void> createCalling() async {
+    try {
+      await injection.getIt<ICallingService>().getKeyCall().then((value) => {
+            if (value.isNotEmpty)
+              {
+                Navigator.push(
+                  navigatorKey.currentState!.context,
+                  MaterialPageRoute(
+                    builder: (context) => RoomCallView(
+                      meetingId: value,
+                      token: ApiClient.instance.token,
+                    ),
+                  ),
+                ),
+              }
+          });
+    } on APIException catch (e) {
+      LogUtils.e(e.message.toString());
+      Fluttertoast.showToast(msg: e.message.toString());
+      state = state.copyWith(status: Status.error);
+    }
   }
 }

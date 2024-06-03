@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:rental_car/data/dtos/all_car_dto.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
@@ -28,6 +27,11 @@ abstract class ICarService {
   Future<List<TopCarDTO>> getTopCar();
 
   Future<List<AllCarDTO>> getAllCar();
+
+  Future<void> connectToUser({
+    required String userId,
+    required String keyRoom,
+  });
 
   Future<CarDetailDTO> getCarById({
     required String idCar,
@@ -128,7 +132,12 @@ class CarServiceImpl implements ICarService {
   }
 
   @override
-  Future<ImageDTO> uploadImage({required MultipartFile  imageFile}) {
+  Future<ImageDTO> uploadImage({required MultipartFile imageFile}) {
     return _carRepository.uploadImage(imageFile: imageFile);
+  }
+
+  @override
+  Future<void> connectToUser({required String userId, required String keyRoom}) {
+    return connectToUser(userId: userId, keyRoom: keyRoom);
   }
 }

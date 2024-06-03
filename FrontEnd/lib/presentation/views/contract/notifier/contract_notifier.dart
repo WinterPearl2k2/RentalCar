@@ -77,7 +77,6 @@ class ContractNotifier extends _$ContractNotifier {
 
   Future<void> getMoreRentalContract() async {
     try {
-      print('object');
       final contracts =
       await injection.getIt<IContractService>().getRentalContract(
         offset: state.rentalContracts.length,

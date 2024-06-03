@@ -42,6 +42,7 @@ class EndPoint {
   static const restUrlCreateCarReview = '/createCarReview';
   static const restUrlGetCarReview = '/getCarReview';
   static const restUrlUploadImage = '/uploadImage';
+  static const restUrlConnectToUser = '/connectToUser';
 
   //goong io
   static const restUrlGoong =

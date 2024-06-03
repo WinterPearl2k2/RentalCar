@@ -30,20 +30,33 @@ class BodyDetailWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                carDetail.nameCar,
-                style: TextStyle(
-                  color: ColorUtils.primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17.sp,
-                ),
-              ),
-              Text(
-                carDetail.descriptionCar,
-                style: TextStyle(
-                  color: ColorUtils.textColor,
-                  fontSize: 14.sp,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        carDetail.nameCar,
+                        style: TextStyle(
+                          color: ColorUtils.primaryColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17.sp,
+                        ),
+                      ),
+                      Text(
+                        carDetail.descriptionCar,
+                        style: TextStyle(
+                          color: ColorUtils.textColor,
+                          fontSize: 14.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: () => notifier.createCalling(),
+                    icon: SvgPicture.asset('assets/icons/ic_video.svg'),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 15.0.h,

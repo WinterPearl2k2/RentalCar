@@ -19,3 +19,5 @@ type User struct {
 	Cars         []Car
 	CarRentails  []CarRentail
 }
+
+// /.well-known/assetlinks.json

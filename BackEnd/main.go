@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	AuthController "rent-car/controllers/auth"
 	CarController "rent-car/controllers/car"
 	ContractController "rent-car/controllers/contract"
@@ -22,8 +23,8 @@ func init() {
 func main() {
 	go scheduleUpdateStatusCar()
 	router := gin.Default()
-	//check connect
-	router.GET("/")
+	router.LoadHTMLGlob("templates/*.html")
+	router.Static("/.well-known", "./.well-known")
 
 	//auth
 	router.POST("/auth/register", AuthController.RegisterUser)
@@ -65,8 +66,14 @@ func main() {
 	router.POST("/createCarReview", CarController.CreateCarReview)
 	router.GET("/getCarReview/:idCar", CarController.GetCarReview)
 	router.POST("/uploadImage", CarController.UploadImage)
-
+	//check connect
+	router.GET("/", handleRoot)
 	router.Run()
+}
+
+func handleRoot(c *gin.Context) {
+	// Render HTML template
+	c.HTML(http.StatusOK, "index.html", nil)
 }
 
 // Tự động cập nhật khi qua ngày mới

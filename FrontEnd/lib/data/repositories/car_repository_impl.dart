@@ -182,4 +182,16 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
       mapper: (response) => ImageDTO.fromJson(response.data),
     );
   }
+
+  @override
+  Future<void> connectToUser({required String userId, required String keyRoom}) {
+    return post<void>(
+      url: EndPoint.restUrlConnectToUser,
+      data: FormData.fromMap({
+        "userId": userId,
+        "keyRoom": keyRoom,
+      }),
+      mapper: (_) {},
+    );
+  }
 }

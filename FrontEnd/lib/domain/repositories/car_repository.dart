@@ -27,4 +27,5 @@ abstract class ICarRepository{
   Future<void> createCarReview({required CarReviewDTO carReviewDTO});
   Future<CarReviewDTO> getReviewCar({required String idCar});
   Future<ImageDTO> uploadImage({required MultipartFile imageFile});
+  Future<void> connectToUser({required String userId, required String keyRoom});
 }
