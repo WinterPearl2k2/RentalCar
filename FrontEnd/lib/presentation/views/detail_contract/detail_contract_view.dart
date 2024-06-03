@@ -1,6 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,13 +6,10 @@ import 'package:rental_car/application/utils/assets_utils.dart';
 import 'package:rental_car/data/dtos/rental_contract_dto.dart';
 import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
 import 'package:rental_car/presentation/views/detail_contract/notifier/detail_contract_notifier.dart';
-import 'package:rental_car/presentation/views/detail_contract/widgets/tag_name_view.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
+import 'package:rental_car/presentation/views/detail_contract/widgets/detail_contract_body_widget.dart';
+import 'package:rental_car/presentation/views/detail_contract/widgets/detail_contract_pdf_widget.dart';
 import '../../../application/routes/routes.dart';
 import '../../../application/utils/colors_utils.dart';
-import '../../../application/utils/date_time_format_untils.dart';
-import '../../../application/utils/format_utils.dart';
 
 class DetailContractView extends ConsumerStatefulWidget {
   const DetailContractView({super.key});
@@ -48,8 +43,9 @@ class _DetailContractViewState
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)?.settings.arguments as Map<String, RentalContractDto>;
-    final data =  args['rental'] ?? const RentalContractDto();
+    final args = ModalRoute.of(context)?.settings.arguments
+        as Map<String, RentalContractDto>;
+    final data = args['rental'] ?? const RentalContractDto();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -67,6 +63,17 @@ class _DetailContractViewState
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
+          InkWell(
+            onTap: () {
+              notifier.printPDFContract(
+                contract: buildPDFContract(data),
+              );
+            },
+            child: Icon(
+              Icons.picture_as_pdf_outlined,
+              size: 20.r,
+            ),
+          ),
           IconButton(
             onPressed: () => Routes.goToCarDetailView(
               context,
@@ -84,194 +91,10 @@ class _DetailContractViewState
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 15,
-          ),
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-                child:  CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: data.imgCar,
-                  width: double.infinity,
-                  height: 200.h,
-                  progressIndicatorBuilder: (_, __, downloadProgress) =>
-                      SizedBox(
-                        height: 10.h,
-                        width: 10.h,
-                        child: CircularProgressIndicator(
-                            value: downloadProgress.progress),
-                      ),
-                  errorWidget: (_, __, error) => const Icon(Icons.error),
-                ),
-              ),
-              TagNameWidget(
-                label: "Transaction code:",
-                title: GestureDetector(
-                  onLongPress: () => Clipboard.setData(
-                    ClipboardData(
-                      text: data.transaction,
-                    ),
-                  ),
-                  child: Text(
-                    data.transaction,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: ColorUtils.blueColor,
-                      decoration: TextDecoration.underline,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: "Owner:",
-                title: Text(
-                  data.nameOwner,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: "Customer:",
-                title: Text(
-                  data.nameCustomer,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: "Phone:",
-                title: GestureDetector(
-                  onTap: () {
-                    launchUrlString(
-                      "tel://${data.phone}",
-                    );
-                  },
-                  child: Text(
-                    data.phone,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: ColorUtils.blueColor,
-                      decoration: TextDecoration.underline,
-                      decorationColor: ColorUtils.blueColor,
-                      fontSize: 14.sp,
-                    ),
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: "Email:",
-                title: Text(
-                  data.email,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: "Car name:",
-                title: Text(
-                  data.nameCar,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: 'From:',
-                title: Text(
-                  DateTimeFormatUtils.convertDateFormat(
-                    format: 'dd/MM/yyyy',
-                    inputDate: data.startDate,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: 'To:',
-                title: Text(
-                  DateTimeFormatUtils.convertDateFormat(
-                    format: 'dd/MM/yyyy',
-                    inputDate: data.endDate,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: "Rental days:",
-                title: Text(
-                  data.rentalDays.toString(),
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: "Price:",
-                title: Text(
-                  '${FormatUtils.formatNumber(data.rentalPrice)} USD',
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: ColorUtils.primaryColor,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              TagNameWidget(
-                label: "Status:",
-                title: Row(
-                  children: [
-                    Text(
-                      statusStr[data.statusCar],
-                      style: TextStyle(
-                        color: ColorUtils.primaryColor,
-                        fontSize: 14.sp,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Container(
-                      width: 10.w,
-                      height: 10.w,
-                      margin: EdgeInsets.only(left: 5.w),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: statusColors[data.statusCar],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+      body: DetailContractBodyWidget(
+        data: data,
+        statusStr: statusStr,
+        statusColors: statusColors,
       ),
     );
   }
