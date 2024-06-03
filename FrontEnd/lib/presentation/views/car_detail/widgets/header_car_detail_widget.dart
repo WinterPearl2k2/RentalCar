@@ -55,6 +55,21 @@ class HeaderCarDetailWidget extends StatelessWidget {
             ),
           ),
         ),
+        Positioned(
+          bottom: 10,
+          right: 10,
+          child: SafeArea(
+            child: IconButton(
+              onPressed: () => carDetailNotifier.shareLink(
+                idCar: carDetail.idCar,
+              ),
+              icon: Icon(
+                Icons.share,
+                color: ColorUtils.whiteColor,
+              ),
+            ),
+          ),
+        ),
         latCar != 0.0
             ? Positioned(
                 right: 10,

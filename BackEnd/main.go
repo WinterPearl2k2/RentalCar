@@ -9,6 +9,7 @@ import (
 	UserController "rent-car/controllers/profile"
 	"rent-car/initializers"
 	"rent-car/models"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -65,6 +66,23 @@ func main() {
 	router.POST("/createCarReview", CarController.CreateCarReview)
 	router.GET("/getCarReview/:idCar", CarController.GetCarReview)
 	router.POST("/uploadImage", CarController.UploadImage)
+
+	//deeplink
+	router.Static(".well-known", ".well-known")
+	router.GET("/carRental", func(ctx *gin.Context) {
+
+		userAgent := ctx.GetHeader("User-Agent")
+		if strings.Contains(userAgent, "Android") ||
+			strings.Contains(userAgent, "Windows") {
+			ctx.Redirect(302, "https://play.google.com/store/apps/details?id=com.ss.android.ugc.trill&hl=vi")
+		} else if strings.Contains(userAgent, "iPhone") ||
+			strings.Contains(userAgent, "iPad") ||
+			strings.Contains(userAgent, "Macintosh") {
+			ctx.Redirect(302, "https://apps.apple.com/vn/app/tiktok/id1235601864?l=vi")
+		} else {
+			ctx.String(400, "Unsupported platform")
+		}
+	})
 
 	router.Run()
 }
