@@ -29,22 +29,21 @@ services:
       postgres:
         condition: service_healthy
     environment:
-      - PORT=8000
+      - PORT=8080
       - DSN=host=postgres user=postgres password=anhquan28 dbname=RentalCar port=5432 sslmode=disable
       - JWT_ACCESS_SECRET=uidgqw78dgqw78giodcqwuih
       - EMAIL="anhquan28092001@gmail.com"
     ports:
-      - "8000:8000"
+      - "8080:8080"
     healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8000/"] 
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/"] 
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
       - my-network
     command: >
-      bash -c "go run database/migrate.go && 
-              ./main" 
+      bash -c "go run main.go" 
 
 networks:
   my-network:
