@@ -19,6 +19,7 @@ final navigatorKey = GlobalKey<NavigatorState>();
 late List<CameraDescription> cameras;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: Environment.fileName);
   SystemChrome.setPreferredOrientations(
     [
