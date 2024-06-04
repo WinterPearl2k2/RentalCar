@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"net/http"
 	AuthController "rent-car/controllers/auth"
 	CarController "rent-car/controllers/car"
 	ContractController "rent-car/controllers/contract"
@@ -24,7 +25,9 @@ func main() {
 	go scheduleUpdateStatusCar()
 	router := gin.Default()
 	//check connect
-	router.GET("/")
+	router.GET("/ping", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusAccepted, "pong")
+	})
 
 	//auth
 	router.POST("/auth/register", AuthController.RegisterUser)

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres_dockerizing
+    environment:
+      POSTGRES_DB: RentalCar
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: anhquan28
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d RentalCar"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - my-network
+
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: go_server
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - PORT=8080
+      - DSN=host=postgres user=postgres password=anhquan28 dbname=RentalCar port=5432 sslmode=disable
+      - JWT_ACCESS_SECRET=uidgqw78dgqw78giodcqwuih
+      - EMAIL="anhquan28092001@gmail.com"
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/"] 
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - my-network
+    command: >
+      bash -c "go run main.go" 
+
+networks:
+  my-network:
