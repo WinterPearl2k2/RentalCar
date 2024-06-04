@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:rental_car/data/data_sources/remote/dio/dio_interceptor.dart';
+import 'package:rental_car/domain/model/environment.dart';
 
 class ApiClient {
   ApiClient._();
@@ -14,8 +15,7 @@ class ApiClient {
   //http://10.20.23.243:8080
   final Dio dio = Dio(
     BaseOptions(
-      // baseUrl: "https://1vp996ng-4000.asse.devtunnels.ms",
-      baseUrl: "http://10.20.23.243:8080",
+      baseUrl: Environment.apiUrl,
       connectTimeout: const Duration(seconds: 15),
       receiveTimeout: const Duration(seconds: 15),
     ),
