@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rental_car/data/dtos/car_detail_dto.dart';
 import 'package:rental_car/data/dtos/user_profile_dto.dart';
+import 'package:rental_car/domain/model/calling.dart';
 import 'package:rental_car/domain/model/car.dart';
 import 'package:rental_car/presentation/views/account_profile/account_profile_view.dart';
 import 'package:rental_car/presentation/views/auth/auth_view.dart';
@@ -118,6 +119,19 @@ class Routes {
     Navigator.pushNamed(
       context,
       RoutesName.changePassword,
+    );
+  }
+
+  static void goToCallingView(
+      BuildContext context,
+      Calling calling,
+      ) {
+    Navigator.pushNamed(
+      context,
+      RoutesName.calling,
+      arguments: {
+        'calling': calling,
+      },
     );
   }
 

@@ -51,6 +51,9 @@ func main() {
 
 	//Notification
 	router.GET("/getNotification", NotificationController.GetNewNotification)
+	router.POST("/connectToUser", CarController.Contact)
+	router.POST("/hangUpToUser", CarController.HangUp)
+	//User
 
 	//car
 	router.GET("/getAllCar", CarController.GetAllCar)

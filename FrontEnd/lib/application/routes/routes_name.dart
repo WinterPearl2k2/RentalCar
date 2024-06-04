@@ -14,6 +14,7 @@ class RoutesName {
   static const verifyCode = '/verify_code';
   //rental
   static const rentalCar = '/rental_car';
+  static const calling = '/calling';
 
   //account profile
   static const accountProfile = '/account_profile';

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:rental_car/application/routes/routes_name.dart';
 import 'package:rental_car/presentation/views/bottom_navigation/bottom_navigaton_view.dart';
+import 'package:rental_car/presentation/views/calling/calling_view.dart';
 import 'package:rental_car/presentation/views/car_rental_management/notification_view.dart';
 import 'package:rental_car/presentation/views/change_password/change_password_view.dart';
 import 'package:rental_car/presentation/views/detail_contract/detail_contract_view.dart';
@@ -21,6 +22,7 @@ class RoutesNavigator {
       RoutesName.detailContract: (context) => const DetailContractView(),
       RoutesName.verifyUser: (context) => const VerifyIdView(),
       RoutesName.addCar: (context) => const AddCarView(),
+      RoutesName.calling: (context) => const CallingView(),
     };
   }
 }

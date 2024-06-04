@@ -184,13 +184,27 @@ class CarRepositoryImpl extends NetworkApi implements ICarRepository {
   }
 
   @override
-  Future<void> connectToUser({required String userId, required String keyRoom}) {
-    return post<void>(
+  Future<void> connectToUser({
+    required String userId,
+    required String keyRoom,
+  }) {
+    return post(
       url: EndPoint.restUrlConnectToUser,
-      data: FormData.fromMap({
+      data: {
         "userId": userId,
         "keyRoom": keyRoom,
-      }),
+      },
+      mapper: (_) {},
+    );
+  }
+
+  @override
+  Future<void> hangUpToUser({required String userId}) {
+    return post(
+      url: EndPoint.restUrlHangUpToUser,
+      data: {
+        "userId": userId,
+      },
       mapper: (_) {},
     );
   }

@@ -24,8 +24,80 @@ func removeDuplicates(tokens []string) []string {
 	return result
 }
 
-func ConnectUser(deviceToken []string, keyRoom string, notification NotificationData) {
+func ConnectUser(deviceToken []string, keyRoom string, userName string, mainUser string) {
+	opt := option.WithCredentialsFile("serviceAccountKey.json")
+	config := &firebase.Config{ProjectID: "rentalcar-e3d6b"}
+	app, err := firebase.NewApp(context.Background(), config, opt)
+	if err != nil {
+		log.Fatalf("error initializing app: %v", err)
+	}
+	ctx := context.Background()
+	client, err := app.Messaging(ctx)
+	if err != nil {
+		log.Fatalf("error getting Messaging client: %v\n", err)
+	}
 
+	deviceToken = removeDuplicates(deviceToken)
+	log.Print(deviceToken)
+
+	message := &messaging.MulticastMessage{
+		Android: &messaging.AndroidConfig{
+			Priority: "high",
+			Notification: &messaging.AndroidNotification{
+				ChannelID: "channelId",
+			},
+		},
+		Data: map[string]string{
+			"keyRoom":  keyRoom,
+			"userName": userName,
+			"mainUser": mainUser,
+		},
+		Tokens: deviceToken,
+	}
+
+	response, err := client.SendMulticast(ctx, message)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	fmt.Println("Successfully sent message:", response)
+}
+
+func HangUpUser(deviceToken []string) {
+	opt := option.WithCredentialsFile("serviceAccountKey.json")
+	config := &firebase.Config{ProjectID: "rentalcar-e3d6b"}
+	app, err := firebase.NewApp(context.Background(), config, opt)
+	if err != nil {
+		log.Fatalf("error initializing app: %v", err)
+	}
+	ctx := context.Background()
+	client, err := app.Messaging(ctx)
+	if err != nil {
+		log.Fatalf("error getting Messaging client: %v\n", err)
+	}
+
+	deviceToken = removeDuplicates(deviceToken)
+	log.Print(deviceToken)
+
+	message := &messaging.MulticastMessage{
+		Android: &messaging.AndroidConfig{
+			Priority: "high",
+			Notification: &messaging.AndroidNotification{
+				ChannelID: "channelId",
+			},
+		},
+		Data: map[string]string{
+			"cancel": "cancel",
+		},
+		Tokens: deviceToken,
+	}
+
+	response, err := client.SendMulticast(ctx, message)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	fmt.Println("Successfully sent message:", response)
 }
 
 func SendNotification(deviceToken []string, user models.User, notification NotificationData) {

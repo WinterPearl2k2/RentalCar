@@ -33,6 +33,10 @@ abstract class ICarService {
     required String keyRoom,
   });
 
+  Future<void> hangUpToUser({
+    required String userId,
+  });
+
   Future<CarDetailDTO> getCarById({
     required String idCar,
     required int page,
@@ -138,6 +142,11 @@ class CarServiceImpl implements ICarService {
 
   @override
   Future<void> connectToUser({required String userId, required String keyRoom}) {
-    return connectToUser(userId: userId, keyRoom: keyRoom);
+    return _carRepository.connectToUser(userId: userId, keyRoom: keyRoom);
+  }
+
+  @override
+  Future<void> hangUpToUser({required String userId}) {
+    return _carRepository.hangUpToUser(userId: userId);
   }
 }

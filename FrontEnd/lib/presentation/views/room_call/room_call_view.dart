@@ -1,37 +1,57 @@
+import 'dart:async';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rental_car/presentation/common/base_state_delegate/base_state_delegate.dart';
+import 'package:rental_car/presentation/views/room_call/notifier/room_call_notifier.dart';
 import 'package:rental_car/presentation/views/room_call/widget/meeting_controls.dart';
 import 'package:rental_car/presentation/views/room_call/widget/participant_tile.dart';
 import 'package:videosdk/videosdk.dart';
 
-class RoomCallView extends StatefulWidget {
+class RoomCallView extends ConsumerStatefulWidget {
   final String meetingId;
   final String token;
+  final String userOwner;
+  final bool type;
 
   const RoomCallView({
     super.key,
     required this.meetingId,
     required this.token,
+    required this.userOwner,
+    required this.type,
   });
 
   @override
-  State<RoomCallView> createState() => _RoomCallViewState();
+  BaseStateDelegate<RoomCallView, RoomCallNotifier> createState() =>
+      _RoomCallViewState();
 }
 
-class _RoomCallViewState extends State<RoomCallView> {
+class _RoomCallViewState
+    extends BaseStateDelegate<RoomCallView, RoomCallNotifier> {
   late Room _room;
   var micEnabled = true;
   var camEnabled = true;
 
   Map<String, Participant> participants = {};
+  late StreamSubscription fcmListener;
 
   @override
-  void initState() {
+  void initNotifier() {
+    notifier = ref.read(roomCallNotifierProvider.notifier);
+    if (widget.type) {
+      notifier.callToUser(
+        userId: widget.userOwner,
+        keyRoom: widget.meetingId,
+      );
+    }
     _room = VideoSDK.createRoom(
       roomId: widget.meetingId,
       token: widget.token,
-      displayName: "John Doe",
+      displayName: widget.userOwner,
       micEnabled: micEnabled,
       camEnabled: camEnabled,
       defaultCameraIndex: kIsWeb ? 0 : 1,
@@ -40,11 +60,15 @@ class _RoomCallViewState extends State<RoomCallView> {
     setMeetingEventListener();
 
     _room.join();
-
-    super.initState();
+    fcmListener = FirebaseMessaging.onMessage.listen(notifier.handleMessage);
   }
 
-  // listening to meeting events
+  @override
+  void dispose() {
+    super.dispose();
+    fcmListener.cancel();
+  }
+
   void setMeetingEventListener() {
     _room.on(Events.roomJoined, () {
       setState(() {
@@ -92,19 +116,30 @@ class _RoomCallViewState extends State<RoomCallView> {
     return true;
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () => _onWillPop(),
+    return PopScope(
+      onPopInvoked: (didPop) async {
+        if (didPop) {
+          return;
+        }
+        _onWillPop();
+      },
       child: Scaffold(
         body: Stack(
           children: [
             Expanded(
-              child: ParticipantTile(
-                key: Key(participants.values.elementAt(0).id),
-                participant: participants.values.elementAt(0),
-              ),
+              child: (participants.isNotEmpty)
+                  ? ParticipantTile(
+                      key: Key(participants.values
+                          .elementAt(widget.type ? 0 : 1)
+                          .id),
+                      participant:
+                          participants.values.elementAt(widget.type ? 0 : 1),
+                    )
+                  : const Center(
+                      child: CircularProgressIndicator(),
+                    ),
             ),
             Positioned(
               top: 0,
@@ -112,10 +147,17 @@ class _RoomCallViewState extends State<RoomCallView> {
               child: SizedBox(
                 width: 150.w,
                 height: 200.h,
-                child: ParticipantTile(
-                  key: Key(participants.values.elementAt(0).id),
-                  participant: participants.values.elementAt(0),
-                ),
+                child: (participants.length > 1)
+                    ? ParticipantTile(
+                        key: Key(participants.values
+                            .elementAt(widget.type ? 1 : 0)
+                            .id),
+                        participant:
+                            participants.values.elementAt(widget.type ? 1 : 0),
+                      )
+                    : const Center(
+                        child: CircularProgressIndicator(),
+                      ),
               ),
             ),
             Positioned(
@@ -133,6 +175,7 @@ class _RoomCallViewState extends State<RoomCallView> {
                 },
                 onLeaveButtonPressed: () {
                   _room.leave();
+                  notifier.hangUpToUser(widget.userOwner);
                   Navigator.pop(context);
                 },
               ),

@@ -86,6 +86,8 @@ class CarDetailNotifier extends _$CarDetailNotifier {
                     builder: (context) => RoomCallView(
                       meetingId: value,
                       token: ApiClient.instance.token,
+                      userOwner: state.carDetail.idUser,
+                      type: true,
                     ),
                   ),
                 ),

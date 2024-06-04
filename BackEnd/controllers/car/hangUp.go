@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	Notification "rent-car/controllers/notification"
-	Middleware "rent-car/middleware"
 	TokenDeviceRepository "rent-car/repositories/device_token"
 	UserRepository "rent-car/repositories/users"
 
@@ -13,7 +12,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func Contact(context *gin.Context) {
+func HangUp(context *gin.Context) {
 	var body Room
 	if err := context.ShouldBindJSON(&body); err != nil {
 		context.JSON(http.StatusUnprocessableEntity, gin.H{
@@ -21,12 +20,7 @@ func Contact(context *gin.Context) {
 		})
 		return
 	}
-	uuid, err := Middleware.RequireAuth(context)
-	if err != nil {
-		context.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
-	mainUser, err := UserRepository.GetUserById(uuid.String())
+	log.Print(body)
 
 	user, err := UserRepository.GetUserById(body.UserId)
 
@@ -50,7 +44,7 @@ func Contact(context *gin.Context) {
 		deviceTokensStr = append(deviceTokensStr, deviceToken.DeviceToken)
 	}
 
-	Notification.ConnectUser(deviceTokensStr, body.KeyRoom, user.NameUser, mainUser.IdUser.String())
+	Notification.HangUpUser(deviceTokensStr)
 
 	context.JSON(http.StatusOK, gin.H{
 		"message": "Ok",

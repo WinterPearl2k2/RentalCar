@@ -24,6 +24,7 @@ class FirebaseService {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
+    if (notifierDto.carId.isEmpty) return;
     LogUtils.i(notifierDto.toString());
     injection
         .getIt<NavigationService>()
@@ -38,6 +39,7 @@ class FirebaseService {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
+    if (notifierDto.carId.isEmpty) return;
     LogUtils.i(notifierDto.toString());
     injection
         .getIt<NavigationService>()
@@ -49,6 +51,7 @@ class FirebaseService {
 
   static Future<void> _handleMessage(RemoteMessage msg) async {
     final notifierDto = NotificationMessageDto.fromJson(msg.data);
+    if (notifierDto.carId.isEmpty) return;
     LogUtils.i(notifierDto.toString());
     LocalNotificationService().showNotification(
       title: msg.notification?.title.toString(),
@@ -57,7 +60,10 @@ class FirebaseService {
     );
   }
 
-  void handleMessage({required onChangedMessage, required onMessageOpenApp}) {
+  void handleMessage({
+    required onChangedMessage,
+    required onMessageOpenApp,
+  }) {
     FirebaseMessaging.onMessage.listen(onChangedMessage);
     FirebaseMessaging.onMessageOpenedApp.listen(onChangedMessage);
   }

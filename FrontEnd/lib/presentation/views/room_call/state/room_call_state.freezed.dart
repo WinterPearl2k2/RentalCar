@@ -17,6 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RoomCallState {
   Stream<dynamic> get stream => throw _privateConstructorUsedError;
+  bool get micEnabled => throw _privateConstructorUsedError;
+  bool get camEnabled => throw _privateConstructorUsedError;
+  Map<String, dynamic> get participants => throw _privateConstructorUsedError;
+  bool get wait => throw _privateConstructorUsedError;
+  String get newMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $RoomCallStateCopyWith<RoomCallState> get copyWith =>
@@ -29,7 +34,13 @@ abstract class $RoomCallStateCopyWith<$Res> {
           RoomCallState value, $Res Function(RoomCallState) then) =
       _$RoomCallStateCopyWithImpl<$Res, RoomCallState>;
   @useResult
-  $Res call({Stream<dynamic> stream});
+  $Res call(
+      {Stream<dynamic> stream,
+      bool micEnabled,
+      bool camEnabled,
+      Map<String, dynamic> participants,
+      bool wait,
+      String newMessage});
 }
 
 /// @nodoc
@@ -46,12 +57,37 @@ class _$RoomCallStateCopyWithImpl<$Res, $Val extends RoomCallState>
   @override
   $Res call({
     Object? stream = null,
+    Object? micEnabled = null,
+    Object? camEnabled = null,
+    Object? participants = null,
+    Object? wait = null,
+    Object? newMessage = null,
   }) {
     return _then(_value.copyWith(
       stream: null == stream
           ? _value.stream
           : stream // ignore: cast_nullable_to_non_nullable
               as Stream<dynamic>,
+      micEnabled: null == micEnabled
+          ? _value.micEnabled
+          : micEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      camEnabled: null == camEnabled
+          ? _value.camEnabled
+          : camEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      participants: null == participants
+          ? _value.participants
+          : participants // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      wait: null == wait
+          ? _value.wait
+          : wait // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newMessage: null == newMessage
+          ? _value.newMessage
+          : newMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -64,7 +100,13 @@ abstract class _$$RoomCallStateImplCopyWith<$Res>
       __$$RoomCallStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Stream<dynamic> stream});
+  $Res call(
+      {Stream<dynamic> stream,
+      bool micEnabled,
+      bool camEnabled,
+      Map<String, dynamic> participants,
+      bool wait,
+      String newMessage});
 }
 
 /// @nodoc
@@ -79,12 +121,37 @@ class __$$RoomCallStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? stream = null,
+    Object? micEnabled = null,
+    Object? camEnabled = null,
+    Object? participants = null,
+    Object? wait = null,
+    Object? newMessage = null,
   }) {
     return _then(_$RoomCallStateImpl(
       stream: null == stream
           ? _value.stream
           : stream // ignore: cast_nullable_to_non_nullable
               as Stream<dynamic>,
+      micEnabled: null == micEnabled
+          ? _value.micEnabled
+          : micEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      camEnabled: null == camEnabled
+          ? _value.camEnabled
+          : camEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
+      participants: null == participants
+          ? _value._participants
+          : participants // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>,
+      wait: null == wait
+          ? _value.wait
+          : wait // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newMessage: null == newMessage
+          ? _value.newMessage
+          : newMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -92,15 +159,43 @@ class __$$RoomCallStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RoomCallStateImpl implements _RoomCallState {
-  const _$RoomCallStateImpl({this.stream = const Stream.empty()});
+  const _$RoomCallStateImpl(
+      {this.stream = const Stream.empty(),
+      this.micEnabled = true,
+      this.camEnabled = true,
+      final Map<String, dynamic> participants = const {},
+      this.wait = false,
+      this.newMessage = ''})
+      : _participants = participants;
 
   @override
   @JsonKey()
   final Stream<dynamic> stream;
+  @override
+  @JsonKey()
+  final bool micEnabled;
+  @override
+  @JsonKey()
+  final bool camEnabled;
+  final Map<String, dynamic> _participants;
+  @override
+  @JsonKey()
+  Map<String, dynamic> get participants {
+    if (_participants is EqualUnmodifiableMapView) return _participants;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_participants);
+  }
+
+  @override
+  @JsonKey()
+  final bool wait;
+  @override
+  @JsonKey()
+  final String newMessage;
 
   @override
   String toString() {
-    return 'RoomCallState(stream: $stream)';
+    return 'RoomCallState(stream: $stream, micEnabled: $micEnabled, camEnabled: $camEnabled, participants: $participants, wait: $wait, newMessage: $newMessage)';
   }
 
   @override
@@ -108,11 +203,21 @@ class _$RoomCallStateImpl implements _RoomCallState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RoomCallStateImpl &&
-            (identical(other.stream, stream) || other.stream == stream));
+            (identical(other.stream, stream) || other.stream == stream) &&
+            (identical(other.micEnabled, micEnabled) ||
+                other.micEnabled == micEnabled) &&
+            (identical(other.camEnabled, camEnabled) ||
+                other.camEnabled == camEnabled) &&
+            const DeepCollectionEquality()
+                .equals(other._participants, _participants) &&
+            (identical(other.wait, wait) || other.wait == wait) &&
+            (identical(other.newMessage, newMessage) ||
+                other.newMessage == newMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, stream);
+  int get hashCode => Object.hash(runtimeType, stream, micEnabled, camEnabled,
+      const DeepCollectionEquality().hash(_participants), wait, newMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -122,11 +227,26 @@ class _$RoomCallStateImpl implements _RoomCallState {
 }
 
 abstract class _RoomCallState implements RoomCallState {
-  const factory _RoomCallState({final Stream<dynamic> stream}) =
-      _$RoomCallStateImpl;
+  const factory _RoomCallState(
+      {final Stream<dynamic> stream,
+      final bool micEnabled,
+      final bool camEnabled,
+      final Map<String, dynamic> participants,
+      final bool wait,
+      final String newMessage}) = _$RoomCallStateImpl;
 
   @override
   Stream<dynamic> get stream;
+  @override
+  bool get micEnabled;
+  @override
+  bool get camEnabled;
+  @override
+  Map<String, dynamic> get participants;
+  @override
+  bool get wait;
+  @override
+  String get newMessage;
   @override
   @JsonKey(ignore: true)
   _$$RoomCallStateImplCopyWith<_$RoomCallStateImpl> get copyWith =>

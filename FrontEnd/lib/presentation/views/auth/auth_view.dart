@@ -45,8 +45,11 @@ class _AuthViewState extends BaseStateDelegate<AuthView, AuthNotifier> {
             children: [
               Container(
                 margin: const EdgeInsets.only(
-                        top: 70, left: 30, right: 30, bottom: 20)
-                    .r,
+                  top: 70,
+                  left: 30,
+                  right: 30,
+                  bottom: 20,
+                ).r,
                 child: Consumer(
                   builder: (_, ref, child) {
                     final stateView = ref.watch(
